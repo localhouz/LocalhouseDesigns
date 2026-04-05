@@ -42,3 +42,13 @@ __screenshots__/
 # System files
 .DS_Store
 Thumbs.db
+
+# Python / research artifacts (not part of this project)
+autoresearch_portable/
+__pycache__/
+*.pyc
+*.py
+templates/
+*.md
+!README.md
+.github/

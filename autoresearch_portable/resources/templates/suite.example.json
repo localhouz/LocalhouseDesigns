@@ -1,6 +1,0 @@
-{
-  "name": "example_suite",
-  "objectives": [
-    "objective.smoke.json"
-  ]
-}
