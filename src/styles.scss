@@ -1,26 +1,29 @@
 @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap');
 
 :root {
-  --black:   #050508;
-  --white:   #f0f0f5;
+  --bg:      #f5f5f0;
+  --surface: #eceee8;
+  --fg:      #0a0a12;
+  --fg-muted: rgba(10,10,18,0.55);
   --accent:  #ff3c00;
   --accent2: #7c3aed;
-  --mid:     #1a1a2e;
-  --border:  rgba(240,240,245,0.08);
+  --border:  rgba(10,10,18,0.12);
   --font-sans: 'Space Grotesk', system-ui, sans-serif;
   --font-mono: 'Space Mono', monospace;
+
+  /* legacy aliases — keep for compat */
+  --black: var(--fg);
+  --white: var(--bg);
+  --mid:   var(--surface);
 }
 
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-html {
-  scroll-behavior: smooth;
-  font-size: 16px;
-}
+html { scroll-behavior: smooth; font-size: 16px; }
 
 body {
-  background: var(--black);
-  color: var(--white);
+  background: var(--bg);
+  color: var(--fg);
   font-family: var(--font-sans);
   font-weight: 400;
   line-height: 1.6;
@@ -28,31 +31,17 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
-a {
-  color: inherit;
-  text-decoration: none;
-}
-
+a { color: inherit; text-decoration: none; }
 img, video { max-width: 100%; display: block; }
 
-::selection {
-  background: var(--accent);
-  color: var(--black);
-}
+::selection { background: var(--accent); color: #fff; }
 
 ::-webkit-scrollbar { width: 4px; }
-::-webkit-scrollbar-track { background: var(--black); }
+::-webkit-scrollbar-track { background: var(--bg); }
 ::-webkit-scrollbar-thumb { background: var(--accent); border-radius: 2px; }
 
-.container {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 2rem;
-}
-
-.section {
-  padding: 8rem 0;
-}
+.container { max-width: 1200px; margin: 0 auto; padding: 0 2rem; }
+.section { padding: 8rem 0; }
 
 .label {
   font-family: var(--font-mono);
@@ -82,27 +71,24 @@ img, video { max-width: 100%; display: block; }
   font-size: 0.8rem;
   letter-spacing: 0.1em;
   text-transform: uppercase;
-  border: 1px solid var(--white);
-  color: var(--white);
+  border: 1px solid var(--fg);
+  color: var(--fg);
   background: transparent;
   cursor: pointer;
   transition: background 0.2s, color 0.2s, border-color 0.2s;
 
-  &:hover {
-    background: var(--white);
-    color: var(--black);
-  }
+  &:hover { background: var(--fg); color: var(--bg); }
 
   &.btn--accent {
     border-color: var(--accent);
     color: var(--accent);
-    &:hover { background: var(--accent); color: var(--black); }
+    &:hover { background: var(--accent); color: #fff; }
   }
 
   &.btn--filled {
     background: var(--accent);
     border-color: var(--accent);
-    color: var(--black);
+    color: #fff;
     font-weight: 700;
     &:hover { background: transparent; color: var(--accent); }
   }

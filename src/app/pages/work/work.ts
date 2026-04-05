@@ -1,6 +1,7 @@
 import { Component, inject, OnInit, signal } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
+import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { SeoService } from '../../shared/seo/seo.service';
 
 interface Repo {
@@ -24,6 +25,11 @@ interface Repo {
 export class WorkComponent implements OnInit {
   private seo = inject(SeoService);
   private http = inject(HttpClient);
+  private sanitizer = inject(DomSanitizer);
+
+  safeUrl(url: string): SafeResourceUrl {
+    return this.sanitizer.bypassSecurityTrustResourceUrl(url);
+  }
 
   repos = signal<Repo[]>([]);
   loading = signal(true);

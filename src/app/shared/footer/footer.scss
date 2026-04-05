@@ -18,7 +18,7 @@
     gap: 1rem;
 
     p {
-      color: rgba(240,240,245,0.5);
+      color: rgba(10,10,18,0.55);
       font-size: 0.9rem;
       line-height: 1.7;
     }
@@ -47,10 +47,10 @@
       font-size: 0.75rem;
       letter-spacing: 0.1em;
       text-transform: uppercase;
-      color: rgba(240,240,245,0.5);
+      color: rgba(10,10,18,0.55);
       transition: color 0.2s;
 
-      &:hover { color: var(--white); }
+      &:hover { color: var(--fg); }
     }
   }
 
@@ -64,13 +64,13 @@
 
   &__copy {
     font-size: 0.8rem;
-    color: rgba(240,240,245,0.3);
+    color: rgba(10,10,18,0.4);
   }
 
   &__mono {
     font-family: var(--font-mono);
     font-size: 0.7rem;
-    color: rgba(240,240,245,0.2);
+    color: rgba(10,10,18,0.3);
     letter-spacing: 0.1em;
   }
 

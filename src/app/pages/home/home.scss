@@ -5,6 +5,7 @@
   display: flex;
   align-items: center;
   overflow: hidden;
+  background: var(--fg);
 
   &__canvas {
     position: absolute;
@@ -102,7 +103,7 @@
       font-size: 0.75rem;
       letter-spacing: 0.12em;
       text-transform: uppercase;
-      color: rgba(240,240,245,0.4);
+      color: rgba(10,10,18,0.5);
       flex-shrink: 0;
 
       &::before {
@@ -139,7 +140,7 @@
 
   &__right {
     p {
-      color: rgba(240,240,245,0.65);
+      color: rgba(10,10,18,0.65);
       line-height: 1.85;
       margin-bottom: 1.5rem;
     }
@@ -170,7 +171,7 @@
 
   &__stat-label {
     font-size: 0.8rem;
-    color: rgba(240,240,245,0.4);
+    color: rgba(10,10,18,0.5);
     letter-spacing: 0.05em;
   }
 }
@@ -221,7 +222,7 @@
 
   p {
     font-size: 0.9rem;
-    color: rgba(240,240,245,0.55);
+    color: rgba(10,10,18,0.6);
     line-height: 1.75;
   }
 }
@@ -260,20 +261,32 @@
     transform: translateY(-4px);
   }
 
-  &__img {
+  &__preview {
     height: 220px;
+    overflow: hidden;
     position: relative;
-    display: flex;
-    align-items: flex-start;
-    padding: 1rem;
+    background: var(--surface);
+
+    iframe {
+      width: 1200px;
+      height: 750px;
+      border: none;
+      transform: scale(0.42);
+      transform-origin: top left;
+      pointer-events: none;
+    }
   }
 
   &__tag {
+    position: absolute;
+    top: 0.75rem;
+    left: 0.75rem;
+    z-index: 1;
     font-family: var(--font-mono);
     font-size: 0.65rem;
     letter-spacing: 0.1em;
     text-transform: uppercase;
-    background: rgba(5,5,8,0.7);
+    background: rgba(245,245,240,0.9);
     border: 1px solid var(--border);
     padding: 0.3rem 0.6rem;
     color: var(--accent);
@@ -289,7 +302,7 @@
 
     p {
       font-size: 0.875rem;
-      color: rgba(240,240,245,0.55);
+      color: rgba(10,10,18,0.6);
       line-height: 1.7;
       margin-bottom: 1.25rem;
     }
@@ -304,7 +317,7 @@
       font-family: var(--font-mono);
       font-size: 0.65rem;
       letter-spacing: 0.08em;
-      color: rgba(240,240,245,0.4);
+      color: rgba(10,10,18,0.45);
       border: 1px solid var(--border);
       padding: 0.2rem 0.5rem;
     }

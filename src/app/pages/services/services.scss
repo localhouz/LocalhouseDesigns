@@ -7,7 +7,7 @@
     margin: 1.5rem 0 1rem;
     em { font-style: normal; color: var(--accent); }
   }
-  &__sub { color: rgba(240,240,245,0.5); font-size: 1.1rem; }
+  &__sub { color: rgba(10,10,18,0.55); font-size: 1.1rem; }
 }
 
 .services-list {
@@ -22,7 +22,7 @@
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 4rem;
-  background: var(--black);
+  background: var(--bg);
   padding: 3.5rem;
   transition: background 0.2s;
 
@@ -34,7 +34,7 @@
       margin: 0.75rem 0 1rem;
     }
     p {
-      color: rgba(240,240,245,0.6);
+      color: rgba(10,10,18,0.65);
       line-height: 1.8;
       font-size: 0.95rem;
     }
@@ -57,7 +57,7 @@
 
     li {
       font-size: 0.85rem;
-      color: rgba(240,240,245,0.55);
+      color: rgba(10,10,18,0.6);
       padding-left: 1rem;
       position: relative;
       line-height: 1.5;
@@ -109,7 +109,7 @@
     padding: 2.5rem;
 
     h3 { font-size: 1.1rem; margin: 0.75rem 0 0.75rem; }
-    p { font-size: 0.875rem; color: rgba(240,240,245,0.5); line-height: 1.75; }
+    p { font-size: 0.875rem; color: rgba(10,10,18,0.6); line-height: 1.75; }
   }
 
   &__step-num {

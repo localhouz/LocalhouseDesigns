@@ -11,7 +11,8 @@
   <section class="case-studies section container">
     @for (project of caseStudies; track project.title) {
       <a [href]="project.url" target="_blank" rel="noopener" class="case-study">
-        <div class="case-study__visual" [style.background]="project.bg">
+        <div class="case-study__visual">
+          <iframe [src]="safeUrl(project.url)" frameborder="0" scrolling="no" loading="lazy" tabindex="-1" aria-hidden="true"></iframe>
           <div class="case-study__tag">{{ project.subtitle }}</div>
         </div>
         <div class="case-study__body">

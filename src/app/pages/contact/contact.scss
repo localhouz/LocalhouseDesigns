@@ -7,7 +7,7 @@
     margin: 1.5rem 0 1rem;
     em { font-style: normal; color: var(--accent); }
   }
-  &__sub { color: rgba(240,240,245,0.5); font-size: 1.1rem; }
+  &__sub { color: rgba(10,10,18,0.55); font-size: 1.1rem; }
 }
 
 .contact-grid {
@@ -36,7 +36,7 @@
 
     span, a {
       font-size: 0.95rem;
-      color: var(--white);
+      color: var(--fg);
       text-decoration: none;
       &:hover { color: var(--accent); }
     }
@@ -47,7 +47,7 @@
     font-size: 0.65rem !important;
     letter-spacing: 0.12em;
     text-transform: uppercase;
-    color: rgba(240,240,245,0.3) !important;
+    color: rgba(10,10,18,0.4) !important;
   }
 
   &__available {
@@ -78,7 +78,7 @@
       font-family: var(--font-mono);
       font-size: 0.65rem;
       letter-spacing: 0.08em;
-      color: rgba(240,240,245,0.4);
+      color: rgba(10,10,18,0.45);
       border: 1px solid var(--border);
       padding: 0.2rem 0.5rem;
     }
@@ -108,13 +108,13 @@
     font-size: 0.7rem;
     letter-spacing: 0.1em;
     text-transform: uppercase;
-    color: rgba(240,240,245,0.5);
+    color: rgba(10,10,18,0.55);
   }
 
   input, textarea, select {
     background: transparent;
     border: 1px solid var(--border);
-    color: var(--white);
+    color: var(--fg);
     font-family: var(--font-sans);
     font-size: 0.95rem;
     padding: 0.875rem 1rem;
@@ -123,7 +123,7 @@
     width: 100%;
     resize: vertical;
 
-    &::placeholder { color: rgba(240,240,245,0.2); }
+    &::placeholder { color: rgba(10,10,18,0.25); }
     &:focus { border-color: var(--accent); }
 
     option { background: var(--black); }
@@ -162,7 +162,7 @@ button[type="submit"] {
 
   h2 { font-size: 2.5rem; }
   p {
-    color: rgba(240,240,245,0.6);
+    color: rgba(10,10,18,0.65);
     a { color: var(--accent); }
   }
 }
