@@ -1,0 +1,214 @@
+.lab-page {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
+  background: #02040a;
+}
+
+.lab-canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+  cursor: grab;
+  touch-action: none;
+
+  &:active           { cursor: grabbing; }
+  &--hovering        { cursor: pointer; }
+}
+
+// ── Overlays ──────────────────────────────────────────────────────────────────
+.lab-overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
+}
+
+.lab-loading {
+  gap: 1.5rem;
+  background: rgba(2,4,10,0.7);
+
+  &__dots {
+    display: flex;
+    gap: 0.5rem;
+
+    span {
+      width: 8px;
+      height: 8px;
+      background: #ff3c00;
+      border-radius: 50%;
+      animation: pulse 1.2s ease-in-out infinite;
+
+      &:nth-child(2) { animation-delay: 0.2s; }
+      &:nth-child(3) { animation-delay: 0.4s; }
+    }
+  }
+
+  &__text {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    letter-spacing: 0.15em;
+    color: rgba(240,240,245,0.35);
+    text-transform: uppercase;
+  }
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 0.3; transform: scale(1); }
+  50%       { opacity: 1;   transform: scale(1.4); }
+}
+
+.lab-error {
+  gap: 0.75rem;
+  text-align: center;
+
+  &__code {
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.15em;
+    color: #ff3c00;
+  }
+
+  &__msg {
+    font-size: 0.9rem;
+    color: rgba(240,240,245,0.5);
+    max-width: 480px;
+    line-height: 1.7;
+  }
+}
+
+// ── Hover tooltip ─────────────────────────────────────────────────────────────
+.planet-tip {
+  position: fixed;
+  z-index: 20;
+  background: rgba(2,4,10,0.88);
+  border: 1px solid rgba(255,60,0,0.3);
+  backdrop-filter: blur(8px);
+  padding: 0.75rem 1rem;
+  min-width: 160px;
+  pointer-events: none;
+
+  &__name {
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    color: #fff;
+    font-weight: 700;
+    margin-bottom: 0.4rem;
+    letter-spacing: 0.03em;
+  }
+
+  &__row {
+    font-family: var(--font-mono);
+    font-size: 0.65rem;
+    letter-spacing: 0.06em;
+    color: rgba(240,240,245,0.45);
+    line-height: 1.8;
+
+    &:nth-child(3) { color: #ff3c00; }
+  }
+}
+
+// ── HUD ───────────────────────────────────────────────────────────────────────
+.lab-hud {
+  position: absolute;
+  top: 6rem;
+  left: 2rem;
+  z-index: 10;
+  pointer-events: none;
+
+  &__eyebrow {
+    font-family: var(--font-mono);
+    font-size: 0.65rem;
+    letter-spacing: 0.15em;
+    color: #ff3c00;
+    text-transform: uppercase;
+    margin-bottom: 0.4rem;
+  }
+
+  &__title {
+    font-family: var(--font-sans);
+    font-size: clamp(1.4rem, 2.5vw, 2rem);
+    font-weight: 700;
+    color: rgba(240,240,245,0.9);
+    letter-spacing: -0.02em;
+    line-height: 1.1;
+    margin-bottom: 0.5rem;
+  }
+
+  &__stats {
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.08em;
+    color: rgba(240,240,245,0.3);
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+  }
+
+  &__sep { color: rgba(255,60,0,0.5); }
+}
+
+// ── Legend ────────────────────────────────────────────────────────────────────
+.lab-legend {
+  position: absolute;
+  bottom: 2.5rem;
+  left: 2rem;
+  z-index: 10;
+  pointer-events: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+
+  &__row {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    font-family: var(--font-mono);
+    font-size: 0.65rem;
+    letter-spacing: 0.08em;
+    color: rgba(240,240,245,0.3);
+  }
+
+  &__sun {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: radial-gradient(circle, #fff9a0, #ff8800);
+    flex-shrink: 0;
+    box-shadow: 0 0 6px 2px rgba(255,150,0,0.5);
+  }
+
+  &__planet {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #4a9eff;
+    flex-shrink: 0;
+    box-shadow: 0 0 4px 1px rgba(74,158,255,0.4);
+  }
+
+  &__belt {
+    width: 8px;
+    height: 2px;
+    background: linear-gradient(to right, #ff3c00, transparent);
+    flex-shrink: 0;
+  }
+
+  &__hint {
+    font-family: var(--font-mono);
+    font-size: 0.6rem;
+    letter-spacing: 0.06em;
+    color: rgba(240,240,245,0.15);
+    margin-top: 0.25rem;
+  }
+}
+
+// ── Mobile ────────────────────────────────────────────────────────────────────
+@media (max-width: 640px) {
+  .lab-hud { top: 5rem; left: 1rem; }
+  .lab-legend { left: 1rem; bottom: 1.5rem; }
+}

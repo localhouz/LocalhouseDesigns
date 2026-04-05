@@ -1,0 +1,72 @@
+<div class="lab-page">
+
+  <!-- Canvas always in DOM so ViewChild resolves immediately -->
+  <canvas #canvas class="lab-canvas"
+    [class.lab-canvas--hovering]="hovered() !== null"
+    (click)="handleClick()">
+  </canvas>
+
+  <!-- Loading overlay -->
+  @if (loading()) {
+    <div class="lab-overlay lab-loading">
+      <div class="lab-loading__dots">
+        <span></span><span></span><span></span>
+      </div>
+      <p class="lab-loading__text">// initializing solar system</p>
+    </div>
+  }
+
+  <!-- Error state -->
+  @if (!loading() && error()) {
+    <div class="lab-overlay lab-error">
+      <p class="lab-error__code">// error</p>
+      <p class="lab-error__msg">{{ error() }}</p>
+    </div>
+  }
+
+  <!-- Live UI (shown once data is loaded) -->
+  @if (!loading() && !error()) {
+
+    <!-- Hover tooltip -->
+    @if (hovered(); as planet) {
+      <div class="planet-tip"
+        [style.left.px]="tipPos().x + 18"
+        [style.top.px]="tipPos().y - 72">
+        <div class="planet-tip__name">{{ planet.name }}</div>
+        <div class="planet-tip__row">{{ planet.lang }}</div>
+        <div class="planet-tip__row">{{ planet.commits | number }} commits</div>
+        <div class="planet-tip__row">Updated {{ planet.updated }}</div>
+      </div>
+    }
+
+    <!-- HUD — top left -->
+    <div class="lab-hud">
+      <div class="lab-hud__eyebrow">// WebGL · Three.js · Live GitHub data</div>
+      <div class="lab-hud__title">Commit Solar System</div>
+      <div class="lab-hud__stats">
+        <span>{{ total() | number }} contributions</span>
+        <span class="lab-hud__sep">·</span>
+        <span>{{ repoCount() }} repos</span>
+      </div>
+    </div>
+
+    <!-- Legend — bottom left -->
+    <div class="lab-legend">
+      <div class="lab-legend__row">
+        <span class="lab-legend__sun"></span>
+        <span>You (the sun)</span>
+      </div>
+      <div class="lab-legend__row">
+        <span class="lab-legend__planet"></span>
+        <span>Repo — size = commits, speed = recency</span>
+      </div>
+      <div class="lab-legend__row">
+        <span class="lab-legend__belt"></span>
+        <span>Contribution activity (asteroid belt)</span>
+      </div>
+      <div class="lab-legend__hint">Drag to orbit · Scroll to zoom · Click a planet to open repo</div>
+    </div>
+
+  }
+
+</div>
