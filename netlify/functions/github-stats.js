@@ -3,9 +3,14 @@ exports.handler = async function () {
   const token = process.env['GITHUB_TOKEN'];
 
   if (!token) {
+    // Debug: list available env var keys (no values) to help diagnose
+    const keys = Object.keys(process.env).filter(k => !k.includes('SECRET') && !k.includes('KEY') && !k.includes('TOKEN')).sort();
     return {
       statusCode: 500,
-      body: JSON.stringify({ error: 'GITHUB_TOKEN environment variable is not set.' }),
+      body: JSON.stringify({
+        error: 'GITHUB_TOKEN environment variable is not set.',
+        availableKeys: keys,
+      }),
     };
   }
 
