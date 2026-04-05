@@ -47,16 +47,6 @@ exports.handler = async function () {
             edges { size node { name color } }
             totalSize
           }
-          defaultBranchRef {
-            target {
-              ... on Commit {
-                history(first: 0) { totalCount }
-                historyByWeek: history(first: 52) {
-                  nodes { committedDate }
-                }
-              }
-            }
-          }
         }
       }
     }
