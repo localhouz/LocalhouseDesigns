@@ -1,0 +1,60 @@
+<div class="services-page">
+
+  <div class="page-header container">
+    <p class="label">What we offer</p>
+    <h1>Services that<br><em>move the needle.</em></h1>
+    <p class="page-header__sub">No fluff. Just the capabilities that matter for modern web.</p>
+  </div>
+
+  <section class="services-list section container">
+    @for (service of services; track service.num) {
+      <div class="service-row">
+        <div class="service-row__left">
+          <span class="service-row__num">{{ service.num }}</span>
+          <h2>{{ service.title }}</h2>
+          <p>{{ service.desc }}</p>
+        </div>
+        <ul class="service-row__items">
+          @for (item of service.items; track item) {
+            <li>{{ item }}</li>
+          }
+        </ul>
+      </div>
+    }
+  </section>
+
+  <section class="process section">
+    <div class="container">
+      <p class="label">How it works</p>
+      <h2 class="process__heading">Simple process.<br><em>Serious results.</em></h2>
+      <div class="process__steps">
+        <div class="process__step">
+          <span class="process__step-num">01</span>
+          <h3>Discovery</h3>
+          <p>We start with a conversation. Goals, audience, timeline, budget. No forms, no decks — just clarity.</p>
+        </div>
+        <div class="process__step">
+          <span class="process__step-num">02</span>
+          <h3>Architecture</h3>
+          <p>Site structure, component design, SEO strategy. We plan the full system before writing line one of code.</p>
+        </div>
+        <div class="process__step">
+          <span class="process__step-num">03</span>
+          <h3>Build</h3>
+          <p>Angular-first, schema-baked, performance-aware. Every component is built to be fast, found, and future-proof.</p>
+        </div>
+        <div class="process__step">
+          <span class="process__step-num">04</span>
+          <h3>Launch</h3>
+          <p>Netlify deploy, DNS migration, Search Console, GA4. We hand you off with everything running and nothing broken.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="services-cta container">
+    <h2>Let's scope<br><em>your project.</em></h2>
+    <a routerLink="/contact" class="btn btn--filled">Start a conversation →</a>
+  </div>
+
+</div>

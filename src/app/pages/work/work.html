@@ -1,0 +1,76 @@
+<div class="work-page">
+
+  <!-- Header -->
+  <div class="page-header container">
+    <p class="label">Selected work</p>
+    <h1>What we've<br><em>shipped.</em></h1>
+    <p class="page-header__sub">Live projects, real outcomes. No mockups.</p>
+  </div>
+
+  <!-- Case studies -->
+  <section class="case-studies section container">
+    @for (project of caseStudies; track project.title) {
+      <a [href]="project.url" target="_blank" rel="noopener" class="case-study">
+        <div class="case-study__visual" [style.background]="project.bg">
+          <div class="case-study__tag">{{ project.subtitle }}</div>
+        </div>
+        <div class="case-study__body">
+          <h2>{{ project.title }}</h2>
+          <p>{{ project.outcome }}</p>
+          <div class="case-study__metrics">
+            @for (m of project.metrics; track m.label) {
+              <div class="metric">
+                <span class="metric__val">{{ m.val }}</span>
+                <span class="metric__label">{{ m.label }}</span>
+              </div>
+            }
+          </div>
+          <div class="case-study__stack">
+            @for (tech of project.stack; track tech) {
+              <span>{{ tech }}</span>
+            }
+          </div>
+        </div>
+      </a>
+    }
+  </section>
+
+  <!-- GitHub repos -->
+  <section class="repos section">
+    <div class="container">
+      <p class="label">Open source & experiments</p>
+      <h2 class="repos__heading">GitHub activity,<br><em>live feed.</em></h2>
+
+      @if (loading()) {
+        <div class="repos__loading">
+          <span class="repos__dot"></span>
+          <span class="repos__dot"></span>
+          <span class="repos__dot"></span>
+        </div>
+      } @else {
+        <div class="repos__grid">
+          @for (repo of repos(); track repo.id) {
+            <a [href]="repo.html_url" target="_blank" rel="noopener" class="repo-card">
+              <div class="repo-card__top">
+                <h3>{{ repo.name }}</h3>
+                @if (repo.language) {
+                  <span class="repo-card__lang">{{ repo.language }}</span>
+                }
+              </div>
+              @if (repo.description) {
+                <p>{{ repo.description }}</p>
+              }
+              <div class="repo-card__footer">
+                <span class="repo-card__date">{{ formatDate(repo.updated_at) }}</span>
+                @if (repo.homepage) {
+                  <span class="repo-card__live">↗ live</span>
+                }
+              </div>
+            </a>
+          }
+        </div>
+      }
+    </div>
+  </section>
+
+</div>

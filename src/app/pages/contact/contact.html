@@ -1,0 +1,99 @@
+<div class="contact-page">
+
+  <div class="page-header container">
+    <p class="label">Get in touch</p>
+    <h1>Let's build<br><em>something.</em></h1>
+    <p class="page-header__sub">Tell us what you're working on. No pitch decks, no NDAs — just a conversation.</p>
+  </div>
+
+  <section class="contact-body section container">
+    <div class="contact-grid">
+
+      <!-- Info -->
+      <div class="contact-info">
+        <div class="contact-info__item">
+          <span class="contact-info__label">Studio</span>
+          <span>Localhouse Designs</span>
+        </div>
+        <div class="contact-info__item">
+          <span class="contact-info__label">Location</span>
+          <span>Northern California</span>
+        </div>
+        <div class="contact-info__item">
+          <span class="contact-info__label">Availability</span>
+          <span class="contact-info__available">Open to new projects</span>
+        </div>
+        <div class="contact-info__item">
+          <span class="contact-info__label">GitHub</span>
+          <a href="https://github.com/localhouz" target="_blank" rel="noopener">github.com/localhouz</a>
+        </div>
+        <div class="contact-info__stack">
+          <span class="contact-info__label">Stack</span>
+          <div class="contact-info__tags">
+            @for (tag of ['Angular', 'TypeScript', 'SCSS', 'Three.js', 'Netlify', 'JSON-LD']; track tag) {
+              <span>{{ tag }}</span>
+            }
+          </div>
+        </div>
+      </div>
+
+      <!-- Form -->
+      @if (!submitted()) {
+        <form
+          name="localhouse-contact"
+          method="POST"
+          data-netlify="true"
+          netlify-honeypot="bot-field"
+          (ngSubmit)="onSubmit(contactForm)"
+          #contactForm="ngForm"
+          class="contact-form"
+        >
+          <input type="hidden" name="form-name" value="localhouse-contact">
+          <p class="hidden"><label>Don't fill this out: <input name="bot-field"></label></p>
+
+          <div class="field">
+            <label for="name">Name *</label>
+            <input id="name" name="name" type="text" [(ngModel)]="name" required placeholder="Your name">
+          </div>
+
+          <div class="field">
+            <label for="email">Email *</label>
+            <input id="email" name="email" type="email" [(ngModel)]="email" required placeholder="your@email.com">
+          </div>
+
+          <div class="field">
+            <label for="project">Project type</label>
+            <input id="project" name="project" type="text" [(ngModel)]="project" placeholder="New site, redesign, SEO audit...">
+          </div>
+
+          <div class="field">
+            <label for="budget">Budget range</label>
+            <select id="budget" name="budget" [(ngModel)]="budget">
+              <option value="">Select a range</option>
+              @for (opt of budgetOptions; track opt) {
+                <option [value]="opt">{{ opt }}</option>
+              }
+            </select>
+          </div>
+
+          <div class="field field--full">
+            <label for="message">Tell us more *</label>
+            <textarea id="message" name="message" [(ngModel)]="message" required rows="5" placeholder="What are you building? What's the timeline?"></textarea>
+          </div>
+
+          <button type="submit" class="btn btn--filled" [disabled]="submitting()">
+            {{ submitting() ? 'Sending...' : 'Send it →' }}
+          </button>
+        </form>
+      } @else {
+        <div class="contact-success">
+          <span class="contact-success__icon">✓</span>
+          <h2>Got it.</h2>
+          <p>We'll be in touch shortly. In the meantime, check out the <a href="https://github.com/localhouz" target="_blank" rel="noopener">GitHub</a>.</p>
+        </div>
+      }
+
+    </div>
+  </section>
+
+</div>

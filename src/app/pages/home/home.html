@@ -1,0 +1,122 @@
+<section class="hero">
+  <canvas #canvas class="hero__canvas"></canvas>
+
+  <div class="hero__content container">
+    <p class="label">Localhouse Designs</p>
+    <h1 class="hero__headline">
+      We build<br>
+      <em>digital things</em><br>
+      that work.
+    </h1>
+    <p class="hero__sub">
+      Boutique studio. Angular-first. SEO/GEO obsessed.<br>
+      No templates. No shortcuts. Just clean, fast, bold web.
+    </p>
+    <div class="hero__actions">
+      <a routerLink="/work" class="btn btn--filled">See the Work</a>
+      <a routerLink="/contact" class="btn">Start a Project</a>
+    </div>
+  </div>
+
+  <div class="hero__scroll">
+    <span class="hero__scroll-line"></span>
+    <span class="hero__scroll-text">scroll</span>
+  </div>
+</section>
+
+<!-- Marquee -->
+<div class="marquee">
+  <div class="marquee__track">
+    @for (item of marqueeItems; track item) {
+      <span>{{ item }}</span>
+    }
+    @for (item of marqueeItems; track item) {
+      <span>{{ item }}</span>
+    }
+  </div>
+</div>
+
+<!-- About strip -->
+<section class="about section">
+  <div class="container">
+    <div class="about__grid">
+      <div class="about__left">
+        <p class="label">Who we are</p>
+        <h2 class="about__heading">Small studio.<br>Big output.</h2>
+      </div>
+      <div class="about__right">
+        <p>Localhouse Designs is a boutique web development studio building performant, beautiful, and search-optimized digital experiences for brands that are serious about their online presence.</p>
+        <p>Angular is our weapon of choice — but our work doesn't stop at code. We wire in SEO/GEO structured data, connect analytics, and architect for the long game from day one.</p>
+        <div class="about__stats">
+          <div class="about__stat">
+            <span class="about__stat-num">2</span>
+            <span class="about__stat-label">Live sites</span>
+          </div>
+          <div class="about__stat">
+            <span class="about__stat-num">100%</span>
+            <span class="about__stat-label">Schema valid</span>
+          </div>
+          <div class="about__stat">
+            <span class="about__stat-num">∞</span>
+            <span class="about__stat-label">Coffee consumed</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Services preview -->
+<section class="services-preview section">
+  <div class="container">
+    <p class="label">What we do</p>
+    <div class="services-preview__grid">
+      @for (service of services; track service.title) {
+        <div class="service-card">
+          <span class="service-card__num">{{ service.num }}</span>
+          <h3>{{ service.title }}</h3>
+          <p>{{ service.desc }}</p>
+        </div>
+      }
+    </div>
+    <div class="services-preview__cta">
+      <a routerLink="/services" class="btn btn--accent">All Services →</a>
+    </div>
+  </div>
+</section>
+
+<!-- Work preview -->
+<section class="work-preview section">
+  <div class="container">
+    <div class="work-preview__header">
+      <p class="label">Selected work</p>
+      <a routerLink="/work" class="btn btn--accent">View all →</a>
+    </div>
+    <div class="work-preview__grid">
+      @for (project of featuredProjects; track project.title) {
+        <a [href]="project.url" target="_blank" rel="noopener" class="project-card">
+          <div class="project-card__img" [style.background]="project.bg">
+            <span class="project-card__tag">{{ project.tag }}</span>
+          </div>
+          <div class="project-card__info">
+            <h3>{{ project.title }}</h3>
+            <p>{{ project.desc }}</p>
+            <div class="project-card__stack">
+              @for (tech of project.stack; track tech) {
+                <span>{{ tech }}</span>
+              }
+            </div>
+          </div>
+        </a>
+      }
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-band">
+  <div class="container">
+    <h2>Ready to build something<br><em>worth finding?</em></h2>
+    <a routerLink="/contact" class="btn btn--filled">Let's talk →</a>
+  </div>
+</section>

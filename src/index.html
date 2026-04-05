@@ -2,12 +2,99 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <title>LocalhouseDesigns</title>
+  <title>Localhouse Designs | Boutique Web Studio — Angular, SEO/GEO, Bleeding Edge</title>
   <base href="/">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Boutique web studio specializing in Angular, performance SEO/GEO, and bold digital experiences. Built different.">
+  <link rel="canonical" href="https://localhousedesigns.netlify.app/">
   <link rel="icon" type="image/x-icon" href="favicon.ico">
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Localhouse Designs">
+  <meta property="og:title" content="Localhouse Designs | Boutique Web Studio">
+  <meta property="og:description" content="Boutique web studio specializing in Angular, SEO/GEO, and bold digital experiences. Built different.">
+  <meta property="og:url" content="https://localhousedesigns.netlify.app/">
+  <meta property="og:image" content="https://localhousedesigns.netlify.app/og-image.png">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Localhouse Designs | Boutique Web Studio">
+  <meta name="twitter:description" content="Boutique web studio. Angular-first. SEO/GEO obsessed. Built different.">
+  <meta name="twitter:image" content="https://localhousedesigns.netlify.app/og-image.png">
+
+  <!-- Organization Schema -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "ProfessionalService",
+    "@id": "https://localhousedesigns.netlify.app/#organization",
+    "name": "Localhouse Designs",
+    "description": "Boutique web studio specializing in Angular development, SEO/GEO optimization, and bold digital experiences.",
+    "url": "https://localhousedesigns.netlify.app",
+    "sameAs": ["https://github.com/localhouz"],
+    "areaServed": { "@type": "Country", "name": "United States" },
+    "knowsAbout": ["Angular", "TypeScript", "SEO", "GEO", "Three.js", "Netlify", "Structured Data", "Web Performance"]
+  }
+  </script>
+
+  <!-- WebSite Schema -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "@id": "https://localhousedesigns.netlify.app/#website",
+    "url": "https://localhousedesigns.netlify.app",
+    "name": "Localhouse Designs",
+    "publisher": { "@id": "https://localhousedesigns.netlify.app/#organization" }
+  }
+  </script>
+
+  <!-- FAQPage Schema -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "What does Localhouse Designs specialize in?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Localhouse Designs specializes in Angular web development, SEO and GEO optimization with structured data markup, Netlify deployment, GA4 analytics setup, and bold design systems." }
+      },
+      {
+        "@type": "Question",
+        "name": "What is GEO and why does it matter?",
+        "acceptedAnswer": { "@type": "Answer", "text": "GEO (Generative Engine Optimization) is the practice of structuring your website content and metadata so AI-powered search engines like ChatGPT, Perplexity, and Google AI Overviews can accurately represent your brand. It uses JSON-LD structured data schemas like FAQPage, Product, and LocalBusiness." }
+      },
+      {
+        "@type": "Question",
+        "name": "Does Localhouse Designs build with Angular?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Yes — Angular is the primary framework. All builds use Angular 21 with standalone components, signals, lazy-loaded routes, and view transitions for maximum performance and maintainability." }
+      },
+      {
+        "@type": "Question",
+        "name": "Where is Localhouse Designs based?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Localhouse Designs is based in Northern California and works with clients across the United States." }
+      },
+      {
+        "@type": "Question",
+        "name": "How do I start a project with Localhouse Designs?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Fill out the contact form at localhousedesigns.netlify.app/contact with your project details, timeline, and budget range. Expect a response within 24 hours." }
+      }
+    ]
+  }
+  </script>
 </head>
 <body>
+  <!-- Netlify form detection -->
+  <form name="localhouse-contact" netlify netlify-honeypot="bot-field" hidden>
+    <input type="text" name="name">
+    <input type="email" name="email">
+    <input type="text" name="project">
+    <input type="text" name="budget">
+    <textarea name="message"></textarea>
+  </form>
+
   <app-root></app-root>
 </body>
 </html>

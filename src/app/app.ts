@@ -1,12 +1,20 @@
-import { Component, signal } from '@angular/core';
+import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
+import { NavComponent } from './shared/nav/nav';
+import { FooterComponent } from './shared/footer/footer';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet],
-  templateUrl: './app.html',
-  styleUrl: './app.scss'
+  imports: [RouterOutlet, NavComponent, FooterComponent],
+  template: `
+    <app-nav />
+    <main>
+      <router-outlet />
+    </main>
+    <app-footer />
+  `,
+  styles: [`
+    main { min-height: 100vh; }
+  `]
 })
-export class App {
-  protected readonly title = signal('LocalhouseDesigns');
-}
+export class App {}
