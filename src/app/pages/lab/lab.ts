@@ -284,12 +284,13 @@ export class LabComponent implements OnInit, AfterViewInit, OnDestroy {
     const planet = this.planets.find(pl => pl.mesh === hits[0].object);
     if (!planet) return;
 
-    // Fly to planet
+    // Fly to planet — position camera at 3× planet radius from surface
     const wp = new THREE.Vector3();
     planet.mesh.getWorldPosition(wp);
-    const offset = wp.clone().normalize().multiplyScalar(planet.mesh.geometry.boundingSphere?.radius ?? 0.5 + 2.5);
+    const radius = (planet.mesh.geometry as THREE.SphereGeometry).parameters?.radius ?? 0.5;
+    const dir = wp.clone().normalize(); // direction from sun to planet
     this.flyFrom     = this.camera.position.clone();
-    this.flyTarget   = wp.clone().add(offset.multiplyScalar(3.5));
+    this.flyTarget   = wp.clone().add(dir.multiplyScalar(radius * 3.5 + 2.5));
     this.flyProgress = 0;
     this.isFocused   = true;
     this.controls.enabled = false;
@@ -336,7 +337,7 @@ export class LabComponent implements OnInit, AfterViewInit, OnDestroy {
 
     this.composer = new EffectComposer(this.renderer);
     this.composer.addPass(new RenderPass(this.scene, this.camera));
-    this.composer.addPass(new UnrealBloomPass(new THREE.Vector2(w, h), 1.4, 0.5, 0.0));
+    this.composer.addPass(new UnrealBloomPass(new THREE.Vector2(w, h), 0.5, 0.3, 0.85));
   }
 
   // ── Scene ─────────────────────────────────────────────────────────────────────
@@ -400,8 +401,8 @@ export class LabComponent implements OnInit, AfterViewInit, OnDestroy {
         }),
       ));
     }
-    this.scene.add(new THREE.PointLight(0xfff0cc, 12, 0, 1.2));
-    this.scene.add(new THREE.AmbientLight(0x0a1020, 1.0));
+    this.scene.add(new THREE.PointLight(0xfff0cc, 4, 0, 1.5));
+    this.scene.add(new THREE.AmbientLight(0x0a1020, 1.5));
   }
 
   private buildAsteroidBelt(weeks: Array<{ contributionDays: ContribDay[] }>) {
@@ -498,11 +499,11 @@ export class LabComponent implements OnInit, AfterViewInit, OnDestroy {
         vertexShader: ATMO_VERT,
         fragmentShader: ATMO_FRAG,
         uniforms: { uColor: { value: new THREE.Color(atmoHex) } },
-        transparent: true, side: THREE.FrontSide, depthWrite: false,
-        blending: THREE.AdditiveBlending,
+        transparent: true, side: THREE.BackSide, depthWrite: false,
+        blending: THREE.NormalBlending,
       });
       const atmosphereMesh = new THREE.Mesh(
-        new THREE.SphereGeometry(radius * 1.25, 32, 32), atmoMat,
+        new THREE.SphereGeometry(radius * 1.08, 32, 32), atmoMat,
       );
 
       const pivot = new THREE.Object3D();
