@@ -1,0 +1,11 @@
+{
+  "name": "example-policy",
+  "allowed_paths": [
+    "scripts/",
+    "tests/",
+    "src/",
+    "README.md",
+    ".synapse/",
+    "synapse_data/"
+  ]
+}

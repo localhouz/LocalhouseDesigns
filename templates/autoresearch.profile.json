@@ -1,0 +1,21 @@
+﻿{
+    "default_policy":  "repo_policy.example.json",
+    "default_objective":  "objective.repo.json",
+    "default_suite":  "suite.example.json",
+    "default_workspace_mode":  "in_place",
+    "cleanup_keep_runs":  20,
+    "agent_default_command":  "objective",
+    "agent_resume_batches":  true,
+    "agent_enforce_gated_mode":  true,
+    "agent_workspace_mode":  "scratch",
+    "auto_bootstrap_templates":  true,
+    "auto_sync_templates":  false,
+    "require_allow_token_for_promotion":  true,
+    "objective_aliases":  {
+                              "repo":  "objective.repo.json",
+                              "smoke":  "objective.smoke.json"
+                          },
+    "suite_aliases":  {
+                          "main":  "suite.example.json"
+                      }
+}

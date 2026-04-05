@@ -1,0 +1,7 @@
+﻿{
+    "name":  "default_suite",
+    "description":  "Default suite for LocalhouseDesigns. Add more objectives as this repo\u0027s autoresearch matures.",
+    "objectives":  [
+                       "objective.repo.json"
+                   ]
+}

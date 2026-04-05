@@ -1,12 +1,10 @@
 <div class="lab-page">
 
-  <!-- Canvas always in DOM so ViewChild resolves immediately -->
   <canvas #canvas class="lab-canvas"
-    [class.lab-canvas--hovering]="hovered() !== null"
+    [class.lab-canvas--hovering]="hovered() !== null && !focused()"
     (click)="handleClick()">
   </canvas>
 
-  <!-- Loading overlay -->
   @if (loading()) {
     <div class="lab-overlay lab-loading">
       <div class="lab-loading__dots">
@@ -16,7 +14,6 @@
     </div>
   }
 
-  <!-- Error state -->
   @if (!loading() && error()) {
     <div class="lab-overlay lab-error">
       <p class="lab-error__code">// error</p>
@@ -24,23 +21,52 @@
     </div>
   }
 
-  <!-- Live UI (shown once data is loaded) -->
   @if (!loading() && !error()) {
 
     <!-- Hover tooltip -->
-    @if (hovered(); as planet) {
+    @if (hovered() && !focused(); as planet) {
       <div class="planet-tip"
         [style.left.px]="tipPos().x + 18"
         [style.top.px]="tipPos().y - 72">
-        <div class="planet-tip__name">{{ planet.name }}</div>
-        <div class="planet-tip__row">{{ planet.lang }}</div>
-        <div class="planet-tip__row">{{ planet.commits | number }} commits</div>
-        <div class="planet-tip__row">Updated {{ planet.updated }}</div>
+        <div class="planet-tip__name">{{ hovered()!.name }}</div>
+        <div class="planet-tip__row">{{ hovered()!.lang }}</div>
+        <div class="planet-tip__row">{{ hovered()!.commits | number }} commits</div>
+        <div class="planet-tip__row">Updated {{ hovered()!.updated }}</div>
+        <div class="planet-tip__hint">click to explore</div>
       </div>
     }
 
-    <!-- HUD — top left -->
-    <div class="lab-hud">
+    <!-- Focus panel (fly-to) -->
+    @if (focused(); as planet) {
+      <div class="planet-panel">
+        <button class="planet-panel__close" (click)="closeFocus()">✕ back</button>
+        <div class="planet-panel__eyebrow">// repo</div>
+        <div class="planet-panel__name">{{ planet.name }}</div>
+        @if (planet.description) {
+          <p class="planet-panel__desc">{{ planet.description }}</p>
+        }
+        <div class="planet-panel__stats">
+          <div class="planet-panel__stat">
+            <span class="planet-panel__stat-val">{{ planet.commits | number }}</span>
+            <span class="planet-panel__stat-label">commits</span>
+          </div>
+          <div class="planet-panel__stat">
+            <span class="planet-panel__stat-val">{{ planet.lang }}</span>
+            <span class="planet-panel__stat-label">primary language</span>
+          </div>
+          <div class="planet-panel__stat">
+            <span class="planet-panel__stat-val">{{ planet.updated }}</span>
+            <span class="planet-panel__stat-label">last updated</span>
+          </div>
+        </div>
+        <a [href]="planet.url" target="_blank" rel="noopener" class="planet-panel__btn">
+          View on GitHub →
+        </a>
+      </div>
+    }
+
+    <!-- HUD -->
+    <div class="lab-hud" [class.lab-hud--hidden]="focused()">
       <div class="lab-hud__eyebrow">// WebGL · Three.js · Live GitHub data</div>
       <div class="lab-hud__title">Commit Solar System</div>
       <div class="lab-hud__stats">
@@ -50,8 +76,8 @@
       </div>
     </div>
 
-    <!-- Legend — bottom left -->
-    <div class="lab-legend">
+    <!-- Legend -->
+    <div class="lab-legend" [class.lab-legend--hidden]="focused()">
       <div class="lab-legend__row">
         <span class="lab-legend__sun"></span>
         <span>You (the sun)</span>
@@ -62,9 +88,9 @@
       </div>
       <div class="lab-legend__row">
         <span class="lab-legend__belt"></span>
-        <span>Contribution activity (asteroid belt)</span>
+        <span>365-day contribution history</span>
       </div>
-      <div class="lab-legend__hint">Drag to orbit · Scroll to zoom · Click a planet to open repo</div>
+      <div class="lab-legend__hint">Drag · Scroll · Click a planet</div>
     </div>
 
   }

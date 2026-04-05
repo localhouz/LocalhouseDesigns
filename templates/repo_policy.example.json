@@ -1,0 +1,16 @@
+﻿{
+    "name":  "portable_repo_policy",
+    "description":  "Auto-generated editable policy for LocalhouseDesigns. Narrow or expand these paths to match the repo.",
+    "allowed_paths":  [
+                          "src/",
+                          "README.md",
+                          "package.json",
+                          "templates/",
+                          ".github/workflows/portable-autoresearch-tests.yml",
+                          ".github/workflows/portable-autoresearch-trusted-gate.yml"
+                      ],
+    "blocked_paths":  [
+                          ".git/",
+                          ".autoresearch/"
+                      ]
+}

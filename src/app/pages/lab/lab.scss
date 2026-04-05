@@ -207,6 +207,119 @@
   }
 }
 
+// ── Focus panel ───────────────────────────────────────────────────────────────
+.planet-panel {
+  position: absolute;
+  top: 50%;
+  right: 2.5rem;
+  transform: translateY(-50%);
+  z-index: 20;
+  width: 280px;
+  background: rgba(2,4,10,0.92);
+  border: 1px solid rgba(255,60,0,0.25);
+  backdrop-filter: blur(12px);
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  animation: fadeIn 0.4s ease;
+
+  &__close {
+    align-self: flex-start;
+    background: none;
+    border: 1px solid rgba(240,240,245,0.15);
+    color: rgba(240,240,245,0.4);
+    font-family: var(--font-mono);
+    font-size: 0.65rem;
+    letter-spacing: 0.1em;
+    padding: 0.3rem 0.75rem;
+    cursor: pointer;
+    transition: color 0.2s, border-color 0.2s;
+    &:hover { color: #fff; border-color: rgba(240,240,245,0.4); }
+  }
+
+  &__eyebrow {
+    font-family: var(--font-mono);
+    font-size: 0.65rem;
+    letter-spacing: 0.15em;
+    color: #ff3c00;
+    margin-top: -0.5rem;
+  }
+
+  &__name {
+    font-family: var(--font-sans);
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: rgba(240,240,245,0.95);
+    letter-spacing: -0.02em;
+    line-height: 1.2;
+    word-break: break-all;
+  }
+
+  &__desc {
+    font-size: 0.82rem;
+    color: rgba(240,240,245,0.5);
+    line-height: 1.7;
+  }
+
+  &__stats {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    padding: 1rem 0;
+    border-top: 1px solid rgba(240,240,245,0.07);
+    border-bottom: 1px solid rgba(240,240,245,0.07);
+  }
+
+  &__stat {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+  }
+
+  &__stat-val {
+    font-family: var(--font-mono);
+    font-size: 0.85rem;
+    color: #ff3c00;
+    font-weight: 700;
+  }
+
+  &__stat-label {
+    font-family: var(--font-mono);
+    font-size: 0.6rem;
+    letter-spacing: 0.08em;
+    color: rgba(240,240,245,0.25);
+    text-transform: uppercase;
+  }
+
+  &__btn {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.65rem 1rem;
+    border: 1px solid rgba(255,60,0,0.5);
+    color: #ff3c00;
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.08em;
+    text-decoration: none;
+    transition: background 0.2s, color 0.2s;
+    &:hover { background: #ff3c00; color: #fff; }
+  }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-50%) translateX(12px); }
+  to   { opacity: 1; transform: translateY(-50%) translateX(0); }
+}
+
+// ── HUD / legend hide when focused ────────────────────────────────────────────
+.lab-hud--hidden,
+.lab-legend--hidden {
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s;
+}
+
 // ── Mobile ────────────────────────────────────────────────────────────────────
 @media (max-width: 640px) {
   .lab-hud { top: 5rem; left: 1rem; }
