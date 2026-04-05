@@ -13,6 +13,10 @@
     background: rgba(245, 245, 240, 0.96);
     backdrop-filter: blur(12px);
     border-color: var(--border);
+
+    .nav__logo-text { color: var(--fg); }
+    .nav__links a { color: rgba(10,10,18,0.55); &:hover, &.active { color: var(--fg); } }
+    .nav__burger span { background: var(--fg); }
   }
 
   &__inner {
@@ -50,7 +54,7 @@
     font-size: 0.9rem;
     font-weight: 600;
     letter-spacing: 0.02em;
-    color: var(--fg);
+    color: rgba(240,240,245,0.9);
 
     em {
       font-style: normal;
@@ -69,11 +73,11 @@
       font-size: 0.75rem;
       letter-spacing: 0.12em;
       text-transform: uppercase;
-      color: rgba(10,10,18,0.55);
+      color: rgba(240,240,245,0.6);
       transition: color 0.2s;
       text-decoration: none;
 
-      &:hover, &.active { color: var(--fg); }
+      &:hover, &.active { color: #fff; }
     }
   }
 
@@ -102,7 +106,7 @@
       display: block;
       width: 24px;
       height: 1px;
-      background: var(--fg);
+      background: rgba(240,240,245,0.9);
       transition: transform 0.2s, opacity 0.2s;
     }
 
