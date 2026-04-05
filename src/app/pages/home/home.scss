@@ -51,6 +51,40 @@
     flex-wrap: wrap;
   }
 
+  &__modes {
+    display: flex;
+    gap: 2.5rem;
+    margin-top: 2.5rem;
+    padding-top: 2.5rem;
+    border-top: 1px solid rgba(240,240,245,0.08);
+    flex-wrap: wrap;
+  }
+
+  &__mode {
+    flex: 1;
+    min-width: 180px;
+
+    p {
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      letter-spacing: 0.05em;
+      color: rgba(240,240,245,0.3);
+      line-height: 1.6;
+      margin: 0;
+    }
+
+    &--edge &-label { color: var(--accent); }
+  }
+
+  &__mode-label {
+    font-family: var(--font-mono);
+    font-size: 0.65rem;
+    letter-spacing: 0.15em;
+    color: rgba(240,240,245,0.25);
+    display: block;
+    margin-bottom: 0.4rem;
+  }
+
   &__scroll {
     position: absolute;
     bottom: 2.5rem;

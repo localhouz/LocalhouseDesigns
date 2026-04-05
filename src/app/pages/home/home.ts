@@ -33,10 +33,10 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
   ];
 
   services = [
-    { num: '01', title: 'Angular Development', desc: 'Standalone components, signals, lazy loading. Modern Angular done right — fast, maintainable, and scalable.' },
-    { num: '02', title: 'SEO & GEO', desc: 'Structured data, FAQPage schemas, Product markup, AI-ready content. Built to rank in search and AI overviews.' },
-    { num: '03', title: 'Performance & Deploy', desc: 'Netlify pipelines, build optimization, Core Web Vitals. Your site loads fast or we fix it.' },
-    { num: '04', title: 'Design Systems', desc: 'Tokens, typography, color. Consistent, bold, on-brand visual systems that scale.' },
+    { num: '01', title: 'Angular Development', desc: 'Standalone components, signals, lazy loading. Modern Angular done right — fast, maintainable, and ready for scale.' },
+    { num: '02', title: 'SEO & GEO', desc: 'Structured data, FAQPage schemas, Product markup, AI-ready content. Built to rank in search and AI overviews alike.' },
+    { num: '03', title: 'WebGL & Three.js', desc: 'Custom GLSL shaders, particle systems, 3D experiences. Browser as canvas — from subtle texture to full generative art.' },
+    { num: '04', title: 'Performance & Deploy', desc: 'Netlify pipelines, build optimization, Core Web Vitals. Enterprise-grade or experimental — it ships fast either way.' },
   ];
 
   featuredProjects = [
