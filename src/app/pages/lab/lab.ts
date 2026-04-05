@@ -327,9 +327,9 @@ export class LabComponent implements OnInit, AfterViewInit, OnDestroy {
       const langName  = repo.primaryLanguage?.name ?? '';
       const colHex    = LANG_COLOR[langName] ?? DEFAULT_COLOR;
       const radius    = 0.18 + (commits / maxCommits) * 0.60;
-      const orbitR    = 8 + i * 3.2;
+      const orbitR    = 5 + i * 1.8;
       const daysSince = (now - new Date(repo.updatedAt).getTime()) / 86_400_000;
-      const speed     = Math.max(0.00015, 0.0028 / Math.pow(Math.max(daysSince, 1), 0.4));
+      const speed     = Math.max(0.00008, 0.0012 / Math.pow(Math.max(daysSince, 1), 0.4));
       const startAngle = Math.random() * Math.PI * 2;
 
       // Orbit ring
