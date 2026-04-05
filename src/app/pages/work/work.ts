@@ -38,7 +38,7 @@ export class WorkComponent implements OnInit {
     {
       title: 'NorCal Sauce Worx',
       subtitle: 'Co-packing brand site',
-      url: 'https://norcalsauceworx.netlify.app',
+      url: 'https://norcalsauceworx.com',
       bg: 'linear-gradient(135deg, #1a0a00 0%, #3d1a00 100%)',
       outcome: 'Quote wizard, Netlify Forms, FAQPage + HowTo + Service schemas, sitemap, full GEO coverage.',
       stack: ['Angular 21', 'SCSS', 'Netlify Forms', 'JSON-LD', 'Schema.org'],
@@ -51,7 +51,7 @@ export class WorkComponent implements OnInit {
     {
       title: 'Prescribed Burn Sauces',
       subtitle: 'E-commerce brand site',
-      url: 'https://www.prescribedburnsauces.com',
+      url: 'https://prescribedburnsauces.com',
       bg: 'linear-gradient(135deg, #1a0000 0%, #3d0000 100%)',
       outcome: 'WebGL hero, 10 product schemas, GA4, Google Search Console verified, 26 rich result items all valid.',
       stack: ['Angular 21', 'Three.js', 'GA4', 'Schema.org', 'Netlify DNS'],

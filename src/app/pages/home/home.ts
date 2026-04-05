@@ -43,7 +43,7 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
     {
       title: 'NorCal Sauce Worx',
       desc: 'Full Angular rebuild — quote wizard, co-packing process, FAQPage + HowTo schemas, Netlify Forms.',
-      url: 'https://norcalsauceworx.netlify.app',
+      url: 'https://norcalsauceworx.com',
       bg: 'linear-gradient(135deg, #1a0a00 0%, #3d1a00 100%)',
       tag: 'Angular · Netlify',
       stack: ['Angular 21', 'SCSS', 'Netlify Forms', 'JSON-LD']
@@ -51,7 +51,7 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
     {
       title: 'Prescribed Burn Sauces',
       desc: 'Brand site with WebGL, full product schemas, GA4, Google Search Console. 26 rich result items — all valid.',
-      url: 'https://www.prescribedburnsauces.com',
+      url: 'https://prescribedburnsauces.com',
       bg: 'linear-gradient(135deg, #1a0000 0%, #3d0000 100%)',
       tag: 'Angular · Three.js',
       stack: ['Angular 21', 'Three.js', 'GA4', 'Schema.org']
