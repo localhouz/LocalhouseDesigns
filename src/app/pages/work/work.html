@@ -10,10 +10,21 @@
   <!-- Case studies -->
   <section class="case-studies section container">
     @for (project of caseStudies; track project.title) {
-      <a [href]="project.url" target="_blank" rel="noopener" class="case-study">
+      <div class="case-study" [class.case-study--soon]="project.comingSoon"
+        [attr.role]="project.comingSoon ? null : 'link'"
+        (click)="!project.comingSoon && openProject(project.url)">
         <div class="case-study__visual">
-          <iframe [src]="safeUrl(project.url)" frameborder="0" scrolling="no" loading="lazy" tabindex="-1" aria-hidden="true"></iframe>
+          @if (!project.comingSoon && project.previewUrl) {
+            <iframe [src]="safeUrl(project.previewUrl)" frameborder="0" scrolling="no" loading="lazy" tabindex="-1" aria-hidden="true"></iframe>
+          } @else {
+            <div class="case-study__placeholder">
+              <span class="case-study__placeholder-label">// screenshot pending</span>
+            </div>
+          }
           <div class="case-study__tag">{{ project.subtitle }}</div>
+          @if (project.comingSoon) {
+            <div class="case-study__soon-badge">Enterprise</div>
+          }
         </div>
         <div class="case-study__body">
           <h2>{{ project.title }}</h2>
@@ -32,7 +43,7 @@
             }
           </div>
         </div>
-      </a>
+      </div>
     }
   </section>
 

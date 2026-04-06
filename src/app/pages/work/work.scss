@@ -29,8 +29,49 @@
   background: var(--bg);
   text-decoration: none;
   transition: background 0.2s;
+  cursor: pointer;
 
   &:hover { background: rgba(255,60,0,0.03); }
+
+  &--soon { cursor: default; }
+  &--soon:hover { background: var(--bg); }
+
+  &__placeholder {
+    width: 100%;
+    height: 100%;
+    min-height: 320px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: repeating-linear-gradient(
+      -45deg,
+      var(--surface),
+      var(--surface) 8px,
+      var(--bg) 8px,
+      var(--bg) 16px
+    );
+  }
+
+  &__placeholder-label {
+    font-family: var(--font-mono);
+    font-size: 0.65rem;
+    letter-spacing: 0.15em;
+    color: rgba(10,10,18,0.25);
+    text-transform: uppercase;
+  }
+
+  &__soon-badge {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    font-family: var(--font-mono);
+    font-size: 0.6rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    background: var(--accent2);
+    color: #fff;
+    padding: 0.25rem 0.6rem;
+  }
 
   &__visual {
     min-height: 320px;

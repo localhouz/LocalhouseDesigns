@@ -39,28 +39,58 @@ export class WorkComponent implements OnInit {
       title: 'NorCal Sauce Worx',
       subtitle: 'Co-packing brand site',
       url: 'https://norcalsauceworx.com',
-      bg: 'linear-gradient(135deg, #1a0a00 0%, #3d1a00 100%)',
+      previewUrl: 'https://norcalsauceworx.com',
       outcome: 'Quote wizard, Netlify Forms, FAQPage + HowTo + Service schemas, sitemap, full GEO coverage.',
       stack: ['Angular 21', 'SCSS', 'Netlify Forms', 'JSON-LD', 'Schema.org'],
       metrics: [
         { val: '8', label: 'FAQ schemas' },
         { val: '5', label: 'Service schemas' },
         { val: '100%', label: 'Form uptime' },
-      ]
+      ],
+      comingSoon: false,
     },
     {
       title: 'Prescribed Burn Sauces',
       subtitle: 'E-commerce brand site',
       url: 'https://prescribedburnsauces.com',
-      bg: 'linear-gradient(135deg, #1a0000 0%, #3d0000 100%)',
+      previewUrl: 'https://prescribedburnsauces.com',
       outcome: 'WebGL hero, 10 product schemas, GA4, Google Search Console verified, 26 rich result items all valid.',
       stack: ['Angular 21', 'Three.js', 'GA4', 'Schema.org', 'Netlify DNS'],
       metrics: [
         { val: '26', label: 'Rich results' },
         { val: '15', label: 'FAQ entries' },
         { val: '10', label: 'Product schemas' },
-      ]
-    }
+      ],
+      comingSoon: false,
+    },
+    {
+      title: 'SyteLine Mobile',
+      subtitle: 'Enterprise ERP mobile app',
+      url: '',
+      previewUrl: '',
+      outcome: 'Custom mobile interface for Infor SyteLine ERP. Built to handle real manufacturing floor workflows — production orders, BOM lookups, inventory transactions — from a handheld device.',
+      stack: ['Mobile', 'ERP Integration', 'Infor SyteLine', 'Workflow Automation'],
+      metrics: [
+        { val: 'ERP', label: 'Integration' },
+        { val: 'Mobile', label: 'First' },
+        { val: 'Live', label: 'Floor data' },
+      ],
+      comingSoon: true,
+    },
+    {
+      title: 'Operations Dashboard',
+      subtitle: 'Internal enterprise tooling',
+      url: '',
+      previewUrl: '',
+      outcome: 'Full-stack operations dashboard built for internal manufacturing management. Custom BOM programs, workflow automation, and real-time production data. Screenshot pending environment spin-up.',
+      stack: ['Angular', 'REST API', 'Workflow Engine', 'BOM Systems', 'Data Viz'],
+      metrics: [
+        { val: 'BOM', label: 'Automation' },
+        { val: 'Real-time', label: 'Data' },
+        { val: 'Custom', label: 'Workflows' },
+      ],
+      comingSoon: true,
+    },
   ];
 
   ngOnInit() {
@@ -95,6 +125,10 @@ export class WorkComponent implements OnInit {
         },
         error: () => this.loading.set(false)
       });
+  }
+
+  openProject(url: string) {
+    if (url) window.open(url, '_blank', 'noopener');
   }
 
   formatDate(iso: string): string {

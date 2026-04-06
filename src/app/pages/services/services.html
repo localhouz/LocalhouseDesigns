@@ -14,11 +14,78 @@
           <h2>{{ service.title }}</h2>
           <p>{{ service.desc }}</p>
         </div>
-        <ul class="service-row__items">
-          @for (item of service.items; track item) {
-            <li>{{ item }}</li>
+        <div class="service-row__right">
+          <ul class="service-row__items">
+            @for (item of service.items; track item) {
+              <li>{{ item }}</li>
+            }
+          </ul>
+
+          <!-- Demo: Live product card -->
+          @if (service.demo === 'product') {
+            <div class="service-demo">
+              <div class="service-demo__label">// try it · type your brand</div>
+              <div class="service-demo__inputs">
+                <input class="service-demo__input" type="text" placeholder="Brand name"
+                  [value]="productName()"
+                  (input)="productName.set($any($event.target).value)" maxlength="32" />
+                <input class="service-demo__input" type="text" placeholder="Tagline"
+                  [value]="productTagline()"
+                  (input)="productTagline.set($any($event.target).value)" maxlength="48" />
+              </div>
+              <div class="product-card-preview">
+                <div class="product-card-preview__accent"></div>
+                <div class="product-card-preview__body">
+                  <span class="product-card-preview__eyebrow">// featured product</span>
+                  <div class="product-card-preview__name">{{ productName() || 'Brand Name' }}</div>
+                  <div class="product-card-preview__tag">{{ productTagline() || 'Your tagline here.' }}</div>
+                  <div class="product-card-preview__cta">Shop Now →</div>
+                </div>
+              </div>
+            </div>
           }
-        </ul>
+
+          <!-- Demo: Google SERP preview -->
+          @if (service.demo === 'serp') {
+            <div class="service-demo">
+              <div class="service-demo__label">// try it · see your Google result</div>
+              <div class="service-demo__inputs">
+                <input class="service-demo__input" type="text" placeholder="Business name"
+                  [value]="serpBusiness()"
+                  (input)="serpBusiness.set($any($event.target).value)" maxlength="60" />
+                <input class="service-demo__input" type="text" placeholder="yourdomain.com"
+                  [value]="serpUrl()"
+                  (input)="serpUrl.set($any($event.target).value)" maxlength="60" />
+                <input class="service-demo__input" type="text" placeholder="Short description"
+                  [value]="serpDesc()"
+                  (input)="serpDesc.set($any($event.target).value)" maxlength="160" />
+              </div>
+              <div class="serp-preview">
+                <div class="serp-preview__site">
+                  <span class="serp-preview__favicon">G</span>
+                  <div>
+                    <div class="serp-preview__domain">{{ serpDisplay() }}</div>
+                    <div class="serp-preview__breadcrumb">{{ serpDisplay() }} › home</div>
+                  </div>
+                </div>
+                <div class="serp-preview__title">{{ serpTitle() }}</div>
+                <div class="serp-preview__desc">{{ serpSnippet() }}</div>
+              </div>
+            </div>
+          }
+
+          <!-- Demo: 3D card (WebGL) -->
+          @if (service.demo === 'webgl') {
+            <div class="service-demo">
+              <div class="service-demo__label">// live WebGL · move your mouse</div>
+              <canvas #miniCanvas class="service-demo__canvas"></canvas>
+              <div class="service-demo__note">
+                Real-time lighting, material shaders, mouse parallax — running in your browser right now.
+              </div>
+            </div>
+          }
+
+        </div>
       </div>
     }
   </section>

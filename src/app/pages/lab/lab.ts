@@ -152,7 +152,7 @@ const PLANET_FRAG = /* glsl */`
 
     // Diffuse lighting from sun
     vec3 toSun = normalize(uSunPos - vWorldPos);
-    float diff = max(dot(vNormal, toSun), 0.0) * 0.5 + 0.65;
+    float diff = max(dot(vNormal, toSun), 0.0) * 0.3 + 0.8;
     col *= diff;
 
     // Fresnel rim
@@ -401,8 +401,8 @@ export class LabComponent implements OnInit, AfterViewInit, OnDestroy {
         }),
       ));
     }
-    this.scene.add(new THREE.PointLight(0xfff0cc, 6, 0, 1.3));
-    this.scene.add(new THREE.AmbientLight(0x4466aa, 6.0));
+    this.scene.add(new THREE.PointLight(0xfff0cc, 4, 0, 1.3));
+    this.scene.add(new THREE.AmbientLight(0x6688cc, 8.0));
   }
 
   private buildAsteroidBelt(weeks: Array<{ contributionDays: ContribDay[] }>) {
