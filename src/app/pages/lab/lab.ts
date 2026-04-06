@@ -152,7 +152,7 @@ const PLANET_FRAG = /* glsl */`
 
     // Diffuse lighting from sun
     vec3 toSun = normalize(uSunPos - vWorldPos);
-    float diff = max(dot(vNormal, toSun), 0.0) * 0.8 + 0.2;
+    float diff = max(dot(vNormal, toSun), 0.0) * 0.7 + 0.45;
     col *= diff;
 
     // Fresnel rim
@@ -337,7 +337,7 @@ export class LabComponent implements OnInit, AfterViewInit, OnDestroy {
 
     this.composer = new EffectComposer(this.renderer);
     this.composer.addPass(new RenderPass(this.scene, this.camera));
-    this.composer.addPass(new UnrealBloomPass(new THREE.Vector2(w, h), 0.5, 0.3, 0.85));
+    this.composer.addPass(new UnrealBloomPass(new THREE.Vector2(w, h), 0.9, 0.4, 0.6));
   }
 
   // ── Scene ─────────────────────────────────────────────────────────────────────
@@ -401,8 +401,8 @@ export class LabComponent implements OnInit, AfterViewInit, OnDestroy {
         }),
       ));
     }
-    this.scene.add(new THREE.PointLight(0xfff0cc, 4, 0, 1.5));
-    this.scene.add(new THREE.AmbientLight(0x0a1020, 1.5));
+    this.scene.add(new THREE.PointLight(0xfff0cc, 8, 0, 1.3));
+    this.scene.add(new THREE.AmbientLight(0x1a2a44, 3.0));
   }
 
   private buildAsteroidBelt(weeks: Array<{ contributionDays: ContribDay[] }>) {
