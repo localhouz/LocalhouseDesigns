@@ -43,9 +43,9 @@ export class ServicesComponent implements OnInit, AfterViewInit, OnDestroy {
     },
     {
       num: '04',
-      title: 'Enterprise & Operations',
-      desc: 'ERP integrations, mobile apps for the manufacturing floor, custom BOM programs, workflow automation, and internal dashboards. We speak the language of operations — not just the web.',
-      items: ['ERP integration (SyteLine)', 'Mobile floor apps', 'BOM systems', 'Workflow automation', 'Internal dashboards', 'Data pipelines'],
+      title: 'Enterprise & ERP',
+      desc: 'Real experience inside Business Central, SAP, and Infor SyteLine — not as a consultant reading documentation, but as an end user who felt the gaps firsthand. That means we know where the data lives, what operations teams actually need access to, and how to build tooling that fits the reality of manufacturing and supply chain work without fighting the system it needs to talk to.',
+      items: ['Microsoft Business Central', 'SAP integration', 'Infor SyteLine', 'Mobile floor apps', 'BOM systems & automation', 'Internal ops dashboards'],
       demo: null,
     },
     {

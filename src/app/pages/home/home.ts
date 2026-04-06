@@ -29,14 +29,15 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
 
   marqueeItems = [
     'Angular 21', 'Three.js', 'SEO/GEO', 'Netlify', 'TypeScript',
-    'Structured Data', 'Schema.org', 'Performance', 'WebGL', 'Small Batch Web'
+    'Business Central', 'SAP', 'Infor SyteLine', 'ERP Integration',
+    'Structured Data', 'Schema.org', 'WebGL', 'Workflow Automation'
   ];
 
   services = [
     { num: '01', title: 'Angular Development', desc: 'Standalone components, signals, lazy loading. Modern Angular done right — fast, maintainable, and ready for scale.' },
-    { num: '02', title: 'SEO & GEO', desc: 'Structured data, FAQPage schemas, Product markup, AI-ready content. Built to rank in search and AI overviews alike.' },
-    { num: '03', title: 'WebGL & Three.js', desc: 'Custom GLSL shaders, particle systems, 3D experiences. Browser as canvas — from subtle texture to full generative art.' },
-    { num: '04', title: 'Performance & Deploy', desc: 'Netlify pipelines, build optimization, Core Web Vitals. Enterprise-grade or experimental — it ships fast either way.' },
+    { num: '02', title: 'Enterprise & ERP', desc: 'Business Central, SAP, Infor SyteLine — custom integrations, internal tooling, mobile floor apps, and workflow automation built by someone who actually used these systems.' },
+    { num: '03', title: 'SEO & GEO', desc: 'Structured data, FAQPage schemas, Product markup, AI-ready content. Built to rank in search and AI overviews alike.' },
+    { num: '04', title: 'WebGL & Three.js', desc: 'Custom GLSL shaders, particle systems, 3D experiences. Browser as canvas — from subtle texture to full generative art.' },
   ];
 
   featuredProjects = [
@@ -73,7 +74,7 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
           description: 'Boutique web studio specializing in Angular development, SEO/GEO optimization, and bold digital experiences.',
           url: base,
           sameAs: ['https://github.com/localhouz'],
-          knowsAbout: ['Angular', 'TypeScript', 'SEO', 'GEO', 'Web Development', 'Netlify', 'Three.js', 'Structured Data'],
+          knowsAbout: ['Angular', 'TypeScript', 'SEO', 'GEO', 'Web Development', 'Netlify', 'Three.js', 'Structured Data', 'Microsoft Business Central', 'SAP', 'Infor SyteLine', 'ERP Integration', 'Workflow Automation'],
           areaServed: { '@type': 'Country', name: 'United States' }
         }
       ]
