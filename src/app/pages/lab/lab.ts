@@ -229,7 +229,7 @@ export class LabComponent implements OnInit, AfterViewInit, OnDestroy {
   private flyFrom:     THREE.Vector3 | null = null;
   private flyProgress  = 1.0;
   private isFocused    = false;
-  private homeCamPos   = new THREE.Vector3(0, 24, 48);
+  private homeCamPos   = new THREE.Vector3(0, 12, 26);
 
   private readonly INTRO_DUR = 4.0;
   private readonly CAM_FROM  = new THREE.Vector3(0, 2.5, 7);
@@ -331,7 +331,7 @@ export class LabComponent implements OnInit, AfterViewInit, OnDestroy {
     this.controls.enableDamping = true;
     this.controls.dampingFactor = 0.06;
     this.controls.minDistance = 3;
-    this.controls.maxDistance = 130;
+    this.controls.maxDistance = 80;
     this.controls.autoRotate = true;
     this.controls.autoRotateSpeed = 0.12;
 
@@ -442,8 +442,8 @@ export class LabComponent implements OnInit, AfterViewInit, OnDestroy {
       const langName   = repo.primaryLanguage?.name ?? '';
       const colHex     = LANG_COLOR[langName] ?? DEFAULT_COLOR;
       const atmoHex    = ATMO_COLOR[langName] ?? 0x334488;
-      const radius     = 0.22 + (commits / maxCommits) * 0.55;
-      const orbitR     = 5.5 + i * 1.9;
+      const radius     = 0.35 + (commits / maxCommits) * 0.7;
+      const orbitR     = 4.5 + i * 1.5;
       const daysSince  = (now - new Date(repo.updatedAt).getTime()) / 86_400_000;
       const ageDays    = (now - new Date(repo.createdAt).getTime()) / 86_400_000;
       const speed      = Math.max(0.00008, 0.0012 / Math.pow(Math.max(daysSince, 1), 0.4));
