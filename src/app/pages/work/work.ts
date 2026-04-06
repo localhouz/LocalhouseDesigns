@@ -82,7 +82,7 @@ export class WorkComponent implements OnInit {
   inDevelopment = [
     {
       title: 'SyteLine Mobile',
-      desc: 'After 18 months deep inside Infor SyteLine, a pattern became clear: floor operators and leads were constantly blocked waiting on answers that already existed in the system. Production order status, BOM details, inventory levels — all there, all locked behind a desktop terminal no one on the floor had access to. This app closes that gap. A purpose-built mobile interface that puts real-time ERP data at the fingertips of the people who need it most — no emails to purchasing, no calls to ops, no waiting.',
+      desc: 'Using Infor SyteLine as an end user made one problem obvious: the system contained critical operational data, but access to it was still tied too heavily to the desktop. For supply chain leads, inventory managers, shippers, and team leads, that meant slower decisions, more handoffs, and too much time spent chasing routine answers. SyteLine Mobile was designed to fix that — a purpose-built mobile interface that surfaces real-time production, BOM, inventory, and shipment data for the people responsible for keeping work moving.',
       stack: ['Mobile', 'Infor SyteLine', 'ERP Integration', 'Workflow Automation'],
       status: 'In Process',
     },
