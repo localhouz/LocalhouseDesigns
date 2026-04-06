@@ -132,6 +132,94 @@
 
 .hidden { display: none; }
 
+// ── Track picker ──────────────────────────────────────────────────────────────
+.track-picker {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1px;
+  background: var(--border);
+  border: 1px solid var(--border);
+
+  @media (max-width: 600px) { grid-template-columns: 1fr; }
+}
+
+.track-btn {
+  background: var(--bg);
+  border: none;
+  padding: 1.5rem 1.75rem;
+  text-align: left;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  transition: background 0.15s;
+
+  &:hover { background: rgba(255,60,0,0.04); }
+
+  &--active {
+    background: rgba(255,60,0,0.06);
+    outline: 2px solid var(--accent);
+    outline-offset: -2px;
+  }
+
+  &__title {
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: var(--fg);
+  }
+
+  &__sub {
+    font-family: var(--font-mono);
+    font-size: 0.65rem;
+    letter-spacing: 0.06em;
+    color: rgba(10,10,18,0.45);
+    line-height: 1.5;
+  }
+}
+
+// ── Scope / timeline radio picker ─────────────────────────────────────────────
+.scope-picker {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 1px;
+  background: var(--border);
+  border: 1px solid var(--border);
+
+  input[type="radio"] { display: none; }
+}
+
+.scope-opt {
+  background: var(--bg);
+  padding: 1.1rem 1.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  cursor: pointer;
+  transition: background 0.15s;
+
+  &:hover { background: rgba(255,60,0,0.04); }
+
+  &--active {
+    background: rgba(255,60,0,0.06);
+    outline: 2px solid var(--accent);
+    outline-offset: -2px;
+  }
+
+  &__title {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--fg);
+  }
+
+  &__hint {
+    font-family: var(--font-mono);
+    font-size: 0.63rem;
+    letter-spacing: 0.06em;
+    color: rgba(10,10,18,0.45);
+    line-height: 1.5;
+  }
+}
+
 button[type="submit"] {
   grid-column: 1 / -1;
   justify-self: start;

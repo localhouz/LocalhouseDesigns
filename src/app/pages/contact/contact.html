@@ -3,7 +3,7 @@
   <div class="page-header container">
     <p class="label">Get in touch</p>
     <h1>Let's build<br><em>something.</em></h1>
-    <p class="page-header__sub">Tell us what you're working on. No pitch decks, no NDAs — just a conversation.</p>
+    <p class="page-header__sub">Tell us what you're working on. No pitch decks — just a conversation.</p>
   </div>
 
   <section class="contact-body section container">
@@ -30,7 +30,7 @@
         <div class="contact-info__stack">
           <span class="contact-info__label">Stack</span>
           <div class="contact-info__tags">
-            @for (tag of ['Angular', 'TypeScript', 'SCSS', 'Three.js', 'Netlify', 'JSON-LD']; track tag) {
+            @for (tag of ['Angular', 'TypeScript', 'SCSS', 'Three.js', 'Netlify', 'Business Central', 'SAP', 'SyteLine']; track tag) {
               <span>{{ tag }}</span>
             }
           </div>
@@ -49,41 +49,139 @@
           class="contact-form"
         >
           <input type="hidden" name="form-name" value="localhouse-contact">
+          <input type="hidden" name="track" [value]="track()">
           <p class="hidden"><label>Don't fill this out: <input name="bot-field"></label></p>
 
+          <!-- Name + Email -->
           <div class="field">
             <label for="name">Name *</label>
             <input id="name" name="name" type="text" [(ngModel)]="name" required placeholder="Your name">
           </div>
-
           <div class="field">
             <label for="email">Email *</label>
             <input id="email" name="email" type="email" [(ngModel)]="email" required placeholder="your@email.com">
           </div>
 
-          <div class="field">
-            <label for="project">Project type</label>
-            <input id="project" name="project" type="text" [(ngModel)]="project" placeholder="New site, redesign, SEO audit...">
-          </div>
-
-          <div class="field">
-            <label for="budget">Budget range</label>
-            <select id="budget" name="budget" [(ngModel)]="budget">
-              <option value="">Select a range</option>
-              @for (opt of budgetOptions; track opt) {
-                <option [value]="opt">{{ opt }}</option>
-              }
-            </select>
-          </div>
-
+          <!-- Track selector -->
           <div class="field field--full">
-            <label for="message">Tell us more *</label>
-            <textarea id="message" name="message" [(ngModel)]="message" required rows="5" placeholder="What are you building? What's the timeline?"></textarea>
+            <label>What kind of project? *</label>
+            <div class="track-picker">
+              <button type="button" class="track-btn" [class.track-btn--active]="track() === 'design'"
+                (click)="setTrack('design')">
+                <span class="track-btn__title">Design & Web</span>
+                <span class="track-btn__sub">Angular builds, brand sites, SEO/GEO, WebGL</span>
+              </button>
+              <button type="button" class="track-btn" [class.track-btn--active]="track() === 'enterprise'"
+                (click)="setTrack('enterprise')">
+                <span class="track-btn__title">Enterprise & ERP</span>
+                <span class="track-btn__sub">Business Central, SAP, SyteLine — integrations, tooling, automation</span>
+              </button>
+            </div>
           </div>
 
-          <button type="submit" class="btn btn--filled" [disabled]="submitting()">
-            {{ submitting() ? 'Sending...' : 'Send it →' }}
-          </button>
+          <!-- Design track -->
+          @if (track() === 'design') {
+            <div class="field field--full">
+              <label>Scope *</label>
+              <div class="scope-picker">
+                @for (opt of designScopeOptions; track opt.value) {
+                  <label class="scope-opt" [class.scope-opt--active]="designScope === opt.value">
+                    <input type="radio" name="designScope" [value]="opt.value" [(ngModel)]="designScope" required>
+                    <span class="scope-opt__title">{{ opt.label }}</span>
+                    <span class="scope-opt__hint">{{ opt.hint }}</span>
+                  </label>
+                }
+              </div>
+            </div>
+
+            <div class="field">
+              <label for="hasDatabase">Database needed?</label>
+              <select id="hasDatabase" name="hasDatabase" [(ngModel)]="hasDatabase">
+                <option value="">Not sure yet</option>
+                <option value="yes">Yes</option>
+                <option value="no">No</option>
+              </select>
+            </div>
+
+            <div class="field">
+              <label for="hasCms">CMS needed?</label>
+              <select id="hasCms" name="hasCms" [(ngModel)]="hasCms">
+                <option value="">Not sure yet</option>
+                <option value="yes">Yes</option>
+                <option value="no">No</option>
+              </select>
+            </div>
+
+            <div class="field field--full">
+              <label for="budget">Budget range</label>
+              <select id="budget" name="budget" [(ngModel)]="budget">
+                <option value="">Select a range</option>
+                @for (opt of budgetOptions; track opt) {
+                  <option [value]="opt">{{ opt }}</option>
+                }
+              </select>
+            </div>
+          }
+
+          <!-- Enterprise track -->
+          @if (track() === 'enterprise') {
+            <div class="field">
+              <label for="erpSystem">ERP System</label>
+              <select id="erpSystem" name="erpSystem" [(ngModel)]="erpSystem">
+                <option value="">Select system</option>
+                @for (sys of erpSystems; track sys) {
+                  <option [value]="sys">{{ sys }}</option>
+                }
+              </select>
+            </div>
+
+            <div class="field">
+              <label for="enterpriseType">Project type</label>
+              <select id="enterpriseType" name="enterpriseType" [(ngModel)]="enterpriseType">
+                <option value="">Select type</option>
+                @for (opt of enterpriseTypes; track opt.value) {
+                  <option [value]="opt.value">{{ opt.label }}</option>
+                }
+              </select>
+            </div>
+
+            <div class="field field--full">
+              <label>Estimated timeline</label>
+              <div class="scope-picker">
+                @for (opt of timelineOptions; track opt.value) {
+                  <label class="scope-opt" [class.scope-opt--active]="timeline === opt.value">
+                    <input type="radio" name="timeline" [value]="opt.value" [(ngModel)]="timeline">
+                    <span class="scope-opt__title">{{ opt.label }}</span>
+                    <span class="scope-opt__hint">{{ opt.hint }}</span>
+                  </label>
+                }
+              </div>
+            </div>
+
+            <div class="field field--full">
+              <label for="enterpriseBudget">Budget range</label>
+              <select id="enterpriseBudget" name="enterpriseBudget" [(ngModel)]="enterpriseBudget">
+                <option value="">Select a range</option>
+                @for (opt of enterpriseBudgetOptions; track opt) {
+                  <option [value]="opt">{{ opt }}</option>
+                }
+              </select>
+            </div>
+          }
+
+          <!-- Message (always shown after track selected) -->
+          @if (track()) {
+            <div class="field field--full">
+              <label for="message">Tell us more *</label>
+              <textarea id="message" name="message" [(ngModel)]="message" required rows="5"
+                placeholder="What are you trying to solve? What does success look like?"></textarea>
+            </div>
+
+            <button type="submit" class="btn btn--filled" [disabled]="submitting()">
+              {{ submitting() ? 'Sending...' : 'Send it →' }}
+            </button>
+          }
+
         </form>
       } @else {
         <div class="contact-success">
