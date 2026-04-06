@@ -461,34 +461,39 @@ export class LabComponent implements OnInit, AfterViewInit, OnDestroy {
         new THREE.LineBasicMaterial({ color: 0x1a2a44, transparent: true, opacity: 0.3 }),
       ));
 
-      // Planet mesh — texture if custom OG image, else procedural shader
-      let planetMat: THREE.Material;
+      // Planet surface — always use OG image as texture (GitHub generates one for every repo)
+      // Blend it with the language color so the planet reads correctly from orbit distance
+      const c1 = new THREE.Color(colHex);
+      const c2 = c1.clone().offsetHSL(0.08, -0.2, -0.15);
+      const weathering = Math.min(ageDays / 365, 1.0);
+      const proceduralMat = new THREE.ShaderMaterial({
+        vertexShader:   PLANET_VERT,
+        fragmentShader: PLANET_FRAG,
+        uniforms: {
+          uTime:        { value: 0 },
+          uColor:       { value: c1 },
+          uColor2:      { value: c2.lerp(new THREE.Color(0x442211), weathering * 0.4) },
+          uTurbulence:  { value: turbulence },
+          uSunPos:      { value: new THREE.Vector3(0, 0, 0) },
+        },
+      });
+      this.planetShaders.push(proceduralMat);
+      let planetMat: THREE.Material = proceduralMat;
 
-      if (repo.usesCustomOpenGraphImage && repo.openGraphImageUrl) {
-        const tex = this.texLoader.load(repo.openGraphImageUrl);
-        tex.colorSpace = THREE.SRGBColorSpace;
-        planetMat = new THREE.MeshStandardMaterial({
-          map: tex, roughness: 0.7, metalness: 0.1,
-          emissiveMap: tex, emissive: new THREE.Color(0x111111),
-        });
-      } else {
-        // Pick a second color — slightly darker/shifted version of primary
-        const c1 = new THREE.Color(colHex);
-        const c2 = c1.clone().offsetHSL(0.08, -0.2, -0.15);
-        const weathering = Math.min(ageDays / 365, 1.0);
-        const mat = new THREE.ShaderMaterial({
-          vertexShader:   PLANET_VERT,
-          fragmentShader: PLANET_FRAG,
-          uniforms: {
-            uTime:        { value: 0 },
-            uColor:       { value: c1 },
-            uColor2:      { value: c2.lerp(new THREE.Color(0x442211), weathering * 0.4) },
-            uTurbulence:  { value: turbulence },
-            uSunPos:      { value: new THREE.Vector3(0, 0, 0) },
-          },
-        });
-        this.planetShaders.push(mat);
-        planetMat = mat;
+      if (repo.openGraphImageUrl) {
+        const tex = this.texLoader.load(repo.openGraphImageUrl,
+          // On load: swap to texture material
+          (loadedTex) => {
+            loadedTex.colorSpace = THREE.SRGBColorSpace;
+            const texMat = new THREE.MeshStandardMaterial({
+              map: loadedTex,
+              roughness: 0.75,
+              metalness: 0.05,
+            });
+            mesh.material = texMat;
+          }
+        );
+        void tex; // texture loads async, mesh starts with procedural
       }
 
       const mesh = new THREE.Mesh(new THREE.SphereGeometry(radius, 48, 48), planetMat);
