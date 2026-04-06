@@ -51,8 +51,8 @@ export class ServicesComponent implements OnInit, AfterViewInit, OnDestroy {
     {
       num: '05',
       title: 'Performance & Deploy',
-      desc: 'Netlify deployments, CI/CD pipelines, build optimization. We care about Lighthouse scores and Core Web Vitals because your users do — even if they don\'t know it.',
-      items: ['Netlify deployments', 'Build optimization', 'Image compression pipeline', 'Core Web Vitals audit', 'Custom domain & DNS', 'SSL provisioning'],
+      desc: 'Deploy your way. Netlify, custom DNS migration, serverless functions, CI/CD — frontend or backend, we handle the full stack. Lighthouse scores and Core Web Vitals aren\'t vanity metrics, they\'re what search engines and users actually experience.',
+      items: ['Netlify deployments', 'DNS migration & custom domains', 'Serverless functions', 'CI/CD pipelines', 'Core Web Vitals audit', 'SSL provisioning'],
       demo: null,
     },
     {

@@ -64,20 +64,6 @@ export class WorkComponent implements OnInit {
       comingSoon: false,
     },
     {
-      title: 'SyteLine Mobile',
-      subtitle: 'Enterprise ERP mobile app',
-      url: '',
-      previewUrl: '',
-      outcome: 'Custom mobile interface for Infor SyteLine ERP. Built to handle real manufacturing floor workflows — production orders, BOM lookups, inventory transactions — from a handheld device.',
-      stack: ['Mobile', 'ERP Integration', 'Infor SyteLine', 'Workflow Automation'],
-      metrics: [
-        { val: 'ERP', label: 'Integration' },
-        { val: 'Mobile', label: 'First' },
-        { val: 'Live', label: 'Floor data' },
-      ],
-      comingSoon: true,
-    },
-    {
       title: 'Operations Dashboard',
       subtitle: 'Internal enterprise tooling',
       url: '',
@@ -90,6 +76,15 @@ export class WorkComponent implements OnInit {
         { val: 'Custom', label: 'Workflows' },
       ],
       comingSoon: true,
+    },
+  ];
+
+  inDevelopment = [
+    {
+      title: 'SyteLine Mobile',
+      desc: 'After 18 months deep inside Infor SyteLine, a pattern became clear: floor operators and leads were constantly blocked waiting on answers that already existed in the system. Production order status, BOM details, inventory levels — all there, all locked behind a desktop terminal no one on the floor had access to. This app closes that gap. A purpose-built mobile interface that puts real-time ERP data at the fingertips of the people who need it most — no emails to purchasing, no calls to ops, no waiting.',
+      stack: ['Mobile', 'Infor SyteLine', 'ERP Integration', 'Workflow Automation'],
+      status: 'In Process',
     },
   ];
 

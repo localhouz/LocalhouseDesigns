@@ -47,6 +47,30 @@
     }
   </section>
 
+  <!-- In development -->
+  @if (inDevelopment.length) {
+    <section class="in-dev section container">
+      <p class="label">In development</p>
+      <h2 class="in-dev__heading">Built but<br><em>not yet shipped.</em></h2>
+      <div class="in-dev__grid">
+        @for (project of inDevelopment; track project.title) {
+          <div class="in-dev-card">
+            <div class="in-dev-card__header">
+              <span class="in-dev-card__status">{{ project.status }}</span>
+              <h3>{{ project.title }}</h3>
+            </div>
+            <p>{{ project.desc }}</p>
+            <div class="in-dev-card__stack">
+              @for (tech of project.stack; track tech) {
+                <span>{{ tech }}</span>
+              }
+            </div>
+          </div>
+        }
+      </div>
+    </section>
+  }
+
   <!-- GitHub repos -->
   <section class="repos section">
     <div class="container">

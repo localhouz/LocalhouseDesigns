@@ -166,6 +166,73 @@
   }
 }
 
+.in-dev {
+  &__heading {
+    font-size: clamp(2rem, 4vw, 3.5rem);
+    margin: 1.5rem 0 3rem;
+    em { font-style: normal; color: var(--accent); }
+  }
+
+  &__grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+    gap: 1px;
+    background: var(--border);
+    border: 1px solid var(--border);
+  }
+}
+
+.in-dev-card {
+  background: var(--bg);
+  padding: 2.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+
+  &__header {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+
+    h3 { font-size: 1.3rem; }
+  }
+
+  &__status {
+    font-family: var(--font-mono);
+    font-size: 0.6rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--accent2);
+    border: 1px solid rgba(124,58,237,0.35);
+    padding: 0.2rem 0.6rem;
+    width: fit-content;
+  }
+
+  p {
+    font-size: 0.9rem;
+    color: rgba(10,10,18,0.6);
+    line-height: 1.8;
+    flex: 1;
+  }
+
+  &__stack {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    padding-top: 0.75rem;
+    border-top: 1px solid var(--border);
+
+    span {
+      font-family: var(--font-mono);
+      font-size: 0.62rem;
+      letter-spacing: 0.08em;
+      color: rgba(10,10,18,0.4);
+      border: 1px solid var(--border);
+      padding: 0.2rem 0.6rem;
+    }
+  }
+}
+
 .repos {
   background: var(--mid);
 
