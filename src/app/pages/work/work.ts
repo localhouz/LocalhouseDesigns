@@ -40,6 +40,7 @@ export class WorkComponent implements OnInit {
       subtitle: 'Co-packing brand site',
       url: 'https://norcalsauceworx.com',
       previewUrl: 'https://norcalsauceworx.com',
+      imageUrl: '',
       outcome: 'Quote wizard, Netlify Forms, FAQPage + HowTo + Service schemas, sitemap, full GEO coverage.',
       stack: ['Angular 21', 'SCSS', 'Netlify Forms', 'JSON-LD', 'Schema.org'],
       metrics: [
@@ -54,6 +55,7 @@ export class WorkComponent implements OnInit {
       subtitle: 'E-commerce brand site',
       url: 'https://prescribedburnsauces.com',
       previewUrl: 'https://prescribedburnsauces.com',
+      imageUrl: '',
       outcome: 'WebGL hero, 10 product schemas, GA4, Google Search Console verified, 26 rich result items all valid.',
       stack: ['Angular 21', 'Three.js', 'GA4', 'Schema.org', 'Netlify DNS'],
       metrics: [
@@ -64,10 +66,26 @@ export class WorkComponent implements OnInit {
       comingSoon: false,
     },
     {
+      title: 'OpsSuite',
+      subtitle: 'Enterprise Excel add-in',
+      url: '',
+      previewUrl: '',
+      imageUrl: 'assets/OpsSuite.png',
+      outcome: 'Unified 7 legacy VBA add-ins into a single C# VSTO Excel ribbon — fully deployed, API-updateable without touching the client machine. Covers capacity planning, master scheduling, exception processing, louver consumption, and purchasing workflows across multiple departments.',
+      stack: ['C#', 'VSTO', '.NET Framework', 'SQL Server', 'REST API', 'Excel'],
+      metrics: [
+        { val: '7→1', label: 'Add-ins unified' },
+        { val: 'API', label: 'Remote updates' },
+        { val: 'Live', label: 'In production' },
+      ],
+      comingSoon: false,
+    },
+    {
       title: 'Operations Dashboard',
       subtitle: 'Internal enterprise tooling',
       url: '',
       previewUrl: '',
+      imageUrl: '',
       outcome: 'Full-stack operations dashboard built for internal manufacturing management. Custom BOM programs, workflow automation, and real-time production data. Screenshot pending environment spin-up.',
       stack: ['Angular', 'REST API', 'Workflow Engine', 'BOM Systems', 'Data Viz'],
       metrics: [
