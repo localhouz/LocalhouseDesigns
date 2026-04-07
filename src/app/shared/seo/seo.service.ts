@@ -17,7 +17,7 @@ export class SeoService {
   private readonly doc = inject(DOCUMENT);
 
   private readonly baseUrl = 'https://localhousedesigns.netlify.app';
-  private readonly defaultImage = `${this.baseUrl}/og-image.png`;
+  private readonly defaultImage = `${this.baseUrl}/og.png`;
 
   setPage(config: SeoConfig): void {
     const image = config.image ?? this.defaultImage;
@@ -30,6 +30,15 @@ export class SeoService {
     this.meta.updateTag({ name: 'twitter:title', content: config.title });
     this.meta.updateTag({ name: 'twitter:description', content: config.description });
     this.meta.updateTag({ name: 'twitter:image', content: image });
+
+    let canonical = this.doc.querySelector<HTMLLinkElement>('link[rel="canonical"]');
+    if (!canonical) {
+      canonical = this.doc.createElement('link');
+      canonical.setAttribute('rel', 'canonical');
+      this.doc.head.appendChild(canonical);
+    }
+    canonical.setAttribute('href', config.url);
+
     this.clearDynamicSchemas();
     for (const schema of config.schemas ?? []) {
       this.injectSchema(schema);

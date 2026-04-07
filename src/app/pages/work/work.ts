@@ -116,9 +116,11 @@ export class WorkComponent implements OnInit {
         {
           '@context': 'https://schema.org',
           '@type': 'CollectionPage',
+          '@id': `${base}/work#webpage`,
           url: `${base}/work`,
           name: 'Work | Localhouse Designs',
-          description: 'Portfolio of web development projects by Localhouse Designs.',
+          description: 'Portfolio of web development and enterprise projects by Localhouse Designs.',
+          isPartOf: { '@id': `${base}/#website` },
           breadcrumb: {
             '@type': 'BreadcrumbList',
             itemListElement: [
@@ -126,6 +128,31 @@ export class WorkComponent implements OnInit {
               { '@type': 'ListItem', position: 2, name: 'Work', item: `${base}/work` }
             ]
           }
+        },
+        {
+          '@context': 'https://schema.org',
+          '@type': 'ItemList',
+          name: 'Localhouse Designs — Featured Projects',
+          url: `${base}/work`,
+          itemListElement: [
+            {
+              '@type': 'ListItem', position: 1,
+              url: 'https://norcalsauceworx.com',
+              name: 'NorCal Sauce Worx',
+              description: 'Angular 21 co-packing brand site with quote wizard, Netlify Forms, FAQPage + HowTo + Service schemas, sitemap, and full GEO coverage.'
+            },
+            {
+              '@type': 'ListItem', position: 2,
+              url: 'https://prescribedburnsauces.com',
+              name: 'Prescribed Burn Sauces',
+              description: 'Angular 21 e-commerce brand site with WebGL hero, 10 product schemas, GA4, Google Search Console verified, 26 rich result items all valid.'
+            },
+            {
+              '@type': 'ListItem', position: 3,
+              name: 'OpsSuite',
+              description: 'C# VSTO Excel ribbon add-in unifying 7 legacy VBA add-ins. Fully deployed and API-updateable without touching client machines. Covers capacity planning, master scheduling, exception processing, and purchasing workflows.'
+            }
+          ]
         }
       ]
     });

@@ -90,6 +90,45 @@ export class ContactComponent implements OnInit {
       title: 'Contact | Localhouse Designs — Start a Project',
       description: 'Ready to build something worth finding? Get in touch with Localhouse Designs to start a web or enterprise project.',
       url: `${base}/contact`,
+      schemas: [
+        {
+          '@context': 'https://schema.org',
+          '@type': 'ContactPage',
+          '@id': `${base}/contact#webpage`,
+          url: `${base}/contact`,
+          name: 'Contact | Localhouse Designs',
+          description: 'Start a web or enterprise project with Localhouse Designs. Separate tracks for Design & Web and Enterprise & ERP.',
+          isPartOf: { '@id': `${base}/#website` },
+          breadcrumb: {
+            '@type': 'BreadcrumbList',
+            itemListElement: [
+              { '@type': 'ListItem', position: 1, name: 'Home', item: base },
+              { '@type': 'ListItem', position: 2, name: 'Contact', item: `${base}/contact` }
+            ]
+          }
+        },
+        {
+          '@context': 'https://schema.org',
+          '@type': 'FAQPage',
+          mainEntity: [
+            {
+              '@type': 'Question',
+              name: 'How do I start a project with Localhouse Designs?',
+              acceptedAnswer: { '@type': 'Answer', text: 'Fill out the contact form at localhousedesigns.netlify.app/contact. Choose either the Design & Web track (Angular SPA, brand site, full-stack) or the Enterprise & ERP track (Business Central, SAP, SyteLine integrations). Include your project scope, timeline, and budget range and expect a response within 24 hours.' }
+            },
+            {
+              '@type': 'Question',
+              name: 'What information should I include in my project inquiry?',
+              acceptedAnswer: { '@type': 'Answer', text: 'For web projects: whether you need frontend only, frontend + backend, or full-stack (including database). For enterprise projects: which ERP system (Business Central, SAP, or SyteLine), the type of work (integration, workflow automation, dashboard, mobile app), and your target timeline. Budget range helps scope the engagement correctly.' }
+            },
+            {
+              '@type': 'Question',
+              name: 'What is the typical response time for a project inquiry?',
+              acceptedAnswer: { '@type': 'Answer', text: 'Localhouse Designs responds to all project inquiries within 24 hours. Initial response includes availability, any clarifying questions, and next steps for scoping.' }
+            }
+          ]
+        }
+      ]
     });
   }
 

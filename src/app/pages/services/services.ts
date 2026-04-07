@@ -181,16 +181,62 @@ export class ServicesComponent implements OnInit, AfterViewInit, OnDestroy {
           areaServed: { '@type': 'Country', name: 'United States' },
           hasOfferCatalog: {
             '@type': 'OfferCatalog',
-            name: 'Web Development Services',
+            name: 'Web & Enterprise Development Services',
             itemListElement: [
-              { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'Angular Development' } },
-              { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'SEO & GEO Optimization' } },
-              { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'Performance & Deploy' } },
-              { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'Analytics & Tracking' } },
-              { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'Design Systems' } },
-              { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'API & Integrations' } }
+              { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'Angular Development', description: 'Standalone components, signals, lazy loading, view transitions. Angular 21 built the right way.' } },
+              { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'Enterprise & ERP Integration', description: 'Custom integrations and tooling for Microsoft Business Central, SAP, and Infor SyteLine.' } },
+              { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'SEO & GEO Optimization', description: 'JSON-LD structured data, FAQPage, Product, and Service schemas. Rank in search and AI overviews.' } },
+              { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'WebGL & Three.js', description: 'Custom GLSL shaders, particle systems, and 3D experiences built on Three.js.' } },
+              { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'Performance & Deploy', description: 'Netlify deployments, DNS migration, serverless functions, CI/CD, and Core Web Vitals optimization.' } },
+              { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'Analytics & Tracking', description: 'GA4 setup, Search Console verification, rich results validation, and conversion tracking.' } }
             ]
           }
+        },
+        {
+          '@context': 'https://schema.org',
+          '@type': 'WebPage',
+          '@id': `${base}/services#webpage`,
+          url: `${base}/services`,
+          name: 'Services | Localhouse Designs',
+          isPartOf: { '@id': `${base}/#website` },
+          breadcrumb: {
+            '@type': 'BreadcrumbList',
+            itemListElement: [
+              { '@type': 'ListItem', position: 1, name: 'Home', item: base },
+              { '@type': 'ListItem', position: 2, name: 'Services', item: `${base}/services` }
+            ]
+          }
+        },
+        {
+          '@context': 'https://schema.org',
+          '@type': 'FAQPage',
+          mainEntity: [
+            {
+              '@type': 'Question',
+              name: 'What Angular services does Localhouse Designs offer?',
+              acceptedAnswer: { '@type': 'Answer', text: 'Localhouse Designs builds Angular 21 applications using standalone components, reactive signals, lazy-loaded routes, the View Transitions API, and responsive SCSS design systems. Engagements range from brand sites and SPAs to full-stack applications with REST APIs and SQL databases.' }
+            },
+            {
+              '@type': 'Question',
+              name: 'What ERP systems does Localhouse Designs work with?',
+              acceptedAnswer: { '@type': 'Answer', text: 'Localhouse Designs has hands-on experience with Microsoft Business Central, SAP, and Infor SyteLine. Services include custom integrations, internal dashboards, workflow automation, mobile floor apps, BOM systems, and reporting tools.' }
+            },
+            {
+              '@type': 'Question',
+              name: 'Does Localhouse Designs offer SEO and GEO services?',
+              acceptedAnswer: { '@type': 'Answer', text: 'Yes. Every project includes full SEO/GEO treatment: per-page meta tags, JSON-LD structured data (FAQPage, Product, Service, BreadcrumbList), Google Search Console setup, sitemap and robots.txt, and rich results validation. GEO targeting ensures AI search engines like ChatGPT and Perplexity can accurately represent your business.' }
+            },
+            {
+              '@type': 'Question',
+              name: 'Can Localhouse Designs build WebGL experiences?',
+              acceptedAnswer: { '@type': 'Answer', text: 'Yes. Localhouse Designs builds custom Three.js scenes with GLSL shaders, particle systems, post-processing (bloom, depth of field), and InstancedMesh for high-performance 3D. Work ranges from interactive hero backgrounds to full generative art experiences.' }
+            },
+            {
+              '@type': 'Question',
+              name: 'Does Localhouse Designs handle deployment and hosting?',
+              acceptedAnswer: { '@type': 'Answer', text: 'Yes. Localhouse Designs handles the full deployment stack: Netlify configuration, SPA routing, www/non-www redirects, custom DNS migration, SSL, serverless Netlify Functions, and CI/CD pipeline setup. We handle the full stack from code to live URL.' }
+            }
+          ]
         }
       ]
     });

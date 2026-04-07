@@ -240,6 +240,24 @@ export class LabComponent implements OnInit, AfterViewInit, OnDestroy {
       title: 'Lab | Localhouse Designs — Commit Solar System',
       description: 'GitHub repos rendered as a live 3D solar system. Each planet is a real repo — texture sourced from the site preview. Built with Three.js WebGL.',
       url: `${base}/lab`,
+      schemas: [
+        {
+          '@context': 'https://schema.org',
+          '@type': 'WebPage',
+          '@id': `${base}/lab#webpage`,
+          url: `${base}/lab`,
+          name: 'Lab | Localhouse Designs — Commit Solar System',
+          description: 'GitHub repos rendered as a live 3D solar system using Three.js WebGL. Each planet represents a real repository.',
+          isPartOf: { '@id': `${base}/#website` },
+          breadcrumb: {
+            '@type': 'BreadcrumbList',
+            itemListElement: [
+              { '@type': 'ListItem', position: 1, name: 'Home', item: base },
+              { '@type': 'ListItem', position: 2, name: 'Lab', item: `${base}/lab` }
+            ]
+          }
+        }
+      ]
     });
   }
 

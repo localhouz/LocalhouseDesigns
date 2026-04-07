@@ -68,13 +68,36 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
       schemas: [
         {
           '@context': 'https://schema.org',
+          '@type': 'WebPage',
+          '@id': `${base}/#webpage`,
+          url: base,
+          name: 'Localhouse Designs | Angular · ERP · SEO/GEO — Built Different',
+          description: 'Boutique web studio specializing in Angular development, enterprise ERP integrations (Business Central, SAP, SyteLine), and performance SEO/GEO.',
+          isPartOf: { '@id': `${base}/#website` },
+          about: { '@id': `${base}/#organization` },
+          breadcrumb: {
+            '@type': 'BreadcrumbList',
+            itemListElement: [
+              { '@type': 'ListItem', position: 1, name: 'Home', item: base }
+            ]
+          }
+        },
+        {
+          '@context': 'https://schema.org',
           '@type': 'ProfessionalService',
           '@id': `${base}/#organization`,
           name: 'Localhouse Designs',
-          description: 'Boutique web studio specializing in Angular development, SEO/GEO optimization, and bold digital experiences.',
+          description: 'Boutique web studio specializing in Angular development, enterprise ERP integrations (Microsoft Business Central, SAP, Infor SyteLine), SEO/GEO structured data optimization, WebGL/Three.js experiences, and Netlify deployments.',
           url: base,
           sameAs: ['https://github.com/localhouz'],
-          knowsAbout: ['Angular', 'TypeScript', 'SEO', 'GEO', 'Web Development', 'Netlify', 'Three.js', 'Structured Data', 'Microsoft Business Central', 'SAP', 'Infor SyteLine', 'ERP Integration', 'Workflow Automation'],
+          knowsAbout: [
+            'Angular', 'TypeScript', 'SEO', 'GEO', 'Web Development', 'Netlify',
+            'Three.js', 'WebGL', 'Structured Data', 'Schema.org', 'JSON-LD',
+            'Microsoft Business Central', 'SAP', 'Infor SyteLine',
+            'ERP Integration', 'Workflow Automation', 'VSTO', 'C#',
+            'Manufacturing Operations', 'Supply Chain', 'BOM Systems',
+            'Mobile Floor Apps', 'GA4'
+          ],
           areaServed: { '@type': 'Country', name: 'United States' }
         }
       ]
