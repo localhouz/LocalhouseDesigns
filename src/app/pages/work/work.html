@@ -13,7 +13,7 @@
       <div class="case-study" [class.case-study--soon]="project.comingSoon"
         [attr.role]="project.comingSoon ? null : 'link'"
         (click)="!project.comingSoon && openProject(project.url)">
-        <div class="case-study__visual">
+        <div class="case-study__visual" [class.case-study__visual--screenshot]="project.imageUrl">
           @if (!project.comingSoon && project.previewUrl) {
             <iframe [src]="safeUrl(project.previewUrl)" frameborder="0" scrolling="no" loading="lazy" tabindex="-1" aria-hidden="true"></iframe>
           } @else if (project.imageUrl) {

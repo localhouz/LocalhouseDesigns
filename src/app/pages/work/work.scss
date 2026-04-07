@@ -88,11 +88,14 @@
       pointer-events: none;
     }
 
+    &--screenshot {
+      min-height: unset;
+    }
+
     img.case-study__screenshot {
       width: 100%;
       height: auto;
       display: block;
-      align-self: center;
     }
   }
 
