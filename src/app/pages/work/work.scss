@@ -74,7 +74,8 @@
   }
 
   &__visual {
-    min-height: 320px;
+    height: 260px;
+    min-height: unset;
     overflow: hidden;
     position: relative;
     background: var(--surface);
