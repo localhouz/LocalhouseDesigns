@@ -70,7 +70,7 @@ export class WorkComponent implements OnInit {
       subtitle: 'Enterprise Excel add-in',
       url: '',
       previewUrl: '',
-      imageUrl: 'assets/OpsSuite.png',
+      imageUrl: 'OpsSuite.png',
       outcome: 'Unified 7 legacy VBA add-ins into a single C# VSTO Excel ribbon — fully deployed, API-updateable without touching the client machine. Covers capacity planning, master scheduling, exception processing, louver consumption, and purchasing workflows across multiple departments.',
       stack: ['C#', 'VSTO', '.NET Framework', 'SQL Server', 'REST API', 'Excel'],
       metrics: [
