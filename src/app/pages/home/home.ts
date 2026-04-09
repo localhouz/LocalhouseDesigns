@@ -133,8 +133,8 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
   ngOnInit() {
     const base = 'https://localhousedesigns.netlify.app';
     this.seo.setPage({
-      title: 'Localhouse Designs | Boutique Web Studio - Angular, SEO/GEO, Bleeding Edge',
-      description: 'Boutique web studio in Broken Arrow, Oklahoma specializing in Angular, performance SEO/GEO, and bold digital experiences. Built different.',
+      title: 'Localhouse Designs | Broken Arrow Web Studio for Angular, ERP, SEO/GEO',
+      description: 'Broken Arrow, Oklahoma web studio serving Tulsa, statewide Oklahoma, and remote clients with Angular development, ERP-aware software, structured-data-first SEO/GEO, and custom digital experiences.',
       url: base,
       schemas: [
         {
@@ -142,8 +142,8 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
           '@type': 'WebPage',
           '@id': `${base}/#webpage`,
           url: base,
-          name: 'Localhouse Designs | Angular, ERP, SEO/GEO - Built Different',
-          description: 'Boutique web studio specializing in Angular development, enterprise ERP integrations (Business Central, SAP, SyteLine), and performance SEO/GEO.',
+          name: 'Localhouse Designs | Broken Arrow Angular, ERP, and SEO/GEO Studio',
+          description: 'Broken Arrow, Oklahoma web studio specializing in Angular development, enterprise ERP integrations, and structured-data-first SEO/GEO.',
           isPartOf: { '@id': `${base}/#website` },
           about: { '@id': `${base}/#organization` },
           breadcrumb: {

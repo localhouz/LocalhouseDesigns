@@ -245,8 +245,8 @@ export class ServicesComponent implements OnInit, AfterViewInit, OnDestroy {
   ngOnInit() {
     const base = 'https://localhousedesigns.netlify.app';
     this.seo.setPage({
-      title: 'Services | Localhouse Designs - Angular, SEO/GEO, Performance, Design',
-      description: 'Full-stack web services from Localhouse Designs in Broken Arrow, Oklahoma: Angular development, SEO/GEO structured data, Netlify deployment, GA4 analytics, and design systems.',
+      title: 'Services | Broken Arrow Angular, ERP, and SEO/GEO Services',
+      description: 'Angular development, ERP-aware tooling, structured-data-first SEO/GEO, performance, and deployment services from Localhouse Designs in Broken Arrow, Oklahoma, serving Tulsa and remote clients.',
       url: `${base}/services`,
       schemas: [
         {
@@ -256,7 +256,7 @@ export class ServicesComponent implements OnInit, AfterViewInit, OnDestroy {
           serviceType: 'Web Development',
           name: 'Localhouse Designs Web Services',
           url: `${base}/services`,
-          description: 'Angular development, SEO/GEO, Netlify deployment, analytics, and design systems for Oklahoma businesses and remote clients.',
+          description: 'Angular development, ERP-aware software, SEO/GEO, deployment, analytics, and design systems for businesses in Broken Arrow, Tulsa, Oklahoma, and remote markets.',
           areaServed: [
             { '@type': 'State', name: 'Oklahoma' },
             { '@type': 'Country', name: 'United States' }
