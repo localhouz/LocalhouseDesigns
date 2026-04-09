@@ -36,6 +36,21 @@ export class WorkComponent implements OnInit {
 
   caseStudies = [
     {
+      title: 'North Styles',
+      subtitle: 'Local grooming brand site',
+      url: 'https://northstyles.com',
+      previewUrl: 'https://northstyles.com',
+      imageUrl: '',
+      outcome: 'Premium local business site rebuilt with stronger SEO, GEO, and AEO foundations. Added dedicated About and Contact flows, local schema, answer-ready FAQ content, trust-building testimonials, and performance-focused image optimization.',
+      stack: ['Astro', 'Tailwind', 'JSON-LD', 'Local SEO', 'AEO'],
+      metrics: [
+        { val: '4', label: 'Core pages refined' },
+        { val: '3', label: 'SEO / GEO / AEO' },
+        { val: '15+', label: 'Assets optimized' },
+      ],
+      comingSoon: false,
+    },
+    {
       title: 'NorCal Sauce Worx',
       subtitle: 'Co-packing brand site',
       url: 'https://norcalsauceworx.com',
@@ -137,18 +152,24 @@ export class WorkComponent implements OnInit {
           itemListElement: [
             {
               '@type': 'ListItem', position: 1,
+              url: 'https://northstyles.com',
+              name: 'North Styles',
+              description: 'Astro-based local grooming brand site with dedicated About and Contact pages, local business schema, FAQPage schema, performance image optimization, and stronger SEO, GEO, and AEO coverage.'
+            },
+            {
+              '@type': 'ListItem', position: 2,
               url: 'https://norcalsauceworx.com',
               name: 'NorCal Sauce Worx',
               description: 'Angular 21 co-packing brand site with quote wizard, Netlify Forms, FAQPage + HowTo + Service schemas, sitemap, and full GEO coverage.'
             },
             {
-              '@type': 'ListItem', position: 2,
+              '@type': 'ListItem', position: 3,
               url: 'https://prescribedburnsauces.com',
               name: 'Prescribed Burn Sauces',
               description: 'Angular 21 e-commerce brand site with WebGL hero, 10 product schemas, GA4, Google Search Console verified, 26 rich result items all valid.'
             },
             {
-              '@type': 'ListItem', position: 3,
+              '@type': 'ListItem', position: 4,
               name: 'OpsSuite',
               description: 'C# VSTO Excel ribbon add-in unifying 7 legacy VBA add-ins. Fully deployed and API-updateable without touching client machines. Covers capacity planning, master scheduling, exception processing, and purchasing workflows.'
             }
