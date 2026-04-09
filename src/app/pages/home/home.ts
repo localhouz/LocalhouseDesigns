@@ -1,7 +1,6 @@
 import { AfterViewInit, Component, ElementRef, inject, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import * as THREE from 'three';
-import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { SeoService } from '../../shared/seo/seo.service';
 
 @Component({
@@ -12,11 +11,6 @@ import { SeoService } from '../../shared/seo/seo.service';
 })
 export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
   private seo = inject(SeoService);
-  private sanitizer = inject(DomSanitizer);
-
-  safeUrl(url: string): SafeResourceUrl {
-    return this.sanitizer.bypassSecurityTrustResourceUrl(url);
-  }
 
   @ViewChild('canvas') canvasRef!: ElementRef<HTMLCanvasElement>;
 
