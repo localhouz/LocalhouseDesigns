@@ -1,0 +1,75 @@
+.insights-page { padding-top: 8rem; }
+
+.page-header {
+  padding: 4rem 0 2rem;
+
+  h1 {
+    font-size: clamp(3rem, 7vw, 6rem);
+    margin: 1.5rem 0 1rem;
+
+    em {
+      font-style: normal;
+      color: var(--accent);
+    }
+  }
+
+  &__sub {
+    color: rgba(10,10,18,0.55);
+    font-size: 1.05rem;
+    line-height: 1.8;
+    max-width: 900px;
+  }
+}
+
+.insights-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1px;
+  background: var(--border);
+  border: 1px solid var(--border);
+
+  @media (max-width: 768px) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.insight-card {
+  display: flex;
+  flex-direction: column;
+  gap: 0.9rem;
+  padding: 2rem;
+  background: var(--bg);
+  text-decoration: none;
+  transition: background 0.2s;
+
+  &:hover {
+    background: rgba(255,60,0,0.04);
+  }
+
+  &__tag {
+    font-family: var(--font-mono);
+    font-size: 0.65rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--accent);
+  }
+
+  h2 {
+    font-size: 1.35rem;
+    color: var(--fg);
+  }
+
+  p {
+    font-size: 0.94rem;
+    line-height: 1.8;
+    color: rgba(10,10,18,0.64);
+  }
+
+  &__cta {
+    margin-top: auto;
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.1em;
+    color: var(--accent);
+  }
+}

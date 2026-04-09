@@ -6,8 +6,10 @@
     </a>
 
     <ul class="nav__links" [class.nav__links--open]="menuOpen()">
+      <li><a routerLink="/about" routerLinkActive="active" (click)="closeMenu()">About</a></li>
       <li><a routerLink="/work" routerLinkActive="active" (click)="closeMenu()">Work</a></li>
       <li><a routerLink="/services" routerLinkActive="active" (click)="closeMenu()">Services</a></li>
+      <li><a routerLink="/insights" routerLinkActive="active" (click)="closeMenu()">Insights</a></li>
       <li><a routerLink="/lab" routerLinkActive="active" (click)="closeMenu()">Lab</a></li>
       <li><a routerLink="/contact" routerLinkActive="active" (click)="closeMenu()" class="nav__cta">Let's Build</a></li>
     </ul>

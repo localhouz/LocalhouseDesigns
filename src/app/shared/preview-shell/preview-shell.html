@@ -1,0 +1,43 @@
+<div class="shell" [class.shell--loading]="loading" [class.shell--failed]="failed">
+
+  <!-- Browser chrome bar -->
+  <div class="shell__chrome">
+    <div class="shell__dots">
+      <span></span><span></span><span></span>
+    </div>
+    <div class="shell__address">
+      <span class="shell__lock">⬤</span>
+      <span class="shell__domain">{{ domain }}</span>
+    </div>
+    <span class="shell__badge">LIVE</span>
+  </div>
+
+  <!-- Live iframe -->
+  @if (!failed) {
+    <iframe
+      [src]="safeUrl"
+      frameborder="0"
+      scrolling="no"
+      loading="lazy"
+      [attr.tabindex]="interactive ? null : '-1'"
+      [style.pointer-events]="interactive ? 'auto' : 'none'"
+      aria-hidden="true"
+      (load)="onLoad()">
+    </iframe>
+  }
+
+  <!-- Loading overlay -->
+  @if (loading && !failed) {
+    <div class="shell__overlay shell__overlay--loading">
+      <div class="shell__spinner"></div>
+    </div>
+  }
+
+  <!-- Failed overlay -->
+  @if (failed) {
+    <div class="shell__overlay shell__overlay--failed">
+      <span class="shell__failed-label">{{ fallbackLabel }}</span>
+    </div>
+  }
+
+</div>

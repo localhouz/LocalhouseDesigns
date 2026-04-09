@@ -11,7 +11,6 @@ import { SeoService } from '../../shared/seo/seo.service';
 export class ContactComponent implements OnInit {
   private seo = inject(SeoService);
 
-  // Core fields
   name = '';
   email = '';
   message = '';
@@ -19,13 +18,11 @@ export class ContactComponent implements OnInit {
   submitted = signal(false);
   submitting = signal(false);
 
-  // Design track
   designScope = '';
   hasDatabase = '';
   hasCms = '';
   budget = '';
 
-  // Enterprise track
   erpSystem = '';
   enterpriseType = '';
   timeline = '';
@@ -33,18 +30,18 @@ export class ContactComponent implements OnInit {
 
   budgetOptions = [
     'Under $5K',
-    '$5K – $15K',
-    '$15K – $40K',
+    '$5K - $15K',
+    '$15K - $40K',
     '$40K+',
-    "Not sure yet — let's scope it",
+    "Not sure yet - let's scope it",
   ];
 
   enterpriseBudgetOptions = [
     'Under $5K',
-    '$5K – $15K',
-    '$15K – $40K',
+    '$5K - $15K',
+    '$15K - $40K',
     '$40K+',
-    "Not sure yet — let's scope it",
+    "Not sure yet - let's scope it",
   ];
 
   designScopeOptions = [
@@ -65,15 +62,14 @@ export class ContactComponent implements OnInit {
   ];
 
   timelineOptions = [
-    { value: 'quick', label: 'Quick win', hint: '1–3 weeks' },
-    { value: 'mid', label: 'Mid-range', hint: '1–3 months' },
-    { value: 'full', label: 'Full project', hint: '3–6 months' },
+    { value: 'quick', label: 'Quick win', hint: '1-3 weeks' },
+    { value: 'mid', label: 'Mid-range', hint: '1-3 months' },
+    { value: 'full', label: 'Full project', hint: '3-6 months' },
     { value: 'ongoing', label: 'Ongoing', hint: 'Retainer / continuous' },
   ];
 
   setTrack(t: 'design' | 'enterprise') {
     this.track.set(t);
-    // reset track-specific fields
     this.designScope = '';
     this.hasDatabase = '';
     this.hasCms = '';
@@ -87,8 +83,8 @@ export class ContactComponent implements OnInit {
   ngOnInit() {
     const base = 'https://localhousedesigns.netlify.app';
     this.seo.setPage({
-      title: 'Contact | Localhouse Designs — Start a Project',
-      description: 'Ready to build something worth finding? Get in touch with Localhouse Designs to start a web or enterprise project.',
+      title: 'Contact | Localhouse Designs - Start a Project',
+      description: 'Ready to build something worth finding? Get in touch with Localhouse Designs in Broken Arrow, Oklahoma to start a web or enterprise project.',
       url: `${base}/contact`,
       schemas: [
         {
@@ -97,7 +93,7 @@ export class ContactComponent implements OnInit {
           '@id': `${base}/contact#webpage`,
           url: `${base}/contact`,
           name: 'Contact | Localhouse Designs',
-          description: 'Start a web or enterprise project with Localhouse Designs. Separate tracks for Design & Web and Enterprise & ERP.',
+          description: 'Start a web or enterprise project with Localhouse Designs. Based in Broken Arrow, Oklahoma and serving local and remote clients through separate Design & Web and Enterprise & ERP tracks.',
           isPartOf: { '@id': `${base}/#website` },
           breadcrumb: {
             '@type': 'BreadcrumbList',
@@ -125,6 +121,11 @@ export class ContactComponent implements OnInit {
               '@type': 'Question',
               name: 'What is the typical response time for a project inquiry?',
               acceptedAnswer: { '@type': 'Answer', text: 'Localhouse Designs responds to all project inquiries within 24 hours. Initial response includes availability, any clarifying questions, and next steps for scoping.' }
+            },
+            {
+              '@type': 'Question',
+              name: 'Where does Localhouse Designs work?',
+              acceptedAnswer: { '@type': 'Answer', text: 'Localhouse Designs is based in Broken Arrow, Oklahoma and serves businesses across the Tulsa metro, the wider Oklahoma market, and remote clients nationwide. Client work has also reached as far as Sacramento, California.' }
             }
           ]
         }
@@ -141,12 +142,10 @@ export class ContactComponent implements OnInit {
       name: this.name,
       email: this.email,
       track: this.track(),
-      // design
       designScope: this.designScope,
       hasDatabase: this.hasDatabase,
       hasCms: this.hasCms,
       budget: this.budget,
-      // enterprise
       erpSystem: this.erpSystem,
       enterpriseType: this.enterpriseType,
       timeline: this.timeline,

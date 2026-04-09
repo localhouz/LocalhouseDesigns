@@ -1,0 +1,18 @@
+<div class="insights-page">
+  <div class="page-header container">
+    <p class="label">Insights</p>
+    <h1>Plain-English thinking on<br><em>search, systems, and strategy.</em></h1>
+    <p class="page-header__sub">Practical articles on GEO, SEO, ERP-connected tooling, and the kinds of decisions that make websites and internal systems more useful.</p>
+  </div>
+
+  <section class="insights-grid section container">
+    @for (article of articles; track article.route) {
+      <a [routerLink]="article.route" class="insight-card">
+        <span class="insight-card__tag">{{ article.tag }}</span>
+        <h2>{{ article.title }}</h2>
+        <p>{{ article.desc }}</p>
+        <span class="insight-card__cta">Read article -&gt;</span>
+      </a>
+    }
+  </section>
+</div>

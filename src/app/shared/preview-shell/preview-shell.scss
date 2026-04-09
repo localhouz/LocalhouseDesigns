@@ -1,0 +1,138 @@
+.shell {
+  position: relative;
+  z-index: 0; // creates stacking context — keeps children z-indices contained
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+
+  // ── Chrome bar ────────────────────────────────────────────────────────────────
+  &__chrome {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 2;
+    height: 26px;
+    background: rgba(14, 14, 20, 0.94);
+    backdrop-filter: blur(6px);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0 0.65rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  }
+
+  &__dots {
+    display: flex;
+    gap: 4px;
+    flex-shrink: 0;
+
+    span {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      &:nth-child(1) { background: #ff5f57; }
+      &:nth-child(2) { background: #ffbd2e; }
+      &:nth-child(3) { background: #28c840; }
+    }
+  }
+
+  &__address {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    background: rgba(255, 255, 255, 0.07);
+    border-radius: 3px;
+    padding: 2px 8px;
+    overflow: hidden;
+    min-width: 0;
+  }
+
+  &__lock {
+    font-size: 5px;
+    color: rgba(255, 255, 255, 0.35);
+    flex-shrink: 0;
+    line-height: 1;
+  }
+
+  &__domain {
+    font-family: var(--font-mono);
+    font-size: 0.55rem;
+    color: rgba(255, 255, 255, 0.55);
+    letter-spacing: 0.02em;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  &__badge {
+    font-family: var(--font-mono);
+    font-size: 0.45rem;
+    letter-spacing: 0.16em;
+    color: var(--accent);
+    text-transform: uppercase;
+    flex-shrink: 0;
+    border: 1px solid rgba(255, 60, 0, 0.4);
+    padding: 2px 5px;
+    line-height: 1.4;
+  }
+
+  // ── Iframe ────────────────────────────────────────────────────────────────────
+  iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 1200px;
+    height: 900px;
+    border: none;
+    transform: scale(0.42);
+    transform-origin: top left;
+  }
+
+  // ── Overlays ──────────────────────────────────────────────────────────────────
+  &__overlay {
+    position: absolute;
+    inset: 0;
+    z-index: 3;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    &--loading {
+      background: var(--surface);
+    }
+
+    &--failed {
+      background: repeating-linear-gradient(
+        -45deg,
+        var(--surface),
+        var(--surface) 8px,
+        var(--bg) 8px,
+        var(--bg) 16px
+      );
+    }
+  }
+
+  &__spinner {
+    width: 24px;
+    height: 24px;
+    border: 2px solid var(--border);
+    border-top-color: var(--accent);
+    border-radius: 50%;
+    animation: preview-spin 0.75s linear infinite;
+  }
+
+  &__failed-label {
+    font-family: var(--font-mono);
+    font-size: 0.65rem;
+    letter-spacing: 0.15em;
+    color: rgba(10, 10, 18, 0.25);
+    text-transform: uppercase;
+  }
+}
+
+@keyframes preview-spin {
+  to { transform: rotate(360deg); }
+}

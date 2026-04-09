@@ -1,0 +1,239 @@
+.about-page { padding-top: 8rem; }
+
+.page-header {
+  padding: 4rem 0 2rem;
+
+  h1 {
+    font-size: clamp(3rem, 7vw, 6rem);
+    margin: 1.5rem 0 1rem;
+
+    em {
+      font-style: normal;
+      color: var(--accent);
+    }
+  }
+
+  &__sub {
+    color: rgba(10,10,18,0.55);
+    font-size: 1.05rem;
+    line-height: 1.8;
+    max-width: 900px;
+  }
+}
+
+.about-signals {
+  &__grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1px;
+    background: var(--border);
+    border: 1px solid var(--border);
+
+    @media (max-width: 768px) {
+      grid-template-columns: 1fr;
+    }
+  }
+}
+
+.signal-card {
+  background: var(--bg);
+  padding: 2rem;
+
+  &__label {
+    display: block;
+    font-family: var(--font-mono);
+    font-size: 0.65rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: rgba(10,10,18,0.42);
+    margin-bottom: 0.9rem;
+  }
+
+  h2 {
+    font-size: 1.35rem;
+    margin-bottom: 0.7rem;
+  }
+
+  p {
+    font-size: 0.9rem;
+    line-height: 1.75;
+    color: rgba(10,10,18,0.62);
+  }
+}
+
+.about-story {
+  &__grid {
+    display: grid;
+    grid-template-columns: 1fr 1.4fr;
+    gap: 5rem;
+
+    @media (max-width: 900px) {
+      grid-template-columns: 1fr;
+      gap: 2rem;
+    }
+  }
+
+  &__left h2 {
+    font-size: clamp(2rem, 4vw, 3.5rem);
+    margin-top: 1rem;
+
+    em {
+      font-style: normal;
+      color: var(--accent);
+    }
+  }
+
+  &__right p {
+    font-size: 0.96rem;
+    line-height: 1.9;
+    color: rgba(10,10,18,0.65);
+    margin-bottom: 1.25rem;
+  }
+}
+
+.about-timeline {
+  background: var(--mid);
+
+  &__list {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1px;
+    background: var(--border);
+    border: 1px solid var(--border);
+    margin-top: 1.5rem;
+  }
+}
+
+.timeline-card {
+  background: var(--mid);
+  padding: 2rem;
+
+  h3 {
+    font-size: 1.2rem;
+    margin-bottom: 0.75rem;
+  }
+
+  p {
+    font-size: 0.94rem;
+    line-height: 1.8;
+    color: rgba(10,10,18,0.64);
+  }
+}
+
+.about-fit {
+  &__grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1px;
+    background: var(--border);
+    border: 1px solid var(--border);
+
+    @media (max-width: 768px) {
+      grid-template-columns: 1fr;
+    }
+  }
+}
+
+.fit-card {
+  background: var(--bg);
+  padding: 2rem;
+
+  ul {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.9rem;
+    margin-top: 1rem;
+  }
+
+  li {
+    position: relative;
+    padding-left: 1rem;
+    font-size: 0.92rem;
+    line-height: 1.75;
+    color: rgba(10,10,18,0.64);
+
+    &::before {
+      content: '-';
+      position: absolute;
+      left: 0;
+      color: var(--accent);
+      font-family: var(--font-mono);
+    }
+  }
+}
+
+.about-qa {
+  &__grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1px;
+    background: var(--border);
+    border: 1px solid var(--border);
+    margin-top: 1.5rem;
+
+    @media (max-width: 900px) {
+      grid-template-columns: 1fr;
+    }
+  }
+}
+
+.qa-card {
+  background: var(--bg);
+  padding: 2rem;
+
+  h3 {
+    font-size: 1.08rem;
+    margin-bottom: 0.75rem;
+  }
+
+  p {
+    font-size: 0.92rem;
+    line-height: 1.75;
+    color: rgba(10,10,18,0.64);
+  }
+}
+
+.about-reading {
+  &__grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1px;
+    background: var(--border);
+    border: 1px solid var(--border);
+    margin-top: 1.5rem;
+
+    @media (max-width: 768px) {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  &__card {
+    padding: 2rem;
+    background: var(--mid);
+
+    h3 {
+      font-size: 1.2rem;
+      margin-bottom: 0.7rem;
+    }
+
+    p {
+      max-width: 760px;
+      font-size: 0.94rem;
+      line-height: 1.75;
+      color: rgba(10,10,18,0.64);
+      margin-bottom: 1.2rem;
+    }
+  }
+}
+
+.about-cta {
+  padding: 6rem 0 8rem;
+  text-align: center;
+
+  h2 {
+    font-size: clamp(2rem, 4vw, 3.5rem);
+    max-width: 900px;
+    margin: 0 auto 2rem;
+  }
+}

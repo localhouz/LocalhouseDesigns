@@ -1,22 +1,19 @@
-import { AfterViewInit, Component, ElementRef, inject, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, inject, OnDestroy, OnInit, PLATFORM_ID, ViewChild } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import * as THREE from 'three';
-import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { SeoService } from '../../shared/seo/seo.service';
+import { PreviewShellComponent } from '../../shared/preview-shell/preview-shell';
 
 @Component({
   selector: 'app-home',
-  imports: [RouterLink],
+  imports: [RouterLink, PreviewShellComponent],
   templateUrl: './home.html',
   styleUrl: './home.scss'
 })
 export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
   private seo = inject(SeoService);
-  private sanitizer = inject(DomSanitizer);
-
-  safeUrl(url: string): SafeResourceUrl {
-    return this.sanitizer.bypassSecurityTrustResourceUrl(url);
-  }
+  private platformId = inject(PLATFORM_ID);
 
   @ViewChild('canvas') canvasRef!: ElementRef<HTMLCanvasElement>;
 
@@ -34,35 +31,101 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
   ];
 
   services = [
-    { num: '01', title: 'Angular Development', desc: 'Standalone components, signals, lazy loading. Modern Angular done right — fast, maintainable, and ready for scale.' },
-    { num: '02', title: 'Enterprise & ERP', desc: 'Business Central, SAP, Infor SyteLine — custom integrations, internal tooling, mobile floor apps, and workflow automation built by someone who actually used these systems.' },
+    { num: '01', title: 'Angular Development', desc: 'Standalone components, signals, lazy loading. Modern Angular done right - fast, maintainable, and ready for scale.' },
+    { num: '02', title: 'Enterprise & ERP', desc: 'Business Central, SAP, Infor SyteLine - custom integrations, internal tooling, mobile floor apps, and workflow automation built by someone who actually used these systems.' },
     { num: '03', title: 'SEO & GEO', desc: 'Structured data, FAQPage schemas, Product markup, AI-ready content. Built to rank in search and AI overviews alike.' },
-    { num: '04', title: 'WebGL & Three.js', desc: 'Custom GLSL shaders, particle systems, 3D experiences. Browser as canvas — from subtle texture to full generative art.' },
+    { num: '04', title: 'WebGL & Three.js', desc: 'Custom GLSL shaders, particle systems, 3D experiences. Browser as canvas - from subtle texture to full generative art.' },
+  ];
+
+  trustFacts = [
+    {
+      label: 'Based in',
+      value: 'Broken Arrow, Oklahoma',
+      detail: 'Serving Broken Arrow, Tulsa, Oklahoma, and remote clients nationwide.'
+    },
+    {
+      label: 'Best fit',
+      value: 'Brands + operations teams',
+      detail: 'Especially strong for Angular builds, ERP-connected tooling, and structured-data-first sites.'
+    },
+    {
+      label: 'Built for',
+      value: 'Search + answer engines',
+      detail: 'Pages are written to help Google, AI overviews, and chat-based discovery systems extract facts cleanly.'
+    }
+  ];
+
+  answerBlocks = [
+    {
+      question: 'Where is Localhouse Designs based?',
+      answer: 'Localhouse Designs is based in Broken Arrow, Oklahoma and works with clients across the Tulsa metro, Oklahoma, and the wider U.S.'
+    },
+    {
+      question: 'What kind of projects are the best fit?',
+      answer: 'The strongest fit is modern Angular sites, structured-data-heavy SEO/GEO work, and business tooling connected to ERP and operations workflows.'
+    },
+    {
+      question: 'Why does the ERP background matter?',
+      answer: 'It means the work is shaped by firsthand experience with operational systems, not generic agency assumptions or surface-level documentation.'
+    }
+  ];
+
+  insightCards = [
+    {
+      title: 'What GEO actually means for local businesses',
+      desc: 'A plain-English look at GEO, how it fits with SEO, and why local businesses should care.',
+      route: '/insights/what-geo-means-for-local-businesses',
+      tag: 'SEO / GEO'
+    },
+    {
+      title: 'What manufacturers actually need from ERP-connected tooling',
+      desc: 'A practical article on internal tooling, operational friction, and why useful systems start with real workflow needs.',
+      route: '/insights/what-manufacturers-actually-need-from-erp-connected-tooling',
+      tag: 'ERP / Operations'
+    },
+    {
+      title: 'How structured data helps AI search understand your business',
+      desc: 'A practical explanation of what schema actually does, what it cannot do alone, and how it supports clearer machine understanding.',
+      route: '/insights/how-structured-data-helps-ai-search-understand-your-business',
+      tag: 'Structured Data'
+    },
+    {
+      title: 'Why a custom site beats a booking-platform page for local search',
+      desc: 'A grounded look at why custom sites create more room for local SEO, trust signals, and answer-ready content than booking-platform shells.',
+      route: '/insights/why-a-custom-site-beats-a-booking-platform-page-for-local-search',
+      tag: 'Local SEO'
+    }
   ];
 
   featuredProjects = [
     {
       title: 'North Styles',
-      desc: 'Astro rebuild for a Tulsa grooming studio with stronger local SEO, AEO, trust content, and a cleaner booking path.',
+      desc: 'Built from scratch to replace the old GlossGenius site with a custom brand site, stronger local SEO/AEO foundations, and a cleaner booking path.',
       url: 'https://north-styles.com/',
+      previewUrl: 'https://north-styles.com/preview',
+      previewDomain: 'north-styles.com',
       bg: 'linear-gradient(135deg, #091325 0%, #20365c 100%)',
       tag: 'Astro / Local SEO',
       stack: ['Astro', 'Tailwind', 'JSON-LD', 'AEO']
     },
     {
       title: 'NorCal Sauce Worx',
-      desc: 'Full Angular rebuild — quote wizard, co-packing process, FAQPage + HowTo schemas, Netlify Forms.',
+      desc: 'Full Angular rebuild - quote wizard, co-packing process, FAQPage + HowTo schemas, Netlify Forms.',
       url: 'https://norcalsauceworx.com',
+      previewUrl: 'https://norcalsauceworx.com',
+      previewDomain: 'norcalsauceworx.com',
       bg: 'linear-gradient(135deg, #1a0a00 0%, #3d1a00 100%)',
-      tag: 'Angular · Netlify',
+      tag: 'Angular / Netlify',
       stack: ['Angular 21', 'SCSS', 'Netlify Forms', 'JSON-LD']
     },
     {
       title: 'Prescribed Burn Sauces',
-      desc: 'Brand site with WebGL, full product schemas, GA4, Google Search Console. 26 rich result items — all valid.',
+      desc: 'Brand site with WebGL, full product schemas, GA4, Google Search Console. 26 rich result items - all valid.',
       url: 'https://prescribedburnsauces.com',
+      previewUrl: 'https://prescribedburnsauces.com',
+      previewDomain: 'prescribedburnsauces.com',
       bg: 'linear-gradient(135deg, #1a0000 0%, #3d0000 100%)',
-      tag: 'Angular · Three.js',
+      tag: 'Angular / Three.js',
       stack: ['Angular 21', 'Three.js', 'GA4', 'Schema.org']
     }
   ];
@@ -70,8 +133,8 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
   ngOnInit() {
     const base = 'https://localhousedesigns.netlify.app';
     this.seo.setPage({
-      title: 'Localhouse Designs | Boutique Web Studio — Angular, SEO/GEO, Bleeding Edge',
-      description: 'Boutique web studio specializing in Angular, performance SEO/GEO, and bold digital experiences. Built different.',
+      title: 'Localhouse Designs | Boutique Web Studio - Angular, SEO/GEO, Bleeding Edge',
+      description: 'Boutique web studio in Broken Arrow, Oklahoma specializing in Angular, performance SEO/GEO, and bold digital experiences. Built different.',
       url: base,
       schemas: [
         {
@@ -79,7 +142,7 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
           '@type': 'WebPage',
           '@id': `${base}/#webpage`,
           url: base,
-          name: 'Localhouse Designs | Angular · ERP · SEO/GEO — Built Different',
+          name: 'Localhouse Designs | Angular, ERP, SEO/GEO - Built Different',
           description: 'Boutique web studio specializing in Angular development, enterprise ERP integrations (Business Central, SAP, SyteLine), and performance SEO/GEO.',
           isPartOf: { '@id': `${base}/#website` },
           about: { '@id': `${base}/#organization` },
@@ -98,6 +161,29 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
           description: 'Boutique web studio specializing in Angular development, enterprise ERP integrations (Microsoft Business Central, SAP, Infor SyteLine), SEO/GEO structured data optimization, WebGL/Three.js experiences, and Netlify deployments.',
           url: base,
           sameAs: ['https://github.com/localhouz'],
+          address: {
+            '@type': 'PostalAddress',
+            addressLocality: 'Broken Arrow',
+            addressRegion: 'OK',
+            addressCountry: 'US'
+          },
+          contactPoint: {
+            '@type': 'ContactPoint',
+            contactType: 'sales',
+            url: `${base}/contact`,
+            areaServed: ['Broken Arrow', 'Tulsa', 'Oklahoma', 'United States'],
+            availableLanguage: 'English'
+          },
+          hasOfferCatalog: {
+            '@type': 'OfferCatalog',
+            name: 'Localhouse Designs Services',
+            itemListElement: [
+              { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'Angular Development' } },
+              { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'ERP Integration' } },
+              { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'SEO and GEO Optimization' } },
+              { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'WebGL and Three.js Development' } }
+            ]
+          },
           knowsAbout: [
             'Angular', 'TypeScript', 'SEO', 'GEO', 'Web Development', 'Netlify',
             'Three.js', 'WebGL', 'Structured Data', 'Schema.org', 'JSON-LD',
@@ -106,19 +192,24 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
             'Manufacturing Operations', 'Supply Chain', 'BOM Systems',
             'Mobile Floor Apps', 'GA4'
           ],
-          areaServed: { '@type': 'Country', name: 'United States' }
+          areaServed: [
+            { '@type': 'State', name: 'Oklahoma' },
+            { '@type': 'Country', name: 'United States' }
+          ]
         }
       ]
     });
   }
 
   ngAfterViewInit() {
+    if (!isPlatformBrowser(this.platformId)) return;
     this.initThree();
     window.addEventListener('mousemove', this.onMouseMove);
     window.addEventListener('resize', this.onResize);
   }
 
   ngOnDestroy() {
+    if (!isPlatformBrowser(this.platformId)) return;
     cancelAnimationFrame(this.animId);
     this.renderer?.dispose();
     window.removeEventListener('mousemove', this.onMouseMove);
@@ -159,13 +250,13 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
     const white = new THREE.Color('#f0f0f5');
 
     for (let i = 0; i < count; i++) {
-      positions[i * 3]     = (Math.random() - 0.5) * 14;
+      positions[i * 3] = (Math.random() - 0.5) * 14;
       positions[i * 3 + 1] = (Math.random() - 0.5) * 14;
       positions[i * 3 + 2] = (Math.random() - 0.5) * 10;
 
       const r = Math.random();
       const col = r < 0.06 ? accent : r < 0.12 ? accent2 : white;
-      colors[i * 3]     = col.r;
+      colors[i * 3] = col.r;
       colors[i * 3 + 1] = col.g;
       colors[i * 3 + 2] = col.b;
     }

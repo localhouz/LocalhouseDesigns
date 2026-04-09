@@ -3,13 +3,12 @@
   <div class="page-header container">
     <p class="label">Get in touch</p>
     <h1>Let's build<br><em>something.</em></h1>
-    <p class="page-header__sub">Tell us what you're working on. No pitch decks — just a conversation.</p>
+    <p class="page-header__sub">Tell us what you're working on. No pitch decks - just a conversation.</p>
   </div>
 
   <section class="contact-body section container">
     <div class="contact-grid">
 
-      <!-- Info -->
       <div class="contact-info">
         <div class="contact-info__item">
           <span class="contact-info__label">Studio</span>
@@ -17,7 +16,11 @@
         </div>
         <div class="contact-info__item">
           <span class="contact-info__label">Location</span>
-          <span>Northern California</span>
+          <span>Broken Arrow, Oklahoma</span>
+        </div>
+        <div class="contact-info__item">
+          <span class="contact-info__label">Service area</span>
+          <span>Broken Arrow, Tulsa, Oklahoma, remote nationwide, with client work reaching Sacramento, California</span>
         </div>
         <div class="contact-info__item">
           <span class="contact-info__label">Availability</span>
@@ -37,7 +40,6 @@
         </div>
       </div>
 
-      <!-- Form -->
       @if (!submitted()) {
         <form
           name="localhouse-contact"
@@ -52,7 +54,6 @@
           <input type="hidden" name="track" [value]="track()">
           <p class="hidden"><label>Don't fill this out: <input name="bot-field"></label></p>
 
-          <!-- Name + Email -->
           <div class="field">
             <label for="name">Name *</label>
             <input id="name" name="name" type="text" [(ngModel)]="name" required placeholder="Your name">
@@ -62,7 +63,6 @@
             <input id="email" name="email" type="email" [(ngModel)]="email" required placeholder="your@email.com">
           </div>
 
-          <!-- Track selector -->
           <div class="field field--full">
             <label>What kind of project? *</label>
             <div class="track-picker">
@@ -74,12 +74,11 @@
               <button type="button" class="track-btn" [class.track-btn--active]="track() === 'enterprise'"
                 (click)="setTrack('enterprise')">
                 <span class="track-btn__title">Enterprise & ERP</span>
-                <span class="track-btn__sub">Business Central, SAP, SyteLine — integrations, tooling, automation</span>
+                <span class="track-btn__sub">Business Central, SAP, SyteLine - integrations, tooling, automation</span>
               </button>
             </div>
           </div>
 
-          <!-- Design track -->
           @if (track() === 'design') {
             <div class="field field--full">
               <label>Scope *</label>
@@ -123,7 +122,6 @@
             </div>
           }
 
-          <!-- Enterprise track -->
           @if (track() === 'enterprise') {
             <div class="field">
               <label for="erpSystem">ERP System</label>
@@ -169,7 +167,6 @@
             </div>
           }
 
-          <!-- Message (always shown after track selected) -->
           @if (track()) {
             <div class="field field--full">
               <label for="message">Tell us more *</label>
@@ -178,14 +175,14 @@
             </div>
 
             <button type="submit" class="btn btn--filled" [disabled]="submitting()">
-              {{ submitting() ? 'Sending...' : 'Send it →' }}
+              {{ submitting() ? 'Sending...' : 'Send it ->' }}
             </button>
           }
 
         </form>
       } @else {
         <div class="contact-success">
-          <span class="contact-success__icon">✓</span>
+          <span class="contact-success__icon">OK</span>
           <h2>Got it.</h2>
           <p>We'll be in touch shortly. In the meantime, check out the <a href="https://github.com/localhouz" target="_blank" rel="noopener">GitHub</a>.</p>
         </div>

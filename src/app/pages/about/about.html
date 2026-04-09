@@ -1,0 +1,103 @@
+<div class="about-page">
+
+  <div class="page-header container">
+    <p class="label">About the studio</p>
+    <h1>Technical work shaped by<br><em>real operations.</em></h1>
+    <p class="page-header__sub">Localhouse Designs is led from Broken Arrow, Oklahoma, part of the Tulsa market, with a background that crosses software development, ERP migration, reporting, product management, and workflow automation.</p>
+  </div>
+
+  <section class="about-signals section container">
+    <div class="about-signals__grid">
+      @for (item of highlights; track item.label) {
+        <div class="signal-card">
+          <span class="signal-card__label">{{ item.label }}</span>
+          <h2>{{ item.value }}</h2>
+          <p>{{ item.detail }}</p>
+        </div>
+      }
+    </div>
+  </section>
+
+  <section class="about-story section container">
+    <div class="about-story__grid">
+      <div class="about-story__left">
+        <p class="label">What shaped the work</p>
+        <h2>Not just web.<br><em>Systems, product, and process.</em></h2>
+      </div>
+      <div class="about-story__right">
+        <p>Localhouse Designs comes from a mix of product responsibility, manufacturing context, and hands-on software work. That matters because most agencies can build a page, but fewer can understand the operational reality behind the business they are building for.</p>
+        <p>The background behind the studio includes product management across multiple business units, reporting and analytics work for finance and sales, and software development tied directly to ERP and production workflows. That means the work is informed by process, not just presentation.</p>
+        <p>Today, that experience shows up in Angular builds, ERP-aware internal tools, structured-data-driven SEO/GEO work, and websites that are easier for both people and machines to understand. The studio is based in Broken Arrow, works across the Tulsa and Oklahoma market, and has handled client work reaching as far as Sacramento, California.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="about-timeline section">
+    <div class="container">
+      <p class="label">Background</p>
+      <div class="about-timeline__list">
+        @for (item of timeline; track item.title) {
+          <article class="timeline-card">
+            <h3>{{ item.title }}</h3>
+            <p>{{ item.body }}</p>
+          </article>
+        }
+      </div>
+    </div>
+  </section>
+
+  <section class="about-fit section container">
+    <div class="about-fit__grid">
+      <article class="fit-card">
+        <p class="label">Best fit</p>
+        <ul>
+          @for (item of fit; track item) {
+            <li>{{ item }}</li>
+          }
+        </ul>
+      </article>
+      <article class="fit-card">
+        <p class="label">Why it works</p>
+        <ul>
+          @for (item of differentiators; track item) {
+            <li>{{ item }}</li>
+          }
+        </ul>
+      </article>
+    </div>
+  </section>
+
+  <section class="about-qa section container">
+    <p class="label">Common questions</p>
+    <div class="about-qa__grid">
+      @for (item of qa; track item.question) {
+        <article class="qa-card">
+          <h3>{{ item.question }}</h3>
+          <p>{{ item.answer }}</p>
+        </article>
+      }
+    </div>
+  </section>
+
+  <section class="about-reading section container">
+    <p class="label">Read next</p>
+    <div class="about-reading__grid">
+      <article class="about-reading__card">
+        <h3>What GEO actually means for local businesses</h3>
+        <p>If you want the plain-English version of how search, AI overviews, and structured data fit together, this is a good place to start.</p>
+        <a routerLink="/insights/what-geo-means-for-local-businesses" class="btn">Read the article -&gt;</a>
+      </article>
+      <article class="about-reading__card">
+        <h3>What manufacturers actually need from ERP-connected tooling</h3>
+        <p>A practical article on what internal tooling should really do in a manufacturing environment, beyond generic dashboards and extra screens.</p>
+        <a routerLink="/insights/what-manufacturers-actually-need-from-erp-connected-tooling" class="btn">Read the article -&gt;</a>
+      </article>
+    </div>
+  </section>
+
+  <section class="about-cta container">
+    <h2>Need a studio that can think through both the website and the system behind it?</h2>
+    <a routerLink="/contact" class="btn btn--filled">Start a project -&gt;</a>
+  </section>
+
+</div>

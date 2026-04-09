@@ -4,18 +4,20 @@
   <div class="page-header container">
     <p class="label">Selected work</p>
     <h1>What we've<br><em>shipped.</em></h1>
-    <p class="page-header__sub">Live projects, real outcomes. No mockups.</p>
+    <p class="page-header__sub">Live projects, real outcomes, and operational work shaped from Broken Arrow, Oklahoma with client reach as far as Sacramento, California.</p>
   </div>
 
   <!-- Case studies -->
   <section class="case-studies section container">
     @for (project of caseStudies; track project.title) {
       <div class="case-study" [class.case-study--soon]="project.comingSoon"
-        [attr.role]="project.comingSoon ? null : 'link'"
-        (click)="!project.comingSoon && openProject(project.url)">
+        [attr.role]="project.comingSoon || !project.url ? null : 'link'"
+        (click)="!project.comingSoon && project.url && openProject(project.url)">
         <div class="case-study__visual" [class.case-study__visual--screenshot]="project.imageUrl">
           @if (!project.comingSoon && project.previewUrl) {
-            <iframe [src]="safeUrl(project.previewUrl)" frameborder="0" scrolling="no" loading="lazy" tabindex="-1" aria-hidden="true"></iframe>
+            <app-preview-shell
+              [previewUrl]="project.previewUrl"
+              [domain]="project.previewDomain || ''" />
           } @else if (project.imageUrl) {
             <img [src]="project.imageUrl" [alt]="project.title" class="case-study__screenshot" loading="lazy">
           } @else {
@@ -24,13 +26,39 @@
             </div>
           }
           <div class="case-study__tag">{{ project.subtitle }}</div>
-          @if (project.comingSoon) {
+          @if (project.comingSoon || !project.url) {
             <div class="case-study__soon-badge">Enterprise</div>
           }
         </div>
         <div class="case-study__body">
           <h2>{{ project.title }}</h2>
           <p>{{ project.outcome }}</p>
+          @if (project.challenge || project.work || project.result) {
+            <div class="case-study__narrative">
+              @if (project.challenge) {
+                <div class="case-study__detail">
+                  <span class="case-study__detail-label">Challenge</span>
+                  <p>{{ project.challenge }}</p>
+                </div>
+              }
+              @if (project.work.length) {
+                <div class="case-study__detail">
+                  <span class="case-study__detail-label">What changed</span>
+                  <ul class="case-study__detail-list">
+                    @for (item of project.work; track item) {
+                      <li>{{ item }}</li>
+                    }
+                  </ul>
+                </div>
+              }
+              @if (project.result) {
+                <div class="case-study__detail">
+                  <span class="case-study__detail-label">Outcome</span>
+                  <p>{{ project.result }}</p>
+                </div>
+              }
+            </div>
+          }
           <div class="case-study__metrics">
             @for (m of project.metrics; track m.label) {
               <div class="metric">
@@ -101,7 +129,7 @@
               <div class="repo-card__footer">
                 <span class="repo-card__date">{{ formatDate(repo.updated_at) }}</span>
                 @if (repo.homepage) {
-                  <span class="repo-card__live">↗ live</span>
+                  <span class="repo-card__live">-&gt; live</span>
                 }
               </div>
             </a>

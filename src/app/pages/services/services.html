@@ -3,7 +3,7 @@
   <div class="page-header container">
     <p class="label">What we offer</p>
     <h1>Services that<br><em>move the needle.</em></h1>
-    <p class="page-header__sub">No fluff. Just the capabilities that matter for modern web.</p>
+    <p class="page-header__sub">No fluff. Just the capabilities that matter for modern web, local visibility, and operationally useful software from Broken Arrow to the wider Oklahoma market.</p>
   </div>
 
   <section class="services-list section container">
@@ -21,10 +21,9 @@
             }
           </ul>
 
-          <!-- Demo: Live product card -->
           @if (service.demo === 'product') {
             <div class="service-demo">
-              <div class="service-demo__label">// try it · type your brand</div>
+              <div class="service-demo__label">// try it / type your brand</div>
               <div class="service-demo__inputs">
                 <input class="service-demo__input" type="text" placeholder="Brand name"
                   [value]="productName()"
@@ -39,16 +38,15 @@
                   <span class="product-card-preview__eyebrow">// featured product</span>
                   <div class="product-card-preview__name">{{ productName() || 'Brand Name' }}</div>
                   <div class="product-card-preview__tag">{{ productTagline() || 'Your tagline here.' }}</div>
-                  <div class="product-card-preview__cta">Shop Now →</div>
+                  <div class="product-card-preview__cta">Shop Now -&gt;</div>
                 </div>
               </div>
             </div>
           }
 
-          <!-- Demo: Google SERP preview -->
           @if (service.demo === 'serp') {
             <div class="service-demo">
-              <div class="service-demo__label">// try it · see your Google result</div>
+              <div class="service-demo__label">// try it / see your Google result</div>
               <div class="service-demo__inputs">
                 <input class="service-demo__input" type="text" placeholder="Business name"
                   [value]="serpBusiness()"
@@ -65,7 +63,7 @@
                   <span class="serp-preview__favicon">G</span>
                   <div>
                     <div class="serp-preview__domain">{{ serpDisplay() }}</div>
-                    <div class="serp-preview__breadcrumb">{{ serpDisplay() }} › home</div>
+                    <div class="serp-preview__breadcrumb">{{ serpDisplay() }} &gt; home</div>
                   </div>
                 </div>
                 <div class="serp-preview__title">{{ serpTitle() }}</div>
@@ -74,13 +72,12 @@
             </div>
           }
 
-          <!-- Demo: 3D card (WebGL) -->
           @if (service.demo === 'webgl') {
             <div class="service-demo">
-              <div class="service-demo__label">// live WebGL · move your mouse</div>
+              <div class="service-demo__label">// live WebGL / move your mouse</div>
               <canvas #miniCanvas class="service-demo__canvas"></canvas>
               <div class="service-demo__note">
-                Real-time lighting, material shaders, mouse parallax — running in your browser right now.
+                Real-time lighting, material shaders, mouse parallax - running in your browser right now.
               </div>
             </div>
           }
@@ -88,6 +85,54 @@
         </div>
       </div>
     }
+  </section>
+
+  <section class="service-breakdowns section container">
+    <p class="label">What Each Service Solves</p>
+    <div class="service-breakdowns__grid">
+      @for (item of serviceBreakdowns; track item.title) {
+        <article class="service-breakdown">
+          <div class="service-breakdown__header">
+            <h2>{{ item.title }}</h2>
+            <p>{{ item.intro }}</p>
+          </div>
+          <div class="service-breakdown__body">
+            <ul class="service-breakdown__points">
+              @for (point of item.points; track point) {
+                <li>{{ point }}</li>
+              }
+            </ul>
+            <div class="service-breakdown__outcomes">
+              @for (outcome of item.outcomes; track outcome) {
+                <span>{{ outcome }}</span>
+              }
+            </div>
+          </div>
+        </article>
+      }
+    </div>
+  </section>
+
+  <section class="service-positioning section container">
+    <p class="label">Who this is for</p>
+    <div class="service-positioning__grid">
+      @for (item of positioning; track item) {
+        <div class="service-positioning__card">
+          <p>{{ item }}</p>
+        </div>
+      }
+    </div>
+  </section>
+
+  <section class="proof-strip section container">
+    <p class="label">Why It Works</p>
+    <div class="proof-strip__grid">
+      @for (item of proofSignals; track item) {
+        <div class="proof-strip__card">
+          <p>{{ item }}</p>
+        </div>
+      }
+    </div>
   </section>
 
   <section class="process section">
@@ -98,7 +143,7 @@
         <div class="process__step">
           <span class="process__step-num">01</span>
           <h3>Discovery</h3>
-          <p>We start with a conversation. Goals, audience, timeline, budget. No forms, no decks — just clarity.</p>
+          <p>We start with a conversation. Goals, audience, timeline, budget. No forms, no decks - just clarity.</p>
         </div>
         <div class="process__step">
           <span class="process__step-num">02</span>
@@ -119,9 +164,53 @@
     </div>
   </section>
 
+  <section class="fit-grid section container">
+    <p class="label">Engagement Fit</p>
+    <div class="fit-grid__wrap">
+      @for (group of engagementFits; track group.kind) {
+        <article class="fit-card">
+          <h3>{{ group.kind }}</h3>
+          <ul>
+            @for (item of group.bullets; track item) {
+              <li>{{ item }}</li>
+            }
+          </ul>
+        </article>
+      }
+    </div>
+  </section>
+
+  <section class="service-answers section container">
+    <p class="label">Common questions</p>
+    <div class="service-answers__grid">
+      @for (item of serviceQuestions; track item.question) {
+        <article class="service-answer">
+          <h3>{{ item.question }}</h3>
+          <p>{{ item.answer }}</p>
+        </article>
+      }
+    </div>
+  </section>
+
+  <section class="service-reading section container">
+    <p class="label">Read Next</p>
+    <div class="service-reading__grid">
+      <article class="service-reading__card">
+        <h3>What GEO actually means for local businesses</h3>
+        <p>A plain-English article on how GEO fits with SEO, structured data, and clearer website messaging without the usual hype.</p>
+        <a routerLink="/insights/what-geo-means-for-local-businesses" class="btn">Read the article -&gt;</a>
+      </article>
+      <article class="service-reading__card">
+        <h3>What manufacturers actually need from ERP-connected tooling</h3>
+        <p>A grounded look at what useful ERP-connected software should actually do for manufacturing teams, planners, and operations.</p>
+        <a routerLink="/insights/what-manufacturers-actually-need-from-erp-connected-tooling" class="btn">Read the article -&gt;</a>
+      </article>
+    </div>
+  </section>
+
   <div class="services-cta container">
     <h2>Let's scope<br><em>your project.</em></h2>
-    <a routerLink="/contact" class="btn btn--filled">Start a conversation →</a>
+    <a routerLink="/contact" class="btn btn--filled">Start a conversation -&gt;</a>
   </div>
 
 </div>

@@ -18,11 +18,11 @@
     <div class="hero__modes">
       <div class="hero__mode">
         <span class="hero__mode-label">// Enterprise</span>
-        <p>Business Central · SAP · SyteLine · ERP Integration · Workflow Automation</p>
+        <p>Business Central / SAP / SyteLine / ERP Integration / Workflow Automation</p>
       </div>
       <div class="hero__mode hero__mode--edge">
         <span class="hero__mode-label">// Bleeding Edge</span>
-        <p>WebGL · GLSL Shaders · Three.js · Generative · Browser APIs</p>
+        <p>WebGL / GLSL Shaders / Three.js / Generative / Browser APIs</p>
       </div>
     </div>
   </div>
@@ -55,7 +55,8 @@
       </div>
       <div class="about__right">
         <p>Localhouse Designs is a boutique web development studio that lives in two worlds: modern Angular builds for consumer and brand clients, and enterprise integrations for teams running on Business Central, SAP, or Infor SyteLine.</p>
-        <p>That ERP background isn't a side note — it's the reason we understand operational complexity, know what floor-level users actually need, and can build tooling that fits inside the reality of how manufacturing and supply chain teams work.</p>
+        <p>That ERP background isn't a side note - it's the reason we understand operational complexity, know what floor-level users actually need, and can build tooling that fits inside the reality of how manufacturing and supply chain teams work.</p>
+        <p>Based in Broken Arrow, Oklahoma, the studio works across the Tulsa market, the wider state, and remote engagements that have reached as far as Sacramento, California.</p>
         <div class="about__stats">
           <div class="about__stat">
             <span class="about__stat-num">4</span>
@@ -66,11 +67,26 @@
             <span class="about__stat-label">Schema valid</span>
           </div>
           <div class="about__stat">
-            <span class="about__stat-num">∞</span>
+            <span class="about__stat-num">A lot</span>
             <span class="about__stat-label">Coffee consumed</span>
           </div>
         </div>
       </div>
+    </div>
+  </div>
+</section>
+
+<section class="signal-strip section">
+  <div class="container">
+    <p class="label">Entity signals</p>
+    <div class="signal-strip__grid">
+      @for (fact of trustFacts; track fact.label) {
+        <div class="signal-card">
+          <span class="signal-card__label">{{ fact.label }}</span>
+          <h3>{{ fact.value }}</h3>
+          <p>{{ fact.detail }}</p>
+        </div>
+      }
     </div>
   </div>
 </section>
@@ -89,7 +105,42 @@
       }
     </div>
     <div class="services-preview__cta">
-      <a routerLink="/services" class="btn btn--accent">All Services →</a>
+      <a routerLink="/services" class="btn btn--accent">All Services -&gt;</a>
+    </div>
+  </div>
+</section>
+
+<section class="answers section">
+  <div class="container">
+    <div class="answers__intro">
+      <p class="label">Answer-ready</p>
+      <h2>Clear facts.<br><em>Easy to extract.</em></h2>
+    </div>
+    <div class="answers__grid">
+      @for (item of answerBlocks; track item.question) {
+        <article class="answer-card">
+          <h3>{{ item.question }}</h3>
+          <p>{{ item.answer }}</p>
+        </article>
+      }
+    </div>
+  </div>
+</section>
+
+<section class="insights-preview section">
+  <div class="container">
+    <div class="insights-preview__header">
+      <p class="label">Insights</p>
+      <a routerLink="/insights" class="btn btn--accent">View all -&gt;</a>
+    </div>
+    <div class="insights-preview__grid">
+      @for (item of insightCards; track item.route) {
+        <a [routerLink]="item.route" class="insight-preview-card">
+          <span class="insight-preview-card__tag">{{ item.tag }}</span>
+          <h3>{{ item.title }}</h3>
+          <p>{{ item.desc }}</p>
+        </a>
+      }
     </div>
   </div>
 </section>
@@ -99,13 +150,13 @@
   <div class="container">
     <div class="work-preview__header">
       <p class="label">Selected work</p>
-      <a routerLink="/work" class="btn btn--accent">View all →</a>
+      <a routerLink="/work" class="btn btn--accent">View all -&gt;</a>
     </div>
     <div class="work-preview__grid">
       @for (project of featuredProjects; track project.title) {
         <a [href]="project.url" target="_blank" rel="noopener" class="project-card">
           <div class="project-card__preview">
-            <iframe [src]="safeUrl(project.url)" frameborder="0" scrolling="no" loading="lazy" tabindex="-1" aria-hidden="true"></iframe>
+            <app-preview-shell [previewUrl]="project.previewUrl" [domain]="project.previewDomain" />
             <span class="project-card__tag">{{ project.tag }}</span>
           </div>
           <div class="project-card__info">
@@ -127,6 +178,6 @@
 <section class="cta-band">
   <div class="container">
     <h2>Ready to build something<br><em>worth finding?</em></h2>
-    <a routerLink="/contact" class="btn btn--filled">Let's talk →</a>
+    <a routerLink="/contact" class="btn btn--filled">Let's talk -&gt;</a>
   </div>
 </section>
