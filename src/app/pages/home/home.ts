@@ -44,7 +44,7 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
     {
       title: 'North Styles',
       desc: 'Astro rebuild for a Tulsa grooming studio with stronger local SEO, AEO, trust content, and a cleaner booking path.',
-      url: 'https://northstyles.com',
+      url: 'https://north-styles.com/',
       bg: 'linear-gradient(135deg, #091325 0%, #20365c 100%)',
       tag: 'Astro / Local SEO',
       stack: ['Astro', 'Tailwind', 'JSON-LD', 'AEO']

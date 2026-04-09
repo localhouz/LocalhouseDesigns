@@ -38,8 +38,8 @@ export class WorkComponent implements OnInit {
     {
       title: 'North Styles',
       subtitle: 'Local grooming brand site',
-      url: 'https://northstyles.com',
-      previewUrl: 'https://northstyles.com',
+      url: 'https://north-styles.com/',
+      previewUrl: 'https://north-styles.com/',
       imageUrl: '',
       outcome: 'Premium local business site rebuilt with stronger SEO, GEO, and AEO foundations. Added dedicated About and Contact flows, local schema, answer-ready FAQ content, trust-building testimonials, and performance-focused image optimization.',
       stack: ['Astro', 'Tailwind', 'JSON-LD', 'Local SEO', 'AEO'],
@@ -152,7 +152,7 @@ export class WorkComponent implements OnInit {
           itemListElement: [
             {
               '@type': 'ListItem', position: 1,
-              url: 'https://northstyles.com',
+              url: 'https://north-styles.com/',
               name: 'North Styles',
               description: 'Astro-based local grooming brand site with dedicated About and Contact pages, local business schema, FAQPage schema, performance image optimization, and stronger SEO, GEO, and AEO coverage.'
             },
