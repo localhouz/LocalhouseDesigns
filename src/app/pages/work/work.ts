@@ -1,6 +1,7 @@
 import { Component, inject, OnInit, signal } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
+import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { SeoService } from '../../shared/seo/seo.service';
 
 interface Repo {
@@ -24,6 +25,11 @@ interface Repo {
 export class WorkComponent implements OnInit {
   private seo = inject(SeoService);
   private http = inject(HttpClient);
+  private sanitizer = inject(DomSanitizer);
+
+  safeUrl(url: string): SafeResourceUrl {
+    return this.sanitizer.bypassSecurityTrustResourceUrl(url);
+  }
 
   repos = signal<Repo[]>([]);
   loading = signal(true);
@@ -33,6 +39,7 @@ export class WorkComponent implements OnInit {
       title: 'North Styles',
       subtitle: 'Local grooming brand site',
       url: 'https://north-styles.com/',
+      previewUrl: 'https://north-styles.com/',
       imageUrl: '',
       outcome: 'Premium local business site rebuilt with stronger SEO, GEO, and AEO foundations. Added dedicated About and Contact flows, local schema, answer-ready FAQ content, trust-building testimonials, and performance-focused image optimization.',
       stack: ['Astro', 'Tailwind', 'JSON-LD', 'Local SEO', 'AEO'],
@@ -47,6 +54,7 @@ export class WorkComponent implements OnInit {
       title: 'NorCal Sauce Worx',
       subtitle: 'Co-packing brand site',
       url: 'https://norcalsauceworx.com',
+      previewUrl: 'https://norcalsauceworx.com',
       imageUrl: '',
       outcome: 'Quote wizard, Netlify Forms, FAQPage + HowTo + Service schemas, sitemap, full GEO coverage.',
       stack: ['Angular 21', 'SCSS', 'Netlify Forms', 'JSON-LD', 'Schema.org'],
@@ -61,6 +69,7 @@ export class WorkComponent implements OnInit {
       title: 'Prescribed Burn Sauces',
       subtitle: 'E-commerce brand site',
       url: 'https://prescribedburnsauces.com',
+      previewUrl: 'https://prescribedburnsauces.com',
       imageUrl: '',
       outcome: 'WebGL hero, 10 product schemas, GA4, Google Search Console verified, 26 rich result items all valid.',
       stack: ['Angular 21', 'Three.js', 'GA4', 'Schema.org', 'Netlify DNS'],
@@ -75,7 +84,8 @@ export class WorkComponent implements OnInit {
       title: 'OpsSuite',
       subtitle: 'Enterprise Excel add-in',
       url: '',
-      imageUrl: '/OpsSuite.png',
+      previewUrl: '',
+      imageUrl: 'OpsSuite.png',
       outcome: 'Unified 7 legacy VBA add-ins into a single C# VSTO Excel ribbon — fully deployed, API-updateable without touching the client machine. Covers capacity planning, master scheduling, exception processing, louver consumption, and purchasing workflows across multiple departments.',
       stack: ['C#', 'VSTO', '.NET Framework', 'SQL Server', 'REST API', 'Excel'],
       metrics: [
@@ -89,6 +99,7 @@ export class WorkComponent implements OnInit {
       title: 'Operations Dashboard',
       subtitle: 'Internal enterprise tooling',
       url: '',
+      previewUrl: '',
       imageUrl: '',
       outcome: 'Full-stack operations dashboard built for internal manufacturing management. Custom BOM programs, workflow automation, and real-time production data. Screenshot pending environment spin-up.',
       stack: ['Angular', 'REST API', 'Workflow Engine', 'BOM Systems', 'Data Viz'],

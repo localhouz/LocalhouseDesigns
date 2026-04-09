@@ -52,13 +52,6 @@
     );
   }
 
-  &__placeholder--live {
-    min-height: 260px;
-    background:
-      linear-gradient(135deg, rgba(255,60,0,0.08), rgba(10,10,18,0.02)),
-      linear-gradient(180deg, rgba(245,245,240,0.96), rgba(232,232,228,0.96));
-  }
-
   &__placeholder-label {
     font-family: var(--font-mono);
     font-size: 0.65rem;
@@ -86,6 +79,15 @@
     overflow: hidden;
     position: relative;
     background: var(--surface);
+
+    iframe {
+      width: 1200px;
+      height: 900px;
+      border: none;
+      transform: scale(0.42);
+      transform-origin: top left;
+      pointer-events: none;
+    }
 
     &--screenshot {
       min-height: 160px;

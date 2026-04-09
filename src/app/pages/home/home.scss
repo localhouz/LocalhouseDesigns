@@ -314,25 +314,15 @@
     overflow: hidden;
     position: relative;
     background: var(--surface);
-  }
 
-  &__placeholder {
-    width: 100%;
-    height: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background:
-      linear-gradient(135deg, rgba(255,60,0,0.08), rgba(10,10,18,0.02)),
-      linear-gradient(180deg, rgba(245,245,240,0.96), rgba(232,232,228,0.96));
-  }
-
-  &__placeholder-label {
-    font-family: var(--font-mono);
-    font-size: 0.65rem;
-    letter-spacing: 0.14em;
-    text-transform: uppercase;
-    color: rgba(10,10,18,0.42);
+    iframe {
+      width: 1200px;
+      height: 750px;
+      border: none;
+      transform: scale(0.42);
+      transform-origin: top left;
+      pointer-events: none;
+    }
   }
 
   &__tag {

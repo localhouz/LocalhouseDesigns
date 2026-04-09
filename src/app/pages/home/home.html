@@ -105,9 +105,7 @@
       @for (project of featuredProjects; track project.title) {
         <a [href]="project.url" target="_blank" rel="noopener" class="project-card">
           <div class="project-card__preview">
-            <div class="project-card__placeholder">
-              <span class="project-card__placeholder-label">Live site opens in a new tab</span>
-            </div>
+            <iframe [src]="safeUrl(project.url)" frameborder="0" scrolling="no" loading="lazy" tabindex="-1" aria-hidden="true"></iframe>
             <span class="project-card__tag">{{ project.tag }}</span>
           </div>
           <div class="project-card__info">

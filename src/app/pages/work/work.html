@@ -14,12 +14,10 @@
         [attr.role]="project.comingSoon ? null : 'link'"
         (click)="!project.comingSoon && openProject(project.url)">
         <div class="case-study__visual" [class.case-study__visual--screenshot]="project.imageUrl">
-          @if (project.imageUrl) {
+          @if (!project.comingSoon && project.previewUrl) {
+            <iframe [src]="safeUrl(project.previewUrl)" frameborder="0" scrolling="no" loading="lazy" tabindex="-1" aria-hidden="true"></iframe>
+          } @else if (project.imageUrl) {
             <img [src]="project.imageUrl" [alt]="project.title" class="case-study__screenshot" loading="lazy">
-          } @else if (!project.comingSoon && project.url) {
-            <div class="case-study__placeholder case-study__placeholder--live">
-              <span class="case-study__placeholder-label">Live site preview opens in a new tab</span>
-            </div>
           } @else {
             <div class="case-study__placeholder">
               <span class="case-study__placeholder-label">// screenshot pending</span>
