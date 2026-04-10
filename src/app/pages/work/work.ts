@@ -100,6 +100,28 @@ export class WorkComponent implements OnInit {
       comingSoon: false,
     },
     {
+      title: 'Local GEO Standard',
+      subtitle: 'Results-only case study',
+      url: '',
+      previewUrl: '',
+      imageUrl: '',
+      outcome: 'Results-only GEO/SEO case study focused on local visibility, answer-ready content, and faster booking or purchase paths across three real client sites.',
+      challenge: 'Local businesses often have scattered NAP data, unclear contact flows, and weak structured signals, which makes them easy to miss in search and answer engines.',
+      work: [
+        'Audited NAP placement, schema coverage, and CTA clarity for three live brands.',
+        'Applied a consistent Local GEO checklist and scored each site before and after.',
+        'Captured proof of change without exposing internal methods or templates.'
+      ],
+      result: 'The public case study shows the outcomes and score lift without revealing the underlying implementation. Full audits are available by request.',
+      stack: ['Local GEO', 'Schema.org', 'On-page SEO', 'AEO'],
+      metrics: [
+        { val: '3', label: 'Sites audited' },
+        { val: 'Score lift', label: 'Before -> After' },
+        { val: 'Results-only', label: 'Public view' },
+      ],
+      comingSoon: false,
+    },
+    {
       title: 'OpsSuite',
       subtitle: 'Enterprise Excel add-in',
       url: '',
@@ -118,28 +140,6 @@ export class WorkComponent implements OnInit {
         { val: '7->1', label: 'Add-ins unified' },
         { val: 'API', label: 'Remote updates' },
         { val: 'Live', label: 'In production' },
-      ],
-      comingSoon: false,
-    },
-    {
-      title: 'Eads Cooling Solutions',
-      subtitle: 'ERP workflow automation',
-      url: '',
-      previewUrl: '',
-      imageUrl: '',
-      outcome: 'Built internal Angular and C# tools tied to ERP and production workflows, with a major focus on BOM, routing, reporting, and day-to-day operational accuracy. Wrote the migration scripts used in the Microsoft Business Central to Infor SyteLine cutover, helping deliver a zero-downtime transition with no data loss.',
-      challenge: 'The work involved real manufacturing and ERP friction: manual handling, workflow bottlenecks, and high-risk business data movement during a major ERP transition.',
-      work: [
-        'Built internal Angular and C# tools for workflow visibility, reporting, and execution.',
-        'Automated BOM and routing-related processes to reduce manual effort and improve data quality.',
-        'Developed the migration scripts used in the Microsoft Business Central to Infor SyteLine cutover.'
-      ],
-      result: 'The result was a stronger internal workflow foundation and a successful ERP migration completed with zero downtime and no data loss.',
-      stack: ['Angular', 'C#', 'Business Central', 'Infor SyteLine', 'BOM Systems', 'Workflow Automation'],
-      metrics: [
-        { val: '0', label: 'Downtime at cutover' },
-        { val: '100%', label: 'Data retained' },
-        { val: 'BOM', label: 'Workflow automation' },
       ],
       comingSoon: false,
     },
@@ -203,13 +203,13 @@ export class WorkComponent implements OnInit {
             },
             {
               '@type': 'ListItem', position: 4,
-              name: 'OpsSuite',
-              description: 'C# VSTO Excel ribbon add-in unifying 7 legacy VBA add-ins into one deployed application with API-updateable behavior. Covers capacity planning, master scheduling, exception processing, and purchasing workflows.'
+              name: 'Local GEO Standard',
+              description: 'Results-only case study across three local brands showing before and after improvements in local visibility signals. Full audit available by request.'
             },
             {
               '@type': 'ListItem', position: 5,
-              name: 'Eads Cooling Solutions',
-              description: 'Internal software and ERP workflow automation work including Angular and C# applications, BOM and routing process improvements, and migration scripts used for a zero-downtime Microsoft Business Central to Infor SyteLine cutover.'
+              name: 'OpsSuite',
+              description: 'C# VSTO Excel ribbon add-in unifying 7 legacy VBA add-ins into one deployed application with API-updateable behavior. Covers capacity planning, master scheduling, exception processing, and purchasing workflows.'
             }
           ]
         }
