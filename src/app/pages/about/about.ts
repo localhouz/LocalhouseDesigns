@@ -126,6 +126,7 @@ export class AboutComponent implements OnInit {
             'Routing workflows',
             'Product management',
             'Reporting and analytics',
+            'Dashboard design',
             'SEO',
             'GEO',
             'Structured data'

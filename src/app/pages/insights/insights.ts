@@ -35,6 +35,18 @@ export class InsightsComponent implements OnInit {
       desc: 'A practical comparison of custom sites versus booking-platform pages when local trust, local SEO, and answer-ready content actually matter.',
       route: '/insights/why-a-custom-site-beats-a-booking-platform-page-for-local-search',
       tag: 'Local SEO'
+    },
+    {
+      title: 'Why most dashboards do not fix the workflow',
+      desc: 'A practical article on why extra visibility often fails to remove friction and what better internal tooling should do instead.',
+      route: '/insights/why-most-dashboards-do-not-fix-the-workflow',
+      tag: 'ERP / Workflows'
+    },
+    {
+      title: 'What local service pages need to rank and get cited',
+      desc: 'A grounded look at what makes a service page useful for local SEO, AI search citations, and actual trust.',
+      route: '/insights/what-local-service-pages-need-to-rank-and-get-cited',
+      tag: 'Local SEO'
     }
   ];
 
@@ -68,7 +80,9 @@ export class InsightsComponent implements OnInit {
             { '@type': 'ListItem', position: 1, url: `${base}/insights/what-geo-means-for-local-businesses`, name: 'What GEO actually means for local businesses' },
             { '@type': 'ListItem', position: 2, url: `${base}/insights/what-manufacturers-actually-need-from-erp-connected-tooling`, name: 'What manufacturers actually need from ERP-connected tooling' },
             { '@type': 'ListItem', position: 3, url: `${base}/insights/how-structured-data-helps-ai-search-understand-your-business`, name: 'How structured data helps AI search understand your business' },
-            { '@type': 'ListItem', position: 4, url: `${base}/insights/why-a-custom-site-beats-a-booking-platform-page-for-local-search`, name: 'Why a custom site beats a booking-platform page for local search' }
+            { '@type': 'ListItem', position: 4, url: `${base}/insights/why-a-custom-site-beats-a-booking-platform-page-for-local-search`, name: 'Why a custom site beats a booking-platform page for local search' },
+            { '@type': 'ListItem', position: 5, url: `${base}/insights/why-most-dashboards-do-not-fix-the-workflow`, name: 'Why most dashboards do not fix the workflow' },
+            { '@type': 'ListItem', position: 6, url: `${base}/insights/what-local-service-pages-need-to-rank-and-get-cited`, name: 'What local service pages need to rank and get cited' }
           ]
         }
       ]

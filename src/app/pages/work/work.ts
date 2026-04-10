@@ -106,6 +106,13 @@ export class WorkComponent implements OnInit {
       previewUrl: '',
       imageUrl: 'OpsSuite.png',
       outcome: 'Unified 7 legacy VBA add-ins into a single C# VSTO Excel ribbon - fully deployed, API-updateable without touching the client machine. Covers capacity planning, master scheduling, exception processing, louver consumption, and purchasing workflows across multiple departments.',
+      challenge: 'The existing Excel tooling was fragmented across multiple legacy VBA add-ins, which made maintenance harder, slowed updates, and spread operational workflows across too many disconnected surfaces.',
+      work: [
+        'Rebuilt the tooling as a single C# VSTO ribbon application that consolidated seven separate add-ins into one deployable system.',
+        'Connected the add-in to APIs and SQL-backed business logic so updates could be delivered centrally without touching each client machine.',
+        'Covered real operational workflows including capacity planning, master scheduling, exception processing, louver consumption, and purchasing support.'
+      ],
+      result: 'OpsSuite turned scattered spreadsheet tooling into one maintainable production application, giving operations teams a cleaner workflow and making ongoing updates dramatically easier to manage.',
       stack: ['C#', 'VSTO', '.NET Framework', 'SQL Server', 'REST API', 'Excel'],
       metrics: [
         { val: '7->1', label: 'Add-ins unified' },
@@ -197,7 +204,7 @@ export class WorkComponent implements OnInit {
             {
               '@type': 'ListItem', position: 4,
               name: 'OpsSuite',
-              description: 'C# VSTO Excel ribbon add-in unifying 7 legacy VBA add-ins. Fully deployed and API-updateable without touching client machines. Covers capacity planning, master scheduling, exception processing, and purchasing workflows.'
+              description: 'C# VSTO Excel ribbon add-in unifying 7 legacy VBA add-ins into one deployed application with API-updateable behavior. Covers capacity planning, master scheduling, exception processing, and purchasing workflows.'
             },
             {
               '@type': 'ListItem', position: 5,

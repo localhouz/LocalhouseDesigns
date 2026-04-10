@@ -8,6 +8,8 @@ export const routes: Routes = [
   { path: 'insights/what-manufacturers-actually-need-from-erp-connected-tooling', loadComponent: () => import('./pages/erp-article/erp-article').then(m => m.ErpArticleComponent) },
   { path: 'insights/how-structured-data-helps-ai-search-understand-your-business', loadComponent: () => import('./pages/schema-article/schema-article').then(m => m.SchemaArticleComponent) },
   { path: 'insights/why-a-custom-site-beats-a-booking-platform-page-for-local-search', loadComponent: () => import('./pages/platform-article/platform-article').then(m => m.PlatformArticleComponent) },
+  { path: 'insights/why-most-dashboards-do-not-fix-the-workflow', loadComponent: () => import('./pages/dashboard-article/dashboard-article').then(m => m.DashboardArticleComponent) },
+  { path: 'insights/what-local-service-pages-need-to-rank-and-get-cited', loadComponent: () => import('./pages/service-pages-article/service-pages-article').then(m => m.ServicePagesArticleComponent) },
   { path: 'work',     loadComponent: () => import('./pages/work/work').then(m => m.WorkComponent) },
   { path: 'services', loadComponent: () => import('./pages/services/services').then(m => m.ServicesComponent) },
   { path: 'contact',  loadComponent: () => import('./pages/contact/contact').then(m => m.ContactComponent) },

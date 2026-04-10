@@ -94,6 +94,18 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
       desc: 'A grounded look at why custom sites create more room for local SEO, trust signals, and answer-ready content than booking-platform shells.',
       route: '/insights/why-a-custom-site-beats-a-booking-platform-page-for-local-search',
       tag: 'Local SEO'
+    },
+    {
+      title: 'Why most dashboards do not fix the workflow',
+      desc: 'A practical article on why more visibility often fails to reduce friction in ERP and operations work.',
+      route: '/insights/why-most-dashboards-do-not-fix-the-workflow',
+      tag: 'ERP / Workflows'
+    },
+    {
+      title: 'What local service pages need to rank and get cited',
+      desc: 'A grounded look at what makes a service page more useful for local SEO, AI search, and trust.',
+      route: '/insights/what-local-service-pages-need-to-rank-and-get-cited',
+      tag: 'Local SEO'
     }
   ];
 
