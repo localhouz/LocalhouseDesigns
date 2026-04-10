@@ -104,19 +104,19 @@ export class WorkComponent implements OnInit {
       subtitle: 'Results-only case study',
       url: '',
       previewUrl: '',
-      imageUrl: '',
-      outcome: 'Results-only GEO/SEO case study focused on local visibility, answer-ready content, and faster booking or purchase paths across three real client sites.',
-      challenge: 'Local businesses often have scattered NAP data, unclear contact flows, and weak structured signals, which makes them easy to miss in search and answer engines.',
+      imageUrl: 'local-geo-results.svg',
+      outcome: 'Results-only GEO/SEO case study showing measurable lifts across North Styles, Prescribed Burn Sauces, and NorCal Sauce Worx while keeping the implementation private.',
+      challenge: 'All three sites had different gaps: inconsistent NAP visibility, unclear contact flows, and incomplete structured signals that made local discovery less reliable.',
       work: [
-        'Audited NAP placement, schema coverage, and CTA clarity for three live brands.',
-        'Applied a consistent Local GEO checklist and scored each site before and after.',
-        'Captured proof of change without exposing internal methods or templates.'
+        'Scored each site against a fixed checklist: NAP placement, LocalBusiness schema, contact clarity, CTA path, map/directions, FAQs, and reviews.',
+        'Applied the same scoring rubric before and after targeted fixes.',
+        'Shared results only, withholding templates and implementation details.'
       ],
-      result: 'The public case study shows the outcomes and score lift without revealing the underlying implementation. Full audits are available by request.',
+      result: 'The public case study shows the outcome and score lift, plus why each site moved (clearer NAP placement, tighter contact flow, and stronger structured signals). Full audits are available by request.',
       stack: ['Local GEO', 'Schema.org', 'On-page SEO', 'AEO'],
       metrics: [
+        { val: '+26', label: 'Avg score lift' },
         { val: '3', label: 'Sites audited' },
-        { val: 'Score lift', label: 'Before -> After' },
         { val: 'Results-only', label: 'Public view' },
       ],
       comingSoon: false,
