@@ -17,6 +17,65 @@
   &--hovering        { cursor: pointer; }
 }
 
+// Mini demo card
+.lab-mini {
+  position: absolute;
+  right: 2rem;
+  top: 6rem;
+  z-index: 12;
+  max-width: 320px;
+  background: rgba(2,4,10,0.85);
+  border: 1px solid rgba(255,60,0,0.25);
+  backdrop-filter: blur(10px);
+  padding: 1.25rem 1.4rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+  box-shadow: 0 16px 40px rgba(0,0,0,0.35);
+
+  &__label {
+    font-family: var(--font-mono);
+    font-size: 0.6rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: #ff3c00;
+  }
+
+  &__title {
+    font-family: var(--font-sans);
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: rgba(240,240,245,0.95);
+  }
+
+  &__desc {
+    font-size: 0.78rem;
+    color: rgba(240,240,245,0.55);
+    line-height: 1.6;
+  }
+
+  &__btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.55rem 0.9rem;
+    border: 1px solid rgba(255,60,0,0.5);
+    color: #ff3c00;
+    font-family: var(--font-mono);
+    font-size: 0.62rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    text-decoration: none;
+    transition: background 0.2s, color 0.2s, border-color 0.2s;
+
+    &:hover {
+      background: #ff3c00;
+      color: #fff;
+      border-color: #ff3c00;
+    }
+  }
+}
+
 // ── Overlays ──────────────────────────────────────────────────────────────────
 .lab-overlay {
   position: absolute;

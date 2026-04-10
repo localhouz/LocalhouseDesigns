@@ -5,6 +5,15 @@
     (click)="handleClick()">
   </canvas>
 
+  <div class="lab-mini">
+    <div class="lab-mini__label">New demo</div>
+    <div class="lab-mini__title">ERP Lite floor map</div>
+    <p class="lab-mini__desc">
+      A mock ERP front end that normalizes machine status into one readable floor view.
+    </p>
+    <a routerLink="/lab/erp-lite" class="lab-mini__btn">Open ERP Lite demo -&gt;</a>
+  </div>
+
   @if (loading()) {
     <div class="lab-overlay lab-loading">
       <div class="lab-loading__dots">
