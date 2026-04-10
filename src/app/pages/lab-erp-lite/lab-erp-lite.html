@@ -1,0 +1,113 @@
+<div class="erp-lite-page">
+  <div class="page-header container">
+    <p class="label">Lab</p>
+    <h1>ERP Lite<br><em>Floor Map.</em></h1>
+    <p class="page-header__sub">
+      A mock front end that turns ERP data into a live, readable floor view. No backend. No vendor lock. Just the UI
+      pattern and an adapter-friendly data model.
+    </p>
+  </div>
+
+  <section class="erp-lite-body section container">
+    <div class="erp-lite-grid">
+      <div class="erp-lite-panel">
+        <div class="erp-lite-panel__block">
+          <span class="erp-lite-panel__label">What this proves</span>
+          <ul>
+            <li>ERP data can be normalized into one UI model</li>
+            <li>Status and bottlenecks can be surfaced without ERP screens</li>
+            <li>A front end can be consistent even when the ERP is not</li>
+          </ul>
+        </div>
+        <div class="erp-lite-panel__block">
+          <span class="erp-lite-panel__label">Filter by</span>
+          <div class="erp-lite-filters">
+            <select [ngModel]="lineFilter()" (ngModelChange)="lineFilter.set($event)">
+              <option value="all">All lines</option>
+              @for (line of lines(); track line) {
+                <option [value]="line">{{ line }}</option>
+              }
+            </select>
+            <select [ngModel]="statusFilter()" (ngModelChange)="statusFilter.set($event)">
+              <option value="all">All statuses</option>
+              @for (status of statuses(); track status) {
+                <option [value]="status">{{ status }}</option>
+              }
+            </select>
+            <select [ngModel]="shiftFilter()" (ngModelChange)="shiftFilter.set($event)">
+              <option value="all">All shifts</option>
+              @for (shift of shifts(); track shift) {
+                <option [value]="shift">{{ shift }}</option>
+              }
+            </select>
+          </div>
+        </div>
+
+        <div class="erp-lite-panel__block">
+          <span class="erp-lite-panel__label">Summary</span>
+          <div class="erp-lite-summary">
+            <div class="summary-card">
+              <span class="summary-card__val">{{ runningCount() }}</span>
+              <span class="summary-card__label">Running</span>
+            </div>
+            <div class="summary-card">
+              <span class="summary-card__val">{{ idleCount() }}</span>
+              <span class="summary-card__label">Idle</span>
+            </div>
+            <div class="summary-card summary-card--down">
+              <span class="summary-card__val">{{ downCount() }}</span>
+              <span class="summary-card__label">Down</span>
+            </div>
+            <div class="summary-card summary-card--setup">
+              <span class="summary-card__val">{{ setupCount() }}</span>
+              <span class="summary-card__label">Setup</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="erp-lite-map">
+        <div class="erp-lite-map__header">
+          <span class="erp-lite-map__label">Live floor map (mock)</span>
+          <span class="erp-lite-map__sub">Updated {{ lastUpdated() }}</span>
+        </div>
+
+        <div class="erp-lite-map__grid">
+          @for (machine of filteredMachines(); track machine.id) {
+            <div class="machine-card" [class.machine-card--down]="machine.status === 'Down'"
+              [class.machine-card--setup]="machine.status === 'Setup'"
+              [class.machine-card--idle]="machine.status === 'Idle'">
+              <div class="machine-card__top">
+                <span class="machine-card__name">{{ machine.name }}</span>
+                <span class="machine-card__line">{{ machine.line }}</span>
+              </div>
+              <div class="machine-card__meta">
+                <span class="machine-card__status">{{ machine.status }}</span>
+                <span class="machine-card__shift">{{ machine.shift }}</span>
+              </div>
+              <div class="machine-card__metrics">
+                <div>
+                  <span class="machine-card__metric-label">Throughput</span>
+                  <span class="machine-card__metric-val">{{ machine.throughput }}</span>
+                </div>
+                <div>
+                  <span class="machine-card__metric-label">Work Order</span>
+                  <span class="machine-card__metric-val">{{ machine.workOrderId }}</span>
+                </div>
+              </div>
+              <div class="machine-card__footer">
+                <span>Last heartbeat</span>
+                <span>{{ machine.lastHeartbeat }}</span>
+              </div>
+            </div>
+          }
+        </div>
+
+        <div class="erp-lite-map__footer">
+          <span class="erp-lite-map__note">Results-only demo. Adapter pattern and live ERP connectors available by request.</span>
+          <a routerLink="/contact" class="btn btn--accent">Request the full build -&gt;</a>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>

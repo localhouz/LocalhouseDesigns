@@ -6,6 +6,7 @@ export const serverRoutes: ServerRoute[] = [
   { path: 'services', renderMode: RenderMode.Prerender },
   { path: 'work', renderMode: RenderMode.Prerender },
   { path: 'contact', renderMode: RenderMode.Prerender },
+  { path: 'local-geo-audit', renderMode: RenderMode.Prerender },
   { path: 'insights', renderMode: RenderMode.Prerender },
   { path: 'insights/what-geo-means-for-local-businesses', renderMode: RenderMode.Prerender },
   { path: 'insights/what-manufacturers-actually-need-from-erp-connected-tooling', renderMode: RenderMode.Prerender },
@@ -15,5 +16,6 @@ export const serverRoutes: ServerRoute[] = [
   { path: 'insights/what-local-service-pages-need-to-rank-and-get-cited', renderMode: RenderMode.Prerender },
   // Lab uses Three.js + a Netlify function and stays client-only.
   { path: 'lab', renderMode: RenderMode.Client },
+  { path: 'lab/erp-lite', renderMode: RenderMode.Prerender },
   { path: '**', renderMode: RenderMode.Client },
 ];

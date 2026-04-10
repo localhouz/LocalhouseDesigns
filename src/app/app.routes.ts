@@ -13,6 +13,8 @@ export const routes: Routes = [
   { path: 'work',     loadComponent: () => import('./pages/work/work').then(m => m.WorkComponent) },
   { path: 'services', loadComponent: () => import('./pages/services/services').then(m => m.ServicesComponent) },
   { path: 'contact',  loadComponent: () => import('./pages/contact/contact').then(m => m.ContactComponent) },
+  { path: 'local-geo-audit', loadComponent: () => import('./pages/local-geo-audit/local-geo-audit').then(m => m.LocalGeoAuditComponent) },
   { path: 'lab',      loadComponent: () => import('./pages/lab/lab').then(m => m.LabComponent) },
+  { path: 'lab/erp-lite', loadComponent: () => import('./pages/lab-erp-lite/lab-erp-lite').then(m => m.LabErpLiteComponent) },
   { path: '**',       redirectTo: '' },
 ];

@@ -3,6 +3,7 @@ import {
   OnDestroy, OnInit, signal, ViewChild,
 } from '@angular/core';
 import { DecimalPipe } from '@angular/common';
+import { RouterLink } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import * as THREE from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
@@ -184,7 +185,7 @@ const ATMO_FRAG = /* glsl */`
 // ── Component ──────────────────────────────────────────────────────────────────
 @Component({
   selector: 'app-lab',
-  imports: [DecimalPipe],
+  imports: [DecimalPipe, RouterLink],
   templateUrl: './lab.html',
   styleUrl: './lab.scss',
 })
