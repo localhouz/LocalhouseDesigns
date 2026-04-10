@@ -1,0 +1,129 @@
+<div class="geo-audit-page">
+
+  <div class="page-header container">
+    <p class="label">Local GEO Audit</p>
+    <h1>Request a<br><em>Local GEO audit.</em></h1>
+    <p class="page-header__sub">
+      Results-only case study is public. The full audit is private. Share your business details and we will return a
+      clear scorecard, top fixes, and a prioritized action list.
+    </p>
+  </div>
+
+  <section class="geo-audit-body section container">
+    <div class="geo-audit-grid">
+
+      <div class="geo-audit-info">
+        <div class="geo-audit-info__block">
+          <span class="geo-audit-info__label">What you get</span>
+          <ul>
+            <li>Local GEO scorecard with before and after targets</li>
+            <li>Top 3 fixes that move the score fastest</li>
+            <li>Clear CTA and contact flow recommendations</li>
+          </ul>
+        </div>
+        <div class="geo-audit-info__block">
+          <span class="geo-audit-info__label">What we score</span>
+          <ul>
+            <li>NAP placement and consistency</li>
+            <li>LocalBusiness schema completeness</li>
+            <li>Contact clarity and directions flow</li>
+            <li>Services and FAQ readability</li>
+            <li>Review and trust signals</li>
+          </ul>
+        </div>
+        <div class="geo-audit-info__block">
+          <span class="geo-audit-info__label">Typical turnaround</span>
+          <span>3 to 5 business days</span>
+        </div>
+      </div>
+
+      @if (!submitted()) {
+        <form
+          name="local-geo-audit"
+          method="POST"
+          data-netlify="true"
+          netlify-honeypot="bot-field"
+          (ngSubmit)="onSubmit(auditForm)"
+          #auditForm="ngForm"
+          class="geo-audit-form"
+        >
+          <input type="hidden" name="form-name" value="local-geo-audit">
+          <input type="hidden" name="auditType" value="local-geo">
+          <p class="hidden"><label>Don't fill this out: <input name="bot-field"></label></p>
+
+          <div class="field">
+            <label for="name">Name *</label>
+            <input id="name" name="name" type="text" [(ngModel)]="name" required placeholder="Your name">
+          </div>
+
+          <div class="field">
+            <label for="email">Email *</label>
+            <input id="email" name="email" type="email" [(ngModel)]="email" required placeholder="you@email.com">
+          </div>
+
+          <div class="field field--full">
+            <label for="businessName">Business name *</label>
+            <input id="businessName" name="businessName" type="text" [(ngModel)]="businessName" required placeholder="Business or brand name">
+          </div>
+
+          <div class="field field--full">
+            <label for="website">Website *</label>
+            <input id="website" name="website" type="url" [(ngModel)]="website" required placeholder="https://">
+          </div>
+
+          <div class="field">
+            <label for="location">City / Region *</label>
+            <input id="location" name="location" type="text" [(ngModel)]="location" required placeholder="Tulsa, OK">
+          </div>
+
+          <div class="field">
+            <label for="businessType">Business type</label>
+            <select id="businessType" name="businessType" [(ngModel)]="businessType">
+              <option value="">Select type</option>
+              @for (opt of businessTypes; track opt) {
+                <option [value]="opt">{{ opt }}</option>
+              }
+            </select>
+          </div>
+
+          <div class="field field--full">
+            <label for="primaryGoal">Primary goal *</label>
+            <select id="primaryGoal" name="primaryGoal" [(ngModel)]="primaryGoal" required>
+              <option value="">Select goal</option>
+              @for (opt of goalOptions; track opt) {
+                <option [value]="opt">{{ opt }}</option>
+              }
+            </select>
+          </div>
+
+          <div class="field field--full">
+            <label for="platform">Current platform</label>
+            <select id="platform" name="platform" [(ngModel)]="platform">
+              <option value="">Select platform</option>
+              @for (opt of platformOptions; track opt) {
+                <option [value]="opt">{{ opt }}</option>
+              }
+            </select>
+          </div>
+
+          <div class="field field--full">
+            <label for="notes">Anything we should know?</label>
+            <textarea id="notes" name="notes" [(ngModel)]="notes" rows="5" placeholder="What is not working today? Any constraints?"></textarea>
+          </div>
+
+          <button type="submit" class="btn btn--filled" [disabled]="submitting()">
+            {{ submitting() ? 'Sending...' : 'Request the audit ->' }}
+          </button>
+        </form>
+      } @else {
+        <div class="geo-audit-success">
+          <span class="geo-audit-success__icon">OK</span>
+          <h2>Request received.</h2>
+          <p>We will review your site and respond within 24 hours with next steps.</p>
+        </div>
+      }
+
+    </div>
+  </section>
+
+</div>

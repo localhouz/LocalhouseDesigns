@@ -1,0 +1,143 @@
+.geo-audit-page { padding-top: 8rem; }
+
+.page-header {
+  padding: 4rem 0 2rem;
+  h1 {
+    font-size: clamp(3rem, 7vw, 6rem);
+    margin: 1.5rem 0 1rem;
+    em { font-style: normal; color: var(--accent); }
+  }
+  &__sub { color: rgba(10,10,18,0.55); font-size: 1.1rem; max-width: 720px; }
+}
+
+.geo-audit-grid {
+  display: grid;
+  grid-template-columns: 1fr 1.6fr;
+  gap: 6rem;
+  align-items: start;
+
+  @media (max-width: 768px) {
+    grid-template-columns: 1fr;
+    gap: 3rem;
+  }
+}
+
+.geo-audit-info {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  position: sticky;
+  top: 6rem;
+
+  &__block {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+
+    ul {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+      color: rgba(10,10,18,0.65);
+
+      li {
+        position: relative;
+        padding-left: 1.2rem;
+        font-size: 0.95rem;
+        line-height: 1.7;
+
+        &::before {
+          content: '>';
+          position: absolute;
+          left: 0;
+          color: var(--accent);
+          font-family: var(--font-mono);
+          font-size: 0.8rem;
+        }
+      }
+    }
+  }
+
+  &__label {
+    font-family: var(--font-mono);
+    font-size: 0.65rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: rgba(10,10,18,0.4);
+  }
+}
+
+.geo-audit-form {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+
+  &--full { grid-column: 1 / -1; }
+
+  label {
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: rgba(10,10,18,0.55);
+  }
+
+  input, textarea, select {
+    background: transparent;
+    border: 1px solid var(--border);
+    color: var(--fg);
+    font-family: var(--font-sans);
+    font-size: 0.95rem;
+    padding: 0.875rem 1rem;
+    outline: none;
+    transition: border-color 0.2s;
+    width: 100%;
+    resize: vertical;
+
+    &::placeholder { color: rgba(10,10,18,0.25); }
+    &:focus { border-color: var(--accent); }
+
+    option { background: var(--black); }
+  }
+}
+
+.hidden { display: none; }
+
+button[type="submit"] {
+  grid-column: 1 / -1;
+  justify-self: start;
+
+  &:disabled { opacity: 0.5; cursor: not-allowed; }
+}
+
+.geo-audit-success {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  padding: 4rem;
+  border: 1px solid var(--border);
+  text-align: center;
+  align-items: center;
+
+  &__icon {
+    width: 56px;
+    height: 56px;
+    background: var(--accent);
+    color: var(--black);
+    font-size: 1.5rem;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  h2 { font-size: 2.5rem; }
+  p { color: rgba(10,10,18,0.65); }
+}
