@@ -123,17 +123,25 @@
         <p class="label">Why this data</p>
         <h2>Real signals, not toy data.</h2>
         <p>
-          We used a public IoT manufacturing dataset because it contains real sensor readings that behave like shop-floor
-          signals. That lets us show how messy telemetry becomes clean, operationally useful information without relying
-          on vendor dashboards.
+          We chose IoT data because it is closest to what a shop floor actually produces: continuous, noisy, and fast.
+          ERP data usually arrives in batches. IoT lets us stress the UI model with real‑time style inputs while staying
+          vendor‑agnostic.
         </p>
       </div>
       <div class="erp-lite-explain__card">
-        <div class="erp-lite-explain__card-label">// what it shows</div>
+        <div class="erp-lite-explain__card-label">// what it shows today</div>
         <ul>
-          <li>Machine-level readings mapped into a simple status model.</li>
-          <li>Throughput-style signals derived from real numeric fields.</li>
-          <li>Consistent UI even when the upstream data is inconsistent.</li>
+          <li>Real sensor rows normalized into a machine status view.</li>
+          <li>Throughput-style signals derived from numeric fields.</li>
+          <li>A single UI model that stays stable across noisy inputs.</li>
+        </ul>
+      </div>
+      <div class="erp-lite-explain__card">
+        <div class="erp-lite-explain__card-label">// what we build next</div>
+        <ul>
+          <li>Adapter layer that maps ERP exports to this model.</li>
+          <li>Live refresh + change events instead of static pulls.</li>
+          <li>Role views for floor, planners, and leadership.</li>
         </ul>
       </div>
       <div class="erp-lite-explain__card">
