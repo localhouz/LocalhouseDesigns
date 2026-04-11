@@ -120,36 +120,93 @@
   <section class="erp-lite-explain section container">
     <div class="erp-lite-explain__grid">
       <div>
-        <p class="label">Why this data</p>
-        <h2>Real signals, not toy data.</h2>
+        <p class="label">Case study</p>
+        <h2>ERP Lite: turning black‑box ERP data into a readable floor view.</h2>
         <p>
-          We chose IoT data because it is closest to what a shop floor actually produces: continuous, noisy, and fast.
-          ERP data usually arrives in batches. IoT lets us stress the UI model with real‑time style inputs while staying
-          vendor‑agnostic.
+          This demo exists because the real operational pain is not a lack of data. It is the time it takes to interpret
+          ERP screens that were built for transactions, not decisions. Line leads and planners need fast answers about
+          bottlenecks, not another menu tree.
+        </p>
+        <p>
+          We built ERP Lite to prove a pattern: keep the ERP as the system of record, but normalize the data into a
+          stable, human‑readable model that powers a consistent front end. This creates one view that can sit above SAP,
+          Epicor, or SyteLine without rewriting the entire tool every time the ERP changes.
+        </p>
+        <p>
+          The goal is a decision surface: one place to see what is running, what is blocked, and what needs attention.
+          That is the difference between “the data exists” and “the data is usable.”
         </p>
       </div>
+
       <div class="erp-lite-explain__card">
-        <div class="erp-lite-explain__card-label">// what it shows today</div>
+        <div class="erp-lite-explain__card-label">// dataset choice</div>
+        <p>
+          We chose a public IoT manufacturing dataset because it behaves like a real floor: noisy, continuous, and
+          time‑sensitive. ERP data is often batch‑driven. IoT lets us stress the UI model with real‑time style inputs
+          while staying vendor‑agnostic.
+        </p>
+      </div>
+
+      <div class="erp-lite-explain__card">
+        <div class="erp-lite-explain__card-label">// what the data shows</div>
         <ul>
-          <li>Real sensor rows normalized into a machine status view.</li>
-          <li>Throughput-style signals derived from numeric fields.</li>
-          <li>A single UI model that stays stable across noisy inputs.</li>
+          <li>Real sensor rows normalized into machine status.</li>
+          <li>Throughput‑style signals derived from numeric fields.</li>
+          <li>A stable UI model despite noisy upstream inputs.</li>
         </ul>
       </div>
+
+      <div class="erp-lite-explain__card">
+        <div class="erp-lite-explain__card-label">// UI model (current)</div>
+        <ul>
+          <li>Machine, Line, Status, Shift.</li>
+          <li>Throughput, Work Order, Last heartbeat.</li>
+          <li>Summary counts for running, idle, down, setup.</li>
+        </ul>
+      </div>
+
+      <div class="erp-lite-explain__card">
+        <div class="erp-lite-explain__card-label">// alignment with ERPs</div>
+        <p>
+          We will align to ERP connectors, not exports: SAP OData/BAPI, Epicor REST/BAQs, and Infor SyteLine IDOs. The
+          adapter layer maps each ERP to the same UI model so the front end remains consistent while the back end varies.
+        </p>
+      </div>
+
+      <div class="erp-lite-explain__card">
+        <div class="erp-lite-explain__card-label">// architecture sketch</div>
+        <ul>
+          <li>ERP connector reads only required fields.</li>
+          <li>Adapter normalizes to the UI model.</li>
+          <li>UI renders status and exceptions only.</li>
+        </ul>
+      </div>
+
+      <div class="erp-lite-explain__card">
+        <div class="erp-lite-explain__card-label">// why it matters</div>
+        <p>
+          This reduces the time it takes to get answers. Instead of searching across ERP modules, users see one clear
+          operational view with the few signals that move the day forward.
+        </p>
+      </div>
+
+      <div class="erp-lite-explain__card">
+        <div class="erp-lite-explain__card-label">// what we will measure</div>
+        <ul>
+          <li>Time to identify a bottleneck.</li>
+          <li>Reduction in ERP screen navigation.</li>
+          <li>Faster response to down and idle states.</li>
+        </ul>
+      </div>
+
       <div class="erp-lite-explain__card">
         <div class="erp-lite-explain__card-label">// what we build next</div>
         <ul>
-          <li>Adapter layer that maps SAP OData/BAPI, Epicor REST/BAQs, and Infor SyteLine IDOs into this model.</li>
           <li>Live refresh + change events instead of static pulls.</li>
           <li>Role views for floor, planners, and leadership.</li>
+          <li>Exception panels for shortages, late orders, and blocked ops.</li>
+          <li>Expansion to inventory snapshots and work‑order risk.</li>
         </ul>
-      </div>
-      <div class="erp-lite-explain__card">
-        <div class="erp-lite-explain__card-label">// black-box, ERP-agnostic</div>
-        <p>
-          The goal is an adapter layer that treats the ERP as a black box: pull only what is needed, normalize it into a
-          stable UI model, and keep the front end consistent no matter which ERP sits underneath.
-        </p>
       </div>
     </div>
   </section>
