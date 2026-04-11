@@ -1,18 +1,10 @@
 <div class="lab-page">
 
-  <canvas #canvas class="lab-canvas"
-    [class.lab-canvas--hovering]="hovered() !== null && !focused()"
-    (click)="handleClick()">
-  </canvas>
-
-  <div class="lab-mini">
-    <div class="lab-mini__label">New demo</div>
-    <div class="lab-mini__title">ERP Lite floor map</div>
-    <p class="lab-mini__desc">
-      A mock ERP front end that normalizes machine status into one readable floor view.
-    </p>
-    <a routerLink="/lab/erp-lite" class="lab-mini__btn">Open ERP Lite demo -&gt;</a>
-  </div>
+  <section class="lab-hero">
+    <canvas #canvas class="lab-canvas"
+      [class.lab-canvas--hovering]="hovered() !== null && !focused()"
+      (click)="handleClick()">
+    </canvas>
 
   @if (loading()) {
     <div class="lab-overlay lab-loading">
@@ -85,10 +77,6 @@
       </div>
     </div>
 
-    <div class="lab-cta" [class.lab-cta--hidden]="focused()">
-      <a routerLink="/lab/erp-lite">ERP Lite demo -&gt;</a>
-    </div>
-
     <!-- Legend -->
     <div class="lab-legend" [class.lab-legend--hidden]="focused()">
       <div class="lab-legend__row">
@@ -107,5 +95,29 @@
     </div>
 
   }
+
+  </section>
+
+  <section class="lab-lower section">
+    <div class="container lab-lower__grid">
+      <div class="lab-lower__intro">
+        <p class="label">New demo</p>
+        <h2>ERP Lite floor map</h2>
+        <p>
+          A mock ERP front end that normalizes machine status into one readable floor view. This is a UI pattern and
+          adapter-friendly model, not a vendor lock-in.
+        </p>
+      </div>
+      <div class="lab-lower__card">
+        <div class="lab-lower__card-label">// demo</div>
+        <div class="lab-lower__card-title">ERP Lite floor map</div>
+        <p class="lab-lower__card-desc">
+          Filters, status counts, and live-style machine tiles using mock data. Built to show how ERP data can be made
+          operationally readable without ERP screens.
+        </p>
+        <a routerLink="/lab/erp-lite" class="btn btn--accent">Open ERP Lite demo -&gt;</a>
+      </div>
+    </div>
+  </section>
 
 </div>
