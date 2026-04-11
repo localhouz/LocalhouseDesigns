@@ -30,20 +30,10 @@ export class LabErpLiteComponent implements OnInit {
   statusFilter = signal('all');
   shiftFilter = signal('all');
 
-  machines = signal<Machine[]>([
-    { id: 'm1', name: 'Cut 01', line: 'Line A', status: 'Running', shift: 'Day', throughput: '42/hr', lastHeartbeat: '1 min ago', workOrderId: 'WO-18231' },
-    { id: 'm2', name: 'Cut 02', line: 'Line A', status: 'Idle', shift: 'Day', throughput: '0/hr', lastHeartbeat: '4 min ago', workOrderId: 'WO-18212' },
-    { id: 'm3', name: 'Mill 01', line: 'Line A', status: 'Setup', shift: 'Day', throughput: '12/hr', lastHeartbeat: '2 min ago', workOrderId: 'WO-18243' },
-    { id: 'm4', name: 'Press 01', line: 'Line B', status: 'Running', shift: 'Swing', throughput: '38/hr', lastHeartbeat: '1 min ago', workOrderId: 'WO-18208' },
-    { id: 'm5', name: 'Press 02', line: 'Line B', status: 'Down', shift: 'Swing', throughput: '0/hr', lastHeartbeat: '9 min ago', workOrderId: 'WO-18177' },
-    { id: 'm6', name: 'Paint 01', line: 'Line B', status: 'Running', shift: 'Swing', throughput: '22/hr', lastHeartbeat: '1 min ago', workOrderId: 'WO-18266' },
-    { id: 'm7', name: 'Pack 01', line: 'Line C', status: 'Running', shift: 'Night', throughput: '55/hr', lastHeartbeat: '2 min ago', workOrderId: 'WO-18271' },
-    { id: 'm8', name: 'Pack 02', line: 'Line C', status: 'Idle', shift: 'Night', throughput: '0/hr', lastHeartbeat: '6 min ago', workOrderId: 'WO-18211' },
-    { id: 'm9', name: 'QC 01', line: 'Line C', status: 'Setup', shift: 'Night', throughput: '8/hr', lastHeartbeat: '3 min ago', workOrderId: 'WO-18275' },
-    { id: 'm10', name: 'Weld 01', line: 'Line D', status: 'Running', shift: 'Day', throughput: '31/hr', lastHeartbeat: '1 min ago', workOrderId: 'WO-18257' },
-    { id: 'm11', name: 'Weld 02', line: 'Line D', status: 'Down', shift: 'Day', throughput: '0/hr', lastHeartbeat: '12 min ago', workOrderId: 'WO-18163' },
-    { id: 'm12', name: 'Weld 03', line: 'Line D', status: 'Running', shift: 'Swing', throughput: '29/hr', lastHeartbeat: '2 min ago', workOrderId: 'WO-18259' },
-  ]);
+  machines = signal<Machine[]>([]);
+  sourceNote = signal('Loading dataset...');
+
+  private readonly dataUrl = '/data/iot_sensor_dataset.csv';
 
   lines = computed(() => Array.from(new Set(this.machines().map(m => m.line))).sort());
   statuses = computed(() => Array.from(new Set(this.machines().map(m => m.status))).sort());
@@ -94,5 +84,77 @@ export class LabErpLiteComponent implements OnInit {
         }
       ]
     });
+
+    this.loadDataset();
   }
+
+  private async loadDataset() {
+    try {
+      const res = await fetch(this.dataUrl);
+      if (!res.ok) throw new Error('dataset fetch failed');
+      const text = await res.text();
+      const rows = this.parseCsv(text, 60);
+      if (!rows.length) throw new Error('empty dataset');
+      const machines = this.toMachines(rows, 12);
+      this.machines.set(machines);
+      this.sourceNote.set('Data source: IBM IoT Predictive Maintenance dataset (snapshot).');
+    } catch {
+      this.machines.set([]);
+      this.sourceNote.set('Data source unavailable. Check dataset snapshot.');
+    }
+  }
+
+  private parseCsv(text: string, limit: number): Record<string, string>[] {
+    const lines = text.split(/\r?\n/).filter(Boolean);
+    if (lines.length < 2) return [];
+    const header = lines[0].split(',').map(h => h.trim());
+    return lines.slice(1, limit + 1).map(line => {
+      const cols = line.split(',');
+      const row: Record<string, string> = {};
+      header.forEach((h, i) => row[h] = cols[i]?.trim() ?? '');
+      return row;
+    });
+  }
+
+  private toMachines(rows: Record<string, string>[], count: number): Machine[] {
+    const shifts: MachineShift[] = ['Day', 'Swing', 'Night'];
+    const lines = ['Line A', 'Line B', 'Line C', 'Line D'];
+
+    const numericCols = Object.keys(rows[0]).filter(k => rows.some(r => !isNaN(Number(r[k]))));
+    const metricKey = ['outpressure', 'inpressure', 'footfall', 'temp', 'atemp']
+      .find(k => numericCols.includes(k)) ?? numericCols[0];
+    const failureKey = ['fail', 'failure', 'failure_within_24h', 'machine_failure']
+      .find(k => Object.keys(rows[0]).includes(k));
+
+    const metricVals = rows.map(r => Number(r[metricKey] ?? 0)).filter(v => !isNaN(v));
+    const sorted = [...metricVals].sort((a, b) => a - b);
+    const p25 = sorted[Math.floor(sorted.length * 0.25)] ?? 0;
+    const p75 = sorted[Math.floor(sorted.length * 0.75)] ?? 0;
+
+    return rows.slice(0, count).map((r, i) => {
+      const metric = Number(r[metricKey] ?? 0);
+      const failure = failureKey ? Number(r[failureKey] ?? 0) : 0;
+      let status: MachineStatus = 'Running';
+      if (failure === 1) status = 'Down';
+      else if (metric <= p25) status = 'Idle';
+      else if (metric >= p75) status = 'Running';
+      else status = 'Setup';
+
+      const machineId = r['machine_id'] || r['device_id'] || r['id'] || `M${i + 1}`;
+      const name = `Machine ${String(i + 1).padStart(2, '0')}`;
+      const throughput = `${Math.max(0, Math.round(metric))}/hr`;
+
+      return {
+        id: String(machineId),
+        name,
+        line: lines[i % lines.length],
+        status,
+        shift: shifts[i % shifts.length],
+        throughput,
+        lastHeartbeat: '1 min ago',
+        workOrderId: `WO-${18200 + i}`,
+      };
+    });
+  }
+
 }

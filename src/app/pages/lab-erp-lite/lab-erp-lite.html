@@ -73,40 +73,75 @@
         </div>
 
         <div class="erp-lite-map__grid">
-          @for (machine of filteredMachines(); track machine.id) {
-            <div class="machine-card" [class.machine-card--down]="machine.status === 'Down'"
-              [class.machine-card--setup]="machine.status === 'Setup'"
-              [class.machine-card--idle]="machine.status === 'Idle'">
-              <div class="machine-card__top">
-                <span class="machine-card__name">{{ machine.name }}</span>
-                <span class="machine-card__line">{{ machine.line }}</span>
-              </div>
-              <div class="machine-card__meta">
-                <span class="machine-card__status">{{ machine.status }}</span>
-                <span class="machine-card__shift">{{ machine.shift }}</span>
-              </div>
-              <div class="machine-card__metrics">
-                <div>
-                  <span class="machine-card__metric-label">Throughput</span>
-                  <span class="machine-card__metric-val">{{ machine.throughput }}</span>
+          @if (filteredMachines().length) {
+            @for (machine of filteredMachines(); track machine.id) {
+              <div class="machine-card" [class.machine-card--down]="machine.status === 'Down'"
+                [class.machine-card--setup]="machine.status === 'Setup'"
+                [class.machine-card--idle]="machine.status === 'Idle'">
+                <div class="machine-card__top">
+                  <span class="machine-card__name">{{ machine.name }}</span>
+                  <span class="machine-card__line">{{ machine.line }}</span>
                 </div>
-                <div>
-                  <span class="machine-card__metric-label">Work Order</span>
-                  <span class="machine-card__metric-val">{{ machine.workOrderId }}</span>
+                <div class="machine-card__meta">
+                  <span class="machine-card__status">{{ machine.status }}</span>
+                  <span class="machine-card__shift">{{ machine.shift }}</span>
+                </div>
+                <div class="machine-card__metrics">
+                  <div>
+                    <span class="machine-card__metric-label">Throughput</span>
+                    <span class="machine-card__metric-val">{{ machine.throughput }}</span>
+                  </div>
+                  <div>
+                    <span class="machine-card__metric-label">Work Order</span>
+                    <span class="machine-card__metric-val">{{ machine.workOrderId }}</span>
+                  </div>
+                </div>
+                <div class="machine-card__footer">
+                  <span>Last heartbeat</span>
+                  <span>{{ machine.lastHeartbeat }}</span>
                 </div>
               </div>
-              <div class="machine-card__footer">
-                <span>Last heartbeat</span>
-                <span>{{ machine.lastHeartbeat }}</span>
-              </div>
+            }
+          } @else {
+            <div class="erp-lite-empty">
+              <p>Dataset not available. Please check the snapshot file.</p>
             </div>
           }
         </div>
 
         <div class="erp-lite-map__footer">
-          <span class="erp-lite-map__note">Results-only demo. Adapter pattern and live ERP connectors available by request.</span>
+          <span class="erp-lite-map__note">{{ sourceNote() }}</span>
           <a routerLink="/contact" class="btn btn--accent">Request the full build -&gt;</a>
         </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="erp-lite-explain section container">
+    <div class="erp-lite-explain__grid">
+      <div>
+        <p class="label">Why this data</p>
+        <h2>Real signals, not toy data.</h2>
+        <p>
+          We used a public IoT manufacturing dataset because it contains real sensor readings that behave like shop-floor
+          signals. That lets us show how messy telemetry becomes clean, operationally useful information without relying
+          on vendor dashboards.
+        </p>
+      </div>
+      <div class="erp-lite-explain__card">
+        <div class="erp-lite-explain__card-label">// what it shows</div>
+        <ul>
+          <li>Machine-level readings mapped into a simple status model.</li>
+          <li>Throughput-style signals derived from real numeric fields.</li>
+          <li>Consistent UI even when the upstream data is inconsistent.</li>
+        </ul>
+      </div>
+      <div class="erp-lite-explain__card">
+        <div class="erp-lite-explain__card-label">// black-box, ERP-agnostic</div>
+        <p>
+          The goal is an adapter layer that treats the ERP as a black box: pull only what is needed, normalize it into a
+          stable UI model, and keep the front end consistent no matter which ERP sits underneath.
+        </p>
       </div>
     </div>
   </section>
