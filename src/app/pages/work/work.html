@@ -72,6 +72,15 @@
               <span>{{ tech }}</span>
             }
           </div>
+          @if (project.ctaRoute) {
+            <a
+              class="btn btn--filled case-study__cta"
+              [routerLink]="project.ctaRoute"
+              (click)="$event.stopPropagation()"
+            >
+              {{ project.ctaLabel || 'Request the audit ->' }}
+            </a>
+          }
         </div>
       </div>
     }

@@ -28,7 +28,7 @@ export class DashboardArticleComponent implements OnInit {
       schemas: [
         {
           '@context': 'https://schema.org',
-          '@type': 'Article',
+          '@type': ['TechArticle', 'Article'],
           '@id': `${url}#article`,
           headline: 'Why Most Dashboards Do Not Fix the Workflow',
           description: 'A practical look at why many internal dashboards add visibility without removing friction, and what better workflow-aware tooling should do instead.',

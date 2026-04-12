@@ -28,7 +28,7 @@ export class ErpArticleComponent implements OnInit {
       schemas: [
         {
           '@context': 'https://schema.org',
-          '@type': 'Article',
+          '@type': ['TechArticle', 'Article'],
           '@id': `${url}#article`,
           headline: 'What Manufacturers Actually Need from ERP-Connected Tooling',
           description: 'A practical look at what useful ERP-connected tooling should actually do for manufacturers, operations teams, and production workflows.',

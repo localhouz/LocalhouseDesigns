@@ -105,6 +105,10 @@ export class AboutComponent implements OnInit {
           '@id': `${base}/about#person`,
           name: 'Steven Rausch',
           jobTitle: 'Software Developer and Product Manager',
+          sameAs: [
+            'https://github.com/localhouz',
+            'https://www.linkedin.com/in/steven-rausch83/'
+          ],
           worksFor: { '@id': `${base}/#organization` },
           address: {
             '@type': 'PostalAddress',

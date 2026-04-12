@@ -19,6 +19,21 @@
     line-height: 1.85;
     color: rgba(10,10,18,0.6);
   }
+
+  &__byline {
+    margin-top: 1rem;
+    font-size: 0.9rem;
+    color: rgba(10,10,18,0.58);
+
+    a {
+      color: var(--accent);
+      text-decoration: none;
+
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+  }
 }
 
 .article-layout {
@@ -98,6 +113,54 @@
       margin-bottom: 0.65rem;
       line-height: 1.8;
       color: rgba(10,10,18,0.68);
+    }
+  }
+}
+
+.article-related {
+  margin-top: 2.5rem;
+  padding: 1.5rem;
+  border: 1px solid var(--border);
+  background: var(--mid);
+
+  h3 {
+    font-size: 1.1rem;
+    margin-bottom: 0.6rem;
+  }
+
+  p {
+    margin: 0 0 0.75rem;
+    color: rgba(10,10,18,0.65);
+  }
+
+  ul {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  li {
+    position: relative;
+    padding-left: 1rem;
+    color: rgba(10,10,18,0.65);
+    line-height: 1.7;
+  }
+
+  li::before {
+    content: '>';
+    position: absolute;
+    left: 0;
+    color: var(--accent);
+    font-family: var(--font-mono);
+  }
+
+  a {
+    color: var(--accent);
+    text-decoration: none;
+
+    &:hover {
+      text-decoration: underline;
     }
   }
 }

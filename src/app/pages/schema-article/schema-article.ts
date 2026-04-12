@@ -28,7 +28,7 @@ export class SchemaArticleComponent implements OnInit {
       schemas: [
         {
           '@context': 'https://schema.org',
-          '@type': 'Article',
+          '@type': ['TechArticle', 'Article'],
           '@id': `${url}#article`,
           headline: 'How Structured Data Helps AI Search Understand Your Business',
           description: 'A practical explanation of how structured data helps AI search and search engines understand your business, and why schema works best when the site is already clear and trustworthy.',

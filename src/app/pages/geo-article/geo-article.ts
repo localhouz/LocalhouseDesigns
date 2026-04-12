@@ -28,7 +28,7 @@ export class GeoArticleComponent implements OnInit {
       schemas: [
         {
           '@context': 'https://schema.org',
-          '@type': 'Article',
+          '@type': ['TechArticle', 'Article'],
           '@id': `${url}#article`,
           headline: 'What GEO Actually Means for Local Businesses',
           description: 'A practical explanation of GEO for local businesses: what it is, what it is not, and how it works alongside SEO, structured data, and clearer website messaging.',

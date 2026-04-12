@@ -172,7 +172,7 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
           name: 'Localhouse Designs',
           description: 'Boutique web studio specializing in Angular development, enterprise ERP integrations (Microsoft Business Central, SAP, Infor SyteLine), SEO/GEO structured data optimization, WebGL/Three.js experiences, and Netlify deployments.',
           url: base,
-          sameAs: ['https://github.com/localhouz'],
+          sameAs: ['https://github.com/localhouz', 'https://www.linkedin.com/in/steven-rausch83/'],
           address: {
             '@type': 'PostalAddress',
             addressLocality: 'Broken Arrow',

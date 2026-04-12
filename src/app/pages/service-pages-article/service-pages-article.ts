@@ -28,7 +28,7 @@ export class ServicePagesArticleComponent implements OnInit {
       schemas: [
         {
           '@context': 'https://schema.org',
-          '@type': 'Article',
+          '@type': ['TechArticle', 'Article'],
           '@id': `${url}#article`,
           headline: 'What Local Service Pages Need to Rank and Get Cited',
           description: 'A practical look at what local service pages need to rank, get cited by AI search, and actually build trust with the people reading them.',

@@ -1,6 +1,7 @@
 import { Component, inject, OnInit, signal } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
+import { RouterLink } from '@angular/router';
 import { SeoService } from '../../shared/seo/seo.service';
 import { PreviewShellComponent } from '../../shared/preview-shell/preview-shell';
 
@@ -18,7 +19,7 @@ interface Repo {
 
 @Component({
   selector: 'app-work',
-  imports: [CommonModule, PreviewShellComponent],
+  imports: [CommonModule, PreviewShellComponent, RouterLink],
   templateUrl: './work.html',
   styleUrl: './work.scss'
 })
@@ -119,6 +120,8 @@ export class WorkComponent implements OnInit {
         { val: '3', label: 'Sites audited' },
         { val: 'Results-only', label: 'Public view' },
       ],
+      ctaLabel: 'Request the full audit ->',
+      ctaRoute: '/local-geo-audit',
       comingSoon: false,
     },
     {

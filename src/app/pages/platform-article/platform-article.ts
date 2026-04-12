@@ -28,7 +28,7 @@ export class PlatformArticleComponent implements OnInit {
       schemas: [
         {
           '@context': 'https://schema.org',
-          '@type': 'Article',
+          '@type': ['TechArticle', 'Article'],
           '@id': `${url}#article`,
           headline: 'Why a Custom Site Beats a Booking-Platform Page for Local Search',
           description: 'A practical comparison of custom websites versus booking-platform pages for local search, trust, structured data, and answer-ready content.',
