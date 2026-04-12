@@ -88,6 +88,191 @@
   }
 }
 
+.erp-lite-view {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+
+  button {
+    border: 1px solid var(--border);
+    background: transparent;
+    color: rgba(10,10,18,0.7);
+    font-family: var(--font-mono);
+    font-size: 0.65rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 0.45rem 0.75rem;
+    cursor: pointer;
+    transition: border-color 0.2s, color 0.2s, background 0.2s;
+
+    &:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+
+    &.active {
+      border-color: var(--accent);
+      background: rgba(255,60,0,0.08);
+      color: var(--accent);
+    }
+  }
+}
+
+.erp-lite-warnings {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+
+  li {
+    font-size: 0.8rem;
+    color: rgba(10,10,18,0.6);
+  }
+}
+
+.erp-lite-checks {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  gap: 0.75rem;
+
+  &__val {
+    font-family: var(--font-mono);
+    font-size: 1.1rem;
+    color: var(--accent);
+    display: block;
+  }
+
+  &__label {
+    font-size: 0.7rem;
+    color: rgba(10,10,18,0.55);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+}
+
+.erp-lite-diagnostics {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  margin-top: 0.75rem;
+
+  li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.4rem 0.6rem;
+    border: 1px solid var(--border);
+    background: var(--bg);
+    font-size: 0.75rem;
+    color: rgba(10,10,18,0.6);
+
+    &.pass {
+      border-color: rgba(24,160,88,0.4);
+      color: rgba(24,160,88,0.9);
+    }
+
+    &.fail {
+      border-color: rgba(214,28,0,0.4);
+      color: rgba(214,28,0,0.9);
+    }
+  }
+
+  &__status {
+    font-family: var(--font-mono);
+    font-size: 0.6rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+}
+
+.erp-lite-contract-btn {
+  align-self: flex-start;
+  border: 1px solid var(--border);
+  background: transparent;
+  color: var(--accent);
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 0.5rem 0.75rem;
+  cursor: pointer;
+  transition: border-color 0.2s, color 0.2s, background 0.2s;
+
+  &:hover {
+    border-color: var(--accent);
+    background: rgba(255,60,0,0.08);
+  }
+}
+
+.erp-lite-status-legend {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+
+  &__label {
+    font-family: var(--font-mono);
+    font-size: 0.6rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: rgba(10,10,18,0.5);
+  }
+
+  &__items {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+  }
+}
+
+.erp-lite-runlog {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+
+  &__label {
+    font-family: var(--font-mono);
+    font-size: 0.6rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: rgba(10,10,18,0.5);
+  }
+
+  ul {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+  }
+
+  li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.4rem 0.6rem;
+    border: 1px solid var(--border);
+    background: var(--bg);
+    font-size: 0.75rem;
+    color: rgba(10,10,18,0.6);
+
+    &.ok {
+      border-color: rgba(24,160,88,0.4);
+      color: rgba(24,160,88,0.9);
+    }
+
+    &.warning {
+      border-color: rgba(14,165,233,0.45);
+      color: rgba(14,165,233,0.9);
+    }
+  }
+
+  &__status {
+    font-family: var(--font-mono);
+    font-size: 0.6rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+}
 .erp-lite-summary {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
@@ -117,6 +302,7 @@
 
   &--down .summary-card__val { color: #d61c00; }
   &--setup .summary-card__val { color: #7c3aed; }
+  &--stale .summary-card__val { color: #0ea5e9; }
 }
 
 .erp-lite-map {
@@ -135,6 +321,13 @@
     flex-wrap: wrap;
   }
 
+  &__meta {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    flex-wrap: wrap;
+  }
+
   &__label {
     font-family: var(--font-mono);
     font-size: 0.7rem;
@@ -146,6 +339,23 @@
   &__sub {
     font-size: 0.85rem;
     color: rgba(10,10,18,0.55);
+  }
+
+  &__badge {
+    font-family: var(--font-mono);
+    font-size: 0.6rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 0.25rem 0.5rem;
+    border: 1px solid rgba(24,160,88,0.4);
+    color: rgba(24,160,88,0.9);
+    background: rgba(24,160,88,0.08);
+
+    &.is-stale {
+      border-color: rgba(14,165,233,0.5);
+      color: rgba(14,165,233,0.9);
+      background: rgba(14,165,233,0.08);
+    }
   }
 
   &__grid {
@@ -167,7 +377,210 @@
   &__note {
     font-size: 0.85rem;
     color: rgba(10,10,18,0.55);
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
   }
+
+  &__meta-line {
+    font-size: 0.7rem;
+    color: rgba(10,10,18,0.45);
+  }
+
+  &__source {
+    font-family: var(--font-mono);
+    font-size: 0.6rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 0.25rem 0.5rem;
+    border: 1px solid var(--border);
+    color: rgba(10,10,18,0.6);
+    background: var(--bg);
+  }
+}
+
+.erp-lite-leadership {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 0.6rem;
+}
+
+.erp-lite-leadership__list {
+  margin-top: 0.6rem;
+  border: 1px solid var(--border);
+  background: var(--bg);
+  padding: 0.85rem;
+
+  h4 {
+    margin-bottom: 0.6rem;
+    font-size: 1rem;
+  }
+
+  ul {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+  }
+
+  li {
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+    border-bottom: 1px solid rgba(10,10,18,0.08);
+    padding-bottom: 0.4rem;
+  }
+
+  li:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+  }
+
+  .issue-name {
+    font-weight: 600;
+  }
+
+  .issue-meta {
+    font-size: 0.75rem;
+    color: rgba(10,10,18,0.55);
+  }
+
+  .issue-score {
+    font-family: var(--font-mono);
+    font-size: 0.6rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: rgba(10,10,18,0.5);
+  }
+}
+.leadership-card {
+  border: 1px solid var(--border);
+  background: var(--bg);
+  padding: 0.9rem 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+
+  &__label {
+    font-family: var(--font-mono);
+    font-size: 0.6rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: rgba(10,10,18,0.45);
+  }
+
+  &__val {
+    font-size: 1.3rem;
+    font-weight: 600;
+    color: var(--accent);
+  }
+}
+
+.erp-lite-map__planner {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+
+  h3 {
+    font-size: 1.2rem;
+  }
+
+  p {
+    color: rgba(10,10,18,0.6);
+    margin: 0;
+  }
+}
+
+.erp-lite-exceptions {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.erp-lite-exception {
+  border: 1px solid var(--border);
+  background: var(--bg);
+  padding: 0.85rem 1rem;
+  display: grid;
+  grid-template-columns: 1.2fr 1fr auto auto;
+  gap: 1rem;
+  align-items: center;
+
+  @media (max-width: 700px) {
+    grid-template-columns: 1fr;
+  }
+
+  &__name {
+    display: block;
+    font-weight: 600;
+  }
+
+  &__line {
+    font-family: var(--font-mono);
+    font-size: 0.6rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: rgba(10,10,18,0.5);
+  }
+
+  &__status {
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: inherit;
+    display: block;
+  }
+
+  &__meta {
+    font-size: 0.75rem;
+    color: rgba(10,10,18,0.55);
+    display: block;
+  }
+
+  &__reason {
+    font-size: 0.7rem;
+    color: rgba(10,10,18,0.45);
+    display: block;
+  }
+
+  &__time {
+    font-size: 0.75rem;
+    color: rgba(10,10,18,0.55);
+    text-align: right;
+  }
+
+  &__score {
+    font-family: var(--font-mono);
+    font-size: 0.65rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: rgba(10,10,18,0.55);
+  }
+}
+
+.erp-lite-exception-summary {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  font-size: 0.75rem;
+  color: rgba(10,10,18,0.55);
+  font-family: var(--font-mono);
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.erp-lite-planner-contract {
+  display: flex;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+  font-size: 0.7rem;
+  color: rgba(10,10,18,0.55);
+  font-family: var(--font-mono);
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  padding: 0.4rem 0;
+  border-bottom: 1px solid rgba(10,10,18,0.08);
 }
 
 .erp-lite-empty {
@@ -200,6 +613,10 @@
   &--idle::after { background: #cbb400; }
   &--setup::after { background: #7c3aed; }
   &--down::after { background: #d61c00; }
+  &--stale {
+    border-color: rgba(14,165,233,0.5);
+    box-shadow: inset 0 0 0 1px rgba(14,165,233,0.3);
+  }
 
   &__top {
     display: flex;
@@ -251,6 +668,19 @@
     justify-content: space-between;
     font-size: 0.75rem;
     color: rgba(10,10,18,0.55);
+    align-items: center;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+  }
+
+  &__stale {
+    font-family: var(--font-mono);
+    font-size: 0.6rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 0.15rem 0.4rem;
+    border: 1px solid rgba(14,165,233,0.45);
+    color: rgba(14,165,233,0.9);
   }
 }
 
@@ -310,4 +740,157 @@
   letter-spacing: 0.12em;
   text-transform: uppercase;
   color: var(--accent);
+}
+
+.erp-lite-modal {
+  position: fixed;
+  inset: 0;
+  background: rgba(8, 8, 12, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  z-index: 50;
+}
+
+.erp-lite-modal__panel {
+  background: var(--bg);
+  border: 1px solid var(--border);
+  max-width: 720px;
+  width: 100%;
+  padding: 1.75rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.erp-lite-modal__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+
+  h3 {
+    font-size: 1.2rem;
+  }
+
+  button {
+    border: 1px solid var(--border);
+    background: transparent;
+    color: rgba(10,10,18,0.7);
+    font-family: var(--font-mono);
+    font-size: 0.65rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    padding: 0.4rem 0.6rem;
+    cursor: pointer;
+  }
+}
+
+.erp-lite-modal__body {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+
+  p {
+    color: rgba(10,10,18,0.65);
+    line-height: 1.7;
+  }
+}
+
+.erp-lite-modal__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1rem;
+
+  ul {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    color: rgba(10,10,18,0.65);
+
+    li {
+      position: relative;
+      padding-left: 1rem;
+
+      &::before {
+        content: '>';
+        position: absolute;
+        left: 0;
+        color: var(--accent);
+        font-family: var(--font-mono);
+      }
+    }
+  }
+}
+
+.erp-lite-modal__label {
+  font-family: var(--font-mono);
+  font-size: 0.6rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: rgba(10,10,18,0.5);
+  margin-bottom: 0.4rem;
+  display: block;
+}
+
+.erp-lite-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  font-family: var(--font-mono);
+  font-size: 0.6rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 0.2rem 0.45rem;
+  border: 1px solid var(--border);
+  color: rgba(10,10,18,0.6);
+  background: var(--bg);
+}
+
+.erp-lite-chip--down {
+  border-color: rgba(214,28,0,0.5);
+  color: rgba(214,28,0,0.9);
+  background: rgba(214,28,0,0.08);
+}
+
+.erp-lite-chip--stale {
+  border-color: rgba(14,165,233,0.5);
+  color: rgba(14,165,233,0.9);
+  background: rgba(14,165,233,0.08);
+}
+
+.erp-lite-modal__section {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+
+.erp-lite-modal__summary {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.erp-lite-modal__table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.8rem;
+
+  th,
+  td {
+    border: 1px solid var(--border);
+    padding: 0.5rem 0.6rem;
+    text-align: left;
+  }
+
+  th {
+    font-family: var(--font-mono);
+    font-size: 0.6rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: rgba(10,10,18,0.5);
+    background: var(--mid);
+  }
 }

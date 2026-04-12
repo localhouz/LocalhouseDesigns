@@ -2,20 +2,7 @@ import { Component, OnInit, computed, inject, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
 import { SeoService } from '../../shared/seo/seo.service';
-
-type MachineStatus = 'Running' | 'Idle' | 'Down' | 'Setup';
-type MachineShift = 'Day' | 'Swing' | 'Night';
-
-interface Machine {
-  id: string;
-  name: string;
-  line: string;
-  status: MachineStatus;
-  shift: MachineShift;
-  throughput: string;
-  lastHeartbeat: string;
-  workOrderId: string;
-}
+import { AdapterCheck, Machine, iotSnapshotAdapter, runAdapterDiagnostics, validateMachinesDetailed } from './erp-lite-adapter';
 
 @Component({
   selector: 'app-lab-erp-lite',
@@ -29,9 +16,17 @@ export class LabErpLiteComponent implements OnInit {
   lineFilter = signal('all');
   statusFilter = signal('all');
   shiftFilter = signal('all');
+  viewMode = signal<'floor' | 'planner' | 'leadership'>('floor');
 
   machines = signal<Machine[]>([]);
   sourceNote = signal('Loading dataset...');
+  adapterWarnings = signal<string[]>([]);
+  adapterChecks = signal<{ warnings: string[]; staleCount: number }>({ warnings: [], staleCount: 0 });
+  adapterDiagnostics = signal<AdapterCheck[]>([]);
+  contractOpen = signal(false);
+  adapterGeneratedAt = signal<string>('');
+  adapterSource = signal('iot-snapshot');
+  adapterRuns = signal<{ id: string; status: 'ok' | 'warning'; note: string }[]>([]);
 
   private readonly dataUrl = '/data/iot_sensor_dataset.csv';
 
@@ -53,9 +48,54 @@ export class LabErpLiteComponent implements OnInit {
   downCount = computed(() => this.filteredMachines().filter(m => m.status === 'Down').length);
   setupCount = computed(() => this.filteredMachines().filter(m => m.status === 'Setup').length);
 
+  staleCount = computed(() => this.filteredMachines().filter(m => this.isStale(m.lastHeartbeat)).length);
+  totalCount = computed(() => this.filteredMachines().length);
+  uptimePercent = computed(() => {
+    const total = this.totalCount();
+    if (!total) return 0;
+    return Math.round((this.runningCount() / total) * 100);
+  });
+  stalePercent = computed(() => {
+    const total = this.totalCount();
+    if (!total) return 0;
+    return Math.round((this.staleCount() / total) * 100);
+  });
+  freshnessPercent = computed(() => Math.max(0, 100 - this.stalePercent()));
+  bottleneckCount = computed(() => this.downCount() + this.staleCount());
+
   lastUpdated = computed(() => {
-    const times = this.filteredMachines().map(m => m.lastHeartbeat);
-    return times[0] || 'just now';
+    const times = this.filteredMachines().map(m => m.lastHeartbeat).filter(Boolean);
+    const latest = times.sort().slice(-1)[0];
+    return latest ? this.formatAge(latest) : 'just now';
+  });
+
+  exceptions = computed(() => {
+    return this.filteredMachines()
+      .filter(m => m.status === 'Down' || this.isStale(m.lastHeartbeat))
+      .map(m => ({
+        id: m.id,
+        name: m.name,
+        status: this.isStale(m.lastHeartbeat) ? 'Stale' : m.status,
+        line: m.line,
+        workOrderId: m.workOrderId,
+        lastHeartbeat: this.formatAge(m.lastHeartbeat),
+        reason: this.isStale(m.lastHeartbeat) ? 'Heartbeat overdue' : 'Failure or alarm',
+        riskScore: this.isStale(m.lastHeartbeat) ? 60 : 90
+      }));
+  });
+
+  exceptionsDown = computed(() => this.exceptions().filter(e => e.status === 'Down').length);
+  exceptionsStale = computed(() => this.exceptions().filter(e => e.status === 'Stale').length);
+  leadershipIssues = computed(() => {
+    return this.exceptions()
+      .slice()
+      .sort((a, b) => {
+        if (a.status === b.status) return 0;
+        if (a.status === 'Down') return -1;
+        if (b.status === 'Down') return 1;
+        return 0;
+      })
+      .slice(0, 5);
   });
 
   ngOnInit() {
@@ -95,8 +135,17 @@ export class LabErpLiteComponent implements OnInit {
       const text = await res.text();
       const rows = this.parseCsv(text, 60);
       if (!rows.length) throw new Error('empty dataset');
-      const machines = this.toMachines(rows, 12);
-      this.machines.set(machines);
+      const mapped = iotSnapshotAdapter.map(rows.slice(0, 12));
+      this.machines.set(mapped.machines);
+      this.adapterWarnings.set(mapped.warnings ?? []);
+      this.adapterChecks.set(validateMachinesDetailed(mapped.machines));
+      this.adapterDiagnostics.set(runAdapterDiagnostics());
+      this.adapterGeneratedAt.set(mapped.generatedAt);
+      this.adapterSource.set(mapped.source);
+      this.adapterRuns.set([
+        { id: `run-${Date.now()}`, status: (mapped.warnings ?? []).length ? 'warning' : 'ok', note: 'IoT snapshot mapped' },
+        { id: 'run-previous', status: 'ok', note: 'Contract v1 applied' }
+      ]);
       this.sourceNote.set('Data source: IBM IoT Predictive Maintenance dataset (snapshot).');
     } catch {
       this.machines.set([]);
@@ -116,45 +165,17 @@ export class LabErpLiteComponent implements OnInit {
     });
   }
 
-  private toMachines(rows: Record<string, string>[], count: number): Machine[] {
-    const shifts: MachineShift[] = ['Day', 'Swing', 'Night'];
-    const lines = ['Line A', 'Line B', 'Line C', 'Line D'];
+  isStale(iso: string): boolean {
+    const ts = Date.parse(iso);
+    if (Number.isNaN(ts)) return true;
+    return Date.now() - ts > 5 * 60_000;
+  }
 
-    const numericCols = Object.keys(rows[0]).filter(k => rows.some(r => !isNaN(Number(r[k]))));
-    const metricKey = ['outpressure', 'inpressure', 'footfall', 'temp', 'atemp']
-      .find(k => numericCols.includes(k)) ?? numericCols[0];
-    const failureKey = ['fail', 'failure', 'failure_within_24h', 'machine_failure']
-      .find(k => Object.keys(rows[0]).includes(k));
-
-    const metricVals = rows.map(r => Number(r[metricKey] ?? 0)).filter(v => !isNaN(v));
-    const sorted = [...metricVals].sort((a, b) => a - b);
-    const p25 = sorted[Math.floor(sorted.length * 0.25)] ?? 0;
-    const p75 = sorted[Math.floor(sorted.length * 0.75)] ?? 0;
-
-    return rows.slice(0, count).map((r, i) => {
-      const metric = Number(r[metricKey] ?? 0);
-      const failure = failureKey ? Number(r[failureKey] ?? 0) : 0;
-      let status: MachineStatus = 'Running';
-      if (failure === 1) status = 'Down';
-      else if (metric <= p25) status = 'Idle';
-      else if (metric >= p75) status = 'Running';
-      else status = 'Setup';
-
-      const machineId = r['machine_id'] || r['device_id'] || r['id'] || `M${i + 1}`;
-      const name = `Machine ${String(i + 1).padStart(2, '0')}`;
-      const throughput = `${Math.max(0, Math.round(metric))}/hr`;
-
-      return {
-        id: String(machineId),
-        name,
-        line: lines[i % lines.length],
-        status,
-        shift: shifts[i % shifts.length],
-        throughput,
-        lastHeartbeat: '1 min ago',
-        workOrderId: `WO-${18200 + i}`,
-      };
-    });
+  formatAge(iso: string): string {
+    const ts = Date.parse(iso);
+    if (Number.isNaN(ts)) return 'unknown';
+    const mins = Math.max(1, Math.round((Date.now() - ts) / 60_000));
+    return `${mins} min ago`;
   }
 
 }

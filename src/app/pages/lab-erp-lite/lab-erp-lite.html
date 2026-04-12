@@ -42,6 +42,14 @@
             </select>
           </div>
         </div>
+        <div class="erp-lite-panel__block">
+          <span class="erp-lite-panel__label">View mode</span>
+          <div class="erp-lite-view">
+            <button type="button" [class.active]="viewMode() === 'floor'" (click)="viewMode.set('floor')">Floor</button>
+            <button type="button" [class.active]="viewMode() === 'planner'" (click)="viewMode.set('planner')">Planner</button>
+            <button type="button" [class.active]="viewMode() === 'leadership'" (click)="viewMode.set('leadership')">Leadership</button>
+          </div>
+        </div>
 
         <div class="erp-lite-panel__block">
           <span class="erp-lite-panel__label">Summary</span>
@@ -62,55 +70,212 @@
               <span class="summary-card__val">{{ setupCount() }}</span>
               <span class="summary-card__label">Setup</span>
             </div>
+            <div class="summary-card summary-card--stale">
+              <span class="summary-card__val">{{ staleCount() }}</span>
+              <span class="summary-card__label">Stale</span>
+            </div>
           </div>
         </div>
+        @if (adapterWarnings().length) {
+          <div class="erp-lite-panel__block">
+            <span class="erp-lite-panel__label">Adapter checks</span>
+            <ul class="erp-lite-warnings">
+              @for (warn of adapterWarnings(); track warn) {
+                <li>{{ warn }}</li>
+              }
+            </ul>
+          </div>
+        } @else {
+          <div class="erp-lite-panel__block">
+            <span class="erp-lite-panel__label">Adapter checks</span>
+            <div class="erp-lite-checks">
+              <div>
+                <span class="erp-lite-checks__val">{{ adapterChecks().warnings.length }}</span>
+                <span class="erp-lite-checks__label">Validation warnings</span>
+              </div>
+              <div>
+                <span class="erp-lite-checks__val">{{ adapterChecks().staleCount }}</span>
+                <span class="erp-lite-checks__label">Stale rows</span>
+              </div>
+              <div>
+                <span class="erp-lite-checks__val">v1</span>
+                <span class="erp-lite-checks__label">Contract</span>
+              </div>
+            </div>
+            <button type="button" class="erp-lite-contract-btn" (click)="contractOpen.set(true)">
+              View adapter contract -&gt;
+            </button>
+            <div class="erp-lite-status-legend">
+              <span class="erp-lite-status-legend__label">Status legend</span>
+              <div class="erp-lite-status-legend__items">
+                <span class="erp-lite-chip erp-lite-chip--down">Down</span>
+                <span class="erp-lite-chip erp-lite-chip--stale">Stale</span>
+                <span class="erp-lite-chip">Running</span>
+                <span class="erp-lite-chip">Idle</span>
+                <span class="erp-lite-chip">Setup</span>
+              </div>
+            </div>
+            <div class="erp-lite-runlog">
+              <span class="erp-lite-runlog__label">Adapter run log</span>
+              <ul>
+                @for (run of adapterRuns(); track run.id) {
+                  <li [class.ok]="run.status === 'ok'" [class.warning]="run.status === 'warning'">
+                    <span>{{ run.note }}</span>
+                    <span class="erp-lite-runlog__status">{{ run.status }}</span>
+                  </li>
+                }
+              </ul>
+            </div>
+            <ul class="erp-lite-diagnostics">
+              @for (check of adapterDiagnostics(); track check.name) {
+                <li [class.pass]="check.pass" [class.fail]="!check.pass">
+                  <span>{{ check.name }}</span>
+                  <span class="erp-lite-diagnostics__status">{{ check.pass ? 'Pass' : 'Fail' }}</span>
+                </li>
+              }
+            </ul>
+          </div>
+        }
       </div>
 
-      <div class="erp-lite-map">
+      <div class="erp-lite-map" [class.erp-lite-map--planner]="viewMode() === 'planner'">
         <div class="erp-lite-map__header">
           <span class="erp-lite-map__label">Live floor map (mock)</span>
-          <span class="erp-lite-map__sub">Updated {{ lastUpdated() }}</span>
+          <div class="erp-lite-map__meta">
+            <span class="erp-lite-map__sub">Updated {{ lastUpdated() }}</span>
+            <span class="erp-lite-map__badge" [class.is-stale]="stalePercent() > 0">
+              Freshness {{ freshnessPercent() }}%
+            </span>
+            <span class="erp-lite-map__source">Source {{ adapterSource() }}</span>
+          </div>
         </div>
 
-        <div class="erp-lite-map__grid">
-          @if (filteredMachines().length) {
-            @for (machine of filteredMachines(); track machine.id) {
-              <div class="machine-card" [class.machine-card--down]="machine.status === 'Down'"
-                [class.machine-card--setup]="machine.status === 'Setup'"
-                [class.machine-card--idle]="machine.status === 'Idle'">
-                <div class="machine-card__top">
-                  <span class="machine-card__name">{{ machine.name }}</span>
-                  <span class="machine-card__line">{{ machine.line }}</span>
-                </div>
-                <div class="machine-card__meta">
-                  <span class="machine-card__status">{{ machine.status }}</span>
-                  <span class="machine-card__shift">{{ machine.shift }}</span>
-                </div>
-                <div class="machine-card__metrics">
+        @if (viewMode() === 'planner') {
+          <div class="erp-lite-map__planner">
+            <h3>Exceptions queue</h3>
+            <p>Read-only view that flags blockers, stale data, and down machines.</p>
+            <div class="erp-lite-planner-contract">
+              <span>Adapter contract: v1</span>
+              <span>Required fields: 5</span>
+              <span>Optional fields: 3</span>
+            </div>
+            <div class="erp-lite-exception-summary">
+              <span>Down: {{ exceptionsDown() }}</span>
+              <span>Stale: {{ exceptionsStale() }}</span>
+              <span>Total: {{ exceptions().length }}</span>
+            </div>
+            <div class="erp-lite-exceptions">
+              @for (ex of exceptions(); track ex.id) {
+                <div class="erp-lite-exception">
                   <div>
-                    <span class="machine-card__metric-label">Throughput</span>
-                    <span class="machine-card__metric-val">{{ machine.throughput }}</span>
+                    <span class="erp-lite-exception__name">{{ ex.name }}</span>
+                    <span class="erp-lite-exception__line">{{ ex.line }}</span>
                   </div>
                   <div>
-                    <span class="machine-card__metric-label">Work Order</span>
-                    <span class="machine-card__metric-val">{{ machine.workOrderId }}</span>
+                    <span class="erp-lite-exception__status">
+                      <span class="erp-lite-chip" [class.erp-lite-chip--down]="ex.status === 'Down'"
+                        [class.erp-lite-chip--stale]="ex.status === 'Stale'">
+                        {{ ex.status }}
+                      </span>
+                    </span>
+                    <span class="erp-lite-exception__meta">WO {{ ex.workOrderId }}</span>
+                    <span class="erp-lite-exception__reason">{{ ex.reason }}</span>
                   </div>
+                  <span class="erp-lite-exception__score">Risk {{ ex.riskScore }}</span>
+                  <span class="erp-lite-exception__time">{{ ex.lastHeartbeat }}</span>
                 </div>
-                <div class="machine-card__footer">
-                  <span>Last heartbeat</span>
-                  <span>{{ machine.lastHeartbeat }}</span>
+              }
+              @if (!exceptions().length) {
+                <div class="erp-lite-empty">
+                  <p>No active exceptions.</p>
                 </div>
+              }
+            </div>
+          </div>
+        } @else {
+          @if (viewMode() === 'leadership') {
+            <div class="erp-lite-leadership">
+              <div class="leadership-card">
+                <span class="leadership-card__label">Uptime</span>
+                <span class="leadership-card__val">{{ uptimePercent() }}%</span>
               </div>
-            }
+              <div class="leadership-card">
+                <span class="leadership-card__label">Bottlenecks</span>
+                <span class="leadership-card__val">{{ bottleneckCount() }}</span>
+              </div>
+              <div class="leadership-card">
+                <span class="leadership-card__label">Stale data</span>
+                <span class="leadership-card__val">{{ stalePercent() }}%</span>
+              </div>
+            </div>
+            <div class="erp-lite-leadership__list">
+              <h4>Top exceptions</h4>
+              @if (leadershipIssues().length) {
+                <ul>
+                  @for (issue of leadershipIssues(); track issue.id) {
+                    <li>
+                      <span class="issue-name">{{ issue.name }}</span>
+                      <span class="issue-meta">{{ issue.status }} · {{ issue.line }} · {{ issue.lastHeartbeat }}</span>
+                      <span class="issue-score">Risk {{ issue.riskScore }}</span>
+                    </li>
+                  }
+                </ul>
+              } @else {
+                <p>No active exceptions.</p>
+              }
+            </div>
           } @else {
-            <div class="erp-lite-empty">
-              <p>Dataset not available. Please check the snapshot file.</p>
+            <div class="erp-lite-map__grid">
+              @if (filteredMachines().length) {
+                @for (machine of filteredMachines(); track machine.id) {
+                  <div class="machine-card" [class.machine-card--down]="machine.status === 'Down'"
+                    [class.machine-card--setup]="machine.status === 'Setup'"
+                    [class.machine-card--idle]="machine.status === 'Idle'"
+                    [class.machine-card--stale]="isStale(machine.lastHeartbeat)">
+                    <div class="machine-card__top">
+                      <span class="machine-card__name">{{ machine.name }}</span>
+                      <span class="machine-card__line">{{ machine.line }}</span>
+                    </div>
+                    <div class="machine-card__meta">
+                      <span class="machine-card__status">{{ machine.status }}</span>
+                      <span class="machine-card__shift">{{ machine.shift }}</span>
+                    </div>
+                    <div class="machine-card__metrics">
+                      <div>
+                        <span class="machine-card__metric-label">Throughput</span>
+                        <span class="machine-card__metric-val">{{ machine.throughput }}</span>
+                      </div>
+                      <div>
+                        <span class="machine-card__metric-label">Work Order</span>
+                        <span class="machine-card__metric-val">{{ machine.workOrderId }}</span>
+                      </div>
+                    </div>
+                    <div class="machine-card__footer">
+                      <span>Last heartbeat</span>
+                      <span>{{ formatAge(machine.lastHeartbeat) }}</span>
+                      @if (isStale(machine.lastHeartbeat)) {
+                        <span class="machine-card__stale">Stale</span>
+                      }
+                    </div>
+                  </div>
+                }
+              } @else {
+                <div class="erp-lite-empty">
+                  <p>Dataset not available. Please check the snapshot file.</p>
+                </div>
+              }
             </div>
           }
-        </div>
+        }
 
         <div class="erp-lite-map__footer">
-          <span class="erp-lite-map__note">{{ sourceNote() }}</span>
+          <div class="erp-lite-map__note">
+            <span>{{ sourceNote() }}</span>
+            @if (adapterGeneratedAt()) {
+              <span class="erp-lite-map__meta-line">Adapter snapshot {{ formatAge(adapterGeneratedAt()) }}</span>
+              <span class="erp-lite-map__meta-line">Normalized via contract v1</span>
+            }
+          </div>
           <a routerLink="/contact" class="btn btn--accent">Request the full build -&gt;</a>
         </div>
       </div>
@@ -208,6 +373,97 @@
           <li>Expansion to inventory snapshots and work‑order risk.</li>
         </ul>
       </div>
+      <div class="erp-lite-explain__card">
+        <div class="erp-lite-explain__card-label">// adapter contract (v1)</div>
+        <ul>
+          <li>Machine: id, name, line, status, shift, throughput, workOrderId, lastHeartbeat.</li>
+          <li>Status precedence: Down, Setup, Idle, Running.</li>
+          <li>Validation: required fields + timestamp parsing.</li>
+          <li>Stale logic: heartbeat &gt; 5 minutes old flagged in UI.</li>
+        </ul>
+      </div>
     </div>
   </section>
+
+  @if (contractOpen()) {
+    <div class="erp-lite-modal" (click)="contractOpen.set(false)">
+      <div class="erp-lite-modal__panel" (click)="$event.stopPropagation()">
+        <div class="erp-lite-modal__header">
+          <h3>ERP Lite adapter contract (v1)</h3>
+          <button type="button" (click)="contractOpen.set(false)">Close</button>
+        </div>
+        <div class="erp-lite-modal__body">
+          <p>The UI only consumes this canonical model. All ERP-specific fields live inside the adapter.</p>
+          <div class="erp-lite-modal__summary">
+            <span class="erp-lite-chip">Required: 5</span>
+            <span class="erp-lite-chip">Optional: 3</span>
+            <span class="erp-lite-chip">Statuses: 4</span>
+            <span class="erp-lite-chip">Contract: v1</span>
+          </div>
+          <div class="erp-lite-modal__grid">
+            <div>
+              <span class="erp-lite-modal__label">Required fields</span>
+              <ul>
+                <li>id</li>
+                <li>name</li>
+                <li>line</li>
+                <li>status</li>
+                <li>lastHeartbeat</li>
+              </ul>
+            </div>
+            <div>
+              <span class="erp-lite-modal__label">Optional fields</span>
+              <ul>
+                <li>shift</li>
+                <li>throughput</li>
+                <li>workOrderId</li>
+              </ul>
+            </div>
+          </div>
+          <div class="erp-lite-modal__section">
+            <span class="erp-lite-modal__label">Status precedence</span>
+            <p>Down → Setup → Idle → Running</p>
+          </div>
+          <div class="erp-lite-modal__section">
+            <span class="erp-lite-modal__label">Stale rule</span>
+            <p>Heartbeat older than 5 minutes is flagged stale.</p>
+          </div>
+          <div class="erp-lite-modal__section">
+            <span class="erp-lite-modal__label">Mapping table (stub)</span>
+            <table class="erp-lite-modal__table">
+              <thead>
+                <tr>
+                  <th>UI field</th>
+                  <th>ERP field</th>
+                  <th>Rule</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>id</td>
+                  <td>ResourceId / WorkCenter</td>
+                  <td>Required</td>
+                </tr>
+                <tr>
+                  <td>status</td>
+                  <td>Status / State flags</td>
+                  <td>Down &gt; Setup &gt; Idle &gt; Running</td>
+                </tr>
+                <tr>
+                  <td>lastHeartbeat</td>
+                  <td>LastUpdate / StatusTimestamp</td>
+                  <td>Newest timestamp</td>
+                </tr>
+                <tr>
+                  <td>throughput</td>
+                  <td>QtyComplete / Rate</td>
+                  <td>Optional numeric</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  }
 </div>
