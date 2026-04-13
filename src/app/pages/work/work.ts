@@ -268,6 +268,12 @@ export class WorkComponent implements OnInit {
     window.setTimeout(() => video.play().catch(() => undefined), 1200);
   }
 
+  onVideoReady(event: Event) {
+    const video = event.target as HTMLVideoElement | null;
+    if (!video) return;
+    video.play().catch(() => undefined);
+  }
+
   formatDate(iso: string): string {
     return new Date(iso).toLocaleDateString('en-US', { month: 'short', year: 'numeric' });
   }

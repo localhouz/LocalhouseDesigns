@@ -21,7 +21,8 @@
               autoplay
               muted
               playsinline
-              preload="metadata"
+              preload="auto"
+              (loadeddata)="onVideoReady($event)"
               (ended)="onVideoEnded($event)"
               (click)="$event.stopPropagation()"
             ></video>
