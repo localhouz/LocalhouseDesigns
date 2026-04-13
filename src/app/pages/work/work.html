@@ -14,7 +14,18 @@
         [attr.role]="project.comingSoon || !project.url ? null : 'link'"
         (click)="!project.comingSoon && project.url && openProject(project.url)">
         <div class="case-study__visual" [class.case-study__visual--screenshot]="project.imageUrl">
-          @if (!project.comingSoon && project.previewUrl) {
+          @if (project.videoUrl) {
+            <video
+              class="case-study__video"
+              [src]="project.videoUrl"
+              autoplay
+              muted
+              playsinline
+              preload="metadata"
+              (ended)="onVideoEnded($event)"
+              (click)="$event.stopPropagation()"
+            ></video>
+          } @else if (!project.comingSoon && project.previewUrl) {
             <app-preview-shell
               [previewUrl]="project.previewUrl"
               [domain]="project.previewDomain || ''" />

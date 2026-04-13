@@ -10,6 +10,49 @@
   &__sub { color: rgba(10,10,18,0.55); font-size: 1.1rem; }
 }
 
+.contact-steps {
+  padding: 1rem 0 4rem;
+
+  &__grid {
+    margin-top: 2rem;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 1px;
+    background: var(--border);
+    border: 1px solid var(--border);
+
+    @media (max-width: 900px) {
+      grid-template-columns: 1fr;
+    }
+  }
+}
+
+.contact-step {
+  background: var(--bg);
+  padding: 2rem;
+
+  &__num {
+    display: block;
+    font-family: var(--font-mono);
+    font-size: 0.65rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 0.85rem;
+  }
+
+  h3 {
+    font-size: 1.1rem;
+    margin-bottom: 0.6rem;
+  }
+
+  p {
+    font-size: 0.92rem;
+    line-height: 1.7;
+    color: rgba(10,10,18,0.6);
+  }
+}
+
 .contact-grid {
   display: grid;
   grid-template-columns: 1fr 1.6fr;

@@ -129,6 +129,7 @@ export class WorkComponent implements OnInit {
       subtitle: 'Enterprise Excel add-in',
       url: '',
       previewUrl: '',
+      videoUrl: 'dashboard-cut-01m12s.mp4',
       imageUrl: 'OpsSuite.png',
       outcome: 'Unified 7 legacy VBA add-ins into a single C# VSTO Excel ribbon - fully deployed, API-updateable without touching the client machine. Covers capacity planning, master scheduling, exception processing, louver consumption, and purchasing workflows across multiple departments.',
       challenge: 'The existing Excel tooling was fragmented across multiple legacy VBA add-ins, which made maintenance harder, slowed updates, and spread operational workflows across too many disconnected surfaces.',
@@ -143,6 +144,29 @@ export class WorkComponent implements OnInit {
         { val: '7->1', label: 'Add-ins unified' },
         { val: 'API', label: 'Remote updates' },
         { val: 'Live', label: 'In production' },
+      ],
+      comingSoon: false,
+    },
+    {
+      title: 'Generative Workflow Dashboard',
+      subtitle: 'Operations intelligence UI',
+      url: '',
+      previewUrl: '',
+      videoUrl: 'dashboard-cut-01m12s.mp4',
+      imageUrl: '',
+      outcome: 'Built a generative, role-aware dashboard that turns ERP workflows into a readable operational surface. The UI adapts to workflow state and highlights what matters now instead of forcing users through menu trees.',
+      challenge: 'Operations teams were stuck interpreting transactional ERP screens that were not designed for fast decision-making. That led to slower response times, constant context switching, and missed bottlenecks.',
+      work: [
+        'Designed a workflow-first UI that reorders and prioritizes tasks based on live operational state.',
+        'Created a generative layout that adjusts to different roles and work queues without rebuilding the screen.',
+        'Focused the surface on exceptions, bottlenecks, and next actions instead of raw ERP tables.'
+      ],
+      result: 'The dashboard reduced interpretation time and made operational bottlenecks visible without hunting across ERP modules.',
+      stack: ['Angular', 'TypeScript', 'Workflow Design', 'Operational UX', 'ERP'],
+      metrics: [
+        { val: 'Role-aware', label: 'Adaptive UI' },
+        { val: 'Workflow', label: 'State-driven' },
+        { val: 'Ops', label: 'Decision surface' },
       ],
       comingSoon: false,
     },
@@ -213,6 +237,11 @@ export class WorkComponent implements OnInit {
               '@type': 'ListItem', position: 5,
               name: 'OpsSuite',
               description: 'C# VSTO Excel ribbon add-in unifying 7 legacy VBA add-ins into one deployed application with API-updateable behavior. Covers capacity planning, master scheduling, exception processing, and purchasing workflows.'
+            },
+            {
+              '@type': 'ListItem', position: 6,
+              name: 'Generative Workflow Dashboard',
+              description: 'Generative, role-aware operations dashboard that translates ERP workflows into a decision surface focused on exceptions, bottlenecks, and next actions.'
             }
           ]
         }
@@ -231,6 +260,13 @@ export class WorkComponent implements OnInit {
 
   openProject(url: string) {
     if (url) window.open(url, '_blank', 'noopener');
+  }
+
+  onVideoEnded(event: Event) {
+    const video = event.target as HTMLVideoElement | null;
+    if (!video) return;
+    video.currentTime = 0;
+    window.setTimeout(() => video.play().catch(() => undefined), 1200);
   }
 
   formatDate(iso: string): string {

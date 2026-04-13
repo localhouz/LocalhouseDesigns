@@ -84,7 +84,7 @@ export class ContactComponent implements OnInit {
     const base = 'https://localhousedesigns.netlify.app';
     this.seo.setPage({
       title: 'Contact | Localhouse Designs - Start a Project',
-      description: 'Ready to build something worth finding? Get in touch with Localhouse Designs in Broken Arrow, Oklahoma to start a web or enterprise project.',
+      description: 'Ready to build something worth finding? Send a quick project outline and receive a 48-hour audit response from Localhouse Designs in Broken Arrow, Oklahoma.',
       url: `${base}/contact`,
       schemas: [
         {
@@ -93,7 +93,7 @@ export class ContactComponent implements OnInit {
           '@id': `${base}/contact#webpage`,
           url: `${base}/contact`,
           name: 'Contact | Localhouse Designs',
-          description: 'Start a web or enterprise project with Localhouse Designs. Based in Broken Arrow, Oklahoma and serving local and remote clients through separate Design & Web and Enterprise & ERP tracks.',
+          description: 'Start a web or enterprise project with Localhouse Designs. Based in Broken Arrow, Oklahoma and serving local and remote clients through separate Design & Web and Enterprise & ERP tracks with an async, no-call workflow.',
           isPartOf: { '@id': `${base}/#website` },
           breadcrumb: {
             '@type': 'BreadcrumbList',
@@ -110,7 +110,7 @@ export class ContactComponent implements OnInit {
             {
               '@type': 'Question',
               name: 'How do I start a project with Localhouse Designs?',
-              acceptedAnswer: { '@type': 'Answer', text: 'Fill out the contact form at localhousedesigns.netlify.app/contact. Choose either the Design & Web track (Angular SPA, brand site, full-stack) or the Enterprise & ERP track (Business Central, SAP, SyteLine integrations). Include your project scope, timeline, and budget range and expect a response within 24 hours.' }
+              acceptedAnswer: { '@type': 'Answer', text: 'Fill out the contact form at localhousedesigns.netlify.app/contact. Choose either the Design & Web track (Angular SPA, brand site, full-stack) or the Enterprise & ERP track (Business Central, SAP, SyteLine integrations). Include your project scope, timeline, and budget range and expect a response within 48 hours.' }
             },
             {
               '@type': 'Question',
@@ -120,7 +120,7 @@ export class ContactComponent implements OnInit {
             {
               '@type': 'Question',
               name: 'What is the typical response time for a project inquiry?',
-              acceptedAnswer: { '@type': 'Answer', text: 'Localhouse Designs responds to all project inquiries within 24 hours. Initial response includes availability, any clarifying questions, and next steps for scoping.' }
+              acceptedAnswer: { '@type': 'Answer', text: 'Localhouse Designs responds to project inquiries within 48 hours. The reply includes an audit-style response, availability, and next steps for scoping.' }
             },
             {
               '@type': 'Question',
