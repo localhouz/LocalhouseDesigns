@@ -151,7 +151,7 @@ export class WorkComponent implements OnInit {
       subtitle: 'Operations intelligence UI',
       url: '',
       previewUrl: '',
-      videoUrl: '/dashboard-cut-01m12s.mp4',
+      videoUrl: '/assets/dashboard-cut-01m12s.mp4',
       imageUrl: '',
       outcome: 'Built a generative, role-aware dashboard that turns ERP workflows into a readable operational surface. The UI adapts to workflow state and highlights what matters now instead of forcing users through menu trees.',
       challenge: 'Operations teams were stuck interpreting transactional ERP screens that were not designed for fast decision-making. That led to slower response times, constant context switching, and missed bottlenecks.',
