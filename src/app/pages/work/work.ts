@@ -35,7 +35,7 @@ export class WorkComponent implements OnInit {
       title: 'North Styles',
       subtitle: 'Local grooming brand site',
       url: 'https://north-styles.com/',
-      previewUrl: 'https://north-styles.com/preview',
+      previewUrl: 'https://north-styles.com/',
       previewDomain: 'north-styles.com',
       imageUrl: '',
       outcome: 'Built from scratch to replace the old GlossGenius site with a custom standalone brand site. Added dedicated About and Contact flows, stronger local SEO / GEO / AEO foundations, trust-building content, and a cleaner path from discovery to booking.',
