@@ -20,9 +20,10 @@
               [src]="project.videoUrl"
               autoplay
               muted
+              defaultMuted
               playsinline
               preload="auto"
-              (loadeddata)="onVideoReady($event)"
+              (canplay)="onVideoReady($event)"
               (ended)="onVideoEnded($event)"
               (click)="$event.stopPropagation()"
             ></video>

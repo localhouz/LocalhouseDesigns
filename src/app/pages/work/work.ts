@@ -271,6 +271,10 @@ export class WorkComponent implements OnInit {
   onVideoReady(event: Event) {
     const video = event.target as HTMLVideoElement | null;
     if (!video) return;
+    video.muted = true;
+    video.defaultMuted = true;
+    video.playsInline = true;
+    video.autoplay = true;
     video.play().catch(() => undefined);
   }
 
