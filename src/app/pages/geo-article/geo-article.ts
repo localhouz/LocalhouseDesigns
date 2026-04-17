@@ -54,7 +54,8 @@ export class GeoArticleComponent implements OnInit {
             '@type': 'BreadcrumbList',
             itemListElement: [
               { '@type': 'ListItem', position: 1, name: 'Home', item: base },
-              { '@type': 'ListItem', position: 2, name: 'Insights', item: `${base}/insights/what-geo-means-for-local-businesses` }
+              { '@type': 'ListItem', position: 2, name: 'Insights', item: `${base}/insights` },
+              { '@type': 'ListItem', position: 3, name: 'What GEO Actually Means for Local Businesses', item: url }
             ]
           }
         }

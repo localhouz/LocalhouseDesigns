@@ -84,6 +84,12 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
       tag: 'ERP / Operations'
     },
     {
+      title: 'ERP Lite: Designing an operational decision surface',
+      desc: 'A design and UX case study on turning ERP-heavy operations data into a readable front end for floor teams, planners, and leadership.',
+      route: '/insights/erp-lite-designing-an-operational-decision-surface',
+      tag: 'ERP / UX'
+    },
+    {
       title: 'How structured data helps AI search understand your business',
       desc: 'A practical explanation of what schema actually does, what it cannot do alone, and how it supports clearer machine understanding.',
       route: '/insights/how-structured-data-helps-ai-search-understand-your-business',
@@ -102,6 +108,12 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
       tag: 'ERP / Workflows'
     },
     {
+      title: 'Why local SEO fails when the contact path is vague',
+      desc: 'NAP clarity, CTA clarity, FAQ schema, and map/directions flow - the levers that decide local conversion.',
+      route: '/insights/why-local-seo-fails-when-the-contact-path-is-vague',
+      tag: 'Local SEO'
+    },
+    {
       title: 'What local service pages need to rank and get cited',
       desc: 'A grounded look at what makes a service page more useful for local SEO, AI search, and trust.',
       route: '/insights/what-local-service-pages-need-to-rank-and-get-cited',
@@ -114,7 +126,7 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
       title: 'North Styles',
       desc: 'Built from scratch to replace the old GlossGenius site with a custom brand site, stronger local SEO/AEO foundations, and a cleaner booking path.',
       url: 'https://north-styles.com/',
-      previewUrl: 'https://north-styles.com/preview',
+      previewUrl: 'https://north-styles.com/',
       previewDomain: 'north-styles.com',
       bg: 'linear-gradient(135deg, #091325 0%, #20365c 100%)',
       tag: 'Astro / Local SEO',
@@ -172,6 +184,7 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
           name: 'Localhouse Designs',
           description: 'Boutique web studio specializing in Angular development, enterprise ERP integrations (Microsoft Business Central, SAP, Infor SyteLine), SEO/GEO structured data optimization, WebGL/Three.js experiences, and Netlify deployments.',
           url: base,
+          logo: { '@type': 'ImageObject', url: `${base}/og.png`, width: 1200, height: 630 },
           sameAs: ['https://github.com/localhouz', 'https://www.linkedin.com/in/steven-rausch83/'],
           address: {
             '@type': 'PostalAddress',

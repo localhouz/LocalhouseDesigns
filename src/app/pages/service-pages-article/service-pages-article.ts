@@ -54,7 +54,8 @@ export class ServicePagesArticleComponent implements OnInit {
             '@type': 'BreadcrumbList',
             itemListElement: [
               { '@type': 'ListItem', position: 1, name: 'Home', item: base },
-              { '@type': 'ListItem', position: 2, name: 'Insights', item: url }
+              { '@type': 'ListItem', position: 2, name: 'Insights', item: `${base}/insights` },
+              { '@type': 'ListItem', position: 3, name: 'What Local Service Pages Need to Rank and Get Cited', item: url }
             ]
           }
         }
