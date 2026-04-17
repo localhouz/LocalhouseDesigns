@@ -1,4 +1,144 @@
 @if (prototype(); as prototype) {
+  @if (prototype.mode === 'market-landing') {
+    <div class="restaurant-prototype restaurant-prototype--market" [ngStyle]="themeStyles()">
+      <div class="market-site">
+        <section class="market-site__hero container">
+          <div class="market-site__nav">
+            <div class="market-site__brand">
+              <span class="market-site__brand-mark">B</span>
+              <div>
+                <strong>{{ prototype.businessName }}</strong>
+                <span>Tulsa seafood market + restaurant</span>
+              </div>
+            </div>
+            <div class="market-site__nav-links">
+              <a href="#fresh">Fresh market</a>
+              <a href="#dining">Dining room</a>
+              <a href="#visit">Visit</a>
+            </div>
+          </div>
+
+          <div class="market-site__hero-grid">
+            <div class="market-site__hero-copy">
+              <span class="market-site__eyebrow">Seafood market + restaurant</span>
+              <h1>Fresh seafood in the case. Dinner worth planning around.</h1>
+              <p>A premium front door for a Tulsa seafood destination, built to make the market feel current, the restaurant feel elevated, and the path into both feel obvious.</p>
+              <div class="market-site__cta-row">
+                <button class="proto-btn proto-btn--filled" type="button">See today’s market</button>
+                <button class="proto-btn" type="button">Reserve dinner</button>
+              </div>
+              <div class="market-site__meta">
+                <div>
+                  <strong>Fresh arrivals</strong>
+                  <span>Updated daily by department</span>
+                </div>
+                <div>
+                  <strong>Restaurant</strong>
+                  <span>Lunch, dinner, and oyster bar</span>
+                </div>
+                <div>
+                  <strong>Tulsa</strong>
+                  <span>Market regulars + date-night traffic</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="market-site__hero-panels">
+              <article class="market-tile market-tile--feature">
+                <span class="menu-card__badge">Today’s highlights</span>
+                <h3>Fresh Gulf snapper, East Coast oysters, and house crab cakes.</h3>
+                <p>Lead with what is actually moving people to visit instead of making them dig through a long inventory list.</p>
+              </article>
+              <div class="market-site__hero-stack">
+                <article class="market-tile">
+                  <h4>Shop the market</h4>
+                  <p>Fresh fish, shellfish, prepared foods, and seasonal specialties.</p>
+                </article>
+                <article class="market-tile">
+                  <h4>Dine in tonight</h4>
+                  <p>A cleaner reservation path for guests who came for dinner, oysters, or wine.</p>
+                </article>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section id="fresh" class="market-site__section container">
+          <div class="market-site__section-heading">
+            <span class="market-site__eyebrow">Fresh market</span>
+            <h2>What is fresh right now should be the first thing people see.</h2>
+          </div>
+          <div class="market-site__arrivals">
+            @for (card of prototype.menuCards; track card.title) {
+              <article class="market-tile market-tile--arrival">
+                <span class="menu-card__badge">{{ card.badge }}</span>
+                <h3>{{ card.title }}</h3>
+                <p>{{ card.subtitle }}</p>
+              </article>
+            }
+          </div>
+        </section>
+
+        <section class="market-site__section container">
+          <div class="market-site__section-heading">
+            <span class="market-site__eyebrow">Departments</span>
+            <h2>A market layout that feels organized, premium, and easy to scan.</h2>
+          </div>
+          <div class="market-site__departments">
+            @for (department of prototype.marketDepartments; track department.title) {
+              <article class="market-tile market-tile--department">
+                <h3>{{ department.title }}</h3>
+                <p>{{ department.subtitle }}</p>
+              </article>
+            }
+          </div>
+        </section>
+
+        <section id="dining" class="market-site__section container">
+          <div class="market-site__dining">
+            <article class="market-tile market-tile--story">
+              <span class="market-site__eyebrow">Restaurant</span>
+              <h2>A dinner side that feels just as intentional as the market.</h2>
+              <p>The homepage should make it clear that Bodean is two strong experiences in one place: a market people trust and a dining room worth booking.</p>
+              <ul class="market-site__list">
+                <li>Clear path into reservations</li>
+                <li>Oyster bar and seafood-house positioning</li>
+                <li>Stronger premium cues without feeling stiff</li>
+              </ul>
+            </article>
+            <article class="market-tile market-tile--service">
+              <span class="menu-card__badge">Tonight</span>
+              <h3>Raw bar, fresh catch, and seafood-house classics.</h3>
+              <p>Let the dining room feel like part of the same premium brand system instead of a separate afterthought.</p>
+              <button class="proto-btn proto-btn--filled" type="button">Book a table</button>
+            </article>
+          </div>
+        </section>
+
+        <section id="visit" class="market-site__section container">
+          <div class="market-site__visit">
+            <article class="market-tile market-tile--visit">
+              <span class="market-site__eyebrow">Visit</span>
+              <h3>Hours, location, and the two reasons to come in.</h3>
+              <p>One clear footer block can handle the practical side without dragging down the whole page.</p>
+            </article>
+            <article class="market-tile market-tile--visit">
+              <h4>Market</h4>
+              <p>Fresh fish, shellfish, prepared foods, and take-home seafood staples.</p>
+            </article>
+            <article class="market-tile market-tile--visit">
+              <h4>Restaurant</h4>
+              <p>Reservations, oyster bar traffic, and a cleaner date-night decision path.</p>
+            </article>
+          </div>
+        </section>
+
+        <div class="restaurant-prototype__footnote container">
+          <p>Concept prototype by Localhouse Designs for outreach and conversation-starting. Not affiliated with or endorsed by {{ prototype.businessName }}.</p>
+        </div>
+      </div>
+    </div>
+  } @else {
   <div class="restaurant-prototype" [ngStyle]="themeStyles()">
     <div class="restaurant-prototype__shell">
       <div class="restaurant-prototype__header container">
@@ -35,45 +175,7 @@
         </div>
 
         <div class="restaurant-prototype__phone">
-          @if (prototype.mode === 'market-landing') {
-            <div class="market-browser">
-              <div class="market-browser__chrome">
-                <span></span>
-                <span></span>
-                <span></span>
-              </div>
-              <div class="market-browser__hero">
-                <div class="market-browser__copy">
-                  <span class="market-browser__eyebrow">Bodean seafood market</span>
-                  <h3>Fresh seafood, prepared foods, and dinner reservations in one premium front door.</h3>
-                  <p>Lead with what is actually in the case today, then let guests choose whether they want to shop the market or book a table.</p>
-                  <div class="market-browser__cta-row">
-                    <button class="proto-btn proto-btn--filled" type="button">See fresh arrivals</button>
-                    <button class="proto-btn" type="button">Book dinner</button>
-                  </div>
-                </div>
-                <div class="market-browser__spotlight">
-                  @for (card of prototype.menuCards; track card.title) {
-                    <article class="market-browser__spotlight-card">
-                      <span class="menu-card__badge">{{ card.badge }}</span>
-                      <h4>{{ card.title }}</h4>
-                      <p>{{ card.subtitle }}</p>
-                    </article>
-                  }
-                </div>
-              </div>
-
-              <div class="market-browser__departments">
-                @for (department of prototype.marketDepartments; track department.title) {
-                  <article class="market-browser__department">
-                    <h4>{{ department.title }}</h4>
-                    <p>{{ department.subtitle }}</p>
-                  </article>
-                }
-              </div>
-            </div>
-          } @else {
-            <div class="phone-frame">
+          <div class="phone-frame">
             <div class="phone-frame__topbar">
               <span></span>
               <span></span>
@@ -205,59 +307,9 @@
                 }
               </div>
             }
-            </div>
-          }
+          </div>
         </div>
       </section>
-
-      @if (prototype.mode === 'market-landing') {
-        <section class="market-landing container">
-          <article class="market-landing__panel">
-            <span class="detail-card__label">Landing page direction</span>
-            <div class="market-landing__split">
-              <div>
-                <h3>What changes on the first screen</h3>
-                <p>The page stops feeling like an archive and starts behaving like a premium storefront. Instead of paragraphs and a giant inventory list, the visitor gets today’s arrivals, market departments, and a clean split between shopping seafood and reserving dinner.</p>
-              </div>
-              <div class="market-landing__stats">
-                @for (metric of prototype.metrics; track metric.label) {
-                  <div class="market-landing__stat">
-                    <strong>{{ metric.value }}</strong>
-                    <span>{{ metric.label }}</span>
-                  </div>
-                }
-              </div>
-            </div>
-          </article>
-
-          <div class="market-landing__grid">
-            <article class="market-landing__panel">
-              <span class="detail-card__label">Featured seafood case</span>
-              <div class="market-landing__cards">
-                @for (card of prototype.menuCards; track card.title) {
-                  <article class="menu-card">
-                    <span class="menu-card__badge">{{ card.badge }}</span>
-                    <h4>{{ card.title }}</h4>
-                    <p>{{ card.subtitle }}</p>
-                  </article>
-                }
-              </div>
-            </article>
-
-            <article class="market-landing__panel">
-              <span class="detail-card__label">Why this is stronger</span>
-              <div class="feature-list">
-                @for (feature of prototype.features; track feature.title) {
-                  <div class="feature-list__item">
-                    <h4>{{ feature.title }}</h4>
-                    <p>{{ feature.detail }}</p>
-                  </div>
-                }
-              </div>
-            </article>
-          </div>
-        </section>
-      }
 
       <section class="restaurant-prototype__details container">
         <div class="restaurant-prototype__details-main">
@@ -302,6 +354,7 @@
       </div>
     </div>
   </div>
+  }
 } @else {
   <div class="restaurant-prototype restaurant-prototype--missing">
     <div class="container">

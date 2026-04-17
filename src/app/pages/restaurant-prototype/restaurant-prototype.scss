@@ -4,6 +4,183 @@
   color: var(--proto-text, #f4efe8);
 }
 
+.restaurant-prototype--market {
+  background:
+    radial-gradient(circle at top, rgba(159, 220, 245, 0.12) 0%, rgba(159, 220, 245, 0) 28%),
+    var(--proto-bg, linear-gradient(180deg, #111 0%, #050505 100%));
+}
+
+.market-site {
+  padding: 2rem 0 5rem;
+}
+
+.market-site__hero,
+.market-site__section,
+.market-site__visit,
+.market-site__dining,
+.market-site__arrivals,
+.market-site__departments {
+  position: relative;
+  z-index: 1;
+}
+
+.market-site__nav,
+.market-site__hero-grid,
+.market-site__arrivals,
+.market-site__departments,
+.market-site__dining,
+.market-site__visit {
+  display: grid;
+  gap: 1rem;
+}
+
+.market-site__nav {
+  align-items: center;
+  margin-bottom: 1.5rem;
+}
+
+.market-site__brand {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+}
+
+.market-site__brand strong,
+.market-site__section-heading h2,
+.market-site__hero-copy h1,
+.market-tile h2,
+.market-tile h3,
+.market-tile h4 {
+  margin: 0;
+}
+
+.market-site__brand span,
+.market-site__nav-links a,
+.market-site__hero-copy p,
+.market-site__meta span,
+.market-site__list,
+.market-tile p {
+  color: var(--proto-muted, #c8c0b7);
+}
+
+.market-site__brand-mark {
+  display: grid;
+  place-items: center;
+  width: 2.75rem;
+  height: 2.75rem;
+  border-radius: 999px;
+  background: var(--proto-accent-soft, rgba(159, 220, 245, 0.18));
+  color: var(--proto-text, #f4efe8);
+  font-weight: 700;
+  font-size: 1.1rem;
+}
+
+.market-site__nav-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.market-site__nav-links a {
+  text-decoration: none;
+}
+
+.market-site__hero-copy,
+.market-tile {
+  border: 1px solid var(--proto-line, rgba(255, 255, 255, 0.08));
+  background:
+    linear-gradient(180deg, rgba(255,255,255,0.03) 0%, rgba(255,255,255,0) 100%),
+    var(--proto-panel, rgba(14, 14, 14, 0.9));
+  border-radius: 1.7rem;
+  box-shadow: 0 28px 80px rgba(0, 0, 0, 0.24);
+  backdrop-filter: blur(18px);
+}
+
+.market-site__hero-copy {
+  padding: 1.5rem;
+}
+
+.market-site__eyebrow {
+  display: inline-flex;
+  margin-bottom: 0.8rem;
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  color: var(--proto-accent, #9fdcf5);
+}
+
+.market-site__hero-copy h1 {
+  font-size: clamp(2.8rem, 7vw, 5.8rem);
+  line-height: 0.92;
+  margin-bottom: 1rem;
+}
+
+.market-site__cta-row,
+.market-site__meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.9rem;
+}
+
+.market-site__cta-row {
+  margin: 1.4rem 0 1.5rem;
+}
+
+.market-site__meta div {
+  min-width: 10rem;
+  padding: 0.95rem 1rem;
+  border-radius: 1.1rem;
+  border: 1px solid var(--proto-line, rgba(255, 255, 255, 0.08));
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.market-site__meta strong,
+.market-landing__stat strong {
+  display: block;
+  margin-bottom: 0.3rem;
+  font-size: 1.05rem;
+}
+
+.market-site__section {
+  margin-top: 1.5rem;
+}
+
+.market-site__section-heading {
+  margin-bottom: 1rem;
+}
+
+.market-site__section-heading h2 {
+  font-size: clamp(1.8rem, 4vw, 3rem);
+  line-height: 1;
+}
+
+.market-tile {
+  padding: 1.2rem;
+}
+
+.market-tile--feature {
+  min-height: 16rem;
+  display: grid;
+  align-content: end;
+}
+
+.market-tile--arrival,
+.market-tile--department,
+.market-tile--visit,
+.market-tile--service,
+.market-tile--story {
+  min-height: 12rem;
+}
+
+.market-site__list {
+  margin: 1rem 0 0;
+  padding-left: 1.15rem;
+}
+
+.market-site__list li + li {
+  margin-top: 0.45rem;
+}
+
 .restaurant-prototype__shell {
   position: relative;
   padding: 4.5rem 0 5rem;
@@ -372,39 +549,6 @@
   gap: 1.25rem;
 }
 
-.market-landing {
-  display: grid;
-  gap: 1.25rem;
-  margin: 0 0 2rem;
-}
-
-.market-landing__panel {
-  padding: 1.35rem;
-  box-shadow: 0 28px 80px rgba(0, 0, 0, 0.28);
-  backdrop-filter: blur(22px);
-}
-
-.market-landing__split,
-.market-landing__grid,
-.market-landing__cards,
-.market-landing__stats {
-  display: grid;
-  gap: 1rem;
-}
-
-.market-landing__stat {
-  border-radius: 1.1rem;
-  border: 1px solid var(--proto-line, rgba(255, 255, 255, 0.08));
-  background: rgba(255, 255, 255, 0.03);
-  padding: 0.95rem 1rem;
-}
-
-.market-landing__stat strong {
-  display: block;
-  margin-bottom: 0.3rem;
-  font-size: 1.05rem;
-}
-
 .restaurant-prototype__details-main,
 .restaurant-prototype__sidebar {
   display: grid;
@@ -443,6 +587,25 @@
 }
 
 @media (min-width: 920px) {
+  .market-site__nav {
+    grid-template-columns: minmax(0, 1fr) auto;
+  }
+
+  .market-site__hero-grid {
+    grid-template-columns: minmax(0, 1.1fr) minmax(20rem, 0.9fr);
+    align-items: stretch;
+  }
+
+  .market-site__arrivals,
+  .market-site__departments,
+  .market-site__visit {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .market-site__dining {
+    grid-template-columns: minmax(0, 1.1fr) minmax(18rem, 0.9fr);
+  }
+
   .restaurant-prototype__header,
   .restaurant-prototype__hero,
   .restaurant-prototype__details {
@@ -451,16 +614,6 @@
 
   .market-browser__hero {
     grid-template-columns: minmax(0, 1.1fr) minmax(15rem, 0.9fr);
-  }
-
-  .market-browser__departments,
-  .market-landing__grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-
-  .market-landing__split {
-    grid-template-columns: minmax(0, 1.2fr) minmax(16rem, 0.8fr);
-    align-items: start;
   }
 }
 
