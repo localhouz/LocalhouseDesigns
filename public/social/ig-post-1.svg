@@ -1,0 +1,70 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1080" height="1350" viewBox="0 0 1080 1350">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#05070d"/>
+      <stop offset="100%" stop-color="#0b121d"/>
+    </linearGradient>
+    <linearGradient id="accent" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#ff3c00"/>
+      <stop offset="100%" stop-color="#ff7a2f"/>
+    </linearGradient>
+    <pattern id="grid" width="36" height="36" patternUnits="userSpaceOnUse">
+      <path d="M36 0H0V36" fill="none" stroke="rgba(255,255,255,0.04)" stroke-width="1"/>
+    </pattern>
+  </defs>
+
+  <rect width="1080" height="1350" fill="url(#bg)"/>
+  <rect width="1080" height="1350" fill="url(#grid)" opacity="0.9"/>
+
+  <circle cx="900" cy="220" r="210" fill="rgba(255,60,0,0.08)"/>
+  <circle cx="240" cy="1180" r="190" fill="rgba(124,58,237,0.12)"/>
+
+  <!-- Brand -->
+  <g font-family="Arial, sans-serif" fill="#f5f5f0">
+    <text x="120" y="320" font-size="70" font-weight="700">Localhouse</text>
+    <text x="120" y="390" font-size="70" font-weight="700">Designs</text>
+    <rect x="120" y="430" width="420" height="10" rx="5" fill="url(#accent)"/>
+    <text x="120" y="490" font-size="22" fill="rgba(245,245,240,0.7)">
+      Boutique studio for clear, high-performing brand sites and ops-aware web tooling.
+    </text>
+  </g>
+
+  <!-- Intro block -->
+  <g font-family="Courier New, monospace" font-size="16" fill="rgba(245,245,240,0.78)">
+    <text x="120" y="575">STUDIO INTRO</text>
+    <text x="120" y="610">We build websites that remove ambiguity and speed up decisions.</text>
+    <text x="120" y="638">Less guessing. More clarity, trust, and conversion.</text>
+  </g>
+
+  <!-- What we build -->
+  <g font-family="Courier New, monospace" font-size="16" fill="rgba(245,245,240,0.78)">
+    <text x="120" y="705">WHAT WE BUILD</text>
+    <text x="120" y="740">- Custom brand sites + booking flows</text>
+    <text x="120" y="770">- Clear About / Contact / FAQ structure</text>
+    <text x="120" y="800">- Local SEO / GEO / AEO foundations</text>
+    <text x="120" y="830">- ERP-aware tooling for ops teams</text>
+  </g>
+
+  <!-- Who we build for -->
+  <g font-family="Courier New, monospace" font-size="16" fill="rgba(245,245,240,0.78)">
+    <text x="120" y="905">WHO IT IS FOR</text>
+    <text x="120" y="940">- Service businesses that need more than a brochure site</text>
+    <text x="120" y="970">- Local brands that want AI- and search-ready signals</text>
+    <text x="120" y="1000">- Manufacturers who need ERP data to read like a dashboard</text>
+  </g>
+
+  <!-- Proof + focus -->
+  <g font-family="Courier New, monospace" font-size="16" fill="rgba(245,245,240,0.78)">
+    <text x="120" y="1075">RECENT WORK</text>
+    <text x="120" y="1110">North Styles, NorCal Sauce Worx, Prescribed Burn Sauces</text>
+    <text x="120" y="1140">In progress: ERP Lite floor map (adapter-first build)</text>
+  </g>
+
+  <!-- Location + CTA -->
+  <rect x="120" y="1185" width="520" height="60" rx="30" fill="none" stroke="url(#accent)" stroke-width="2"/>
+  <text x="170" y="1223" font-family="Courier New, monospace" font-size="16" fill="#ff3c00">Tulsa County - Broken Arrow</text>
+
+  <text x="120" y="1295" font-family="Courier New, monospace" font-size="14" fill="rgba(245,245,240,0.55)">
+    localhousedesigns.netlify.app/contact
+  </text>
+</svg>

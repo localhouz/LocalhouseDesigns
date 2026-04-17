@@ -1,0 +1,243 @@
+@if (prototype(); as prototype) {
+  <div class="restaurant-prototype" [ngStyle]="themeStyles()">
+    <div class="restaurant-prototype__shell">
+      <div class="restaurant-prototype__header container">
+        <div>
+          <p class="label">Lead prototype</p>
+          <h1>{{ prototype.businessName }}<br><em>{{ prototype.prototypeLabel.toLowerCase() }}.</em></h1>
+          <p class="restaurant-prototype__sub">{{ prototype.heroSubtitle }}</p>
+        </div>
+        <div class="restaurant-prototype__header-actions">
+          <a routerLink="/contact" class="btn">Open Localhouse contact -&gt;</a>
+          <a [href]="prototype.website" target="_blank" rel="noopener" class="btn btn--filled">View live site -&gt;</a>
+        </div>
+      </div>
+
+      <section class="restaurant-prototype__hero container">
+        <div class="restaurant-prototype__intro">
+          <span class="restaurant-prototype__eyebrow">{{ prototype.instagramHandle }} / {{ prototype.cityLabel }}</span>
+          <h2>{{ prototype.heroTitle }}</h2>
+          <p>{{ prototype.summary }}</p>
+
+          <div class="restaurant-prototype__cta-row">
+            <button class="proto-btn proto-btn--filled" type="button">{{ prototype.primaryCta }}</button>
+            <button class="proto-btn" type="button">{{ prototype.secondaryCta }}</button>
+          </div>
+
+          <div class="restaurant-prototype__metrics">
+            @for (metric of prototype.metrics; track metric.label) {
+              <div class="restaurant-prototype__metric">
+                <span>{{ metric.value }}</span>
+                <small>{{ metric.label }}</small>
+              </div>
+            }
+          </div>
+        </div>
+
+        <div class="restaurant-prototype__phone">
+          <div class="phone-frame">
+            <div class="phone-frame__topbar">
+              <span></span>
+              <span></span>
+              <span></span>
+            </div>
+
+            @if (prototype.mode === 'visual-menu') {
+              <div class="phone-frame__content">
+                <div class="phone-frame__hero-card">
+                  <strong>Tonight at {{ prototype.businessName }}</strong>
+                  <p>Food-first entry, visual menu, and one clean route into reservations.</p>
+                </div>
+                <div class="phone-frame__stack">
+                  @for (card of prototype.menuCards; track card.title) {
+                    <article class="menu-card">
+                      <span class="menu-card__badge">{{ card.badge }}</span>
+                      <h3>{{ card.title }}</h3>
+                      <p>{{ card.subtitle }}</p>
+                    </article>
+                  }
+                </div>
+              </div>
+            }
+
+            @if (prototype.mode === 'late-night') {
+              <div class="phone-frame__content">
+                <div class="state-banner">
+                  <span>Current mode</span>
+                  <strong>{{ currentMenuState() }}</strong>
+                </div>
+                <div class="state-tabs">
+                  @for (card of prototype.menuCards; track card.title) {
+                    <div class="state-tab" [class.state-tab--active]="card.title === currentMenuState()">
+                      <span>{{ card.title }}</span>
+                      <small>{{ card.badge }}</small>
+                    </div>
+                  }
+                </div>
+                <article class="menu-card menu-card--feature">
+                  <span class="menu-card__badge">Auto-switched</span>
+                  <h3>{{ currentMenuState() }} feature set</h3>
+                  <p>The first thing guests see changes with the hour instead of staying frozen.</p>
+                </article>
+              </div>
+            }
+
+            @if (prototype.mode === 'market-report') {
+              <div class="phone-frame__content">
+                <div class="market-update">
+                  <span>Market update</span>
+                  <strong>Refreshed 4:40 PM</strong>
+                </div>
+                <div class="phone-frame__stack">
+                  @for (card of prototype.menuCards; track card.title) {
+                    <article class="menu-card">
+                      <span class="menu-card__badge">{{ card.badge }}</span>
+                      <h3>{{ card.title }}</h3>
+                      <p>{{ card.subtitle }}</p>
+                    </article>
+                  }
+                </div>
+              </div>
+            }
+
+            @if (prototype.mode === 'searchable-menu') {
+              <div class="phone-frame__content">
+                <label class="search-field">
+                  <span>Search the menu</span>
+                  <input
+                    type="text"
+                    [value]="menuQuery()"
+                    (input)="menuQuery.set($any($event.target).value)"
+                    placeholder="shepherd's pie, brunch, fish..."
+                  />
+                </label>
+
+                <div class="category-row">
+                  @for (category of prototype.searchCategories; track category) {
+                    <button
+                      type="button"
+                      class="category-pill"
+                      [class.category-pill--active]="selectedCategory() === category"
+                      (click)="setCategory(category)"
+                    >
+                      {{ category }}
+                    </button>
+                  }
+                </div>
+
+                <div class="phone-frame__stack">
+                  @for (card of filteredMenuCards(); track card.title) {
+                    <article class="menu-card menu-card--compact">
+                      <div>
+                        <h3>{{ card.title }}</h3>
+                        <p>{{ card.subtitle }}</p>
+                      </div>
+                      <strong>{{ card.price }}</strong>
+                    </article>
+                  }
+                </div>
+              </div>
+            }
+
+            @if (prototype.mode === 'order-flow') {
+              <div class="phone-frame__content">
+                <div class="flow-steps">
+                  <span class="flow-step flow-step--active">Pick your vibe</span>
+                  <span class="flow-step">Choose plates</span>
+                  <span class="flow-step">Add cocktails</span>
+                </div>
+                <div class="phone-frame__stack">
+                  @for (card of prototype.menuCards; track card.title) {
+                    <article class="menu-card">
+                      <span class="menu-card__badge">{{ card.badge }}</span>
+                      <h3>{{ card.title }}</h3>
+                      <p>{{ card.subtitle }}</p>
+                    </article>
+                  }
+                </div>
+              </div>
+            }
+
+            @if (prototype.mode === 'pairing-agent') {
+              <div class="phone-frame__content">
+                <div class="pairing-label">
+                  <span>Pairing guide</span>
+                  <strong>Choose your cut</strong>
+                </div>
+                <div class="pairing-options">
+                  @for (item of prototype.pairingOptions; track item.cut) {
+                    <button
+                      type="button"
+                      class="pairing-pill"
+                      [class.pairing-pill--active]="selectedPairing() === item.cut"
+                      (click)="setPairing(item.cut)"
+                    >
+                      {{ item.cut }}
+                    </button>
+                  }
+                </div>
+                @if (activePairing(); as pairing) {
+                  <article class="menu-card menu-card--feature">
+                    <span class="menu-card__badge">Recommended</span>
+                    <h3>{{ pairing.wine }}</h3>
+                    <p>{{ pairing.note }}</p>
+                  </article>
+                }
+              </div>
+            }
+          </div>
+        </div>
+      </section>
+
+      <section class="restaurant-prototype__details container">
+        <div class="restaurant-prototype__details-main">
+          <article class="detail-card">
+            <span class="detail-card__label">Opportunity</span>
+            <h3>Why this lead is worth a custom concept</h3>
+            <p>{{ prototype.opportunity }}</p>
+          </article>
+
+          <article class="detail-card">
+            <span class="detail-card__label">What Localhouse would improve</span>
+            <div class="feature-list">
+              @for (feature of prototype.features; track feature.title) {
+                <div class="feature-list__item">
+                  <h4>{{ feature.title }}</h4>
+                  <p>{{ feature.detail }}</p>
+                </div>
+              }
+            </div>
+          </article>
+        </div>
+
+        <aside class="restaurant-prototype__sidebar">
+          <article class="detail-card">
+            <span class="detail-card__label">Prototype notes</span>
+            <ul class="prototype-notes">
+              <li>Built as an outbound concept page for {{ prototype.businessName }}.</li>
+              <li>Designed to be sent as a link, not just a screenshot.</li>
+              <li>Focuses on mobile-first discovery because that is where most social traffic lands.</li>
+            </ul>
+          </article>
+
+          <article class="detail-card">
+            <span class="detail-card__label">Outreach angle</span>
+            <p>Open the DM with the one thing that is easier in this concept than on the current site, then send the link.</p>
+          </article>
+        </aside>
+      </section>
+
+      <div class="restaurant-prototype__footnote container">
+        <p>Concept prototype by Localhouse Designs for outreach and conversation-starting. Not affiliated with or endorsed by {{ prototype.businessName }}.</p>
+      </div>
+    </div>
+  </div>
+} @else {
+  <div class="restaurant-prototype restaurant-prototype--missing">
+    <div class="container">
+      <p class="label">Prototype not found</p>
+      <h1>This lead page<br><em>doesn’t exist yet.</em></h1>
+      <a routerLink="/" class="btn btn--filled">Back to Localhouse -&gt;</a>
+    </div>
+  </div>
+}

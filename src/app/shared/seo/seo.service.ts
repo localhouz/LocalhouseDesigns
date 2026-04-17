@@ -8,6 +8,7 @@ export interface SeoConfig {
   url: string;
   image?: string;
   schemas?: object[];
+  noIndex?: boolean;
 }
 
 @Injectable({ providedIn: 'root' })
@@ -30,6 +31,14 @@ export class SeoService {
     this.meta.updateTag({ name: 'twitter:title', content: config.title });
     this.meta.updateTag({ name: 'twitter:description', content: config.description });
     this.meta.updateTag({ name: 'twitter:image', content: image });
+    this.meta.updateTag({
+      name: 'robots',
+      content: config.noIndex ? 'noindex, nofollow, noarchive, nosnippet' : 'index, follow'
+    });
+    this.meta.updateTag({
+      name: 'googlebot',
+      content: config.noIndex ? 'noindex, nofollow, noarchive, nosnippet' : 'index, follow'
+    });
 
     let canonical = this.doc.querySelector<HTMLLinkElement>('link[rel="canonical"]');
     if (!canonical) {

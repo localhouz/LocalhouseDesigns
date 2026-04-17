@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1080" height="1080" viewBox="0 0 1080 1080">
+  <rect width="1080" height="1080" fill="#0b0d12"/>
+  <rect x="140" y="140" width="800" height="800" rx="140" fill="#0f141f"/>
+
+  <!-- LH house mark -->
+  <g fill="#f5f5f0">
+    <!-- L as chimney + base -->
+    <rect x="320" y="300" width="110" height="520" rx="20"/>
+    <rect x="320" y="720" width="320" height="110" rx="20"/>
+
+    <!-- H as right wall + roof connector -->
+    <rect x="650" y="420" width="110" height="400" rx="20"/>
+    <polygon points="430,420 540,300 760,420 700,420 540,340 490,420"/>
+  </g>
+
+  <!-- Roof accent stroke -->
+  <polygon points="430,420 540,300 760,420 720,440 540,360 470,440" fill="#ff3c00"/>
+
+  <!-- Base accent -->
+  <rect x="320" y="840" width="440" height="12" rx="6" fill="#ff7a2f"/>
+</svg>

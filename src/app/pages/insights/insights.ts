@@ -25,6 +25,12 @@ export class InsightsComponent implements OnInit {
       tag: 'ERP / Operations'
     },
     {
+      title: 'ERP Lite: Designing an operational decision surface',
+      desc: 'A design and UX case study on turning ERP-heavy operations data into a readable front end for floor teams, planners, and leadership.',
+      route: '/insights/erp-lite-designing-an-operational-decision-surface',
+      tag: 'ERP / UX'
+    },
+    {
       title: 'How structured data helps AI search understand your business',
       desc: 'A plain-English look at what schema really does, where it helps, and why it works best when the site is already clear and trustworthy.',
       route: '/insights/how-structured-data-helps-ai-search-understand-your-business',
@@ -41,6 +47,12 @@ export class InsightsComponent implements OnInit {
       desc: 'A practical article on why extra visibility often fails to remove friction and what better internal tooling should do instead.',
       route: '/insights/why-most-dashboards-do-not-fix-the-workflow',
       tag: 'ERP / Workflows'
+    },
+    {
+      title: 'Why local SEO fails when the contact path is vague',
+      desc: 'A practical breakdown of NAP clarity, CTA clarity, FAQ schema, and map/directions flow - the levers that decide local conversion.',
+      route: '/insights/why-local-seo-fails-when-the-contact-path-is-vague',
+      tag: 'Local SEO'
     },
     {
       title: 'What local service pages need to rank and get cited',
@@ -79,10 +91,12 @@ export class InsightsComponent implements OnInit {
           itemListElement: [
             { '@type': 'ListItem', position: 1, url: `${base}/insights/what-geo-means-for-local-businesses`, name: 'What GEO actually means for local businesses' },
             { '@type': 'ListItem', position: 2, url: `${base}/insights/what-manufacturers-actually-need-from-erp-connected-tooling`, name: 'What manufacturers actually need from ERP-connected tooling' },
-            { '@type': 'ListItem', position: 3, url: `${base}/insights/how-structured-data-helps-ai-search-understand-your-business`, name: 'How structured data helps AI search understand your business' },
-            { '@type': 'ListItem', position: 4, url: `${base}/insights/why-a-custom-site-beats-a-booking-platform-page-for-local-search`, name: 'Why a custom site beats a booking-platform page for local search' },
-            { '@type': 'ListItem', position: 5, url: `${base}/insights/why-most-dashboards-do-not-fix-the-workflow`, name: 'Why most dashboards do not fix the workflow' },
-            { '@type': 'ListItem', position: 6, url: `${base}/insights/what-local-service-pages-need-to-rank-and-get-cited`, name: 'What local service pages need to rank and get cited' }
+            { '@type': 'ListItem', position: 3, url: `${base}/insights/erp-lite-designing-an-operational-decision-surface`, name: 'ERP Lite: Designing an operational decision surface' },
+            { '@type': 'ListItem', position: 4, url: `${base}/insights/how-structured-data-helps-ai-search-understand-your-business`, name: 'How structured data helps AI search understand your business' },
+            { '@type': 'ListItem', position: 5, url: `${base}/insights/why-a-custom-site-beats-a-booking-platform-page-for-local-search`, name: 'Why a custom site beats a booking-platform page for local search' },
+            { '@type': 'ListItem', position: 6, url: `${base}/insights/why-most-dashboards-do-not-fix-the-workflow`, name: 'Why most dashboards do not fix the workflow' },
+            { '@type': 'ListItem', position: 7, url: `${base}/insights/why-local-seo-fails-when-the-contact-path-is-vague`, name: 'Why local SEO fails when the contact path is vague' },
+            { '@type': 'ListItem', position: 8, url: `${base}/insights/what-local-service-pages-need-to-rank-and-get-cited`, name: 'What local service pages need to rank and get cited' }
           ]
         }
       ]

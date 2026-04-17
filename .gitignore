@@ -43,6 +43,11 @@ __screenshots__/
 .DS_Store
 Thumbs.db
 
+# Local-only tooling and scratch output
+.synapse/
+synapse_data/
+tmp-instagram/
+
 # Python / research artifacts (not part of this project)
 autoresearch_portable/
 __pycache__/
