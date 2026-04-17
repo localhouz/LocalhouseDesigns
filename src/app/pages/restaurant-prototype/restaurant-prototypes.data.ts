@@ -30,8 +30,13 @@ export interface PrototypePairingOption {
 }
 
 export interface MarketLandingConfig {
+  heroHeadline: string;
   heroSubtext: string;
+  heroImage: string;
+  marketImage: string;
+  diningImage: string;
   freshHeadline: string;
+  marketIntroBody: string;
   departmentHeadline: string;
   diningHeadline: string;
   diningBody: string;
@@ -93,7 +98,7 @@ export const restaurantPrototypes: RestaurantPrototype[] = [
     heroTitle: 'A bio-link menu that feels like the restaurant.',
     heroSubtitle: 'Wild Fork already has the atmosphere. This concept turns that into a cleaner mobile experience with visual menu cards, reserve-first flow, and stronger first-click confidence.',
     primaryCta: 'Reserve a table',
-    secondaryCta: 'View tonight’s menu',
+    secondaryCta: "View tonight's menu",
     theme: {
       background: 'radial-gradient(circle at top, #243229 0%, #111612 58%, #090b09 100%)',
       panel: 'rgba(17, 24, 18, 0.88)',
@@ -133,7 +138,7 @@ export const restaurantPrototypes: RestaurantPrototype[] = [
     summary: 'A dynamic mobile menu that highlights happy hour, dinner, or late-night food automatically so the first thing guests see is what is actually relevant right now.',
     heroTitle: 'The menu changes with the night.',
     heroSubtitle: 'This concept makes The Tavern feel more alive online by switching featured items and CTAs based on time of day instead of forcing every guest through the same static page.',
-    primaryCta: 'See what’s live now',
+    primaryCta: "See what's live now",
     secondaryCta: 'Book for tonight',
     theme: {
       background: 'radial-gradient(circle at top, #4e2f18 0%, #1d120b 56%, #090605 100%)',
@@ -174,10 +179,10 @@ export const restaurantPrototypes: RestaurantPrototype[] = [
     summary: 'A premium market-first landing page that surfaces what is fresh today, groups the inventory into useful departments, and gives visitors a cleaner split between shopping the market and reserving dinner.',
     heroTitle: 'Make the market the reason to visit.',
     heroSubtitle: 'This concept reframes Bodean as a destination seafood market with a restaurant attached, not a restaurant with a hard-to-scan market page buried underneath it.',
-    primaryCta: 'Shop today’s market',
+    primaryCta: "Shop today's market",
     secondaryCta: 'Reserve for dinner',
     theme: {
-      background: 'radial-gradient(circle at top, #26506a 0%, #0c1d28 52%, #071015 100%)',
+      background: 'radial-gradient(circle at top, #1c4862 0%, #0c1d28 52%, #071015 100%)',
       panel: 'rgba(9, 23, 33, 0.9)',
       panelAlt: 'rgba(16, 43, 59, 0.95)',
       line: 'rgba(184, 226, 244, 0.16)',
@@ -187,9 +192,9 @@ export const restaurantPrototypes: RestaurantPrototype[] = [
       muted: '#c6dce7'
     },
     metrics: [
+      { value: 'Fresh daily', label: 'Fish and shellfish lead the page' },
       { value: '2 paths', label: 'Market shop + dinner reservation' },
-      { value: 'Today', label: 'Fresh arrivals surfaced first' },
-      { value: 'Cleaner', label: 'Less text-heavy inventory' }
+      { value: 'Premium', label: 'Cleaner first impression' }
     ],
     features: [
       { title: 'Featured arrivals first', detail: 'Lead with the seafood case and what is fresh now instead of making guests parse a long inventory document.' },
@@ -205,27 +210,32 @@ export const restaurantPrototypes: RestaurantPrototype[] = [
       { title: 'Fresh fish', subtitle: 'Daily arrivals, featured cuts, and whole-fish availability' },
       { title: 'Shellfish', subtitle: 'Oysters, shrimp, crab, and clams from both coasts' },
       { title: 'Prepared foods', subtitle: 'Crab cakes, dips, sides, and take-home staples' },
-      { title: 'Market staples', subtitle: 'Sauces, seasonings, and the pantry items regulars come back for' }
+      { title: 'Market staples', subtitle: 'Sauces, seasonings, breads, and gourmet goods' }
     ],
     marketLanding: {
-      heroSubtext: 'Bodean has been Tulsa\'s seafood destination for over thirty years. Fresh arrivals from the Gulf, the Carolinas, and both coasts. Shop the market or stay for dinner.',
-      freshHeadline: "What's fresh today",
-      departmentHeadline: 'Everything in the case, organized the way you shop',
-      diningHeadline: 'Dinner for two. Or twelve.',
-      diningBody: 'The restaurant runs the same standard as the market — fresh catch, classic preparations, and an oyster bar that earns its own visit. Reserve ahead on weekends.',
+      heroHeadline: 'Dine. Shop. Enjoy.',
+      heroSubtext: "A rebuilt front door for Tulsa's seafood market and restaurant, adapted from Bodean's public positioning around fresh fish, shellfish, prepared foods, and a dining room built around the catch.",
+      heroImage: '/lead-previews/bodean-hero.jpg',
+      marketImage: '/lead-previews/bodean-market.jpg',
+      diningImage: '/lead-previews/bodean-oyster-bar.jpg',
+      freshHeadline: 'Fresh fish and shellfish should lead the homepage, not hide inside a long market list.',
+      marketIntroBody: "Bodean's public site already points to the right story: fresh fish and shellfish, prepared foods, housemade specialties, breads, sauces, and gourmet goods. This concept turns that into a clearer, more premium landing page.",
+      departmentHeadline: 'Everything in the case, organized the way people actually shop it.',
+      diningHeadline: 'The dining room should feel like part of the same seafood story.',
+      diningBody: 'The restaurant side carries the same standard as the market: fresh catch, seafood-house classics, oyster bar energy, and a reservation path that feels polished instead of buried.',
       diningBullets: ['Raw bar open nightly', 'Fresh catch specials updated daily', 'Private dining available'],
       diningCardTitle: 'Raw bar, fresh catch, and seafood-house classics.',
-      diningCardBody: 'Book early on weekends. The dining room fills around the market\'s busiest days.',
+      diningCardBody: "Book early on weekends. The dining room fills around the market's busiest days.",
       visitIntroHeadline: 'Come for the market. Stay for dinner.',
-      visitIntroBody: 'The market opens early. The restaurant stays open late. Both are worth the trip.',
-      visitMarketBody: 'Fresh fish, shellfish, prepared foods, and take-home seafood staples.',
-      visitRestaurantBody: 'Reservations recommended on weekends. Walk-ins welcome at the bar.'
+      visitIntroBody: 'A stronger homepage should make both sides of the business obvious right away: shop the seafood case, or plan a night out around the dining room.',
+      visitMarketBody: 'Fresh fish, shellfish, prepared foods, breads, sauces, and take-home seafood staples.',
+      visitRestaurantBody: 'Reservations recommended on weekends, with oyster bar and seafood-house traffic called out clearly.'
     }
   },
   {
     slug: 'kilkennys',
     shareSlug: 'kilkennys-irish-menu-lantern-2026',
-    businessName: 'Kilkenny’s Irish Pub',
+    businessName: "Kilkenny's Irish Pub",
     instagramHandle: '@tulsairishpub',
     website: 'https://www.kilkennysirishpub.com/',
     cityLabel: 'Tulsa',
@@ -234,7 +244,7 @@ export const restaurantPrototypes: RestaurantPrototype[] = [
     prototypeLabel: 'Searchable Menu Prototype',
     summary: 'A mobile-first menu interface that helps guests search, filter, and actually find what they want instead of scrolling through an intimidating wall of categories.',
     heroTitle: 'Big menu. Much easier to use.',
-    heroSubtitle: 'Kilkenny’s has range. This concept keeps that depth while giving guests a cleaner path through brunch, Irish staples, and pub favorites on mobile.',
+    heroSubtitle: "Kilkenny's has range. This concept keeps that depth while giving guests a cleaner path through brunch, Irish staples, and pub favorites on mobile.",
     primaryCta: 'Search the menu',
     secondaryCta: 'Start with favorites',
     theme: {
@@ -253,13 +263,13 @@ export const restaurantPrototypes: RestaurantPrototype[] = [
       { value: 'Less scroll', label: 'Faster path to order intent' }
     ],
     features: [
-      { title: 'Search-first mobile experience', detail: 'Help guests jump to shepherd’s pie, fish and chips, or brunch immediately.' },
+      { title: 'Search-first mobile experience', detail: "Help guests jump to shepherd's pie, fish and chips, or brunch immediately." },
       { title: 'Smart category filters', detail: 'Turn menu depth into something useful instead of overwhelming.' },
       { title: 'Recommended starters', detail: 'Surface best bets before guests bounce.' }
     ],
     menuCards: [
       { title: 'Fish and chips', subtitle: 'Beer-battered pub classic', price: '$18' },
-      { title: 'Shepherd’s pie', subtitle: 'Slow comfort favorite', price: '$19' },
+      { title: "Shepherd's pie", subtitle: 'Slow comfort favorite', price: '$19' },
       { title: 'Irish breakfast', subtitle: 'Brunch-heavy discovery card', price: '$17' },
       { title: 'Bangers and mash', subtitle: 'Easy dinner crowd favorite', price: '$18' },
       { title: 'Scotch egg', subtitle: 'Starter people actively search for', price: '$9' },
@@ -270,7 +280,7 @@ export const restaurantPrototypes: RestaurantPrototype[] = [
   {
     slug: 'nolas',
     shareSlug: 'nolas-bayou-order-orbit-2026',
-    businessName: 'Nola’s Creole & Cocktails',
+    businessName: "Nola's Creole & Cocktails",
     instagramHandle: '@nolastulsa',
     website: 'https://www.nolastulsa.com/',
     cityLabel: 'Tulsa',
@@ -279,7 +289,7 @@ export const restaurantPrototypes: RestaurantPrototype[] = [
     prototypeLabel: 'Interactive Ordering Prototype',
     summary: 'A richer mobile ordering and reservation concept that leans into the bayou atmosphere with flavor pathways, cocktail pairing prompts, and a stronger sense of personality.',
     heroTitle: 'Let the ordering flow carry the vibe.',
-    heroSubtitle: 'This concept turns Nola’s personality into an interactive ordering surface with flavor routes, cocktail pairings, and a much more memorable first screen.',
+    heroSubtitle: "This concept turns Nola's personality into an interactive ordering surface with flavor routes, cocktail pairings, and a much more memorable first screen.",
     primaryCta: 'Start your order',
     secondaryCta: 'See cocktails first',
     theme: {
@@ -320,7 +330,7 @@ export const restaurantPrototypes: RestaurantPrototype[] = [
     prototypeLabel: 'Wine Pairing Prototype',
     summary: 'A luxe steakhouse landing page concept with a pairing assistant that turns the wine list into a guided experience, not just a dense document.',
     heroTitle: 'A pairing guide with the right level of ceremony.',
-    heroSubtitle: 'This concept frames PRHYME’s digital experience around the steak-and-wine decision, with a calmer premium interface and a more persuasive path to reservation.',
+    heroSubtitle: "This concept frames PRHYME's digital experience around the steak-and-wine decision, with a calmer premium interface and a more persuasive path to reservation.",
     primaryCta: 'Explore pairings',
     secondaryCta: 'Reserve for dinner',
     theme: {

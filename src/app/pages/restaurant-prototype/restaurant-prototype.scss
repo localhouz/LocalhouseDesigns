@@ -10,6 +10,261 @@
     var(--proto-bg, linear-gradient(180deg, #111 0%, #050505 100%));
 }
 
+.ms-nav,
+.ms-hero__content,
+.ms-feature-grid,
+.ms-catch-grid,
+.ms-depts__grid,
+.ms-restaurant,
+.ms-visit__grid {
+  display: grid;
+  gap: 1rem;
+}
+
+.ms-nav {
+  align-items: center;
+  padding-top: 1.2rem;
+  margin-bottom: 1rem;
+}
+
+.ms-nav__brand {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+}
+
+.ms-nav__mark {
+  display: grid;
+  place-items: center;
+  width: 2.75rem;
+  height: 2.75rem;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.09);
+  border: 1px solid var(--proto-line, rgba(255, 255, 255, 0.08));
+  font-weight: 700;
+}
+
+.ms-nav__brand strong,
+.ms-nav__brand span,
+.ms-nav__links a,
+.ms-hero__sub,
+.ms-stat span,
+.ms-section-header p,
+.ms-catch-item p,
+.ms-dept p,
+.ms-restaurant__story p,
+.ms-restaurant__bullets,
+.ms-restaurant__card p,
+.ms-visit__intro p,
+.ms-visit__card p {
+  color: var(--proto-muted, #c6dce7);
+}
+
+.ms-nav__links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.ms-nav__links a {
+  text-decoration: none;
+}
+
+.ms-hero {
+  position: relative;
+  overflow: clip;
+  min-height: 42rem;
+  margin-bottom: 2rem;
+}
+
+.ms-hero__image {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.ms-hero__overlay {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(90deg, rgba(5, 13, 18, 0.88) 0%, rgba(5, 13, 18, 0.55) 44%, rgba(5, 13, 18, 0.2) 100%),
+    linear-gradient(180deg, rgba(5, 13, 18, 0.08) 0%, rgba(5, 13, 18, 0.52) 100%);
+}
+
+.ms-hero__content {
+  position: relative;
+  z-index: 1;
+  align-content: end;
+  min-height: 42rem;
+  padding-top: 10rem;
+  padding-bottom: 3rem;
+}
+
+.ms-eyebrow {
+  display: inline-flex;
+  margin-bottom: 0.8rem;
+  font-size: 0.78rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--proto-accent, #9fdcf5);
+}
+
+.ms-hero__copy {
+  max-width: 42rem;
+}
+
+.ms-hero__copy h1,
+.ms-section-header h2,
+.ms-catch-item h3,
+.ms-dept h3,
+.ms-restaurant__story h2,
+.ms-restaurant__card h3,
+.ms-visit__intro h2,
+.ms-visit__card h3 {
+  margin: 0;
+}
+
+.ms-hero__copy h1 {
+  font-size: clamp(3rem, 7vw, 6.2rem);
+  line-height: 0.92;
+  margin-bottom: 1rem;
+}
+
+.ms-hero__copy em {
+  font-style: normal;
+  color: var(--proto-accent, #9fdcf5);
+}
+
+.ms-hero__sub {
+  max-width: 34rem;
+  font-size: 1.05rem;
+}
+
+.ms-cta-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.85rem;
+  margin-top: 1.5rem;
+}
+
+.ms-hero__stats {
+  display: grid;
+  gap: 0.8rem;
+  align-content: end;
+}
+
+.ms-stat,
+.ms-catch-item,
+.ms-dept,
+.ms-restaurant__card,
+.ms-visit__card {
+  border: 1px solid var(--proto-line, rgba(255, 255, 255, 0.08));
+  background: rgba(7, 17, 23, 0.72);
+  backdrop-filter: blur(18px);
+}
+
+.ms-stat {
+  padding: 1rem 1.1rem;
+  border-radius: 1.15rem;
+}
+
+.ms-stat strong {
+  display: block;
+  margin-bottom: 0.3rem;
+  font-size: 1.05rem;
+}
+
+.ms-intro,
+.ms-depts,
+.ms-restaurant-band,
+.ms-visit {
+  margin-top: 2rem;
+}
+
+.ms-section-header {
+  margin-bottom: 1rem;
+}
+
+.ms-section-header h2,
+.ms-restaurant__story h2,
+.ms-visit__intro h2 {
+  font-size: clamp(1.9rem, 4vw, 3.2rem);
+  line-height: 0.98;
+  margin-bottom: 0.75rem;
+}
+
+.ms-photo-card,
+.ms-restaurant__visual {
+  position: relative;
+  overflow: clip;
+  min-height: 22rem;
+  border-radius: 1.75rem;
+}
+
+.ms-photo-card img,
+.ms-restaurant__visual img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.ms-catch-grid,
+.ms-depts__grid {
+  align-content: start;
+}
+
+.ms-catch-item,
+.ms-dept,
+.ms-restaurant__card,
+.ms-visit__card {
+  padding: 1.25rem;
+  border-radius: 1.4rem;
+}
+
+.ms-badge {
+  display: inline-flex;
+  margin-bottom: 0.8rem;
+  padding: 0.34rem 0.65rem;
+  border-radius: 999px;
+  background: var(--proto-accent-soft, rgba(159, 220, 245, 0.18));
+  color: var(--proto-text, #eff9fd);
+  font-size: 0.74rem;
+}
+
+.ms-restaurant-band {
+  padding: 2rem 0;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.02) 0%, rgba(255, 255, 255, 0.05) 100%),
+    rgba(0, 0, 0, 0.12);
+}
+
+.ms-restaurant__story {
+  align-self: center;
+}
+
+.ms-restaurant__bullets {
+  margin: 1rem 0 0;
+  padding-left: 1.1rem;
+}
+
+.ms-restaurant__bullets li + li {
+  margin-top: 0.45rem;
+}
+
+.ms-restaurant__card {
+  position: absolute;
+  right: 1rem;
+  bottom: 1rem;
+  max-width: 18rem;
+}
+
+.ms-visit__intro {
+  margin-bottom: 1rem;
+}
+
 .market-site {
   padding: 2rem 0 5rem;
 }
@@ -587,6 +842,27 @@
 }
 
 @media (min-width: 920px) {
+  .ms-nav {
+    grid-template-columns: minmax(0, 1fr) auto;
+  }
+
+  .ms-hero__content {
+    grid-template-columns: minmax(0, 1.15fr) minmax(18rem, 0.85fr);
+    align-items: end;
+  }
+
+  .ms-feature-grid,
+  .ms-restaurant {
+    grid-template-columns: minmax(0, 1.05fr) minmax(20rem, 0.95fr);
+    align-items: stretch;
+  }
+
+  .ms-catch-grid,
+  .ms-depts__grid,
+  .ms-visit__grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
   .market-site__nav {
     grid-template-columns: minmax(0, 1fr) auto;
   }
@@ -618,6 +894,21 @@
 }
 
 @media (max-width: 720px) {
+  .ms-hero {
+    min-height: 36rem;
+  }
+
+  .ms-hero__content {
+    min-height: 36rem;
+    padding-top: 7rem;
+  }
+
+  .ms-restaurant__card {
+    position: static;
+    margin-top: 1rem;
+    max-width: none;
+  }
+
   .restaurant-prototype__shell {
     padding-top: 3.5rem;
   }
