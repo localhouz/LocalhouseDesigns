@@ -1,7 +1,7 @@
 .hvac-prototype {
   min-height: calc(100vh - 4.5rem);
   color: #f5f2ea;
-  font-size: 15px;
+  font-size: 16px;
   background:
     radial-gradient(circle at top left, rgba(255, 111, 56, 0.18), transparent 28%),
     radial-gradient(circle at 85% 10%, rgba(108, 191, 228, 0.16), transparent 24%),
@@ -46,7 +46,7 @@
 }
 
 .hvac-demo .container {
-  max-width: 1120px;
+  max-width: 1200px;
 }
 
 .demo-toolbar {
@@ -100,12 +100,12 @@
 .demo-scenarios__list {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 0.24rem;
+  gap: 0.34rem;
 }
 
 .scenario-chip {
   display: block;
-  padding: 0.34rem 0.54rem;
+  padding: 0.46rem 0.72rem;
   text-align: left;
   border-radius: 0.5rem;
   border: 1px solid rgba(255, 255, 255, 0.08);
@@ -115,7 +115,7 @@
   line-height: 1;
 
   strong {
-    font-size: 0.72rem;
+    font-size: 0.82rem;
   }
 }
 
@@ -126,8 +126,8 @@
 
 .hvac-demo__grid {
   display: grid;
-  grid-template-columns: minmax(12.5rem, 14.5rem) minmax(0, 1fr);
-  gap: 0.52rem;
+  grid-template-columns: minmax(14rem, 16rem) minmax(0, 1fr);
+  gap: 0.64rem;
   align-items: start;
 }
 
@@ -143,14 +143,14 @@
 .demo-controls {
   display: grid;
   gap: 0.32rem;
-  padding: 0.46rem;
+  padding: 0.56rem;
   border-radius: 0.68rem;
   position: sticky;
   top: 5rem;
 }
 
 .demo-controls__block {
-  padding: 0.42rem;
+  padding: 0.5rem;
   border-radius: 0.54rem;
   background: rgba(0, 0, 0, 0.16);
   border: 1px solid rgba(255, 255, 255, 0.06);
@@ -169,12 +169,12 @@
 
 .demo-option-list {
   display: grid;
-  gap: 0.22rem;
+  gap: 0.3rem;
 }
 
 .demo-option {
   display: block;
-  padding: 0.36rem 0.5rem;
+  padding: 0.48rem 0.66rem;
   text-align: left;
   border-radius: 0.44rem;
   border: 1px solid rgba(255, 255, 255, 0.08);
@@ -184,7 +184,7 @@
   line-height: 1.05;
 
   strong {
-    font-size: 0.7rem;
+    font-size: 0.8rem;
   }
 }
 
@@ -195,19 +195,19 @@
 
 .demo-preview {
   display: grid;
-  gap: 0.48rem;
+  gap: 0.58rem;
 }
 
 .demo-browser {
   overflow: hidden;
-  border-radius: 0.84rem;
+  border-radius: 0.92rem;
 }
 
 .demo-browser__chrome {
   display: flex;
   align-items: center;
   gap: 0.3rem;
-  padding: 0.42rem 0.58rem;
+  padding: 0.52rem 0.68rem;
   border-bottom: 1px solid rgba(255, 255, 255, 0.08);
   background: rgba(0, 0, 0, 0.16);
 
@@ -221,29 +221,29 @@
 
 .demo-browser__url {
   margin-left: 0.32rem;
-  padding: 0.18rem 0.34rem;
+  padding: 0.24rem 0.42rem;
   border-radius: 999px;
   background: rgba(255, 255, 255, 0.04);
   color: rgba(245, 242, 234, 0.64);
   font-family: var(--font-mono);
-  font-size: 0.58rem;
+  font-size: 0.64rem;
   letter-spacing: 0.06em;
 }
 
 .demo-browser__surface {
   display: grid;
-  gap: 0.4rem;
-  padding: 0.42rem;
+  gap: 0.52rem;
+  padding: 0.56rem;
 }
 
 .site-hero,
 .site-band__card {
-  border-radius: 0.68rem;
+  border-radius: 0.78rem;
   border: 1px solid rgba(255, 255, 255, 0.08);
 }
 
 .site-hero {
-  padding: 0.5rem;
+  padding: 0.66rem;
   background:
     radial-gradient(circle at top right, rgba(121, 207, 231, 0.12), transparent 26%),
     linear-gradient(180deg, rgba(255, 122, 69, 0.08), rgba(255, 255, 255, 0.02));
@@ -253,36 +253,36 @@
   display: flex;
   justify-content: space-between;
   gap: 0.4rem;
-  margin-bottom: 0.36rem;
+  margin-bottom: 0.46rem;
   color: rgba(245, 242, 234, 0.6);
   font-family: var(--font-mono);
-  font-size: 0.54rem;
+  font-size: 0.6rem;
   letter-spacing: 0.06em;
 }
 
 .site-hero__grid,
 .site-band {
   display: grid;
-  gap: 0.4rem;
+  gap: 0.52rem;
 }
 
 .site-hero__grid {
-  grid-template-columns: minmax(0, 1fr) minmax(11.5rem, 12.5rem);
+  grid-template-columns: minmax(0, 1fr) minmax(13rem, 14rem);
   align-items: stretch;
 }
 
 .site-hero__copy h2 {
-  margin: 0 0 0.18rem;
+  margin: 0 0 0.24rem;
   max-width: 19ch;
-  font-size: clamp(1rem, 1.45vw, 1.34rem);
-  line-height: 1.02;
+  font-size: clamp(1.18rem, 1.7vw, 1.58rem);
+  line-height: 1.04;
 }
 
 .site-hero__copy p,
 .site-callout p {
   color: rgba(245, 242, 234, 0.7);
-  line-height: 1.18;
-  font-size: 0.66rem;
+  line-height: 1.25;
+  font-size: 0.74rem;
   margin: 0;
 }
 
@@ -292,21 +292,21 @@
 .demo-footer__actions {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.28rem;
+  gap: 0.36rem;
 }
 
 .site-hero__actions {
-  margin: 0.34rem 0 0.28rem;
+  margin: 0.44rem 0 0.36rem;
 }
 
 .site-btn {
-  padding: 0.28rem 0.5rem;
+  padding: 0.38rem 0.66rem;
   border-radius: 999px;
   border: 1px solid rgba(255, 255, 255, 0.12);
   background: transparent;
   color: #f5f2ea;
   font: inherit;
-  font-size: 0.66rem;
+  font-size: 0.74rem;
   line-height: 1;
 }
 
@@ -321,65 +321,65 @@
 }
 
 .site-proof span {
-  padding: 0.12rem 0.26rem;
+  padding: 0.16rem 0.32rem;
   border-radius: 999px;
   border: 1px solid rgba(255, 255, 255, 0.08);
   color: rgba(245, 242, 234, 0.72);
   font-family: var(--font-mono);
-  font-size: 0.56rem;
+  font-size: 0.62rem;
   line-height: 1;
 }
 
 .site-callout {
-  padding: 0.42rem;
-  border-radius: 0.6rem;
+  padding: 0.54rem;
+  border-radius: 0.72rem;
   background: rgba(0, 0, 0, 0.18);
   border: 1px solid rgba(255, 255, 255, 0.08);
 }
 
 .site-callout__phone {
   margin-bottom: 0.1rem;
-  font-size: 0.96rem;
+  font-size: 1.08rem;
   font-weight: 700;
   letter-spacing: -0.03em;
   line-height: 1;
 }
 
 .site-band {
-  grid-template-columns: minmax(0, 1fr) minmax(11.25rem, 12.25rem);
+  grid-template-columns: minmax(0, 1fr) minmax(12.5rem, 13.5rem);
 }
 
 .site-band__card {
-  padding: 0.42rem;
+  padding: 0.54rem;
   background: rgba(0, 0, 0, 0.16);
 
   h3 {
     margin: 0;
-    font-size: 0.66rem;
-    line-height: 1.18;
+    font-size: 0.74rem;
+    line-height: 1.24;
   }
 }
 
 .mini-form {
   display: grid;
-  gap: 0.26rem;
+  gap: 0.34rem;
 }
 
 .mini-form__row {
   display: flex;
   justify-content: space-between;
-  gap: 0.5rem;
-  padding-bottom: 0.22rem;
+  gap: 0.6rem;
+  padding-bottom: 0.28rem;
   border-bottom: 1px solid rgba(255, 255, 255, 0.06);
 
   span {
     color: rgba(245, 242, 234, 0.56);
-    font-size: 0.58rem;
+    font-size: 0.64rem;
     line-height: 1;
   }
 
   strong {
-    font-size: 0.62rem;
+    font-size: 0.7rem;
     line-height: 1;
   }
 }
@@ -387,8 +387,8 @@
 .demo-footer {
   align-items: center;
   justify-content: space-between;
-  padding: 0.36rem 0.46rem;
-  border-radius: 0.68rem;
+  padding: 0.44rem 0.56rem;
+  border-radius: 0.78rem;
 }
 
 .demo-footer__item {
@@ -399,13 +399,13 @@
   span {
     color: rgba(245, 242, 234, 0.55);
     font-family: var(--font-mono);
-    font-size: 0.54rem;
+    font-size: 0.6rem;
     letter-spacing: 0.08em;
     text-transform: uppercase;
   }
 
   strong {
-    font-size: 0.62rem;
+    font-size: 0.7rem;
     color: rgba(245, 242, 234, 0.78);
     line-height: 1.15;
   }
