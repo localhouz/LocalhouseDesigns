@@ -29,6 +29,21 @@ export interface PrototypePairingOption {
   note: string;
 }
 
+export interface MarketLandingConfig {
+  heroSubtext: string;
+  freshHeadline: string;
+  departmentHeadline: string;
+  diningHeadline: string;
+  diningBody: string;
+  diningBullets: string[];
+  diningCardTitle: string;
+  diningCardBody: string;
+  visitIntroHeadline: string;
+  visitIntroBody: string;
+  visitMarketBody: string;
+  visitRestaurantBody: string;
+}
+
 export interface RestaurantPrototype {
   slug: string;
   shareSlug: string;
@@ -58,6 +73,7 @@ export interface RestaurantPrototype {
   features: PrototypeFeature[];
   menuCards: PrototypeMenuCard[];
   marketDepartments?: PrototypeMenuCard[];
+  marketLanding?: MarketLandingConfig;
   searchCategories?: string[];
   pairingOptions?: PrototypePairingOption[];
 }
@@ -187,10 +203,24 @@ export const restaurantPrototypes: RestaurantPrototype[] = [
     ],
     marketDepartments: [
       { title: 'Fresh fish', subtitle: 'Daily arrivals, featured cuts, and whole-fish availability' },
-      { title: 'Shellfish', subtitle: 'Oysters, shrimp, crab, and easy raw-bar discovery' },
+      { title: 'Shellfish', subtitle: 'Oysters, shrimp, crab, and clams from both coasts' },
       { title: 'Prepared foods', subtitle: 'Crab cakes, dips, sides, and take-home staples' },
-      { title: 'Dinner reservations', subtitle: 'A clean handoff into the restaurant without losing the market story' }
-    ]
+      { title: 'Market staples', subtitle: 'Sauces, seasonings, and the pantry items regulars come back for' }
+    ],
+    marketLanding: {
+      heroSubtext: 'Bodean has been Tulsa\'s seafood destination for over thirty years. Fresh arrivals from the Gulf, the Carolinas, and both coasts. Shop the market or stay for dinner.',
+      freshHeadline: "What's fresh today",
+      departmentHeadline: 'Everything in the case, organized the way you shop',
+      diningHeadline: 'Dinner for two. Or twelve.',
+      diningBody: 'The restaurant runs the same standard as the market — fresh catch, classic preparations, and an oyster bar that earns its own visit. Reserve ahead on weekends.',
+      diningBullets: ['Raw bar open nightly', 'Fresh catch specials updated daily', 'Private dining available'],
+      diningCardTitle: 'Raw bar, fresh catch, and seafood-house classics.',
+      diningCardBody: 'Book early on weekends. The dining room fills around the market\'s busiest days.',
+      visitIntroHeadline: 'Come for the market. Stay for dinner.',
+      visitIntroBody: 'The market opens early. The restaurant stays open late. Both are worth the trip.',
+      visitMarketBody: 'Fresh fish, shellfish, prepared foods, and take-home seafood staples.',
+      visitRestaurantBody: 'Reservations recommended on weekends. Walk-ins welcome at the bar.'
+    }
   },
   {
     slug: 'kilkennys',

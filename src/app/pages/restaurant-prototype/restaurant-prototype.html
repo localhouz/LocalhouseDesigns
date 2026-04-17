@@ -22,10 +22,10 @@
             <div class="market-site__hero-copy">
               <span class="market-site__eyebrow">Seafood market + restaurant</span>
               <h1>Fresh seafood in the case. Dinner worth planning around.</h1>
-              <p>A premium front door for a Tulsa seafood destination, built to make the market feel current, the restaurant feel elevated, and the path into both feel obvious.</p>
+              <p>{{ prototype.marketLanding?.heroSubtext }}</p>
               <div class="market-site__cta-row">
-                <button class="proto-btn proto-btn--filled" type="button">See today’s market</button>
-                <button class="proto-btn" type="button">Reserve dinner</button>
+                <button class="proto-btn proto-btn--filled" type="button">{{ prototype.primaryCta }}</button>
+                <button class="proto-btn" type="button">{{ prototype.secondaryCta }}</button>
               </div>
               <div class="market-site__meta">
                 <div>
@@ -46,17 +46,17 @@
             <div class="market-site__hero-panels">
               <article class="market-tile market-tile--feature">
                 <span class="menu-card__badge">Today’s highlights</span>
-                <h3>Fresh Gulf snapper, East Coast oysters, and house crab cakes.</h3>
-                <p>Lead with what is actually moving people to visit instead of making them dig through a long inventory list.</p>
+                <h3>{{ prototype.menuCards[0]?.title }}, {{ prototype.menuCards[1]?.title }}, and {{ prototype.menuCards[2]?.title }}.</h3>
+                <p>{{ prototype.menuCards[0]?.subtitle }}</p>
               </article>
               <div class="market-site__hero-stack">
                 <article class="market-tile">
                   <h4>Shop the market</h4>
-                  <p>Fresh fish, shellfish, prepared foods, and seasonal specialties.</p>
+                  <p>{{ prototype.menuCards[1]?.subtitle }}</p>
                 </article>
                 <article class="market-tile">
                   <h4>Dine in tonight</h4>
-                  <p>A cleaner reservation path for guests who came for dinner, oysters, or wine.</p>
+                  <p>{{ prototype.menuCards[2]?.subtitle }}</p>
                 </article>
               </div>
             </div>
@@ -66,7 +66,7 @@
         <section id="fresh" class="market-site__section container">
           <div class="market-site__section-heading">
             <span class="market-site__eyebrow">Fresh market</span>
-            <h2>What is fresh right now should be the first thing people see.</h2>
+            <h2>{{ prototype.marketLanding?.freshHeadline }}</h2>
           </div>
           <div class="market-site__arrivals">
             @for (card of prototype.menuCards; track card.title) {
@@ -82,7 +82,7 @@
         <section class="market-site__section container">
           <div class="market-site__section-heading">
             <span class="market-site__eyebrow">Departments</span>
-            <h2>A market layout that feels organized, premium, and easy to scan.</h2>
+            <h2>{{ prototype.marketLanding?.departmentHeadline }}</h2>
           </div>
           <div class="market-site__departments">
             @for (department of prototype.marketDepartments; track department.title) {
@@ -98,18 +98,18 @@
           <div class="market-site__dining">
             <article class="market-tile market-tile--story">
               <span class="market-site__eyebrow">Restaurant</span>
-              <h2>A dinner side that feels just as intentional as the market.</h2>
-              <p>The homepage should make it clear that Bodean is two strong experiences in one place: a market people trust and a dining room worth booking.</p>
+              <h2>{{ prototype.marketLanding?.diningHeadline }}</h2>
+              <p>{{ prototype.marketLanding?.diningBody }}</p>
               <ul class="market-site__list">
-                <li>Clear path into reservations</li>
-                <li>Oyster bar and seafood-house positioning</li>
-                <li>Stronger premium cues without feeling stiff</li>
+                @for (bullet of prototype.marketLanding?.diningBullets ?? []; track bullet) {
+                  <li>{{ bullet }}</li>
+                }
               </ul>
             </article>
             <article class="market-tile market-tile--service">
               <span class="menu-card__badge">Tonight</span>
-              <h3>Raw bar, fresh catch, and seafood-house classics.</h3>
-              <p>Let the dining room feel like part of the same premium brand system instead of a separate afterthought.</p>
+              <h3>{{ prototype.marketLanding?.diningCardTitle }}</h3>
+              <p>{{ prototype.marketLanding?.diningCardBody }}</p>
               <button class="proto-btn proto-btn--filled" type="button">Book a table</button>
             </article>
           </div>
@@ -119,16 +119,16 @@
           <div class="market-site__visit">
             <article class="market-tile market-tile--visit">
               <span class="market-site__eyebrow">Visit</span>
-              <h3>Hours, location, and the two reasons to come in.</h3>
-              <p>One clear footer block can handle the practical side without dragging down the whole page.</p>
+              <h3>{{ prototype.marketLanding?.visitIntroHeadline }}</h3>
+              <p>{{ prototype.marketLanding?.visitIntroBody }}</p>
             </article>
             <article class="market-tile market-tile--visit">
               <h4>Market</h4>
-              <p>Fresh fish, shellfish, prepared foods, and take-home seafood staples.</p>
+              <p>{{ prototype.marketLanding?.visitMarketBody }}</p>
             </article>
             <article class="market-tile market-tile--visit">
               <h4>Restaurant</h4>
-              <p>Reservations, oyster bar traffic, and a cleaner date-night decision path.</p>
+              <p>{{ prototype.marketLanding?.visitRestaurantBody }}</p>
             </article>
           </div>
         </section>
