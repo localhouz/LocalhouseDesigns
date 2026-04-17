@@ -34,6 +34,97 @@ export class HvacPrototypeComponent implements OnInit {
   selectedService = signal('repair');
   selectedUrgency = signal('today');
 
+  activeService = computed(
+    () => this.serviceOptions.find((option) => option.value === this.selectedService()) ?? this.serviceOptions[0]
+  );
+
+  activeUrgency = computed(
+    () => this.urgencyOptions.find((option) => option.value === this.selectedUrgency()) ?? this.urgencyOptions[0]
+  );
+
+  heroEyebrow = computed(() => {
+    const service = this.selectedService();
+    if (service === 'replace') return 'Replacement estimates';
+    if (service === 'maintenance') return 'Seasonal tune-up';
+    if (service === 'air-quality') return 'Indoor air quality';
+    return 'Same-day repair';
+  });
+
+  heroHeadline = computed(() => {
+    const service = this.selectedService();
+    const urgency = this.selectedUrgency();
+
+    if (service === 'replace') {
+      return urgency === 'planning'
+        ? 'Compare system options without chasing the next step.'
+        : 'Make replacement quotes feel calm, local, and easy to trust.';
+    }
+
+    if (service === 'maintenance') {
+      return 'Turn tune-up traffic into scheduled service without extra friction.';
+    }
+
+    if (service === 'air-quality') {
+      return 'Explain comfort problems in homeowner language, then give one clear action.';
+    }
+
+    return urgency === 'today'
+      ? 'Air out today? Make the next step obvious.'
+      : 'Keep repair leads moving with one clear action above the fold.';
+  });
+
+  primaryCta = computed(() => {
+    const service = this.selectedService();
+    const urgency = this.selectedUrgency();
+
+    if (service === 'replace') return 'Request free estimate';
+    if (service === 'maintenance') return 'Schedule tune-up';
+    if (service === 'air-quality') return 'Book home assessment';
+    if (urgency === 'today') return 'Call for same-day service';
+    return 'Request repair visit';
+  });
+
+  proofItems = computed(() => {
+    const service = this.selectedService();
+
+    if (service === 'replace') {
+      return ['Financing options', 'Licensed installation', 'Tulsa metro service area'];
+    }
+    if (service === 'maintenance') {
+      return ['Seasonal checklist', 'Membership pricing', 'Fast scheduling'];
+    }
+    if (service === 'air-quality') {
+      return ['Dust and allergy issues', 'Humidity and airflow', 'Whole-home solutions'];
+    }
+    return ['24/7 emergency response', 'Broken Arrow to Owasso', 'Short estimate path'];
+  });
+
+  demoNotes = computed(() => {
+    const service = this.selectedService();
+    if (service === 'replace') {
+      return [
+        'Replacement traffic needs trust and financing sooner than it needs a long service explainer.',
+        'The CTA language shifts from urgent repair to lower-friction estimate intent.'
+      ];
+    }
+    if (service === 'maintenance') {
+      return [
+        'Tune-up traffic converts better when the offer is small, specific, and easy to schedule.',
+        'Membership and checklist language reduce hesitation faster than generic HVAC copy.'
+      ];
+    }
+    if (service === 'air-quality') {
+      return [
+        'Air-quality pages work better when they start with symptoms people actually recognize at home.',
+        'This path earns the lead by translating comfort issues before asking for the appointment.'
+      ];
+    }
+    return [
+      'Repair traffic needs urgency, area coverage, and one obvious phone-first action immediately.',
+      'The prototype keeps the first screen tight so the estimate path feels immediate instead of buried.'
+    ];
+  });
+
   serviceSummary = computed(() => {
     const service = this.selectedService();
     const urgency = this.selectedUrgency();
