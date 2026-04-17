@@ -1,7 +1,7 @@
 export type PrototypeMode =
   | 'visual-menu'
   | 'late-night'
-  | 'market-report'
+  | 'market-landing'
   | 'searchable-menu'
   | 'order-flow'
   | 'pairing-agent';
@@ -57,6 +57,7 @@ export interface RestaurantPrototype {
   metrics: PrototypeMetric[];
   features: PrototypeFeature[];
   menuCards: PrototypeMenuCard[];
+  marketDepartments?: PrototypeMenuCard[];
   searchCategories?: string[];
   pairingOptions?: PrototypePairingOption[];
 }
@@ -151,38 +152,44 @@ export const restaurantPrototypes: RestaurantPrototype[] = [
     instagramHandle: '@bodeanseafood',
     website: 'https://www.bodeanrestaurant.com/',
     cityLabel: 'Tulsa',
-    mode: 'market-report',
-    opportunity: 'Replace the text-heavy market report with a live-feeling update surface.',
-    prototypeLabel: 'Market Report Prototype',
-    summary: 'A cleaner seafood landing page that turns market updates into scannable cards, freshness notes, and featured catches instead of a long wall of text.',
-    heroTitle: 'Make the market report feel live.',
-    heroSubtitle: 'This concept reframes Bodean’s daily freshness story as a polished update surface with featured catches, chef notes, and clearer reservation momentum.',
-    primaryCta: 'See today’s catch',
+    mode: 'market-landing',
+    opportunity: 'Turn the outdated market page into a premium landing page that cleanly sells both the seafood case and the restaurant.',
+    prototypeLabel: 'Seafood Market Landing Page',
+    summary: 'A premium market-first landing page that surfaces what is fresh today, groups the inventory into useful departments, and gives visitors a cleaner split between shopping the market and reserving dinner.',
+    heroTitle: 'Make the market the reason to visit.',
+    heroSubtitle: 'This concept reframes Bodean as a destination seafood market with a restaurant attached, not a restaurant with a hard-to-scan market page buried underneath it.',
+    primaryCta: 'Shop today’s market',
     secondaryCta: 'Reserve for dinner',
     theme: {
-      background: 'radial-gradient(circle at top, #17364b 0%, #0a1923 54%, #071015 100%)',
-      panel: 'rgba(10, 25, 35, 0.9)',
-      panelAlt: 'rgba(16, 43, 59, 0.94)',
-      line: 'rgba(177, 223, 245, 0.12)',
-      accent: '#8ed0f2',
-      accentSoft: 'rgba(142, 208, 242, 0.18)',
-      text: '#eef8fd',
-      muted: '#bfd9e7'
+      background: 'radial-gradient(circle at top, #26506a 0%, #0c1d28 52%, #071015 100%)',
+      panel: 'rgba(9, 23, 33, 0.9)',
+      panelAlt: 'rgba(16, 43, 59, 0.95)',
+      line: 'rgba(184, 226, 244, 0.16)',
+      accent: '#9fdcf5',
+      accentSoft: 'rgba(159, 220, 245, 0.18)',
+      text: '#eff9fd',
+      muted: '#c6dce7'
     },
     metrics: [
-      { value: 'Live feel', label: 'Daily market update module' },
-      { value: '3 cards', label: 'Fresh catch, oyster bar, chef note' },
-      { value: 'Cleaner', label: 'Less text friction' }
+      { value: '2 paths', label: 'Market shop + dinner reservation' },
+      { value: 'Today', label: 'Fresh arrivals surfaced first' },
+      { value: 'Cleaner', label: 'Less text-heavy inventory' }
     ],
     features: [
-      { title: 'Freshness cards', detail: 'Present market changes as clear visual modules instead of a dense paragraph.' },
-      { title: 'Chef note block', detail: 'Bring personality into the daily update without losing clarity.' },
-      { title: 'Dinner CTA anchored', detail: 'Connect the market story directly to reservation intent.' }
+      { title: 'Featured arrivals first', detail: 'Lead with the seafood case and what is fresh now instead of making guests parse a long inventory document.' },
+      { title: 'Department-based layout', detail: 'Group fresh fish, shellfish, prepared foods, and market staples so the page feels premium and scannable.' },
+      { title: 'Restaurant + market split', detail: 'Give visitors one clear path into shopping the market and another into reserving dinner.' }
     ],
     menuCards: [
-      { title: 'Fresh catch board', subtitle: 'What just landed and how it is being served', badge: 'Updated today' },
-      { title: 'Oyster availability', subtitle: 'East + west coast varieties at a glance', badge: 'Live list' },
-      { title: 'Chef’s note', subtitle: 'A short editorial update instead of a buried announcement', badge: 'Kitchen' }
+      { title: 'Fresh Gulf snapper', subtitle: 'Whole fish and fillets surfaced right on the landing page', badge: 'Fresh arrival' },
+      { title: 'East + west coast oysters', subtitle: 'A cleaner way to show what is actually in the case today', badge: 'Raw bar' },
+      { title: 'House crab cakes', subtitle: 'Prepared seafood that should feel featured, not buried', badge: 'Prepared foods' }
+    ],
+    marketDepartments: [
+      { title: 'Fresh fish', subtitle: 'Daily arrivals, featured cuts, and whole-fish availability' },
+      { title: 'Shellfish', subtitle: 'Oysters, shrimp, crab, and easy raw-bar discovery' },
+      { title: 'Prepared foods', subtitle: 'Crab cakes, dips, sides, and take-home staples' },
+      { title: 'Dinner reservations', subtitle: 'A clean handoff into the restaurant without losing the market story' }
     ]
   },
   {
@@ -267,7 +274,7 @@ export const restaurantPrototypes: RestaurantPrototype[] = [
     ],
     menuCards: [
       { title: 'Bold + spicy', subtitle: 'Blackened mains, heat-forward picks', badge: 'Heat seekers' },
-      { title: 'Comfort classics', subtitle: 'Gumbo, étouffée, and richer plates', badge: 'Creole staples' },
+      { title: 'Comfort classics', subtitle: 'Gumbo, etouffee, and richer plates', badge: 'Creole staples' },
       { title: 'Cocktail trail', subtitle: 'Start with drinks, then match the food', badge: 'Pair it' }
     ]
   },

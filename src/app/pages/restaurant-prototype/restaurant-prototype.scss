@@ -143,11 +143,97 @@
   justify-content: center;
 }
 
+.market-browser,
 .phone-frame {
   width: min(100%, 27rem);
   padding: 1rem;
   border-radius: 2rem;
   background: linear-gradient(180deg, rgba(255,255,255,0.06) 0%, var(--proto-panel, rgba(14, 14, 14, 0.95)) 100%);
+}
+
+.market-browser {
+  width: min(100%, 40rem);
+}
+
+.market-browser__chrome {
+  display: flex;
+  gap: 0.35rem;
+  margin-bottom: 1rem;
+}
+
+.market-browser__chrome span {
+  width: 0.55rem;
+  height: 0.55rem;
+  border-radius: 999px;
+  background: var(--proto-accent-soft, rgba(245, 163, 91, 0.18));
+}
+
+.market-browser__hero,
+.market-browser__departments,
+.market-landing__panel {
+  border: 1px solid var(--proto-line, rgba(255, 255, 255, 0.08));
+  background:
+    linear-gradient(180deg, rgba(255,255,255,0.03) 0%, rgba(255,255,255,0) 100%),
+    var(--proto-panel-alt, rgba(28, 28, 28, 0.94));
+  border-radius: 1.5rem;
+}
+
+.market-browser__hero {
+  display: grid;
+  gap: 1rem;
+  padding: 1.2rem;
+}
+
+.market-browser__eyebrow {
+  display: inline-flex;
+  margin-bottom: 0.7rem;
+  color: var(--proto-accent, #f5a35b);
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  font-size: 0.78rem;
+}
+
+.market-browser__hero h3,
+.market-browser__spotlight-card h4,
+.market-browser__department h4,
+.market-landing__panel h3,
+.market-landing__panel h4 {
+  margin: 0 0 0.45rem;
+}
+
+.market-browser__copy p,
+.market-browser__spotlight-card p,
+.market-browser__department p,
+.market-landing__panel p,
+.market-landing__stat span {
+  color: var(--proto-muted, #c8c0b7);
+}
+
+.market-browser__cta-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.7rem;
+  margin-top: 1rem;
+}
+
+.market-browser__spotlight {
+  display: grid;
+  gap: 0.8rem;
+}
+
+.market-browser__spotlight-card,
+.market-browser__department {
+  border: 1px solid var(--proto-line, rgba(255, 255, 255, 0.08));
+  background: rgba(255, 255, 255, 0.03);
+  border-radius: 1.2rem;
+  padding: 1rem;
+}
+
+.market-browser__departments {
+  display: grid;
+  gap: 0.8rem;
+  margin-top: 1rem;
+  padding: 1rem;
 }
 
 .phone-frame__topbar {
@@ -286,6 +372,39 @@
   gap: 1.25rem;
 }
 
+.market-landing {
+  display: grid;
+  gap: 1.25rem;
+  margin: 0 0 2rem;
+}
+
+.market-landing__panel {
+  padding: 1.35rem;
+  box-shadow: 0 28px 80px rgba(0, 0, 0, 0.28);
+  backdrop-filter: blur(22px);
+}
+
+.market-landing__split,
+.market-landing__grid,
+.market-landing__cards,
+.market-landing__stats {
+  display: grid;
+  gap: 1rem;
+}
+
+.market-landing__stat {
+  border-radius: 1.1rem;
+  border: 1px solid var(--proto-line, rgba(255, 255, 255, 0.08));
+  background: rgba(255, 255, 255, 0.03);
+  padding: 0.95rem 1rem;
+}
+
+.market-landing__stat strong {
+  display: block;
+  margin-bottom: 0.3rem;
+  font-size: 1.05rem;
+}
+
 .restaurant-prototype__details-main,
 .restaurant-prototype__sidebar {
   display: grid;
@@ -328,6 +447,20 @@
   .restaurant-prototype__hero,
   .restaurant-prototype__details {
     grid-template-columns: minmax(0, 1.1fr) minmax(22rem, 0.9fr);
+  }
+
+  .market-browser__hero {
+    grid-template-columns: minmax(0, 1.1fr) minmax(15rem, 0.9fr);
+  }
+
+  .market-browser__departments,
+  .market-landing__grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .market-landing__split {
+    grid-template-columns: minmax(0, 1.2fr) minmax(16rem, 0.8fr);
+    align-items: start;
   }
 }
 
