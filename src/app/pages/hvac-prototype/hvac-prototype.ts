@@ -233,12 +233,19 @@ export class HvacPrototypeComponent implements OnInit, OnDestroy {
 
     let index = this.scenarios.findIndex((scenario) => scenario.title === this.selectedScenario());
     if (index < 0) index = 0;
+    let steps = 0;
 
     this.cycleTimer = setInterval(() => {
       if (!this.autoPlaying()) return;
       index = (index + 1) % this.scenarios.length;
+      steps += 1;
       this.activateScenario(this.scenarios[index]);
-    }, 4000);
+
+      if (steps >= this.scenarios.length) {
+        this.autoPlaying.set(false);
+        this.stopAutoCycle();
+      }
+    }, 12000);
   }
 
   private stopAutoCycle() {
