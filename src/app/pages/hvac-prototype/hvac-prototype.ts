@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, computed, inject, OnInit, signal } from '@angular/core';
+import { Component, computed, inject, OnDestroy, OnInit, signal } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { SeoService } from '../../shared/seo/seo.service';
 
@@ -9,14 +9,22 @@ interface Option {
   hint: string;
 }
 
+interface DemoScenario {
+  title: string;
+  service: string;
+  urgency: string;
+  summary: string;
+}
+
 @Component({
   selector: 'app-hvac-prototype',
   imports: [CommonModule, RouterLink],
   templateUrl: './hvac-prototype.html',
   styleUrl: './hvac-prototype.scss'
 })
-export class HvacPrototypeComponent implements OnInit {
+export class HvacPrototypeComponent implements OnInit, OnDestroy {
   private seo = inject(SeoService);
+  private cycleTimer: ReturnType<typeof setInterval> | null = null;
 
   serviceOptions: Option[] = [
     { label: 'AC Repair', value: 'repair', hint: 'No cooling, weak airflow, strange noise' },
@@ -31,8 +39,31 @@ export class HvacPrototypeComponent implements OnInit {
     { label: 'Just comparing options', value: 'planning', hint: 'Researching price, timing, and fit' }
   ];
 
+  scenarios: DemoScenario[] = [
+    {
+      title: 'Emergency repair',
+      service: 'repair',
+      urgency: 'today',
+      summary: 'Phone-first repair lead with same-day urgency and immediate area coverage.'
+    },
+    {
+      title: 'Replacement quote',
+      service: 'replace',
+      urgency: 'planning',
+      summary: 'Lower-pressure estimate path with financing and trust moved closer to the CTA.'
+    },
+    {
+      title: 'Seasonal tune-up',
+      service: 'maintenance',
+      urgency: 'week',
+      summary: 'Simple scheduling flow for recurring maintenance instead of a bloated service page.'
+    }
+  ];
+
   selectedService = signal('repair');
   selectedUrgency = signal('today');
+  selectedScenario = signal('Emergency repair');
+  autoPlaying = signal(true);
 
   activeService = computed(
     () => this.serviceOptions.find((option) => option.value === this.selectedService()) ?? this.serviceOptions[0]
@@ -158,13 +189,69 @@ export class HvacPrototypeComponent implements OnInit {
       url,
       noIndex: true
     });
+
+    this.startAutoCycle();
+  }
+
+  ngOnDestroy() {
+    this.stopAutoCycle();
   }
 
   setService(value: string) {
     this.selectedService.set(value);
+    this.syncScenarioLabel();
   }
 
   setUrgency(value: string) {
     this.selectedUrgency.set(value);
+    this.syncScenarioLabel();
+  }
+
+  activateScenario(scenario: DemoScenario, userInitiated = false) {
+    this.selectedService.set(scenario.service);
+    this.selectedUrgency.set(scenario.urgency);
+    this.selectedScenario.set(scenario.title);
+
+    if (userInitiated) {
+      this.autoPlaying.set(false);
+      this.stopAutoCycle();
+    }
+  }
+
+  resumeAutoPlay() {
+    this.autoPlaying.set(true);
+    this.startAutoCycle();
+  }
+
+  pauseAutoPlay() {
+    this.autoPlaying.set(false);
+    this.stopAutoCycle();
+  }
+
+  private startAutoCycle() {
+    this.stopAutoCycle();
+
+    let index = this.scenarios.findIndex((scenario) => scenario.title === this.selectedScenario());
+    if (index < 0) index = 0;
+
+    this.cycleTimer = setInterval(() => {
+      if (!this.autoPlaying()) return;
+      index = (index + 1) % this.scenarios.length;
+      this.activateScenario(this.scenarios[index]);
+    }, 4000);
+  }
+
+  private stopAutoCycle() {
+    if (this.cycleTimer) {
+      clearInterval(this.cycleTimer);
+      this.cycleTimer = null;
+    }
+  }
+
+  private syncScenarioLabel() {
+    const match = this.scenarios.find(
+      (scenario) => scenario.service === this.selectedService() && scenario.urgency === this.selectedUrgency()
+    );
+    this.selectedScenario.set(match?.title ?? 'Custom view');
   }
 }

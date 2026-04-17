@@ -8,6 +8,35 @@
           This is a compact prototype showing how a local-service homepage can change emphasis by service type and urgency
           without turning into a maze.
         </p>
+
+        <div class="demo-scenarios">
+          <div class="demo-scenarios__header">
+            <span class="demo-scenarios__label">Now showing</span>
+            @if (autoPlaying()) {
+              <button type="button" class="demo-scenarios__toggle" (click)="pauseAutoPlay()">
+                Pause autoplay
+              </button>
+            } @else {
+              <button type="button" class="demo-scenarios__toggle" (click)="resumeAutoPlay()">
+                Resume autoplay
+              </button>
+            }
+          </div>
+
+          <div class="demo-scenarios__list">
+            @for (scenario of scenarios; track scenario.title) {
+              <button
+                type="button"
+                class="scenario-chip"
+                [class.scenario-chip--active]="selectedScenario() === scenario.title"
+                (click)="activateScenario(scenario, true)"
+              >
+                <strong>{{ scenario.title }}</strong>
+                <span>{{ scenario.summary }}</span>
+              </button>
+            }
+          </div>
+        </div>
       </div>
 
       <div class="hvac-demo__grid">
