@@ -4,7 +4,6 @@
       <div class="demo-toolbar">
         <div class="demo-toolbar__title">
           <p class="label">Local-service demo</p>
-          <h1>HVAC lead-path demo</h1>
         </div>
 
         <div class="demo-toolbar__status">
@@ -28,14 +27,13 @@
             <button
               type="button"
               class="scenario-chip"
-              [class.scenario-chip--active]="selectedScenario() === scenario.title"
-              (click)="activateScenario(scenario, true)"
-            >
-              <strong>{{ scenario.title }}</strong>
-              <span>{{ scenario.summary }}</span>
-            </button>
-          }
-        </div>
+                [class.scenario-chip--active]="selectedScenario() === scenario.title"
+                (click)="activateScenario(scenario, true)"
+              >
+                <strong>{{ scenario.title }}</strong>
+              </button>
+            }
+          </div>
       </div>
 
       <div class="hvac-demo__grid">
@@ -51,7 +49,6 @@
                   (click)="setService(option.value)"
                 >
                   <strong>{{ option.label }}</strong>
-                  <span>{{ option.hint }}</span>
                 </button>
               }
             </div>
@@ -68,7 +65,6 @@
                   (click)="setUrgency(option.value)"
                 >
                   <strong>{{ option.label }}</strong>
-                  <span>{{ option.hint }}</span>
                 </button>
               }
             </div>
@@ -99,7 +95,7 @@
                 <div class="site-hero__grid">
                   <div class="site-hero__copy">
                     <h2>{{ heroHeadline() }}</h2>
-                    <p>{{ activeService().hint }} The first screen keeps the service fit, area coverage, and next step visible without over-explaining.</p>
+                    <p>{{ activeService().hint }}</p>
 
                     <div class="site-hero__actions">
                       <button type="button" class="site-btn site-btn--filled">{{ primaryCta() }}</button>
@@ -116,7 +112,7 @@
                   <div class="site-callout">
                     <div class="site-callout__label">Fast lead path</div>
                     <div class="site-callout__phone">(918) 555-0148</div>
-                    <p>Licensed and insured HVAC service with a cleaner estimate path and less friction before the lead starts.</p>
+                    <p>Licensed and insured Tulsa metro service.</p>
                   </div>
                 </div>
               </section>
@@ -125,7 +121,6 @@
                 <div class="site-band__card">
                   <span class="site-band__label">Why this screen works</span>
                   <h3>Everything important stays above the fold.</h3>
-                  <p>Service fit, urgency, proof, and the primary CTA all show up before the visitor has to interpret the site.</p>
                 </div>
 
                 <div class="site-band__card site-band__card--form">
