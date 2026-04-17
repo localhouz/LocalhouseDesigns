@@ -2,9 +2,7 @@
   <section class="hvac-demo">
     <div class="container">
       <div class="demo-toolbar">
-        <div class="demo-toolbar__title">
-          <p class="label">Local-service demo</p>
-        </div>
+        <p class="label">Local-service demo</p>
 
         <div class="demo-toolbar__status">
           <span class="demo-toolbar__label">Now showing</span>
@@ -21,19 +19,19 @@
         </div>
       </div>
 
-      <div class="demo-scenarios demo-scenarios--compact">
+      <div class="demo-scenarios">
         <div class="demo-scenarios__list">
           @for (scenario of scenarios; track scenario.title) {
             <button
               type="button"
               class="scenario-chip"
-                [class.scenario-chip--active]="selectedScenario() === scenario.title"
-                (click)="activateScenario(scenario, true)"
-              >
-                <strong>{{ scenario.title }}</strong>
-              </button>
-            }
-          </div>
+              [class.scenario-chip--active]="selectedScenario() === scenario.title"
+              (click)="activateScenario(scenario, true)"
+            >
+              <strong>{{ scenario.title }}</strong>
+            </button>
+          }
+        </div>
       </div>
 
       <div class="hvac-demo__grid">
@@ -56,11 +54,11 @@
 
           <div class="demo-controls__block">
             <span class="demo-controls__label">Lead urgency</span>
-            <div class="demo-option-list demo-option-list--compact">
+            <div class="demo-option-list">
               @for (option of urgencyOptions; track option.value) {
                 <button
                   type="button"
-                  class="demo-option demo-option--compact"
+                  class="demo-option"
                   [class.demo-option--active]="selectedUrgency() === option.value"
                   (click)="setUrgency(option.value)"
                 >
@@ -68,11 +66,6 @@
                 </button>
               }
             </div>
-          </div>
-
-          <div class="demo-controls__block demo-readout">
-            <span class="demo-controls__label">What this version is proving</span>
-            <h2>{{ serviceSummary() }}</h2>
           </div>
         </aside>
 
@@ -89,7 +82,7 @@
               <section class="site-hero">
                 <div class="site-hero__topline">
                   <span>{{ heroEyebrow() }}</span>
-                  <span>Tulsa • Broken Arrow • Bixby • Owasso</span>
+                  <span>Tulsa | Broken Arrow | Bixby | Owasso</span>
                 </div>
 
                 <div class="site-hero__grid">
@@ -119,8 +112,8 @@
 
               <section class="site-band">
                 <div class="site-band__card">
-                  <span class="site-band__label">Why this screen works</span>
-                  <h3>Everything important stays above the fold.</h3>
+                  <span class="site-band__label">Why this works</span>
+                  <h3>Service fit, urgency, proof, and CTA stay visible immediately.</h3>
                 </div>
 
                 <div class="site-band__card site-band__card--form">
@@ -148,11 +141,11 @@
           <div class="demo-footer">
             <div class="demo-footer__item">
               <span>Focus</span>
-              <strong>{{ demoNotes()[0] }}</strong>
+              <strong>{{ serviceSummary() }}</strong>
             </div>
             <div class="demo-footer__actions">
-              <a routerLink="/work" class="btn">Back to Work -&gt;</a>
-              <a routerLink="/insights/how-a-local-service-rebuild-turns-traffic-into-leads" class="btn btn--filled">Read the case-study note -&gt;</a>
+              <a routerLink="/work" class="btn">Work</a>
+              <a routerLink="/insights/how-a-local-service-rebuild-turns-traffic-into-leads" class="btn btn--filled">Case-study note</a>
             </div>
           </div>
         </div>
