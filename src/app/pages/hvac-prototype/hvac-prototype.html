@@ -1,41 +1,40 @@
 <div class="hvac-prototype">
   <section class="hvac-demo">
     <div class="container">
-      <div class="hvac-demo__intro">
-        <p class="label">Local-service demo</p>
-        <h1>HVAC lead-path demo,<br><em>not a long case-study page.</em></h1>
-        <p class="hvac-demo__sub">
-          This is a compact prototype showing how a local-service homepage can change emphasis by service type and urgency
-          without turning into a maze.
-        </p>
+      <div class="demo-toolbar">
+        <div class="demo-toolbar__title">
+          <p class="label">Local-service demo</p>
+          <h1>HVAC lead-path demo</h1>
+        </div>
 
-        <div class="demo-scenarios">
-          <div class="demo-scenarios__header">
-            <span class="demo-scenarios__label">Now showing</span>
-            @if (autoPlaying()) {
-              <button type="button" class="demo-scenarios__toggle" (click)="pauseAutoPlay()">
-                Pause autoplay
-              </button>
-            } @else {
-              <button type="button" class="demo-scenarios__toggle" (click)="resumeAutoPlay()">
-                Resume autoplay
-              </button>
-            }
-          </div>
+        <div class="demo-toolbar__status">
+          <span class="demo-toolbar__label">Now showing</span>
+          <strong>{{ selectedScenario() }}</strong>
+          @if (autoPlaying()) {
+            <button type="button" class="demo-scenarios__toggle" (click)="pauseAutoPlay()">
+              Pause autoplay
+            </button>
+          } @else {
+            <button type="button" class="demo-scenarios__toggle" (click)="resumeAutoPlay()">
+              Resume autoplay
+            </button>
+          }
+        </div>
+      </div>
 
-          <div class="demo-scenarios__list">
-            @for (scenario of scenarios; track scenario.title) {
-              <button
-                type="button"
-                class="scenario-chip"
-                [class.scenario-chip--active]="selectedScenario() === scenario.title"
-                (click)="activateScenario(scenario, true)"
-              >
-                <strong>{{ scenario.title }}</strong>
-                <span>{{ scenario.summary }}</span>
-              </button>
-            }
-          </div>
+      <div class="demo-scenarios demo-scenarios--compact">
+        <div class="demo-scenarios__list">
+          @for (scenario of scenarios; track scenario.title) {
+            <button
+              type="button"
+              class="scenario-chip"
+              [class.scenario-chip--active]="selectedScenario() === scenario.title"
+              (click)="activateScenario(scenario, true)"
+            >
+              <strong>{{ scenario.title }}</strong>
+              <span>{{ scenario.summary }}</span>
+            </button>
+          }
         </div>
       </div>
 
@@ -78,11 +77,6 @@
           <div class="demo-controls__block demo-readout">
             <span class="demo-controls__label">What this version is proving</span>
             <h2>{{ serviceSummary() }}</h2>
-            <ul class="demo-notes">
-              @for (note of demoNotes(); track note) {
-                <li>{{ note }}</li>
-              }
-            </ul>
           </div>
         </aside>
 
@@ -158,12 +152,8 @@
 
           <div class="demo-footer">
             <div class="demo-footer__item">
-              <span>Prototype type</span>
-              <strong>Interactive case-study demo</strong>
-            </div>
-            <div class="demo-footer__item">
               <span>Focus</span>
-              <strong>Service clarity + lead path</strong>
+              <strong>{{ demoNotes()[0] }}</strong>
             </div>
             <div class="demo-footer__actions">
               <a routerLink="/work" class="btn">Back to Work -&gt;</a>

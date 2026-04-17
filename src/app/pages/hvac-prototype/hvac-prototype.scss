@@ -38,37 +38,53 @@
 }
 
 .hvac-demo {
-  padding: 8rem 0 5rem;
+  padding: 7rem 0 4rem;
 }
 
-.hvac-demo__intro {
-  max-width: 48rem;
-  margin-bottom: 2rem;
-
-  h1 {
-    margin: 1rem 0 1rem;
-    font-size: clamp(2.8rem, 6vw, 5.4rem);
-    line-height: 0.96;
-  }
-
-  em {
-    color: #79cfe7;
-    font-style: normal;
-  }
+.demo-toolbar {
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 1rem;
 }
 
-.hvac-demo__sub {
-  color: rgba(245, 242, 234, 0.7);
-  font-size: 1.02rem;
-  line-height: 1.8;
+.demo-toolbar__title h1 {
+  margin: 0.7rem 0 0;
+  font-size: clamp(1.4rem, 2vw, 2rem);
+  line-height: 1;
+  letter-spacing: -0.02em;
+}
+
+.demo-toolbar__status {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  flex-wrap: wrap;
+  padding: 0.75rem 0.9rem;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.demo-toolbar__label {
+  color: rgba(245, 242, 234, 0.54);
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
 }
 
 .demo-scenarios {
-  margin-top: 1.4rem;
-  padding: 1rem;
+  margin-bottom: 1rem;
+  padding: 0.85rem;
   border-radius: 1.25rem;
   border: 1px solid rgba(255, 255, 255, 0.08);
   background: rgba(255, 255, 255, 0.04);
+}
+
+.demo-scenarios--compact {
+  margin-top: 0;
 }
 
 .demo-scenarios__header {
@@ -208,8 +224,8 @@
 }
 
 .demo-readout h2 {
-  margin: 0 0 0.8rem;
-  font-size: 1.35rem;
+  margin: 0;
+  font-size: 1.1rem;
   line-height: 1.2;
 }
 
@@ -275,7 +291,7 @@
 .demo-browser__surface {
   display: grid;
   gap: 1rem;
-  padding: 1rem;
+  padding: 0.9rem;
 }
 
 .site-hero,
@@ -420,13 +436,14 @@
 .demo-footer {
   align-items: center;
   justify-content: space-between;
-  padding: 1rem 1.1rem;
+  padding: 0.9rem 1rem;
   border-radius: 1.35rem;
 }
 
 .demo-footer__item {
   display: grid;
   gap: 0.18rem;
+  flex: 1;
 
   span {
     color: rgba(245, 242, 234, 0.55);
@@ -437,7 +454,9 @@
   }
 
   strong {
-    font-size: 0.92rem;
+    font-size: 0.88rem;
+    color: rgba(245, 242, 234, 0.78);
+    line-height: 1.5;
   }
 }
 
@@ -455,11 +474,15 @@
   .demo-controls {
     position: static;
   }
+
+  .demo-toolbar {
+    display: grid;
+  }
 }
 
 @media (max-width: 720px) {
   .hvac-demo {
-    padding-top: 7rem;
+    padding-top: 6.5rem;
   }
 
   .demo-footer {
