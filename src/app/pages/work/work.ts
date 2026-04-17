@@ -1,7 +1,7 @@
 import { Component, inject, OnInit, signal } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { SeoService } from '../../shared/seo/seo.service';
 import { PreviewShellComponent } from '../../shared/preview-shell/preview-shell';
 
@@ -26,6 +26,7 @@ interface Repo {
 export class WorkComponent implements OnInit {
   private seo = inject(SeoService);
   private http = inject(HttpClient);
+  private router = inject(Router);
 
   repos = signal<Repo[]>([]);
   loading = signal(true);
@@ -101,6 +102,31 @@ export class WorkComponent implements OnInit {
       comingSoon: false,
     },
     {
+      title: 'Tulsa HVAC Lead Prototype',
+      subtitle: 'Local-service conversion prototype',
+      url: '',
+      route: '/lab/local-service-hvac-prototype',
+      previewUrl: '',
+      imageUrl: '',
+      outcome: 'Built a working local-service prototype that shows how an HVAC site can turn search traffic into clearer estimate requests with stronger service framing, local proof, and a cleaner quote path.',
+      challenge: 'Most local-service sites do not lose the lead because the traffic is bad. They lose it because the service fit is vague, the trust signals are scattered, and the quote request path adds friction too early.',
+      work: [
+        'Built a real prototype page around HVAC repair, replacement, maintenance, and air-quality services instead of stopping at strategy copy.',
+        'Added an interactive service-and-urgency control to show how the page emphasis changes based on what kind of lead is landing.',
+        'Structured the page around one consistent estimate CTA, service-area proof, FAQs, and a shorter intake path.'
+      ],
+      result: 'The prototype now gives Localhouse a concrete local-service case study that is easier to sell than a generic redesign story and much less blocked than another ERP demo.',
+      stack: ['Angular 21', 'SCSS', 'Local SEO', 'Conversion UX', 'Service Pages'],
+      metrics: [
+        { val: '1', label: 'Primary quote path' },
+        { val: '4', label: 'Service intents covered' },
+        { val: 'Built', label: 'Working prototype' },
+      ],
+      ctaLabel: 'Open the prototype ->',
+      ctaRoute: '/lab/local-service-hvac-prototype',
+      comingSoon: false,
+    },
+    {
       title: 'Local GEO Standard',
       subtitle: 'Results-only case study',
       url: '',
@@ -172,6 +198,12 @@ export class WorkComponent implements OnInit {
   ];
 
   inDevelopment = [
+    {
+      title: 'Local Service Contact-Path Rebuild',
+      desc: 'Next case-study build: a local-service homepage, focused service page, and quote flow designed to show how clearer service framing, stronger trust signals, and one consistent CTA can turn local search traffic into inquiries.',
+      stack: ['Local SEO', 'Service Pages', 'Quote Flow', 'Conversion UX'],
+      status: 'Next Build',
+    },
     {
       title: 'SyteLine Mobile',
       desc: 'Using Infor SyteLine as an end user made one problem obvious: the system contained critical operational data, but access to it was still tied too heavily to the desktop. For supply chain leads, inventory managers, shippers, and team leads, that meant slower decisions, more handoffs, and too much time spent chasing routine answers. SyteLine Mobile was designed to fix that - a purpose-built mobile interface that surfaces real-time production, BOM, inventory, and shipment data for the people responsible for keeping work moving.',
@@ -259,6 +291,10 @@ export class WorkComponent implements OnInit {
 
   openProject(url: string) {
     if (url) window.open(url, '_blank', 'noopener');
+  }
+
+  openInternalProject(route: string) {
+    if (route) this.router.navigateByUrl(route);
   }
 
   onVideoEnded(event: Event) {

@@ -1,0 +1,241 @@
+<div class="hvac-prototype">
+  <section class="hvac-hero">
+    <div class="container hvac-hero__grid">
+      <div class="hvac-hero__copy">
+        <p class="label">Local-service prototype</p>
+        <h1>Tulsa HVAC service<br><em>with a cleaner quote path.</em></h1>
+        <p class="hvac-hero__sub">
+          This prototype is built to show how a local HVAC site can make the service fit obvious,
+          reduce hesitation fast, and move from search click to estimate request without wasting the first screen.
+        </p>
+
+        <div class="hvac-hero__actions">
+          <a routerLink="/contact" class="btn btn--filled">Request the build -&gt;</a>
+          <a routerLink="/insights/how-a-local-service-rebuild-turns-traffic-into-leads" class="btn">Read the case-study angle -&gt;</a>
+        </div>
+
+        <div class="hvac-proof-strip">
+          <div class="hvac-proof">
+            <strong>24/7</strong>
+            <span>Emergency repair positioning</span>
+          </div>
+          <div class="hvac-proof">
+            <strong>Tulsa</strong>
+            <span>Broken Arrow, Bixby, Owasso, Jenks</span>
+          </div>
+          <div class="hvac-proof">
+            <strong>1 CTA</strong>
+            <span>Quote request repeated consistently</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="hvac-hero__panel">
+        <div class="hero-card hero-card--alert">
+          <span class="hero-card__eyebrow">Need service now?</span>
+          <h2>Air out today?<br>Make the next step obvious.</h2>
+          <p>Callouts, service area, financing, and estimate request should live on the first screen instead of being scattered across the site.</p>
+          <a routerLink="/contact" class="hero-card__btn">Start estimate path</a>
+        </div>
+
+        <div class="hero-card hero-card--contact">
+          <div class="hero-card__meta">
+            <span>Open now</span>
+            <span>Licensed + insured</span>
+          </div>
+          <div class="hero-card__phone">(918) 555-0148</div>
+          <p>Same-day HVAC repair, replacement quotes, seasonal tune-ups, and indoor air quality installs across the Tulsa metro.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="hvac-services section">
+    <div class="container">
+      <div class="section-intro">
+        <p class="label">What changes</p>
+        <h2>Service clarity first.<br><em>Hesitation second.</em></h2>
+      </div>
+
+      <div class="service-grid">
+        <article class="service-card">
+          <span class="service-card__tag">Repair</span>
+          <h3>AC and heating repair</h3>
+          <p>Emergency-friendly positioning, problem-language headlines, and one clean route to same-day help.</p>
+        </article>
+        <article class="service-card">
+          <span class="service-card__tag">Replace</span>
+          <h3>System replacement quotes</h3>
+          <p>Financing, install process, and confidence-building proof pulled closer to the estimate request.</p>
+        </article>
+        <article class="service-card">
+          <span class="service-card__tag">Maintain</span>
+          <h3>Maintenance memberships</h3>
+          <p>Plan details, seasonal timing, and recurring value explained before the contact ask shows up.</p>
+        </article>
+        <article class="service-card">
+          <span class="service-card__tag">Comfort</span>
+          <h3>Indoor air quality</h3>
+          <p>Dust, allergies, humidity, and airflow issues translated into clearer homeowner language.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="hvac-decision-band">
+    <div class="container hvac-decision-band__grid">
+      <div class="decision-panel">
+        <span class="decision-panel__label">Prototype control</span>
+        <h2>What kind of lead are we designing for?</h2>
+        <p>This is the core case-study move: the page changes emphasis based on the job and urgency instead of pretending every visitor is the same.</p>
+
+        <div class="decision-group">
+          <span class="decision-group__label">Service type</span>
+          <div class="decision-pills">
+            @for (option of serviceOptions; track option.value) {
+              <button
+                type="button"
+                class="decision-pill"
+                [class.decision-pill--active]="selectedService() === option.value"
+                (click)="setService(option.value)"
+              >
+                {{ option.label }}
+              </button>
+            }
+          </div>
+        </div>
+
+        <div class="decision-group">
+          <span class="decision-group__label">Urgency</span>
+          <div class="decision-pills">
+            @for (option of urgencyOptions; track option.value) {
+              <button
+                type="button"
+                class="decision-pill"
+                [class.decision-pill--active]="selectedUrgency() === option.value"
+                (click)="setUrgency(option.value)"
+              >
+                {{ option.label }}
+              </button>
+            }
+          </div>
+        </div>
+      </div>
+
+      <div class="summary-card">
+        <span class="summary-card__label">Current readout</span>
+        <h3>{{ serviceSummary() }}</h3>
+        <p>The real point is not personalization for its own sake. It is removing the mismatch between what the homeowner needs and what the page chooses to emphasize.</p>
+        <div class="summary-card__stack">
+          <span>service-page clarity</span>
+          <span>local proof</span>
+          <span>quote CTA</span>
+          <span>FAQ support</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="hvac-quote section">
+    <div class="container hvac-quote__grid">
+      <div class="quote-flow">
+        <div class="quote-flow__header">
+          <p class="label">Quote path</p>
+          <h2>Three steps.<br><em>No maze.</em></h2>
+        </div>
+
+        <div class="quote-steps">
+          <article class="quote-step">
+            <span class="quote-step__num">01</span>
+            <h3>Choose the job</h3>
+            <p>Repair, replacement, maintenance, or air quality. No vague “contact us for more.”</p>
+          </article>
+          <article class="quote-step">
+            <span class="quote-step__num">02</span>
+            <h3>Share the urgency</h3>
+            <p>Now, this week, or planning. The page should reflect the decision speed the lead actually needs.</p>
+          </article>
+          <article class="quote-step">
+            <span class="quote-step__num">03</span>
+            <h3>Request the visit</h3>
+            <p>Name, phone, ZIP, and a short issue note. Enough to move, not enough to create friction.</p>
+          </article>
+        </div>
+      </div>
+
+      <div class="quote-form-card">
+        <span class="quote-form-card__label">Example intake</span>
+        <h3>Request service</h3>
+        <div class="quote-form-card__fields">
+          <div class="mock-field">
+            <label>Service needed</label>
+            <div class="mock-field__value">AC repair</div>
+          </div>
+          <div class="mock-field">
+            <label>ZIP code</label>
+            <div class="mock-field__value">74133</div>
+          </div>
+          <div class="mock-field">
+            <label>Best callback number</label>
+            <div class="mock-field__value">(918) 555-0148</div>
+          </div>
+          <div class="mock-field mock-field--full">
+            <label>What is happening?</label>
+            <div class="mock-field__value">Upstairs unit is running but not cooling. Warm air from vents since this afternoon.</div>
+          </div>
+        </div>
+        <button type="button" class="btn btn--filled">Check availability -&gt;</button>
+        <p class="quote-form-card__note">This prototype keeps the form short on purpose. The sale happens because the page feels decisive before the form ever starts.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="hvac-trust section">
+    <div class="container hvac-trust__grid">
+      <div class="trust-column">
+        <p class="label">Proof before commitment</p>
+        <div class="trust-stack">
+          <article class="trust-card">
+            <span class="trust-card__tag">Service area</span>
+            <h3>Tulsa metro, made explicit</h3>
+            <p>Broken Arrow, Tulsa, Bixby, Jenks, Owasso, and nearby suburbs should be visible right where the lead decides whether to keep going.</p>
+          </article>
+          <article class="trust-card">
+            <span class="trust-card__tag">Reviews</span>
+            <h3>Pull proof next to the CTA</h3>
+            <p>Short review excerpts, financing mentions, warranty language, and licensed-insured context reduce uncertainty fast.</p>
+          </article>
+        </div>
+      </div>
+
+      <div class="faq-card">
+        <span class="faq-card__label">FAQs that actually help</span>
+        <div class="faq-item">
+          <h3>Do you offer same-day HVAC repair in Tulsa?</h3>
+          <p>Yes, the prototype assumes same-day repair positioning is one of the highest-intent entry points and should be visible immediately.</p>
+        </div>
+        <div class="faq-item">
+          <h3>Do you finance new HVAC systems?</h3>
+          <p>For replacement traffic, financing belongs near system options and estimate CTAs, not buried on a separate page.</p>
+        </div>
+        <div class="faq-item">
+          <h3>What areas do you serve?</h3>
+          <p>The service area should be named in plain English with city references, not implied through a footer-only address.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="hvac-footer-cta">
+    <div class="container hvac-footer-cta__inner">
+      <div>
+        <p class="label">Why this exists</p>
+        <h2>A real local-service build,<br><em>not just another article.</em></h2>
+      </div>
+      <div class="hvac-footer-cta__actions">
+        <a routerLink="/work" class="btn">Back to Work -&gt;</a>
+        <a routerLink="/contact" class="btn btn--filled">Build this system -&gt;</a>
+      </div>
+    </div>
+  </section>
+</div>

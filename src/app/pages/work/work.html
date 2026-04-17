@@ -11,8 +11,8 @@
   <section class="case-studies section container">
     @for (project of caseStudies; track project.title) {
       <div class="case-study" [class.case-study--soon]="project.comingSoon"
-        [attr.role]="project.comingSoon || !project.url ? null : 'link'"
-        (click)="!project.comingSoon && project.url && openProject(project.url)">
+        [attr.role]="project.comingSoon || (!project.url && !project.route) ? null : 'link'"
+        (click)="!project.comingSoon && project.url ? openProject(project.url) : (!project.comingSoon && project.route ? openInternalProject(project.route) : null)">
         <div class="case-study__visual" [class.case-study__visual--screenshot]="project.imageUrl">
           @if (project.videoUrl) {
             <video
@@ -39,7 +39,7 @@
             </div>
           }
           <div class="case-study__tag">{{ project.subtitle }}</div>
-          @if (project.comingSoon || !project.url) {
+          @if (project.comingSoon) {
             <div class="case-study__soon-badge">Enterprise</div>
           }
         </div>

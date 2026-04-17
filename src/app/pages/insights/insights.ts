@@ -59,6 +59,12 @@ export class InsightsComponent implements OnInit {
       desc: 'A grounded look at what makes a service page useful for local SEO, AI search citations, and actual trust.',
       route: '/insights/what-local-service-pages-need-to-rank-and-get-cited',
       tag: 'Local SEO'
+    },
+    {
+      title: 'How a local service rebuild turns traffic into leads',
+      desc: 'A case-study direction for rebuilding a local service site around service clarity, trust, and a cleaner quote path.',
+      route: '/insights/how-a-local-service-rebuild-turns-traffic-into-leads',
+      tag: 'Case Study'
     }
   ];
 
@@ -96,7 +102,8 @@ export class InsightsComponent implements OnInit {
             { '@type': 'ListItem', position: 5, url: `${base}/insights/why-a-custom-site-beats-a-booking-platform-page-for-local-search`, name: 'Why a custom site beats a booking-platform page for local search' },
             { '@type': 'ListItem', position: 6, url: `${base}/insights/why-most-dashboards-do-not-fix-the-workflow`, name: 'Why most dashboards do not fix the workflow' },
             { '@type': 'ListItem', position: 7, url: `${base}/insights/why-local-seo-fails-when-the-contact-path-is-vague`, name: 'Why local SEO fails when the contact path is vague' },
-            { '@type': 'ListItem', position: 8, url: `${base}/insights/what-local-service-pages-need-to-rank-and-get-cited`, name: 'What local service pages need to rank and get cited' }
+            { '@type': 'ListItem', position: 8, url: `${base}/insights/what-local-service-pages-need-to-rank-and-get-cited`, name: 'What local service pages need to rank and get cited' },
+            { '@type': 'ListItem', position: 9, url: `${base}/insights/how-a-local-service-rebuild-turns-traffic-into-leads`, name: 'How a local service rebuild turns traffic into leads' }
           ]
         }
       ]
