@@ -65,6 +65,23 @@
     flex-wrap: wrap;
   }
 
+  &__offer {
+    display: flex;
+    gap: 0.65rem;
+    flex-wrap: wrap;
+    margin-top: 1rem;
+
+    span {
+      font-family: var(--font-mono);
+      font-size: 0.68rem;
+      letter-spacing: 0.08em;
+      color: rgba(240,240,245,0.6);
+      border: 1px solid rgba(240,240,245,0.12);
+      padding: 0.35rem 0.55rem;
+      background: rgba(240,240,245,0.03);
+    }
+  }
+
   &__modes {
     display: flex;
     gap: 2.5rem;

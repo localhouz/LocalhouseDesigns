@@ -3,7 +3,7 @@
   <div class="page-header container">
     <p class="label">Get in touch</p>
     <h1>Let's build<br><em>something.</em></h1>
-    <p class="page-header__sub">Tell us what you're working on. No calls required. If you want more context first, start with <a routerLink="/services">services</a>, <a routerLink="/work">work</a>, or <a routerLink="/about">about</a>.</p>
+    <p class="page-header__sub">Tell us what you're trying to improve and share the site if you have one. We keep it async and reply with a practical audit path, not a sales script.</p>
   </div>
 
   <section class="contact-steps container">
@@ -12,12 +12,12 @@
       <div class="contact-step">
         <span class="contact-step__num">Step 01</span>
         <h3>Send the basics</h3>
-        <p>Share your site, goals, and any constraints. We keep it async.</p>
+        <p>Share the site, the problem, and what kind of result you want. We keep it async.</p>
       </div>
       <div class="contact-step">
         <span class="contact-step__num">Step 02</span>
         <h3>Get a quick audit</h3>
-        <p>We reply within 48 hours with 3 concrete fixes and a recommended path.</p>
+        <p>We reply within 48 hours with 3 concrete fixes and the clearest next step.</p>
       </div>
       <div class="contact-step">
         <span class="contact-step__num">Step 03</span>
@@ -87,129 +87,62 @@
             <label for="email">Email *</label>
             <input id="email" name="email" type="email" [(ngModel)]="email" required placeholder="your@email.com">
           </div>
-
           <div class="field field--full">
-            <label>What kind of project? *</label>
-            <div class="track-picker">
-              <button type="button" class="track-btn" [class.track-btn--active]="track() === 'design'"
-                (click)="setTrack('design')">
-                <span class="track-btn__title">Design & Web</span>
-                <span class="track-btn__sub">Angular builds, brand sites, SEO/GEO, WebGL</span>
-              </button>
-              <button type="button" class="track-btn" [class.track-btn--active]="track() === 'enterprise'"
-                (click)="setTrack('enterprise')">
-                <span class="track-btn__title">Enterprise & ERP</span>
-                <span class="track-btn__sub">Business Central, SAP, SyteLine - integrations, tooling, automation</span>
-              </button>
-            </div>
+            <label for="website">Website or page URL</label>
+            <input
+              id="website"
+              name="website"
+              type="text"
+              [(ngModel)]="website"
+              placeholder="https://your-site.com or the page that needs help">
           </div>
 
-          @if (track() === 'design') {
-            <div class="field field--full">
-              <label>Scope *</label>
-              <div class="scope-picker">
-                @for (opt of designScopeOptions; track opt.value) {
-                  <label class="scope-opt" [class.scope-opt--active]="designScope === opt.value">
-                    <input type="radio" name="designScope" [value]="opt.value" [(ngModel)]="designScope" required>
-                    <span class="scope-opt__title">{{ opt.label }}</span>
-                    <span class="scope-opt__hint">{{ opt.hint }}</span>
-                  </label>
-                }
-              </div>
-            </div>
+          <div class="field field--full">
+            <label for="projectType">What kind of project?</label>
+            <select id="projectType" name="projectType" [(ngModel)]="projectType">
+              <option value="">Choose the closest fit</option>
+              @for (opt of projectTypeOptions; track opt) {
+                <option [value]="opt">{{ opt }}</option>
+              }
+            </select>
+          </div>
 
-            <div class="field">
-              <label for="hasDatabase">Database needed?</label>
-              <select id="hasDatabase" name="hasDatabase" [(ngModel)]="hasDatabase">
-                <option value="">Not sure yet</option>
-                <option value="yes">Yes</option>
-                <option value="no">No</option>
-              </select>
-            </div>
+          <div class="field">
+            <label for="budget">Budget range</label>
+            <select id="budget" name="budget" [(ngModel)]="budget">
+              <option value="">Select a range</option>
+              @for (opt of budgetOptions; track opt) {
+                <option [value]="opt">{{ opt }}</option>
+              }
+            </select>
+          </div>
 
-            <div class="field">
-              <label for="hasCms">CMS needed?</label>
-              <select id="hasCms" name="hasCms" [(ngModel)]="hasCms">
-                <option value="">Not sure yet</option>
-                <option value="yes">Yes</option>
-                <option value="no">No</option>
-              </select>
-            </div>
+          <div class="field">
+            <label for="timeline">Timeline</label>
+            <select id="timeline" name="timeline" [(ngModel)]="timeline">
+              <option value="">Not sure yet</option>
+              @for (opt of timelineOptions; track opt) {
+                <option [value]="opt">{{ opt }}</option>
+              }
+            </select>
+          </div>
 
-            <div class="field field--full">
-              <label for="budget">Budget range</label>
-              <select id="budget" name="budget" [(ngModel)]="budget">
-                <option value="">Select a range</option>
-                @for (opt of budgetOptions; track opt) {
-                  <option [value]="opt">{{ opt }}</option>
-                }
-              </select>
-            </div>
-          }
+          <div class="field field--full">
+            <label for="message">What feels off right now? *</label>
+            <textarea id="message" name="message" [(ngModel)]="message" required rows="5"
+              placeholder="Tell us what is not converting, what feels messy, or what result you want from the site or workflow."></textarea>
+          </div>
 
-          @if (track() === 'enterprise') {
-            <div class="field">
-              <label for="erpSystem">ERP System</label>
-              <select id="erpSystem" name="erpSystem" [(ngModel)]="erpSystem">
-                <option value="">Select system</option>
-                @for (sys of erpSystems; track sys) {
-                  <option [value]="sys">{{ sys }}</option>
-                }
-              </select>
-            </div>
-
-            <div class="field">
-              <label for="enterpriseType">Project type</label>
-              <select id="enterpriseType" name="enterpriseType" [(ngModel)]="enterpriseType">
-                <option value="">Select type</option>
-                @for (opt of enterpriseTypes; track opt.value) {
-                  <option [value]="opt.value">{{ opt.label }}</option>
-                }
-              </select>
-            </div>
-
-            <div class="field field--full">
-              <label>Estimated timeline</label>
-              <div class="scope-picker">
-                @for (opt of timelineOptions; track opt.value) {
-                  <label class="scope-opt" [class.scope-opt--active]="timeline === opt.value">
-                    <input type="radio" name="timeline" [value]="opt.value" [(ngModel)]="timeline">
-                    <span class="scope-opt__title">{{ opt.label }}</span>
-                    <span class="scope-opt__hint">{{ opt.hint }}</span>
-                  </label>
-                }
-              </div>
-            </div>
-
-            <div class="field field--full">
-              <label for="enterpriseBudget">Budget range</label>
-              <select id="enterpriseBudget" name="enterpriseBudget" [(ngModel)]="enterpriseBudget">
-                <option value="">Select a range</option>
-                @for (opt of enterpriseBudgetOptions; track opt) {
-                  <option [value]="opt">{{ opt }}</option>
-                }
-              </select>
-            </div>
-          }
-
-          @if (track()) {
-            <div class="field field--full">
-              <label for="message">Tell us more *</label>
-              <textarea id="message" name="message" [(ngModel)]="message" required rows="5"
-                placeholder="What are you trying to solve? What does success look like?"></textarea>
-            </div>
-
-            <button type="submit" class="btn btn--filled" [disabled]="submitting()">
-              {{ submitting() ? 'Sending...' : 'Send it ->' }}
-            </button>
-          }
+          <button type="submit" class="btn btn--filled" [disabled]="submitting()">
+            {{ submitting() ? 'Sending...' : 'Request the audit ->' }}
+          </button>
 
         </form>
       } @else {
         <div class="contact-success">
           <span class="contact-success__icon">OK</span>
           <h2>Got it.</h2>
-          <p>We'll be in touch shortly. In the meantime, check out the <a href="https://github.com/localhouz" target="_blank" rel="noopener">GitHub</a>.</p>
+          <p>We will be in touch shortly with a practical next step. In the meantime, you can review the <a routerLink="/work">work</a> or keep exploring the site.</p>
         </div>
       }
 

@@ -1,10 +1,11 @@
-import { Component, inject, OnInit, signal, computed } from '@angular/core';
+import { Component, inject, OnInit, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { RouterLink } from '@angular/router';
 import { SeoService } from '../../shared/seo/seo.service';
 
 @Component({
   selector: 'app-contact',
-  imports: [FormsModule],
+  imports: [FormsModule, RouterLink],
   templateUrl: './contact.html',
   styleUrl: './contact.scss'
 })
@@ -13,72 +14,35 @@ export class ContactComponent implements OnInit {
 
   name = '';
   email = '';
+  website = '';
   message = '';
-  track = signal<'design' | 'enterprise' | ''>('');
+  projectType = '';
   submitted = signal(false);
   submitting = signal(false);
-
-  designScope = '';
-  hasDatabase = '';
-  hasCms = '';
   budget = '';
-
-  erpSystem = '';
-  enterpriseType = '';
   timeline = '';
-  enterpriseBudget = '';
+
+  projectTypeOptions = [
+    'Local business site or lead-path rebuild',
+    'Brand or ecommerce site',
+    'ERP integration or internal tooling',
+    'Not sure yet'
+  ];
 
   budgetOptions = [
     'Under $5K',
     '$5K - $15K',
     '$15K - $40K',
     '$40K+',
-    "Not sure yet - let's scope it",
-  ];
-
-  enterpriseBudgetOptions = [
-    'Under $5K',
-    '$5K - $15K',
-    '$15K - $40K',
-    '$40K+',
-    "Not sure yet - let's scope it",
-  ];
-
-  designScopeOptions = [
-    { value: 'fe-only', label: 'Frontend only', hint: 'Angular SPA, brand site, no server-side logic' },
-    { value: 'fe-be', label: 'Frontend + backend', hint: 'API, serverless functions, auth, integrations' },
-    { value: 'full-stack', label: 'Full stack', hint: 'Frontend + backend + database (SQL/NoSQL)' },
-  ];
-
-  erpSystems = ['Microsoft Business Central', 'SAP', 'Infor SyteLine', 'Other / Not sure'];
-
-  enterpriseTypes = [
-    { value: 'integration', label: 'Custom integration or report' },
-    { value: 'workflow', label: 'Workflow automation' },
-    { value: 'dashboard', label: 'Internal dashboard / tooling' },
-    { value: 'mobile', label: 'Mobile floor app' },
-    { value: 'multi-phase', label: 'Multi-phase ERP project' },
-    { value: 'retainer', label: 'Ongoing retainer' },
+    "Not sure yet - let's scope it"
   ];
 
   timelineOptions = [
-    { value: 'quick', label: 'Quick win', hint: '1-3 weeks' },
-    { value: 'mid', label: 'Mid-range', hint: '1-3 months' },
-    { value: 'full', label: 'Full project', hint: '3-6 months' },
-    { value: 'ongoing', label: 'Ongoing', hint: 'Retainer / continuous' },
+    'ASAP / active problem',
+    'This month',
+    'Next 1-3 months',
+    'Just exploring'
   ];
-
-  setTrack(t: 'design' | 'enterprise') {
-    this.track.set(t);
-    this.designScope = '';
-    this.hasDatabase = '';
-    this.hasCms = '';
-    this.budget = '';
-    this.erpSystem = '';
-    this.enterpriseType = '';
-    this.timeline = '';
-    this.enterpriseBudget = '';
-  }
 
   ngOnInit() {
     const base = 'https://localhousedesigns.netlify.app';
@@ -110,12 +74,12 @@ export class ContactComponent implements OnInit {
             {
               '@type': 'Question',
               name: 'How do I start a project with Localhouse Designs?',
-              acceptedAnswer: { '@type': 'Answer', text: 'Fill out the contact form at localhousedesigns.netlify.app/contact. Choose either the Design & Web track (Angular SPA, brand site, full-stack) or the Enterprise & ERP track (Business Central, SAP, SyteLine integrations). Include your project scope, timeline, and budget range and expect a response within 48 hours.' }
+              acceptedAnswer: { '@type': 'Answer', text: 'Fill out the contact form at localhousedesigns.netlify.app/contact. Share your name, email, website or page URL if you have one, what feels off right now, and any timeline or budget context. Expect a reply within 48 hours with a practical audit path.' }
             },
             {
               '@type': 'Question',
               name: 'What information should I include in my project inquiry?',
-              acceptedAnswer: { '@type': 'Answer', text: 'For web projects: whether you need frontend only, frontend + backend, or full-stack (including database). For enterprise projects: which ERP system (Business Central, SAP, or SyteLine), the type of work (integration, workflow automation, dashboard, mobile app), and your target timeline. Budget range helps scope the engagement correctly.' }
+              acceptedAnswer: { '@type': 'Answer', text: 'The most useful details are your current site or page, the main conversion or workflow issue, what kind of result you want, and any rough timing or budget context you already know.' }
             },
             {
               '@type': 'Question',
@@ -141,15 +105,10 @@ export class ContactComponent implements OnInit {
       'form-name': 'localhouse-contact',
       name: this.name,
       email: this.email,
-      track: this.track(),
-      designScope: this.designScope,
-      hasDatabase: this.hasDatabase,
-      hasCms: this.hasCms,
+      website: this.website,
+      projectType: this.projectType,
       budget: this.budget,
-      erpSystem: this.erpSystem,
-      enterpriseType: this.enterpriseType,
       timeline: this.timeline,
-      enterpriseBudget: this.enterpriseBudget,
       message: this.message,
     });
 
