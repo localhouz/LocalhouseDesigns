@@ -65,6 +65,12 @@ export class InsightsComponent implements OnInit {
       desc: 'A case-study direction for rebuilding a local service site around service clarity, trust, and a cleaner quote path.',
       route: '/insights/how-a-local-service-rebuild-turns-traffic-into-leads',
       tag: 'Case Study'
+    },
+    {
+      title: 'SyteLine Mobile: making ERP access work on the floor',
+      desc: 'A mobile operations case study on reducing desktop-only ERP friction for inventory, shipping, and floor-level teams.',
+      route: '/insights/syteline-mobile-making-erp-access-work-on-the-floor',
+      tag: 'ERP / Mobile'
     }
   ];
 
@@ -103,7 +109,8 @@ export class InsightsComponent implements OnInit {
             { '@type': 'ListItem', position: 6, url: `${base}/insights/why-most-dashboards-do-not-fix-the-workflow`, name: 'Why most dashboards do not fix the workflow' },
             { '@type': 'ListItem', position: 7, url: `${base}/insights/why-local-seo-fails-when-the-contact-path-is-vague`, name: 'Why local SEO fails when the contact path is vague' },
             { '@type': 'ListItem', position: 8, url: `${base}/insights/what-local-service-pages-need-to-rank-and-get-cited`, name: 'What local service pages need to rank and get cited' },
-            { '@type': 'ListItem', position: 9, url: `${base}/insights/how-a-local-service-rebuild-turns-traffic-into-leads`, name: 'How a local service rebuild turns traffic into leads' }
+            { '@type': 'ListItem', position: 9, url: `${base}/insights/how-a-local-service-rebuild-turns-traffic-into-leads`, name: 'How a local service rebuild turns traffic into leads' },
+            { '@type': 'ListItem', position: 10, url: `${base}/insights/syteline-mobile-making-erp-access-work-on-the-floor`, name: 'SyteLine Mobile: making ERP access work on the floor' }
           ]
         }
       ]

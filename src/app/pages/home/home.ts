@@ -118,6 +118,12 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
       desc: 'A grounded look at what makes a service page more useful for local SEO, AI search, and trust.',
       route: '/insights/what-local-service-pages-need-to-rank-and-get-cited',
       tag: 'Local SEO'
+    },
+    {
+      title: 'SyteLine Mobile: making ERP access work on the floor',
+      desc: 'A mobile operations case study on making ERP answers faster to reach for floor, inventory, and shipping workflows.',
+      route: '/insights/syteline-mobile-making-erp-access-work-on-the-floor',
+      tag: 'ERP / Mobile'
     }
   ];
 

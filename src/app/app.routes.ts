@@ -13,6 +13,7 @@ export const routes: Routes = [
   { path: 'insights/what-local-service-pages-need-to-rank-and-get-cited', loadComponent: () => import('./pages/service-pages-article/service-pages-article').then(m => m.ServicePagesArticleComponent) },
   { path: 'insights/why-local-seo-fails-when-the-contact-path-is-vague', loadComponent: () => import('./pages/contact-path-article/contact-path-article').then(m => m.ContactPathArticleComponent) },
   { path: 'insights/how-a-local-service-rebuild-turns-traffic-into-leads', loadComponent: () => import('./pages/local-service-rebuild-article/local-service-rebuild-article').then(m => m.LocalServiceRebuildArticleComponent) },
+  { path: 'insights/syteline-mobile-making-erp-access-work-on-the-floor', loadComponent: () => import('./pages/syteline-mobile-case-study/syteline-mobile-case-study').then(m => m.SytelineMobileCaseStudyComponent) },
   { path: 'work',     loadComponent: () => import('./pages/work/work').then(m => m.WorkComponent) },
   { path: 'services', loadComponent: () => import('./pages/services/services').then(m => m.ServicesComponent) },
   { path: 'contact',  loadComponent: () => import('./pages/contact/contact').then(m => m.ContactComponent) },
