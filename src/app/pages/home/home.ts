@@ -121,7 +121,7 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
     },
     {
       title: 'SyteLine Mobile: making ERP access work on the floor',
-      desc: 'A mobile operations case study on making ERP answers faster to reach for floor, inventory, and shipping workflows.',
+      desc: 'A mobile operations case study rooted in firsthand ERP experience and the need for faster floor-level answers.',
       route: '/insights/syteline-mobile-making-erp-access-work-on-the-floor',
       tag: 'ERP / Mobile'
     }

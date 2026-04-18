@@ -68,7 +68,7 @@ export class InsightsComponent implements OnInit {
     },
     {
       title: 'SyteLine Mobile: making ERP access work on the floor',
-      desc: 'A mobile operations case study on reducing desktop-only ERP friction for inventory, shipping, and floor-level teams.',
+      desc: 'A mobile operations case study rooted in firsthand ERP experience, and in the need to put faster answers in reach of the people who need them most.',
       route: '/insights/syteline-mobile-making-erp-access-work-on-the-floor',
       tag: 'ERP / Mobile'
     }

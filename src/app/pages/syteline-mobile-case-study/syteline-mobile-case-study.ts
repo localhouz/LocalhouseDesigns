@@ -12,10 +12,10 @@ export class SytelineMobileCaseStudyComponent implements OnInit {
   private seo = inject(SeoService);
 
   takeaways = [
-    'SyteLine Mobile is framed around workflow access, not mobile for its own sake.',
+    'SyteLine Mobile comes from firsthand ERP experience, not a generic mobile-app concept.',
     'The point is to answer routine ERP questions faster without sending people back to a desktop.',
     'Inventory, shipping, BOM, and production context become more useful when they are easier to reach in motion.',
-    'This case study bridges Localhouse\'s ERP thinking with a more practical floor-level interface story.'
+    'This case study bridges Localhouse\'s ERP thinking with a more personal floor-level interface story.'
   ];
 
   ngOnInit() {
@@ -23,7 +23,7 @@ export class SytelineMobileCaseStudyComponent implements OnInit {
     const url = `${base}/insights/syteline-mobile-making-erp-access-work-on-the-floor`;
     this.seo.setPage({
       title: 'SyteLine Mobile: Making ERP Access Work on the Floor | Localhouse Designs',
-      description: 'A mobile operations case study on making SyteLine and ERP-style data faster to access for inventory, shipping, and floor-level workflows without recreating the full desktop ERP on a phone.',
+      description: 'A mobile operations case study rooted in firsthand ERP experience, showing why inventory, shipping, and floor-level teams need faster answers at their fingertips instead of one more desktop-bound workflow.',
       url,
       schemas: [
         {
@@ -31,7 +31,7 @@ export class SytelineMobileCaseStudyComponent implements OnInit {
           '@type': ['TechArticle', 'Article'],
           '@id': `${url}#article`,
           headline: 'SyteLine Mobile: Making ERP Access Work on the Floor',
-          description: 'A mobile operations case study on making SyteLine and ERP-style data faster to access for inventory, shipping, and floor-level workflows without recreating the full desktop ERP on a phone.',
+          description: 'A mobile operations case study rooted in firsthand ERP experience, showing why inventory, shipping, and floor-level teams need faster answers at their fingertips instead of one more desktop-bound workflow.',
           datePublished: '2026-04-18',
           dateModified: '2026-04-18',
           author: { '@id': `${base}/about#person` },
