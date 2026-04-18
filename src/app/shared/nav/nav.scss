@@ -36,18 +36,11 @@
   }
 
   &__logo-mark {
-    width: 36px;
-    height: 36px;
-    background: var(--accent);
-    color: var(--black);
-    font-family: var(--font-mono);
-    font-weight: 700;
-    font-size: 0.8rem;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    letter-spacing: 0.05em;
+    width: 42px;
+    height: 42px;
+    display: block;
     flex-shrink: 0;
+    object-fit: contain;
   }
 
   &__logo-text {
