@@ -25,48 +25,48 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
   private mouse = { x: 0, y: 0 };
 
   marqueeItems = [
-    'Angular 21', 'Three.js', 'SEO/GEO', 'Netlify', 'TypeScript',
-    'Business Central', 'SAP', 'Infor SyteLine', 'ERP Integration',
-    'Structured Data', 'Schema.org', 'WebGL', 'Workflow Automation'
+    'Oklahoma service businesses', 'Local SEO / GEO', 'Service page rebuilds', 'Contact path clarity',
+    'Structured Data', 'Schema.org', 'Broken Arrow', 'Tulsa', 'Oklahoma City',
+    'Angular 21', 'ERP-connected tooling', 'Workflow Automation'
   ];
 
   services = [
-    { num: '01', title: 'Angular Development', desc: 'Standalone components, signals, lazy loading. Modern Angular done right - fast, maintainable, and ready for scale.' },
-    { num: '02', title: 'Enterprise & ERP', desc: 'Business Central, SAP, Infor SyteLine - custom integrations, internal tooling, mobile floor apps, and workflow automation built by someone who actually used these systems.' },
-    { num: '03', title: 'SEO & GEO', desc: 'Structured data, FAQPage schemas, Product markup, AI-ready content. Built to rank in search and AI overviews alike.' },
-    { num: '04', title: 'WebGL & Three.js', desc: 'Custom GLSL shaders, particle systems, 3D experiences. Browser as canvas - from subtle texture to full generative art.' },
+    { num: '01', title: 'Website Rebuilds', desc: 'For service businesses stuck with vague messaging, weak structure, or platform-limited sites that do not turn visits into real inquiries.' },
+    { num: '02', title: 'Local SEO / GEO', desc: 'NAP clarity, structured data, FAQ coverage, service-page depth, and contact-path cleanup so search and AI systems understand the business clearly.' },
+    { num: '03', title: 'Audit-First Conversion Work', desc: 'We start with what is unclear, what is slowing trust down, and what is making the next step harder than it should be.' },
+    { num: '04', title: 'Operational Tooling', desc: 'Still available for ERP-connected dashboards, internal tools, and workflow automation when the problem extends beyond the website.' },
   ];
 
   trustFacts = [
     {
       label: 'Based in',
       value: 'Broken Arrow, Oklahoma',
-      detail: 'Serving Broken Arrow, Tulsa, Oklahoma, and remote clients nationwide.'
+      detail: 'Serving service businesses across Tulsa, Oklahoma City, and the wider Oklahoma market.'
     },
     {
       label: 'Best fit',
-      value: 'Brands + operations teams',
-      detail: 'Especially strong for Angular builds, ERP-connected tooling, and structured-data-first sites.'
+      value: 'Oklahoma service businesses',
+      detail: 'Especially strong for businesses with outdated, vague, or platform-limited sites that need clearer lead paths.'
     },
     {
       label: 'Built for',
-      value: 'Search + answer engines',
-      detail: 'Pages are written to help Google, AI overviews, and chat-based discovery systems extract facts cleanly.'
+      value: 'Trust + local visibility',
+      detail: 'Pages are structured to help Google, AI overviews, and real people understand what the business does and what to do next.'
     }
   ];
 
   answerBlocks = [
     {
       question: 'Where is Localhouse Designs based?',
-      answer: 'Localhouse Designs is based in Broken Arrow, Oklahoma and works with clients across the Tulsa metro, Oklahoma, and the wider U.S.'
+      answer: 'Localhouse Designs is based in Broken Arrow, Oklahoma and works with service businesses across Tulsa, Oklahoma City, and the wider Oklahoma market.'
     },
     {
       question: 'What kind of projects are the best fit?',
-      answer: 'The strongest fit is modern Angular sites, structured-data-heavy SEO/GEO work, and business tooling connected to ERP and operations workflows.'
+      answer: 'The strongest fit is rebuilding service-business websites that feel vague, outdated, or boxed in by templates, especially when trust and local visibility need work.'
     },
     {
       question: 'Why does the ERP background matter?',
-      answer: 'It means the work is shaped by firsthand experience with operational systems, not generic agency assumptions or surface-level documentation.'
+      answer: 'It means the sites are built with stronger systems thinking. Clearer flows, better structure, and a sharper sense of what people need in order to take the next step.'
     }
   ];
 
@@ -140,7 +140,7 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
     },
     {
       title: 'NorCal Sauce Worx',
-      desc: 'Full Angular rebuild - quote wizard, co-packing process, FAQPage + HowTo schemas, Netlify Forms.',
+      desc: 'Full Angular rebuild with a clearer quote path, stronger service structure, and FAQPage + HowTo schema support.',
       url: 'https://norcalsauceworx.com',
       previewUrl: 'https://norcalsauceworx.com',
       previewDomain: 'norcalsauceworx.com',
@@ -150,7 +150,7 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
     },
     {
       title: 'Prescribed Burn Sauces',
-      desc: 'Brand site with WebGL, full product schemas, GA4, Google Search Console. 26 rich result items - all valid.',
+      desc: 'Brand site with stronger product structure, full schema coverage, and cleaner measurement foundations from launch.',
       url: 'https://prescribedburnsauces.com',
       previewUrl: 'https://prescribedburnsauces.com',
       previewDomain: 'prescribedburnsauces.com',
@@ -164,7 +164,7 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
     const base = 'https://localhousedesigns.netlify.app';
     this.seo.setPage({
       title: 'Localhouse Designs | Broken Arrow Web Studio for Angular, ERP, SEO/GEO',
-      description: 'Broken Arrow, Oklahoma web studio serving Tulsa, statewide Oklahoma, and remote clients with Angular development, ERP-aware software, structured-data-first SEO/GEO, and custom digital experiences.',
+      description: 'Broken Arrow, Oklahoma web studio building clearer, higher-converting websites for service businesses across Oklahoma, with stronger local SEO/GEO and cleaner contact paths.',
       url: base,
       schemas: [
         {
@@ -172,8 +172,8 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
           '@type': 'WebPage',
           '@id': `${base}/#webpage`,
           url: base,
-          name: 'Localhouse Designs | Broken Arrow Angular, ERP, and SEO/GEO Studio',
-          description: 'Broken Arrow, Oklahoma web studio specializing in Angular development, enterprise ERP integrations, and structured-data-first SEO/GEO.',
+          name: 'Localhouse Designs | Oklahoma Service Business Websites',
+          description: 'Broken Arrow, Oklahoma web studio building clearer, higher-converting websites for service businesses with stronger local SEO/GEO and cleaner lead paths.',
           isPartOf: { '@id': `${base}/#website` },
           about: { '@id': `${base}/#organization` },
           breadcrumb: {
@@ -188,7 +188,7 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
           '@type': 'ProfessionalService',
           '@id': `${base}/#organization`,
           name: 'Localhouse Designs',
-          description: 'Boutique web studio specializing in Angular development, enterprise ERP integrations (Microsoft Business Central, SAP, Infor SyteLine), SEO/GEO structured data optimization, WebGL/Three.js experiences, and Netlify deployments.',
+          description: 'Boutique web studio helping Oklahoma service businesses rebuild vague or underperforming websites into clearer, higher-converting sites with stronger local SEO/GEO foundations. Enterprise and ERP-connected tooling also available.',
           url: base,
           logo: { '@type': 'ImageObject', url: `${base}/og.png`, width: 1200, height: 630 },
           sameAs: ['https://github.com/localhouz', 'https://www.linkedin.com/in/steven-rausch83/'],
@@ -202,17 +202,17 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
             '@type': 'ContactPoint',
             contactType: 'sales',
             url: `${base}/contact`,
-            areaServed: ['Broken Arrow', 'Tulsa', 'Oklahoma', 'United States'],
+            areaServed: ['Broken Arrow', 'Tulsa', 'Oklahoma City', 'Oklahoma', 'United States'],
             availableLanguage: 'English'
           },
           hasOfferCatalog: {
             '@type': 'OfferCatalog',
             name: 'Localhouse Designs Services',
             itemListElement: [
-              { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'Angular Development' } },
-              { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'ERP Integration' } },
-              { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'SEO and GEO Optimization' } },
-              { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'WebGL and Three.js Development' } }
+              { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'Website Rebuilds for Service Businesses' } },
+              { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'Local SEO and GEO Optimization' } },
+              { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'Conversion and Contact Path Audits' } },
+              { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'ERP-connected Operational Tooling' } }
             ]
           },
           knowsAbout: [

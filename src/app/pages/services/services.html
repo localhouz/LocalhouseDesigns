@@ -2,8 +2,8 @@
 
   <div class="page-header container">
     <p class="label">What we offer</p>
-    <h1>Services that<br><em>move the needle.</em></h1>
-    <p class="page-header__sub">No fluff. Just the capabilities that matter for modern web, local visibility, and operationally useful software from Broken Arrow to the wider Oklahoma market. If you want the proof behind the offers, the <a routerLink="/work">work page</a> and <a routerLink="/about">about page</a> fill in the why.</p>
+    <h1>Clearer websites.<br><em>Stronger next steps.</em></h1>
+    <p class="page-header__sub">Localhouse Designs is built first for Oklahoma service businesses that need more trust, better local visibility, and a contact path that does not fall apart once someone lands. ERP-connected tooling is here too, but it is the secondary lane, not the front door.</p>
   </div>
 
   <section class="services-list section container">
@@ -20,68 +20,6 @@
               <li>{{ item }}</li>
             }
           </ul>
-
-          @if (service.demo === 'product') {
-            <div class="service-demo">
-              <div class="service-demo__label">// try it / type your brand</div>
-              <div class="service-demo__inputs">
-                <input class="service-demo__input" type="text" placeholder="Brand name"
-                  [value]="productName()"
-                  (input)="productName.set($any($event.target).value)" maxlength="32" />
-                <input class="service-demo__input" type="text" placeholder="Tagline"
-                  [value]="productTagline()"
-                  (input)="productTagline.set($any($event.target).value)" maxlength="48" />
-              </div>
-              <div class="product-card-preview">
-                <div class="product-card-preview__accent"></div>
-                <div class="product-card-preview__body">
-                  <span class="product-card-preview__eyebrow">// featured product</span>
-                  <div class="product-card-preview__name">{{ productName() || 'Brand Name' }}</div>
-                  <div class="product-card-preview__tag">{{ productTagline() || 'Your tagline here.' }}</div>
-                  <div class="product-card-preview__cta">Shop Now -&gt;</div>
-                </div>
-              </div>
-            </div>
-          }
-
-          @if (service.demo === 'serp') {
-            <div class="service-demo">
-              <div class="service-demo__label">// try it / see your Google result</div>
-              <div class="service-demo__inputs">
-                <input class="service-demo__input" type="text" placeholder="Business name"
-                  [value]="serpBusiness()"
-                  (input)="serpBusiness.set($any($event.target).value)" maxlength="60" />
-                <input class="service-demo__input" type="text" placeholder="yourdomain.com"
-                  [value]="serpUrl()"
-                  (input)="serpUrl.set($any($event.target).value)" maxlength="60" />
-                <input class="service-demo__input" type="text" placeholder="Short description"
-                  [value]="serpDesc()"
-                  (input)="serpDesc.set($any($event.target).value)" maxlength="160" />
-              </div>
-              <div class="serp-preview">
-                <div class="serp-preview__site">
-                  <span class="serp-preview__favicon">G</span>
-                  <div>
-                    <div class="serp-preview__domain">{{ serpDisplay() }}</div>
-                    <div class="serp-preview__breadcrumb">{{ serpDisplay() }} &gt; home</div>
-                  </div>
-                </div>
-                <div class="serp-preview__title">{{ serpTitle() }}</div>
-                <div class="serp-preview__desc">{{ serpSnippet() }}</div>
-              </div>
-            </div>
-          }
-
-          @if (service.demo === 'webgl') {
-            <div class="service-demo">
-              <div class="service-demo__label">// live WebGL / move your mouse</div>
-              <canvas #miniCanvas class="service-demo__canvas"></canvas>
-              <div class="service-demo__note">
-                Real-time lighting, material shaders, mouse parallax - running in your browser right now.
-              </div>
-            </div>
-          }
-
         </div>
       </div>
     }
@@ -138,27 +76,27 @@
   <section class="process section">
     <div class="container">
       <p class="label">How it works</p>
-      <h2 class="process__heading">Simple process.<br><em>Serious results.</em></h2>
+      <h2 class="process__heading">Simple process.<br><em>No-call by default.</em></h2>
       <div class="process__steps">
         <div class="process__step">
           <span class="process__step-num">01</span>
-          <h3>Discovery</h3>
-          <p>We start with a conversation. Goals, audience, timeline, budget. No forms, no decks - just clarity.</p>
+          <h3>Send the site</h3>
+          <p>You send the current site, a little context, and what feels off. No pitch deck, no forced call, no agency theater.</p>
         </div>
         <div class="process__step">
           <span class="process__step-num">02</span>
-          <h3>Architecture</h3>
-          <p>Site structure, component design, SEO strategy. We plan the full system before writing line one of code.</p>
+          <h3>Audit and direction</h3>
+          <p>We review clarity, contact flow, local trust signals, and what is making the site harder to trust or use than it should be.</p>
         </div>
         <div class="process__step">
           <span class="process__step-num">03</span>
-          <h3>Build</h3>
-          <p>Angular-first, schema-baked, performance-aware. Every component is built to be fast, found, and future-proof.</p>
+          <h3>Rebuild or tighten</h3>
+          <p>From there we either rebuild the site, clean up the most expensive friction points, or scope the right next step if the work is bigger.</p>
         </div>
         <div class="process__step">
           <span class="process__step-num">04</span>
-          <h3>Launch</h3>
-          <p>Netlify deploy, DNS migration, Search Console, GA4. We hand you off with everything running and nothing broken.</p>
+          <h3>Launch and measure</h3>
+          <p>Launch, forms, tracking, and cleanup stay in scope so the site is not just prettier, but actually more usable and measurable.</p>
         </div>
       </div>
     </div>
@@ -196,19 +134,19 @@
     <p class="label">Read Next</p>
     <div class="service-reading__grid">
       <article class="service-reading__card">
-        <h3>What GEO actually means for local businesses</h3>
-        <p>A plain-English article on how GEO fits with SEO, structured data, and clearer website messaging without the usual hype.</p>
-        <a routerLink="/insights/what-geo-means-for-local-businesses" class="btn">Read the article -&gt;</a>
+        <h3>Why local SEO fails when the contact path is vague</h3>
+        <p>A grounded look at the friction points that quietly kill local conversion: unclear NAP, weak CTA structure, thin FAQs, and sloppy map or directions flow.</p>
+        <a routerLink="/insights/why-local-seo-fails-when-the-contact-path-is-vague" class="btn">Read the article -&gt;</a>
       </article>
       <article class="service-reading__card">
-        <h3>What manufacturers actually need from ERP-connected tooling</h3>
-        <p>A grounded look at what useful ERP-connected software should actually do for manufacturing teams, planners, and operations.</p>
-        <a routerLink="/insights/what-manufacturers-actually-need-from-erp-connected-tooling" class="btn">Read the article -&gt;</a>
+        <h3>Local GEO Standard</h3>
+        <p>A results-only case study showing how clearer NAP placement, tighter contact flow, and stronger structured signals improved three real client sites.</p>
+        <a routerLink="/work/local-geo-standard" class="btn">View the case study -&gt;</a>
       </article>
       <article class="service-reading__card">
-        <h3>How structured data helps AI search understand your business</h3>
-        <p>A practical article on what schema actually helps with, where it stops, and why clear content still has to do the heavy lifting.</p>
-        <a routerLink="/insights/how-structured-data-helps-ai-search-understand-your-business" class="btn">Read the article -&gt;</a>
+        <h3>ERP Lite: designing an operational decision surface</h3>
+        <p>A case-study framing for ERP UI and why internal systems usually need a cleaner decision layer instead of yet another transactional screen.</p>
+        <a routerLink="/insights/erp-lite-designing-an-operational-decision-surface" class="btn">Read the article -&gt;</a>
       </article>
       <article class="service-reading__card">
         <h3>Why a custom site beats a booking-platform page for local search</h3>
@@ -219,8 +157,8 @@
   </section>
 
   <div class="services-cta container">
-    <h2>Let's scope<br><em>your project.</em></h2>
-    <a routerLink="/contact" class="btn btn--filled">Start a conversation -&gt;</a>
+    <h2>Need a clearer site<br><em>or a sharper first step?</em></h2>
+    <a routerLink="/contact" class="btn btn--filled">Request a quick audit -&gt;</a>
   </div>
 
 </div>

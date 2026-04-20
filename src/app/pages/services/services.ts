@@ -1,7 +1,5 @@
-import { Component, ElementRef, inject, OnInit, PLATFORM_ID, signal, ViewChildren, QueryList, AfterViewInit, OnDestroy } from '@angular/core';
-import { isPlatformBrowser } from '@angular/common';
+import { Component, inject, OnInit } from '@angular/core';
 import { RouterLink } from '@angular/router';
-import * as THREE from 'three';
 import { SeoService } from '../../shared/seo/seo.service';
 
 @Component({
@@ -10,67 +8,75 @@ import { SeoService } from '../../shared/seo/seo.service';
   templateUrl: './services.html',
   styleUrl: './services.scss'
 })
-export class ServicesComponent implements OnInit, AfterViewInit, OnDestroy {
+export class ServicesComponent implements OnInit {
   private seo = inject(SeoService);
-  private platformId = inject(PLATFORM_ID);
-  @ViewChildren('miniCanvas') miniCanvases!: QueryList<ElementRef<HTMLCanvasElement>>;
-  signalCount = signal(0);
-  schemaUrl = signal('');
-  schemaResult = signal<string | null>(null);
-  schemaLoading = signal(false);
-  private animIds: number[] = [];
+  
 
   positioning = [
-    'Based in Broken Arrow, Oklahoma and serving the Tulsa metro, the wider Oklahoma market, and remote clients across the U.S.',
-    'Best fit for teams that need both clean frontend execution and operational depth.',
-    'Built for discoverability in search, AI overviews, and answer engines.'
+    'Based in Broken Arrow and built for service businesses across Oklahoma that need a clearer site, stronger trust signals, and a next step people will actually take.',
+    'Best fit for businesses whose current website feels vague, boxed in by a platform, or too thin to support local SEO, GEO, and real conversion.',
+    'Also available for operations-heavy teams that need ERP-aware dashboards, workflow tooling, or a cleaner surface on top of messy internal systems.'
   ];
 
   serviceQuestions = [
     {
-      question: 'Do you work with Oklahoma businesses?',
-      answer: 'Yes. Localhouse Designs is based in Broken Arrow and works with businesses across Broken Arrow, Tulsa, the wider Oklahoma market, and remote clients nationwide.'
+      question: 'Do you work with businesses outside Tulsa?',
+      answer: 'Yes. Localhouse Designs is based in Broken Arrow and works across Oklahoma, especially around Tulsa, Broken Arrow, Oklahoma City, Edmond, Norman, Moore, Jenks, Owasso, and Bixby.'
     },
     {
-      question: 'What makes your SEO and GEO work different?',
-      answer: 'The focus is not just metadata. It is entity clarity, structured data, answer-ready copy, internal content architecture, and pages that help search and AI systems understand what the business actually does.'
+      question: 'What do you mean by website clarity?',
+      answer: 'It means the site quickly answers the questions that decide trust: what you do, where you work, who you serve, why someone should choose you, and what the next step is. That is where a lot of conversion and local visibility problems really start.'
     },
     {
-      question: 'Who is the ideal client?',
-      answer: 'Brands that want cleaner positioning, manufacturers or operations teams that need real system understanding, and businesses that want a site that is easier to find, cite, and trust.'
+      question: 'Is this just SEO work?',
+      answer: 'No. Search visibility is only one piece. The stronger offer is a clearer site overall: better service pages, better About and Contact structure, stronger local signals, cleaner CTAs, and better measurement once the site is live.'
+    },
+    {
+      question: 'Who is the best fit?',
+      answer: 'The best fit is an established Oklahoma service business with a dated, vague, or platform-limited site. Secondary fit is an operations-heavy team that needs ERP-connected tooling or a more readable internal dashboard.'
     }
   ];
 
   serviceBreakdowns = [
     {
-      title: 'Angular Development',
-      intro: 'For businesses that need a fast, maintainable frontend instead of a fragile site that becomes expensive to change.',
+      title: 'Website Rebuilds For Service Businesses',
+      intro: 'This is the primary lane: rebuild the site so it is easier to trust, easier to navigate, and easier to contact.',
       points: [
-        'Best for brand sites, custom marketing pages, SPAs, dashboards, and internal tools.',
-        'Built with reusable components, clear state, and architecture that can survive growth.',
-        'Strong fit when performance, flexibility, and long-term maintainability matter.'
+        'Best for salons, barbers, med spas, home services, wellness brands, and other Oklahoma businesses that depend on local trust.',
+        'Reworks weak homepages, vague service pages, platform-limited layouts, and confusing About or Contact sections.',
+        'Built custom so the brand feels real, the path feels obvious, and the business is not stuck inside someone else\'s template.'
       ],
-      outcomes: ['Faster load times', 'Cleaner component systems', 'Easier future feature work']
+      outcomes: ['More trust', 'Clearer offer', 'Better first impression']
     },
     {
-      title: 'SEO / GEO / AEO',
-      intro: 'For businesses that want to be easier to find in search and easier to understand in AI-generated answers.',
+      title: 'Local SEO / GEO / AEO Foundations',
+      intro: 'This is where visibility and conversion start to work together instead of fighting each other.',
       points: [
-        'Covers metadata, structured data, answer-ready copy, entity clarity, and crawl signals.',
-        'Focused on helping Google, AI overviews, and chat-based search systems extract the right facts.',
-        'Especially valuable for local businesses, niche B2B services, and expertise-driven brands.'
+        'Covers the pieces that most local businesses miss first: visible NAP, clear CTA paths, real FAQ content, map and directions flow, and schema that matches the page.',
+        'Built to help Google, AI overviews, and answer engines understand the business without making people read through clutter.',
+        'Best used as part of a site cleanup or rebuild, not as a layer of technical garnish on top of vague messaging.'
       ],
-      outcomes: ['Stronger entity clarity', 'Better answer-engine retrieval', 'More trustworthy search snippets']
+      outcomes: ['Stronger local signals', 'Better entity clarity', 'Less contact friction']
     },
     {
-      title: 'Enterprise & ERP Integration',
-      intro: 'For operations teams that need tools shaped by real system experience rather than generic agency guesses.',
+      title: 'Audit-First Conversion Cleanup',
+      intro: 'For businesses that are not ready for a full rebuild but need a clear first move.',
       points: [
-        'Built around actual workflow pain points in Business Central, SAP, and Infor SyteLine environments.',
-        'Useful for dashboards, automation, mobile floor apps, BOM systems, and reporting workflows.',
-        'Designed to reduce friction for the people actually using the system day to day.'
+        'Starts with a fast async review of homepage clarity, service-page structure, NAP placement, CTA consistency, FAQ coverage, and contact-path friction.',
+        'Turns abstract website problems into a short list of practical fixes instead of broad marketing advice.',
+        'Built for owners who want a grounded recommendation before deciding whether to rebuild, tighten, or expand.'
       ],
-      outcomes: ['Less workflow friction', 'Faster access to operational data', 'More useful internal tooling']
+      outcomes: ['Lower-risk first step', 'Clear priorities', '48-hour response path']
+    },
+    {
+      title: 'ERP-Connected Tooling And Operational Views',
+      intro: 'This is the secondary lane: internal software for teams that need better operational visibility, not just a prettier interface.',
+      points: [
+        'Shaped by real experience around Business Central, SAP, and Infor SyteLine workflows rather than generic dashboard language.',
+        'Useful for floor views, reporting surfaces, workflow helpers, BOM-related tooling, and data layers that make internal systems easier to read.',
+        'Best fit when the problem is interpretation time, workflow friction, or lack of a clean front end above the ERP.'
+      ],
+      outcomes: ['Cleaner ops visibility', 'Less workflow friction', 'Better internal UX']
     }
   ];
 
@@ -78,199 +84,89 @@ export class ServicesComponent implements OnInit, AfterViewInit, OnDestroy {
     {
       kind: 'Strong fit',
       bullets: [
-        'You want a custom site or tool instead of forcing your business into a template.',
-        'You care about search visibility, machine-readable structure, and long-term maintainability.',
-        'You need someone who can bridge frontend quality with operational or ERP context.'
+        'You already have a real business, but the site feels vague, dated, or boxed in by a platform.',
+        'You want a site that helps people trust you faster instead of making them guess what to click next.',
+        'You need someone who can handle brand clarity, local visibility, and the technical side in the same build.'
       ]
     },
     {
       kind: 'Usually not a fit',
       bullets: [
-        'You only want the cheapest possible site with no concern for performance, structure, or growth.',
-        'You need a giant agency process with multiple account layers instead of direct execution.',
-        'You want generic marketing copy without technical depth or operational detail.'
+        'You only want the cheapest possible website and do not care how it performs or whether it converts.',
+        'You want a giant agency process with heavy account layers instead of direct collaboration and execution.',
+        'You want generic marketing promises without doing the harder work of clarifying the offer and fixing the path.'
       ]
     }
   ];
 
   proofSignals = [
-    'Angular-first builds with structured-data-aware architecture',
-    'Hands-on ERP familiarity across Business Central, SAP, and SyteLine',
-    'Schema, sitemap, OG, and answer-engine visibility baked into planning',
-    'Netlify deployment, analytics, and launch support handled in the same workflow'
+    'Real Oklahoma-based case studies across local service brands and operational tooling',
+    'Search, schema, contact-path, and conversion thinking handled in the same workflow',
+    'Hands-on ERP familiarity across Business Central, SAP, and SyteLine when the work moves beyond brochure sites',
+    'Launch, analytics, forms, and follow-through handled in the same build instead of split across vendors'
   ];
 
   services = [
     {
       num: '01',
-      title: 'Angular Development',
-      desc: 'Standalone components, signals, lazy loading, view transitions. We build Angular apps the way Angular intended - clean, fast, and maintainable. Strong fit for Oklahoma businesses that want a custom site or internal tool instead of a template they will outgrow.',
-      items: ['Standalone components', 'Signals & computed state', 'Lazy-loaded routes', 'View transitions API', 'Responsive design', 'Accessibility (WCAG)'],
-      demo: 'product',
+      title: 'Website Rebuilds',
+      desc: 'Custom websites for Oklahoma service businesses that need more clarity, more trust, and a path that actually leads somewhere. Built to replace vague homepages, thin platform sites, and confusing service structures.',
+      items: ['Homepage and service-page restructuring', 'About and Contact cleanup', 'Custom layout and brand polish', 'Mobile-first rebuilds', 'Booking and inquiry path cleanup', 'Platform replacement when needed']
     },
     {
       num: '02',
-      title: 'SEO & GEO',
-      desc: 'Traditional search ranking and AI-powered search optimization. FAQPage, HowTo, Product, LocalBusiness, and Service schemas. Built for businesses in Broken Arrow, Tulsa, Oklahoma, and beyond that need Google and AI systems to understand who they are clearly.',
-      items: ['JSON-LD structured data', 'FAQPage & HowTo schemas', 'Product & LocalBusiness markup', 'Per-page meta & OG tags', 'Sitemap & robots.txt', 'Google Search Console setup'],
-      demo: 'serp',
+      title: 'Local SEO / GEO',
+      desc: 'Make the business easier for Google, AI overviews, and real customers to understand. The focus is not just metadata. It is clarity, local signals, entity structure, and a contact path that holds up once someone lands.',
+      items: ['Visible NAP and local trust signals', 'Schema that matches the actual page', 'FAQ content built around real buyer questions', 'Map and directions flow', 'Per-page metadata and OG cleanup', 'Search Console and sitemap setup']
     },
     {
       num: '03',
-      title: 'WebGL & Three.js',
-      desc: 'Custom GLSL shaders, particle systems, 3D scenes. From a subtle animated hero to a full generative experience - the browser as a canvas. Every pixel computed on the GPU.',
-      items: ['Three.js scenes', 'GLSL shaders', 'Particle systems', 'Post-processing', 'OrbitControls', 'InstancedMesh'],
-      demo: 'webgl',
+      title: 'Audit-First Conversion Work',
+      desc: 'A lighter first step for businesses that know the site is underperforming but do not want to jump straight into a full rebuild. We score the contact path, trust structure, and local visibility basics, then hand back a practical fix list.',
+      items: ['48-hour async audit path', 'Homepage clarity review', 'CTA and contact-flow review', 'FAQ and schema review', 'Priority fix list', 'Rebuild recommendation when needed']
     },
     {
       num: '04',
-      title: 'Enterprise & ERP',
-      desc: 'Real experience inside Business Central, SAP, and Infor SyteLine - not as a consultant reading documentation, but as an end user who felt the gaps firsthand. That means we know where the data lives, what operations teams actually need access to, and how to build tooling that fits the reality of manufacturing and supply chain work without fighting the system it needs to talk to.',
-      items: ['Microsoft Business Central', 'SAP integration', 'Infor SyteLine', 'Mobile floor apps', 'BOM systems & automation', 'Internal ops dashboards'],
-      demo: null,
+      title: 'ERP-Connected Tooling',
+      desc: 'For teams that need a better surface on top of Business Central, SAP, or Infor SyteLine. This is where internal dashboards, workflow helpers, and ops-aware interfaces come in.',
+      items: ['Operational dashboards', 'Workflow tooling', 'ERP-aware front ends', 'Reporting views', 'Manufacturing and supply-chain context', 'Internal UX cleanup']
     },
     {
       num: '05',
-      title: 'Performance & Deploy',
-      desc: 'Deploy your way. Netlify, custom DNS migration, serverless functions, CI/CD - frontend or backend, we handle the full stack. Lighthouse scores and Core Web Vitals are not vanity metrics, they are what search engines and users actually experience.',
-      items: ['Netlify deployments', 'DNS migration & custom domains', 'Serverless functions', 'CI/CD pipelines', 'Core Web Vitals audit', 'SSL provisioning'],
-      demo: null,
-    },
-    {
-      num: '06',
-      title: 'Analytics & Tracking',
-      desc: 'GA4, Google Search Console, rich results validation. You cannot improve what you do not measure. We wire in full tracking from day one so you always know what is working.',
-      items: ['GA4 setup & configuration', 'Search Console verification', 'Rich results validation', 'Event tracking', 'Conversion goals', 'Real-time reporting'],
-      demo: null,
-    },
+      title: 'Launch, Tracking, And Follow-Through',
+      desc: 'The build does not stop at design handoff. Launch, forms, analytics, and the pieces that make the site actually usable all stay in scope.',
+      items: ['Netlify deployment and DNS support', 'Forms and inquiry routing', 'GA4 and Search Console setup', 'Conversion tracking basics', 'Core Web Vitals cleanup', 'Post-launch fixes and iteration']
+    }
   ];
-
-  // Demo 1: Live product card
-  productName = signal('Hot Sauce Co.');
-  productTagline = signal('Small batch. Big heat.');
-
-  // Demo 2: SERP preview
-  serpBusiness = signal('Your Business');
-  serpDesc = signal('We do the thing you need, better than anyone else. Based in Broken Arrow, Oklahoma.');
-  serpUrl = signal('yourbusiness.com');
-
-  serpTitle() { return this.serpBusiness() || 'Your Business'; }
-  serpSnippet() { return this.serpDesc() || 'Your description appears here in Google search results.'; }
-  serpDisplay() {
-    const u = this.serpUrl() || 'yourbusiness.com';
-    return u.replace(/^https?:\/\//, '').replace(/\/$/, '');
-  }
-
-  ngAfterViewInit() {
-    if (!isPlatformBrowser(this.platformId)) return;
-    this.miniCanvases.forEach(ref => this.initCardWebGL(ref.nativeElement));
-  }
-
-  ngOnDestroy() {
-    if (!isPlatformBrowser(this.platformId)) return;
-    this.animIds.forEach(id => cancelAnimationFrame(id));
-  }
-
-  private initCardWebGL(canvas: HTMLCanvasElement) {
-    const w = canvas.clientWidth || 340;
-    const h = canvas.clientHeight || 220;
-    const renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true });
-    renderer.setSize(w, h);
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-    renderer.shadowMap.enabled = true;
-
-    const scene = new THREE.Scene();
-    scene.background = new THREE.Color(0x0a0a12);
-    const camera = new THREE.PerspectiveCamera(45, w / h, 0.1, 100);
-    camera.position.set(0, 0, 4);
-
-    const cardGeo = new THREE.BoxGeometry(2.8, 1.7, 0.06);
-    const cardMat = new THREE.MeshStandardMaterial({
-      color: 0x1a1a2e, roughness: 0.3, metalness: 0.6,
-      emissive: new THREE.Color(0x0d0d1a), emissiveIntensity: 1,
-    });
-    const card = new THREE.Mesh(cardGeo, cardMat);
-    card.castShadow = true;
-    scene.add(card);
-
-    const stripeMat = new THREE.MeshStandardMaterial({
-      color: 0xff3c00, emissive: new THREE.Color(0xff3c00), emissiveIntensity: 0.4,
-      roughness: 0.2, metalness: 0.8,
-    });
-    const stripe = new THREE.Mesh(new THREE.BoxGeometry(2.8, 0.06, 0.07), stripeMat);
-    stripe.position.set(0, 0.55, 0);
-    card.add(stripe);
-
-    const dot = new THREE.Mesh(
-      new THREE.SphereGeometry(0.08, 16, 16),
-      new THREE.MeshStandardMaterial({ color: 0xff3c00, emissive: new THREE.Color(0xff3c00), emissiveIntensity: 1 })
-    );
-    dot.position.set(-1.1, 0.55, 0.1);
-    card.add(dot);
-
-    const keyLight = new THREE.DirectionalLight(0xffffff, 2.5);
-    keyLight.position.set(3, 4, 5);
-    scene.add(keyLight);
-    const fillLight = new THREE.PointLight(0x7c3aed, 1.5, 10);
-    fillLight.position.set(-3, -2, 2);
-    scene.add(fillLight);
-    const rimLight = new THREE.PointLight(0xff3c00, 1.0, 8);
-    rimLight.position.set(2, -3, -1);
-    scene.add(rimLight);
-    scene.add(new THREE.AmbientLight(0x0a0a20, 2));
-
-    let mouseX = 0, mouseY = 0, targetX = 0, targetY = 0;
-    canvas.addEventListener('mousemove', (e) => {
-      const rect = canvas.getBoundingClientRect();
-      mouseX = ((e.clientX - rect.left) / rect.width) * 2 - 1;
-      mouseY = -((e.clientY - rect.top) / rect.height) * 2 + 1;
-    });
-    canvas.addEventListener('mouseleave', () => { mouseX = 0; mouseY = 0; });
-
-    const animate = () => {
-      const id = requestAnimationFrame(animate);
-      this.animIds.push(id);
-      targetX += (mouseX * 0.35 - targetX) * 0.06;
-      targetY += (mouseY * 0.2 - targetY) * 0.06;
-      card.rotation.y = targetX;
-      card.rotation.x = -targetY;
-      const t = Date.now() * 0.001;
-      dot.position.y = 0.55 + Math.sin(t * 2) * 0.04;
-      fillLight.intensity = 1.5 + Math.sin(t * 0.7) * 0.3;
-      renderer.render(scene, camera);
-    };
-    animate();
-  }
 
   ngOnInit() {
     const base = 'https://localhousedesigns.netlify.app';
     this.seo.setPage({
-      title: 'Services | Broken Arrow Angular, ERP, and SEO/GEO Services',
-      description: 'Angular development, ERP-aware tooling, structured-data-first SEO/GEO, performance, and deployment services from Localhouse Designs in Broken Arrow, Oklahoma, serving Tulsa and remote clients.',
+      title: 'Services | Websites For Oklahoma Service Businesses',
+      description: 'Website rebuilds, local SEO/GEO foundations, audit-first conversion work, and ERP-aware tooling from Localhouse Designs in Broken Arrow, serving businesses across Oklahoma.',
       url: `${base}/services`,
       schemas: [
         {
           '@context': 'https://schema.org',
           '@type': 'Service',
           provider: { '@id': `${base}/#organization` },
-          serviceType: 'Web Development',
+          serviceType: 'Website Rebuild And Local Visibility Services',
           name: 'Localhouse Designs Web Services',
           url: `${base}/services`,
-          description: 'Angular development, ERP-aware software, SEO/GEO, deployment, analytics, and design systems for businesses in Broken Arrow, Tulsa, Oklahoma, and remote markets.',
+          description: 'Website rebuilds, local SEO/GEO, conversion cleanup, launch support, and ERP-aware tooling for Oklahoma businesses.',
           areaServed: [
             { '@type': 'State', name: 'Oklahoma' },
             { '@type': 'Country', name: 'United States' }
           ],
           hasOfferCatalog: {
             '@type': 'OfferCatalog',
-            name: 'Web & Enterprise Development Services',
+            name: 'Website And Operational Tooling Services',
             itemListElement: [
-              { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'Angular Development', description: 'Standalone components, signals, lazy loading, view transitions. Angular 21 built the right way.' } },
-              { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'Enterprise & ERP Integration', description: 'Custom integrations and tooling for Microsoft Business Central, SAP, and Infor SyteLine.' } },
-              { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'SEO & GEO Optimization', description: 'JSON-LD structured data, FAQPage, Product, and Service schemas. Rank in search and AI overviews.' } },
-              { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'WebGL & Three.js', description: 'Custom GLSL shaders, particle systems, and 3D experiences built on Three.js.' } },
-              { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'Performance & Deploy', description: 'Netlify deployments, DNS migration, serverless functions, CI/CD, and Core Web Vitals optimization.' } },
-              { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'Analytics & Tracking', description: 'GA4 setup, Search Console verification, rich results validation, and conversion tracking.' } }
+              { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'Website Rebuilds', description: 'Custom websites for Oklahoma service businesses that need more clarity, more trust, and a better contact path.' } },
+              { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'Local SEO And GEO Foundations', description: 'Visible NAP, structured data, FAQ coverage, metadata, and map-driven contact flow improvements.' } },
+              { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'Audit-First Conversion Cleanup', description: 'Async website clarity and local visibility review with a short list of practical fixes.' } },
+              { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'ERP-Connected Tooling', description: 'Operational dashboards, workflow tools, and ERP-aware interfaces for Business Central, SAP, and Infor SyteLine environments.' } },
+              { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'Launch And Tracking Support', description: 'Deployment, forms, analytics, Search Console, and post-launch cleanup handled in the same workflow.' } }
             ]
           }
         },
@@ -295,38 +191,33 @@ export class ServicesComponent implements OnInit, AfterViewInit, OnDestroy {
           mainEntity: [
             {
               '@type': 'Question',
-              name: 'What Angular services does Localhouse Designs offer?',
-              acceptedAnswer: { '@type': 'Answer', text: 'Localhouse Designs builds Angular 21 applications using standalone components, reactive signals, lazy-loaded routes, the View Transitions API, and responsive SCSS design systems. Engagements range from brand sites and SPAs to full-stack applications with REST APIs and SQL databases.' }
+              name: 'What kind of businesses is Localhouse Designs built for?',
+              acceptedAnswer: { '@type': 'Answer', text: 'Localhouse Designs is built primarily for Oklahoma service businesses that need a clearer, higher-converting website with stronger local visibility. Secondary work includes ERP-connected tooling and operational dashboards for teams with more complex internal systems.' }
             },
             {
               '@type': 'Question',
-              name: 'What ERP systems does Localhouse Designs work with?',
-              acceptedAnswer: { '@type': 'Answer', text: 'Localhouse Designs has hands-on experience with Microsoft Business Central, SAP, and Infor SyteLine. Services include custom integrations, internal dashboards, workflow automation, mobile floor apps, BOM systems, and reporting tools.' }
+              name: 'What does a Localhouse website rebuild usually include?',
+              acceptedAnswer: { '@type': 'Answer', text: 'A typical rebuild includes homepage and service-page restructuring, better About and Contact flow, local trust signals, clearer calls to action, stronger mobile behavior, and the SEO/GEO foundations needed for search and answer engines to understand the business more clearly.' }
             },
             {
               '@type': 'Question',
               name: 'Does Localhouse Designs offer SEO and GEO services?',
-              acceptedAnswer: { '@type': 'Answer', text: 'Yes. Every project includes full SEO/GEO treatment: per-page meta tags, JSON-LD structured data (FAQPage, Product, Service, BreadcrumbList), Google Search Console setup, sitemap and robots.txt, and rich results validation. GEO targeting ensures AI search engines like ChatGPT and Perplexity can accurately represent your business.' }
+              acceptedAnswer: { '@type': 'Answer', text: 'Yes. Localhouse Designs handles the practical side of local SEO, GEO, and AEO: visible NAP, FAQ coverage, metadata, map and directions flow, structured data, sitemap setup, and content cleanup that helps both search engines and customers understand what the business actually does.' }
             },
             {
               '@type': 'Question',
-              name: 'Can Localhouse Designs build WebGL experiences?',
-              acceptedAnswer: { '@type': 'Answer', text: 'Yes. Localhouse Designs builds custom Three.js scenes with GLSL shaders, particle systems, post-processing (bloom, depth of field), and InstancedMesh for high-performance 3D. Work ranges from interactive hero backgrounds to full generative art experiences.' }
+              name: 'Do you offer an audit before a full rebuild?',
+              acceptedAnswer: { '@type': 'Answer', text: 'Yes. Localhouse Designs offers an async audit-first path that reviews homepage clarity, local trust signals, CTA structure, FAQ coverage, and contact-path friction before recommending the next move.' }
             },
             {
               '@type': 'Question',
-              name: 'Does Localhouse Designs handle deployment and hosting?',
-              acceptedAnswer: { '@type': 'Answer', text: 'Yes. Localhouse Designs handles the full deployment stack: Netlify configuration, SPA routing, www/non-www redirects, custom DNS migration, SSL, serverless Netlify Functions, and CI/CD pipeline setup. We handle the full stack from code to live URL.' }
+              name: 'What ERP systems does Localhouse Designs work with?',
+              acceptedAnswer: { '@type': 'Answer', text: 'Localhouse Designs has hands-on familiarity with Microsoft Business Central, SAP, and Infor SyteLine. ERP-related work includes operational dashboards, workflow helpers, reporting views, and front ends that make internal data easier to read.' }
             },
             {
               '@type': 'Question',
-              name: 'Who is the best fit for Localhouse Designs services?',
-              acceptedAnswer: { '@type': 'Answer', text: 'Localhouse Designs is a strong fit for businesses that want custom Angular-based sites or tools, stronger SEO/GEO/AEO foundations, and technically sound implementation shaped by real business and operations context.' }
-            },
-            {
-              '@type': 'Question',
-              name: 'Do you work with local Oklahoma businesses and remote clients?',
-              acceptedAnswer: { '@type': 'Answer', text: 'Yes. Localhouse Designs is based in Broken Arrow, Oklahoma and works with local businesses across Broken Arrow and Tulsa as well as remote clients throughout the United States.' }
+              name: 'Does Localhouse Designs handle launch and tracking too?',
+              acceptedAnswer: { '@type': 'Answer', text: 'Yes. Launch support includes deployment, DNS help, forms, GA4, Search Console, conversion tracking basics, and post-launch cleanup so the site is not just designed but actually usable and measurable.' }
             }
           ]
         }
