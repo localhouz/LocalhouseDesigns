@@ -72,6 +72,18 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
 
   insightCards = [
     {
+      title: 'Why branded search ownership matters before local SEO promises',
+      desc: 'A practical article on why a business should own its own name in search before making bigger SEO claims.',
+      route: '/insights/why-branded-search-ownership-matters-before-local-seo-promises',
+      tag: 'Entity / SEO'
+    },
+    {
+      title: 'Why Google can find your page and still not index it',
+      desc: 'A plain-English explanation of why discovered and crawled pages still get left out of the index, and what usually matters more than panic.',
+      route: '/insights/why-google-can-find-your-page-and-still-not-index-it',
+      tag: 'Indexing / SEO'
+    },
+    {
       title: 'What GEO actually means for local businesses',
       desc: 'A plain-English look at GEO, how it fits with SEO, and why local businesses should care.',
       route: '/insights/what-geo-means-for-local-businesses',

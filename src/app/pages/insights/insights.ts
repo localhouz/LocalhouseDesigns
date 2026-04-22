@@ -13,6 +13,18 @@ export class InsightsComponent implements OnInit {
 
   articles = [
     {
+      title: 'Why branded search ownership matters before local SEO promises',
+      desc: 'A practical article on why businesses should own their own branded search results before making bigger SEO promises, and what usually gets in the way.',
+      route: '/insights/why-branded-search-ownership-matters-before-local-seo-promises',
+      tag: 'Entity / SEO'
+    },
+    {
+      title: 'Why Google can find your page and still not index it',
+      desc: 'A plain-English explanation of why Google can discover or crawl a page and still choose not to index it, and what usually matters more than panic.',
+      route: '/insights/why-google-can-find-your-page-and-still-not-index-it',
+      tag: 'Indexing / SEO'
+    },
+    {
       title: 'What GEO actually means for local businesses',
       desc: 'A plain-English explanation of GEO, where it fits, and why local businesses should care without getting lost in AI buzzwords.',
       route: '/insights/what-geo-means-for-local-businesses',
@@ -101,16 +113,18 @@ export class InsightsComponent implements OnInit {
           '@type': 'ItemList',
           name: 'Localhouse Designs Insights',
           itemListElement: [
-            { '@type': 'ListItem', position: 1, url: `${base}/insights/what-geo-means-for-local-businesses`, name: 'What GEO actually means for local businesses' },
-            { '@type': 'ListItem', position: 2, url: `${base}/insights/what-manufacturers-actually-need-from-erp-connected-tooling`, name: 'What manufacturers actually need from ERP-connected tooling' },
-            { '@type': 'ListItem', position: 3, url: `${base}/insights/erp-lite-designing-an-operational-decision-surface`, name: 'ERP Lite: Designing an operational decision surface' },
-            { '@type': 'ListItem', position: 4, url: `${base}/insights/how-structured-data-helps-ai-search-understand-your-business`, name: 'How structured data helps AI search understand your business' },
-            { '@type': 'ListItem', position: 5, url: `${base}/insights/why-a-custom-site-beats-a-booking-platform-page-for-local-search`, name: 'Why a custom site beats a booking-platform page for local search' },
-            { '@type': 'ListItem', position: 6, url: `${base}/insights/why-most-dashboards-do-not-fix-the-workflow`, name: 'Why most dashboards do not fix the workflow' },
-            { '@type': 'ListItem', position: 7, url: `${base}/insights/why-local-seo-fails-when-the-contact-path-is-vague`, name: 'Why local SEO fails when the contact path is vague' },
-            { '@type': 'ListItem', position: 8, url: `${base}/insights/what-local-service-pages-need-to-rank-and-get-cited`, name: 'What local service pages need to rank and get cited' },
-            { '@type': 'ListItem', position: 9, url: `${base}/insights/how-a-local-service-rebuild-turns-traffic-into-leads`, name: 'How a local service rebuild turns traffic into leads' },
-            { '@type': 'ListItem', position: 10, url: `${base}/insights/syteline-mobile-making-erp-access-work-on-the-floor`, name: 'SyteLine Mobile: making ERP access work on the floor' }
+            { '@type': 'ListItem', position: 1, url: `${base}/insights/why-branded-search-ownership-matters-before-local-seo-promises`, name: 'Why branded search ownership matters before local SEO promises' },
+            { '@type': 'ListItem', position: 2, url: `${base}/insights/why-google-can-find-your-page-and-still-not-index-it`, name: 'Why Google can find your page and still not index it' },
+            { '@type': 'ListItem', position: 3, url: `${base}/insights/what-geo-means-for-local-businesses`, name: 'What GEO actually means for local businesses' },
+            { '@type': 'ListItem', position: 4, url: `${base}/insights/what-manufacturers-actually-need-from-erp-connected-tooling`, name: 'What manufacturers actually need from ERP-connected tooling' },
+            { '@type': 'ListItem', position: 5, url: `${base}/insights/erp-lite-designing-an-operational-decision-surface`, name: 'ERP Lite: Designing an operational decision surface' },
+            { '@type': 'ListItem', position: 6, url: `${base}/insights/how-structured-data-helps-ai-search-understand-your-business`, name: 'How structured data helps AI search understand your business' },
+            { '@type': 'ListItem', position: 7, url: `${base}/insights/why-a-custom-site-beats-a-booking-platform-page-for-local-search`, name: 'Why a custom site beats a booking-platform page for local search' },
+            { '@type': 'ListItem', position: 8, url: `${base}/insights/why-most-dashboards-do-not-fix-the-workflow`, name: 'Why most dashboards do not fix the workflow' },
+            { '@type': 'ListItem', position: 9, url: `${base}/insights/why-local-seo-fails-when-the-contact-path-is-vague`, name: 'Why local SEO fails when the contact path is vague' },
+            { '@type': 'ListItem', position: 10, url: `${base}/insights/what-local-service-pages-need-to-rank-and-get-cited`, name: 'What local service pages need to rank and get cited' },
+            { '@type': 'ListItem', position: 11, url: `${base}/insights/how-a-local-service-rebuild-turns-traffic-into-leads`, name: 'How a local service rebuild turns traffic into leads' },
+            { '@type': 'ListItem', position: 12, url: `${base}/insights/syteline-mobile-making-erp-access-work-on-the-floor`, name: 'SyteLine Mobile: making ERP access work on the floor' }
           ]
         }
       ]

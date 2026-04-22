@@ -1,0 +1,86 @@
+<article class="article-page">
+  <div class="article-hero container">
+    <p class="label">Insight</p>
+    <h1>Why Google can find your page<br><em>and still not index it.</em></h1>
+    <p class="article-hero__sub">A plain-English look at why discovered and crawled pages still get left out of the index, and what usually matters more than hammering the request-indexing button.</p>
+    <p class="article-hero__byline">Written by <a routerLink="/about">Steven Rausch</a> from Localhouse Designs in Broken Arrow, Oklahoma.</p>
+  </div>
+
+  <div class="article-layout container">
+    <aside class="article-aside">
+      <span class="article-aside__label">Quick take</span>
+      <ul>
+        @for (item of takeaways; track item) {
+          <li>{{ item }}</li>
+        }
+      </ul>
+    </aside>
+
+    <div class="article-body">
+      <p>Seeing a page in Search Console as discovered, crawled, or even inspected successfully can create a false sense of security. A lot of people assume Google found the page, so indexing should be automatic. It is not.</p>
+
+      <p>In practice, Google is making a judgment call. It is not only asking whether the page exists. It is also asking whether the page is clear, distinct, reachable, and worth spending index space on compared with everything else already available.</p>
+
+      <h2>What “discovered” and “crawled” actually mean</h2>
+      <p>If a page is discovered but not indexed, Google usually knows the URL exists but has not committed to indexing it yet. If a page is crawled but not indexed, Google has looked at it and still has not decided it deserves a place in the index.</p>
+
+      <p>That can sound scary, but it does not always mean the page is broken. Sometimes it means the page is new. Sometimes it means the site is sending mixed signals. Sometimes it means the page just does not look important enough yet.</p>
+
+      <h2>What usually causes the problem</h2>
+      <p>There are a few common causes behind indexing friction:</p>
+
+      <ul>
+        <li>Redirect and canonical mismatches</li>
+        <li>Pages that are in the sitemap but not strongly linked internally</li>
+        <li>Thin or repetitive content</li>
+        <li>Weak differentiation from other pages on the site</li>
+        <li>Important pages buried under less important ones</li>
+      </ul>
+
+      <p>This is one reason indexing can feel confusing. It is not just a technical checklist. It is also a priority and clarity problem.</p>
+
+      <h2>Why some pages matter more than others</h2>
+      <p>Not every URL deserves the same attention. If you are trying to get a business site indexed cleanly, the first pages to fight for are usually the ones that define the business:</p>
+
+      <ul>
+        <li>Homepage</li>
+        <li>Services or products</li>
+        <li>About</li>
+        <li>Contact</li>
+        <li>The strongest support page or article hub</li>
+      </ul>
+
+      <p>If those pages are not indexed or are sending mixed signals, chasing every minor URL first is usually wasted motion.</p>
+
+      <h2>What usually helps more than repeated indexing requests</h2>
+      <p>Request indexing is useful, but it is not the strategy. The better strategy is to make the page more obviously index-worthy. That usually means:</p>
+
+      <ul>
+        <li>Aligning the canonical URL with the final live URL</li>
+        <li>Linking to the page from the homepage or other important pages</li>
+        <li>Making the page more specific and distinct</li>
+        <li>Ensuring the sitemap includes the right version of the URL</li>
+        <li>Cutting weak or duplicate pages out of the spotlight</li>
+      </ul>
+
+      <p>When that is in place, Search Console requests have a better chance of leading somewhere useful.</p>
+
+      <h2>The practical takeaway</h2>
+      <p>If Google can find a page and still will not index it, the answer is usually not panic. The answer is to make the page easier to trust, easier to prioritize, and easier to distinguish. Indexing is technical, but it is also editorial. Google is deciding whether the page earns the slot.</p>
+
+      <div class="article-related">
+        <h3>Related reading</h3>
+        <ul>
+          <li><a routerLink="/insights/why-branded-search-ownership-matters-before-local-seo-promises">Why branded search ownership matters before local SEO promises</a> - where indexing and entity clarity connect.</li>
+          <li><a routerLink="/insights/what-local-service-pages-need-to-rank-and-get-cited">What local service pages need to rank and get cited</a> - where page quality starts carrying more weight.</li>
+          <li><a routerLink="/insights/why-a-custom-site-beats-a-booking-platform-page-for-local-search">Why a custom site beats a booking-platform page for local search</a> - where site architecture gives you more control in the first place.</li>
+        </ul>
+      </div>
+
+      <div class="article-callout">
+        <h3>Need help figuring out which pages are actually worth fighting for?</h3>
+        <p>That is usually a structure, signal, and prioritization problem before it is a “publish more pages” problem. See the <a routerLink="/services">services page</a> or start through <a routerLink="/contact">contact</a>.</p>
+      </div>
+    </div>
+  </div>
+</article>

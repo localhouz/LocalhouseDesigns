@@ -14,6 +14,11 @@ export const serverRoutes: ServerRoute[] = [
   { path: 'insights/why-a-custom-site-beats-a-booking-platform-page-for-local-search', renderMode: RenderMode.Prerender },
   { path: 'insights/why-most-dashboards-do-not-fix-the-workflow', renderMode: RenderMode.Prerender },
   { path: 'insights/what-local-service-pages-need-to-rank-and-get-cited', renderMode: RenderMode.Prerender },
+  { path: 'insights/why-branded-search-ownership-matters-before-local-seo-promises', renderMode: RenderMode.Prerender },
+  { path: 'insights/why-google-can-find-your-page-and-still-not-index-it', renderMode: RenderMode.Prerender },
+  { path: 'insights/why-local-seo-fails-when-the-contact-path-is-vague', renderMode: RenderMode.Prerender },
+  { path: 'insights/how-a-local-service-rebuild-turns-traffic-into-leads', renderMode: RenderMode.Prerender },
+  { path: 'insights/syteline-mobile-making-erp-access-work-on-the-floor', renderMode: RenderMode.Prerender },
   // Lab uses Three.js + a Netlify function and stays client-only.
   { path: 'lab', renderMode: RenderMode.Client },
   { path: 'lab/erp-lite', renderMode: RenderMode.Prerender },

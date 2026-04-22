@@ -11,6 +11,8 @@ export const routes: Routes = [
   { path: 'insights/why-a-custom-site-beats-a-booking-platform-page-for-local-search', loadComponent: () => import('./pages/platform-article/platform-article').then(m => m.PlatformArticleComponent) },
   { path: 'insights/why-most-dashboards-do-not-fix-the-workflow', loadComponent: () => import('./pages/dashboard-article/dashboard-article').then(m => m.DashboardArticleComponent) },
   { path: 'insights/what-local-service-pages-need-to-rank-and-get-cited', loadComponent: () => import('./pages/service-pages-article/service-pages-article').then(m => m.ServicePagesArticleComponent) },
+  { path: 'insights/why-branded-search-ownership-matters-before-local-seo-promises', loadComponent: () => import('./pages/branded-serp-article/branded-serp-article').then(m => m.BrandedSerpArticleComponent) },
+  { path: 'insights/why-google-can-find-your-page-and-still-not-index-it', loadComponent: () => import('./pages/indexing-article/indexing-article').then(m => m.IndexingArticleComponent) },
   { path: 'insights/why-local-seo-fails-when-the-contact-path-is-vague', loadComponent: () => import('./pages/contact-path-article/contact-path-article').then(m => m.ContactPathArticleComponent) },
   { path: 'insights/how-a-local-service-rebuild-turns-traffic-into-leads', loadComponent: () => import('./pages/local-service-rebuild-article/local-service-rebuild-article').then(m => m.LocalServiceRebuildArticleComponent) },
   { path: 'insights/syteline-mobile-making-erp-access-work-on-the-floor', loadComponent: () => import('./pages/syteline-mobile-case-study/syteline-mobile-case-study').then(m => m.SytelineMobileCaseStudyComponent) },
