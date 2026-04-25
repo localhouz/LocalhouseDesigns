@@ -1,4 +1,4 @@
-<nav class="nav" [class.nav--scrolled]="scrolled()">
+<nav class="nav" [class.nav--home]="isHome()" [class.nav--scrolled]="scrolled()" [class.nav--open]="menuOpen()">
   <div class="nav__inner">
     <a routerLink="/" class="nav__logo" (click)="closeMenu()">
       <img src="lh-logo-transparent.png" alt="Localhouse Designs logo" class="nav__logo-mark">
@@ -14,7 +14,7 @@
       <li><a routerLink="/contact" routerLinkActive="active" (click)="closeMenu()" class="nav__cta">Let's Build</a></li>
     </ul>
 
-    <button class="nav__burger" (click)="toggleMenu()" [class.nav__burger--open]="menuOpen()" aria-label="Menu">
+    <button class="nav__burger" type="button" (click)="toggleMenu()" [class.nav__burger--open]="menuOpen()" [attr.aria-expanded]="menuOpen()" aria-label="Menu">
       <span></span><span></span><span></span>
     </button>
   </div>
