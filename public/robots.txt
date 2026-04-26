@@ -1,4 +1,5 @@
 User-agent: *
 Allow: /
+Disallow: /mockups/
 
 Sitemap: https://localhousedesigns.netlify.app/sitemap.xml

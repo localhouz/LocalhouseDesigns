@@ -1,0 +1,881 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Radical Family Farms — Shop</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400;1,600;1,700&family=Cormorant+SC:wght@400;600&family=Courier+Prime:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{font-size:16px;scroll-behavior:smooth;}
+
+:root{
+  --bg:     #f3ede2;
+  --surf:   #ebe4d6;
+  --surf2:  #e0d8c8;
+  --ink:    #1c1408;
+  --mid:    rgba(28,20,8,0.55);
+  --low:    rgba(28,20,8,0.28);
+  --red:    #c13b1a;
+  --green:  #384f3b;
+  --gold:   #b58a2a;
+  --border: rgba(28,20,8,0.13);
+  --bold:   rgba(28,20,8,0.35);
+  --ff-d:   'Cormorant Garamond', Georgia, serif;
+  --ff-sc:  'Cormorant SC', Georgia, serif;
+  --ff-m:   'Courier Prime', monospace;
+}
+
+body{background:var(--bg);color:var(--ink);font-family:var(--ff-d);line-height:1.6;overflow-x:hidden;-webkit-font-smoothing:antialiased;}
+a{color:inherit;text-decoration:none;}
+img{max-width:100%;display:block;object-fit:cover;}
+
+/* grain */
+body::after{content:'';position:fixed;inset:0;pointer-events:none;z-index:9000;opacity:.04;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size:180px;}
+
+/* ── ANNOUNCE ─────────────────────────── */
+.ann{background:var(--green);color:rgba(243,237,226,.85);padding:.55rem 2rem;display:flex;align-items:center;justify-content:center;gap:2rem;}
+.ann span{font-family:var(--ff-m);font-size:.6rem;letter-spacing:.2em;text-transform:uppercase;white-space:nowrap;}
+.ann em{font-style:normal;color:#fff;}
+.ann-dot{color:rgba(243,237,226,.3);font-size:.5rem;}
+
+/* ── NAV ──────────────────────────────── */
+.nav{position:sticky;top:0;z-index:200;background:var(--bg);border-bottom:1px solid var(--border);
+  display:grid;grid-template-columns:1fr auto 1fr;align-items:center;padding:0 clamp(1rem,3.5vw,3rem);height:60px;gap:1rem;}
+.nav-links{display:flex;gap:2rem;list-style:none;}
+.nav-links a{font-family:var(--ff-m);font-size:.6rem;letter-spacing:.16em;text-transform:uppercase;color:var(--mid);transition:color .15s;}
+.nav-links a:hover{color:var(--ink);}
+.nav-logo{text-align:center;}
+.nav-logo-main{font-family:var(--ff-sc);font-size:1.05rem;font-weight:600;letter-spacing:.08em;line-height:1;}
+.nav-logo-sub{font-family:var(--ff-m);font-size:.48rem;letter-spacing:.28em;text-transform:uppercase;color:var(--mid);margin-top:.2rem;}
+.nav-right{display:flex;align-items:center;justify-content:flex-end;gap:1.5rem;list-style:none;}
+.nav-right a{font-family:var(--ff-m);font-size:.6rem;letter-spacing:.16em;text-transform:uppercase;color:var(--mid);transition:color .15s;}
+.nav-right a:hover{color:var(--ink);}
+.nav-cart{display:flex;align-items:center;gap:.4rem;padding:.32rem .8rem;border:1px solid var(--bold);color:var(--ink)!important;transition:background .15s;}
+.nav-cart:hover{background:var(--ink);color:var(--bg)!important;}
+
+/* ── HERO ─────────────────────────────── */
+.hero{display:grid;grid-template-columns:1fr 1fr;min-height:72vh;border-bottom:1px solid var(--border);overflow:hidden;}
+.hero-photo{position:relative;overflow:hidden;}
+.hero-photo img{width:100%;height:100%;object-fit:cover;display:block;}
+.hero-photo-overlay{position:absolute;inset:0;background:linear-gradient(to right,rgba(28,20,8,.55) 0%,rgba(28,20,8,.1) 60%);}
+.hero-photo-tag{position:absolute;top:1.5rem;left:1.5rem;font-family:var(--ff-m);font-size:.55rem;letter-spacing:.2em;text-transform:uppercase;
+  background:rgba(28,20,8,.6);color:rgba(243,237,226,.75);padding:.3rem .7rem;backdrop-filter:blur(4px);}
+.hero-shop{display:flex;flex-direction:column;justify-content:space-between;padding:clamp(2rem,5vw,4rem) clamp(1.5rem,4vw,3rem);background:var(--surf);border-left:1px solid var(--border);}
+.hero-shop-top{}
+.hero-label{font-family:var(--ff-m);font-size:.6rem;letter-spacing:.2em;text-transform:uppercase;color:var(--red);display:flex;align-items:center;gap:.6rem;margin-bottom:1.5rem;}
+.hero-label::before{content:'';width:1.25rem;height:1px;background:var(--red);flex-shrink:0;}
+.hero-h1{font-family:var(--ff-d);font-size:clamp(2.5rem,5vw,4.5rem);font-weight:300;line-height:.95;letter-spacing:-.02em;margin-bottom:.75rem;}
+.hero-h1 em{display:block;font-style:italic;font-weight:700;color:var(--red);}
+.hero-sub{font-family:var(--ff-m);font-size:.65rem;letter-spacing:.12em;text-transform:uppercase;color:var(--mid);line-height:1.7;margin-bottom:2rem;}
+
+/* featured product card inside hero */
+.hero-product{background:var(--bg);border:1px solid var(--border);margin-bottom:2rem;}
+.hero-product-img{aspect-ratio:4/3;overflow:hidden;border-bottom:1px solid var(--border);}
+.hero-product-img img{width:100%;height:100%;}
+.hero-product-body{padding:1.25rem 1.5rem;}
+.hero-product-cat{font-family:var(--ff-m);font-size:.55rem;letter-spacing:.18em;text-transform:uppercase;color:var(--mid);margin-bottom:.4rem;}
+.hero-product-name{font-family:var(--ff-d);font-size:1.35rem;font-weight:600;line-height:1.15;margin-bottom:.5rem;}
+.hero-product-desc{font-family:var(--ff-m);font-size:.6rem;letter-spacing:.06em;color:var(--mid);line-height:1.65;margin-bottom:1.25rem;}
+.hero-product-footer{display:flex;align-items:center;justify-content:space-between;}
+.hero-product-price{font-family:var(--ff-d);font-size:1.75rem;font-weight:700;}
+.btn-atc{font-family:var(--ff-m);font-size:.6rem;letter-spacing:.16em;text-transform:uppercase;padding:.55rem 1.25rem;background:var(--ink);color:var(--bg);border:none;cursor:pointer;transition:background .15s;}
+.btn-atc:hover{background:var(--red);}
+
+.hero-shop-bottom{border-top:1px solid var(--border);padding-top:1.5rem;display:flex;gap:2.5rem;}
+.hero-stat strong{display:block;font-family:var(--ff-d);font-size:1.3rem;font-weight:600;line-height:1;}
+.hero-stat span{font-family:var(--ff-m);font-size:.52rem;letter-spacing:.14em;text-transform:uppercase;color:var(--mid);}
+
+/* ── MARQUEE ──────────────────────────── */
+.mq{background:var(--surf);border-bottom:1px solid var(--border);overflow:hidden;}
+.mq-track{display:flex;animation:mq 30s linear infinite;white-space:nowrap;}
+@keyframes mq{from{transform:translateX(0);}to{transform:translateX(-50%);}}
+.mq-item{display:inline-flex;align-items:center;gap:.6rem;padding:.7rem 1.75rem;border-right:1px solid var(--border);
+  font-family:var(--ff-m);font-size:.58rem;letter-spacing:.18em;text-transform:uppercase;color:var(--mid);flex-shrink:0;}
+.mq-item::after{content:'✦';color:var(--red);font-size:.4rem;}
+
+/* ── COLLECTION PILLS ─────────────────── */
+.collection-nav{padding:1.25rem clamp(1rem,3.5vw,3rem);display:flex;gap:.5rem;align-items:center;border-bottom:1px solid var(--border);flex-wrap:wrap;}
+.collection-nav-label{font-family:var(--ff-m);font-size:.55rem;letter-spacing:.2em;text-transform:uppercase;color:var(--low);margin-right:.75rem;}
+.pill{font-family:var(--ff-m);font-size:.58rem;letter-spacing:.14em;text-transform:uppercase;padding:.38rem .9rem;border:1px solid var(--border);color:var(--mid);cursor:pointer;transition:all .15s;}
+.pill:hover,.pill.active{background:var(--ink);border-color:var(--ink);color:var(--bg);}
+.pill.active{color:var(--bg);}
+
+/* ── PRODUCT GRID ─────────────────────── */
+.shop{padding:clamp(2.5rem,5vw,4rem) clamp(1rem,3.5vw,3rem);}
+.shop-header{display:flex;align-items:baseline;justify-content:space-between;margin-bottom:2rem;}
+.shop-title{font-family:var(--ff-d);font-size:clamp(1.5rem,3vw,2.25rem);font-weight:300;letter-spacing:-.01em;}
+.shop-title em{font-style:italic;font-weight:600;}
+.shop-count{font-family:var(--ff-m);font-size:.58rem;letter-spacing:.14em;text-transform:uppercase;color:var(--mid);}
+.shop-sort{font-family:var(--ff-m);font-size:.58rem;letter-spacing:.14em;text-transform:uppercase;color:var(--mid);background:none;border:1px solid var(--border);padding:.38rem .75rem;cursor:pointer;}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--border);}
+.card{background:var(--bg);display:flex;flex-direction:column;cursor:pointer;transition:background .15s;}
+.card:hover{background:var(--surf);}
+.card:hover .card-img img{transform:scale(1.03);}
+.card:hover .card-quick{opacity:1;transform:translateY(0);}
+.card-img{aspect-ratio:1/1;overflow:hidden;position:relative;background:var(--surf2);}
+.card-img img{width:100%;height:100%;object-fit:cover;transition:transform .4s ease;}
+.card-badge{position:absolute;top:.85rem;left:.85rem;font-family:var(--ff-m);font-size:.5rem;letter-spacing:.16em;text-transform:uppercase;padding:.28rem .6rem;background:var(--ink);color:var(--bg);z-index:1;}
+.card-badge.red{background:var(--red);}
+.card-badge.green{background:var(--green);}
+.card-quick{position:absolute;bottom:0;left:0;right:0;padding:.85rem 1rem;background:var(--ink);color:var(--bg);
+  font-family:var(--ff-m);font-size:.58rem;letter-spacing:.16em;text-transform:uppercase;text-align:center;
+  opacity:0;transform:translateY(8px);transition:opacity .2s,transform .2s;}
+.card-body{padding:1.25rem 1.25rem .85rem;}
+.card-cat{font-family:var(--ff-m);font-size:.52rem;letter-spacing:.18em;text-transform:uppercase;color:var(--mid);margin-bottom:.35rem;}
+.card-name{font-family:var(--ff-d);font-size:1.2rem;font-weight:600;line-height:1.15;letter-spacing:-.01em;}
+.card-foot{display:flex;align-items:center;justify-content:space-between;padding:.85rem 1.25rem;border-top:1px solid var(--border);}
+.card-price{font-family:var(--ff-d);font-size:1.35rem;font-weight:700;}
+.card-price-note{font-family:var(--ff-m);font-size:.5rem;letter-spacing:.1em;text-transform:uppercase;color:var(--mid);}
+.card-add{font-family:var(--ff-m);font-size:.52rem;letter-spacing:.14em;text-transform:uppercase;padding:.38rem .85rem;border:1px solid var(--bold);color:var(--ink);background:none;cursor:pointer;transition:all .15s;}
+.card-add:hover{background:var(--ink);color:var(--bg);border-color:var(--ink);}
+.card-stars{display:flex;align-items:center;gap:.4rem;margin-top:.5rem;}
+.stars{color:var(--gold);font-size:.75rem;letter-spacing:.05em;}
+.card-review-count{font-family:var(--ff-m);font-size:.5rem;letter-spacing:.1em;text-transform:uppercase;color:var(--mid);}
+.card-social{display:inline-flex;align-items:center;gap:.35rem;font-family:var(--ff-m);font-size:.5rem;letter-spacing:.12em;text-transform:uppercase;
+  padding:.25rem .6rem;background:rgba(56,79,59,.12);color:var(--green);border:1px solid rgba(56,79,59,.25);margin-top:.4rem;}
+.card-social::before{content:'●';font-size:.4rem;color:var(--green);}
+
+/* ── FEATURED PRODUCT ─────────────────── */
+.feature{display:grid;grid-template-columns:1fr 1fr;min-height:60vh;border-top:1px solid var(--border);border-bottom:1px solid var(--border);margin-top:clamp(2.5rem,5vw,4rem);}
+.feature-photo{position:relative;overflow:hidden;background:var(--surf2);}
+.feature-photo img{width:100%;height:100%;object-fit:cover;}
+.feature-photo-caption{position:absolute;bottom:1rem;left:1rem;font-family:var(--ff-m);font-size:.52rem;letter-spacing:.14em;text-transform:uppercase;
+  color:rgba(243,237,226,.6);background:rgba(28,20,8,.5);padding:.28rem .65rem;backdrop-filter:blur(4px);}
+.feature-info{padding:clamp(2.5rem,5vw,4.5rem) clamp(1.5rem,4vw,3.5rem);background:var(--surf);display:flex;flex-direction:column;justify-content:center;border-left:1px solid var(--border);}
+.feature-label{font-family:var(--ff-m);font-size:.58rem;letter-spacing:.22em;text-transform:uppercase;color:var(--red);display:flex;align-items:center;gap:.6rem;margin-bottom:1.5rem;}
+.feature-label::before{content:'';width:1.25rem;height:1px;background:var(--red);flex-shrink:0;}
+.feature-name{font-family:var(--ff-d);font-size:clamp(2rem,4.5vw,3.75rem);font-weight:300;line-height:.97;letter-spacing:-.02em;margin-bottom:.5rem;}
+.feature-name em{display:block;font-style:italic;font-weight:700;}
+.feature-tagline{font-family:var(--ff-m);font-size:.62rem;letter-spacing:.14em;text-transform:uppercase;color:var(--mid);margin-bottom:1.75rem;line-height:1.65;}
+.feature-price-row{display:flex;align-items:baseline;gap:1rem;margin-bottom:.75rem;}
+.feature-price{font-family:var(--ff-d);font-size:2.25rem;font-weight:700;}
+.feature-price-note{font-family:var(--ff-m);font-size:.55rem;letter-spacing:.14em;text-transform:uppercase;color:var(--mid);}
+.feature-divider{height:1px;background:var(--border);margin:1.5rem 0;}
+.feature-story{font-family:var(--ff-d);font-style:italic;font-size:1.05rem;line-height:1.7;color:var(--mid);margin-bottom:2rem;}
+.feature-actions{display:flex;gap:.75rem;flex-wrap:wrap;margin-bottom:2rem;}
+.btn-primary{font-family:var(--ff-m);font-size:.62rem;letter-spacing:.16em;text-transform:uppercase;padding:.75rem 2rem;background:var(--ink);color:var(--bg);border:none;cursor:pointer;transition:background .15s;}
+.btn-primary:hover{background:var(--red);}
+.btn-secondary{font-family:var(--ff-m);font-size:.62rem;letter-spacing:.16em;text-transform:uppercase;padding:.75rem 1.5rem;background:none;color:var(--ink);border:1px solid var(--bold);cursor:pointer;transition:all .15s;}
+.btn-secondary:hover{background:var(--ink);color:var(--bg);}
+.feature-trust{display:flex;gap:.5rem;flex-wrap:wrap;}
+.trust-tag{font-family:var(--ff-m);font-size:.52rem;letter-spacing:.12em;text-transform:uppercase;padding:.3rem .7rem;border:1px solid var(--border);color:var(--low);}
+.trust-tag.g{border-color:var(--green);color:var(--green);}
+
+/* ── STICKY ATC ───────────────────────── */
+.sticky-atc{position:fixed;bottom:0;left:0;right:0;z-index:300;background:var(--ink);color:var(--bg);
+  display:flex;align-items:center;justify-content:space-between;padding:.85rem clamp(1rem,3.5vw,3rem);
+  transform:translateY(100%);transition:transform .3s ease;border-top:1px solid rgba(243,237,226,.1);}
+.sticky-atc.visible{transform:translateY(0);}
+.sticky-atc-name{font-family:var(--ff-d);font-size:1.05rem;font-weight:600;}
+.sticky-atc-note{font-family:var(--ff-m);font-size:.52rem;letter-spacing:.14em;text-transform:uppercase;color:rgba(243,237,226,.5);margin-top:.15rem;}
+.sticky-atc-right{display:flex;align-items:center;gap:1.25rem;}
+.sticky-atc-price{font-family:var(--ff-d);font-size:1.35rem;font-weight:700;}
+.sticky-atc-btn{font-family:var(--ff-m);font-size:.6rem;letter-spacing:.16em;text-transform:uppercase;padding:.65rem 1.75rem;background:var(--red);color:#fff;border:none;cursor:pointer;transition:background .15s;white-space:nowrap;}
+.sticky-atc-btn:hover{background:#a52e13;}
+
+/* ── QTY SELECTOR ─────────────────────── */
+.qty-row{display:flex;align-items:center;gap:.75rem;margin-bottom:1.25rem;}
+.qty-label{font-family:var(--ff-m);font-size:.55rem;letter-spacing:.16em;text-transform:uppercase;color:var(--mid);}
+.qty{display:flex;align-items:center;border:1px solid var(--bold);}
+.qty-btn{width:32px;height:32px;display:flex;align-items:center;justify-content:center;background:none;border:none;cursor:pointer;font-family:var(--ff-m);font-size:1rem;color:var(--ink);transition:background .15s;}
+.qty-btn:hover{background:var(--surf2);}
+.qty-val{width:36px;text-align:center;font-family:var(--ff-m);font-size:.75rem;border-left:1px solid var(--border);border-right:1px solid var(--border);height:32px;line-height:32px;}
+
+/* ── TESTIMONIALS ─────────────────────── */
+.testi{background:var(--surf);border-top:1px solid var(--border);border-bottom:1px solid var(--border);}
+.testi-inner{max-width:1400px;margin:0 auto;padding:clamp(3rem,6vw,5rem) clamp(1rem,3.5vw,3rem);}
+.testi-header{display:flex;align-items:baseline;justify-content:space-between;margin-bottom:2.5rem;}
+.testi-label{font-family:var(--ff-m);font-size:.58rem;letter-spacing:.22em;text-transform:uppercase;color:var(--red);display:flex;align-items:center;gap:.6rem;}
+.testi-label::before{content:'';width:1.25rem;height:1px;background:var(--red);flex-shrink:0;}
+.testi-avg{font-family:var(--ff-d);font-size:.95rem;color:var(--mid);}
+.testi-avg strong{color:var(--ink);font-weight:700;}
+.testi-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--border);}
+.testi-card{background:var(--bg);padding:2rem 1.75rem;}
+.testi-stars{color:var(--gold);font-size:.85rem;margin-bottom:1rem;}
+.testi-quote{font-family:var(--ff-d);font-style:italic;font-size:1.05rem;line-height:1.65;color:var(--ink);margin-bottom:1.25rem;}
+.testi-author{font-family:var(--ff-m);font-size:.55rem;letter-spacing:.16em;text-transform:uppercase;color:var(--mid);}
+.testi-product{font-family:var(--ff-m);font-size:.52rem;letter-spacing:.12em;text-transform:uppercase;color:var(--low);margin-top:.25rem;}
+
+/* ── EMAIL CAPTURE ────────────────────── */
+.email-capture{background:var(--ink);color:var(--bg);}
+.email-inner{max-width:1400px;margin:0 auto;padding:clamp(3rem,6vw,5rem) clamp(1rem,3.5vw,3rem);
+  display:grid;grid-template-columns:1fr 1fr;gap:clamp(2rem,5vw,5rem);align-items:center;}
+.email-heading{font-family:var(--ff-d);font-size:clamp(2rem,4vw,3.25rem);font-weight:300;line-height:.97;letter-spacing:-.02em;margin-bottom:.75rem;}
+.email-heading em{font-style:italic;font-weight:700;color:var(--gold);}
+.email-sub{font-family:var(--ff-d);font-style:italic;font-size:1rem;line-height:1.75;color:rgba(243,237,226,.5);margin-bottom:1.5rem;}
+.email-perks{display:flex;flex-wrap:wrap;gap:.4rem;}
+.email-perk{font-family:var(--ff-m);font-size:.52rem;letter-spacing:.12em;text-transform:uppercase;padding:.28rem .65rem;border:1px solid rgba(243,237,226,.18);color:rgba(243,237,226,.5);}
+.email-form{display:flex;flex-direction:column;gap:.75rem;}
+.email-field{display:flex;gap:0;}
+.email-input{flex:1;padding:.75rem 1rem;font-family:var(--ff-m);font-size:.65rem;letter-spacing:.1em;
+  background:rgba(243,237,226,.08);border:1px solid rgba(243,237,226,.2);border-right:none;color:var(--bg);outline:none;}
+.email-input::placeholder{color:rgba(243,237,226,.35);}
+.email-input:focus{border-color:rgba(243,237,226,.45);}
+.email-submit{font-family:var(--ff-m);font-size:.6rem;letter-spacing:.16em;text-transform:uppercase;padding:.75rem 1.5rem;
+  background:var(--gold);color:var(--ink);border:none;cursor:pointer;transition:background .15s;white-space:nowrap;font-weight:700;}
+.email-submit:hover{background:#9a7220;}
+.email-note{font-family:var(--ff-m);font-size:.52rem;letter-spacing:.1em;text-transform:uppercase;color:rgba(243,237,226,.28);}
+
+/* ── SCROLL REVEAL ────────────────────── */
+.reveal{opacity:0;transform:translateY(22px);transition:opacity .6s ease,transform .6s ease;}
+.reveal.in{opacity:1;transform:translateY(0);}
+.reveal-delay-1{transition-delay:.1s;}
+.reveal-delay-2{transition-delay:.2s;}
+.reveal-delay-3{transition-delay:.3s;}
+
+/* ── CSA ──────────────────────────────── */
+.csa{border-top:1px solid var(--border);}
+.csa-banner{display:grid;grid-template-columns:1fr 1fr;min-height:45vh;}
+.csa-photo{position:relative;overflow:hidden;}
+.csa-photo img{width:100%;height:100%;object-fit:cover;}
+.csa-photo::after{content:'';position:absolute;inset:0;background:linear-gradient(to right,rgba(28,20,8,0) 50%,var(--bg) 100%);}
+.csa-content{padding:clamp(2.5rem,5vw,4.5rem) clamp(1.5rem,4vw,3rem);display:flex;flex-direction:column;justify-content:center;}
+.csa-label{font-family:var(--ff-m);font-size:.58rem;letter-spacing:.22em;text-transform:uppercase;color:var(--green);display:flex;align-items:center;gap:.6rem;margin-bottom:1.25rem;}
+.csa-label::before{content:'';width:1.25rem;height:1px;background:var(--green);flex-shrink:0;}
+.csa-h2{font-family:var(--ff-d);font-size:clamp(2rem,4vw,3.25rem);font-weight:300;line-height:.97;letter-spacing:-.02em;margin-bottom:1.25rem;}
+.csa-h2 em{font-style:italic;font-weight:700;}
+.csa-sub{font-family:var(--ff-m);font-size:.6rem;letter-spacing:.1em;color:var(--mid);line-height:1.7;margin-bottom:2rem;max-width:42ch;}
+.csa-plans{display:flex;flex-direction:column;gap:1px;background:var(--border);border:1px solid var(--border);margin-bottom:1.25rem;}
+.csa-plan{display:flex;align-items:center;justify-content:space-between;padding:1rem 1.25rem;background:var(--bg);transition:background .15s;cursor:pointer;gap:1rem;}
+.csa-plan:hover,.csa-plan.feat{background:var(--ink);color:var(--bg);}
+.csa-plan.feat .csa-plan-freq{color:rgba(243,237,226,.5);}
+.csa-plan-left{}
+.csa-plan-name{font-family:var(--ff-d);font-size:1.1rem;font-weight:600;line-height:1.1;}
+.csa-plan-freq{font-family:var(--ff-m);font-size:.52rem;letter-spacing:.14em;text-transform:uppercase;color:var(--mid);margin-top:.2rem;}
+.csa-plan-price{font-family:var(--ff-d);font-size:1.3rem;font-weight:700;white-space:nowrap;}
+.csa-note{font-family:var(--ff-m);font-size:.54rem;letter-spacing:.12em;text-transform:uppercase;color:var(--low);}
+
+/* ── CSA PHOTO STRIP ──────────────────── */
+.box-strip{display:grid;grid-template-columns:repeat(4,1fr);border-top:1px solid var(--border);height:260px;gap:1px;background:var(--border);}
+.box-strip-item{overflow:hidden;position:relative;}
+.box-strip-item img{width:100%;height:100%;object-fit:cover;transition:transform .4s ease;}
+.box-strip-item:hover img{transform:scale(1.06);}
+.box-strip-label{position:absolute;bottom:.75rem;left:.75rem;font-family:var(--ff-m);font-size:.5rem;letter-spacing:.14em;
+  text-transform:uppercase;color:rgba(243,237,226,.7);background:rgba(28,20,8,.5);padding:.25rem .6rem;backdrop-filter:blur(4px);}
+
+/* ── STORY STRIP ──────────────────────── */
+.story-strip{display:grid;grid-template-columns:1fr 1fr;border-top:1px solid var(--border);}
+.story-photo{position:relative;overflow:hidden;min-height:420px;}
+.story-photo img{width:100%;height:100%;object-fit:cover;}
+.story-photo-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(28,20,8,.75) 0%,rgba(28,20,8,0) 55%);}
+.story-photo-text{position:absolute;bottom:2rem;left:2rem;right:2rem;}
+.story-photo-quote{font-family:var(--ff-d);font-style:italic;font-size:1.35rem;font-weight:400;line-height:1.35;color:rgba(243,237,226,.9);margin-bottom:.5rem;}
+.story-photo-cite{font-family:var(--ff-m);font-size:.52rem;letter-spacing:.16em;text-transform:uppercase;color:rgba(243,237,226,.5);}
+.story-content{background:var(--surf);padding:clamp(2.5rem,5vw,4.5rem) clamp(1.5rem,4vw,3rem);display:flex;flex-direction:column;justify-content:center;border-left:1px solid var(--border);}
+.story-label{font-family:var(--ff-m);font-size:.58rem;letter-spacing:.22em;text-transform:uppercase;color:var(--red);display:flex;align-items:center;gap:.6rem;margin-bottom:1.25rem;}
+.story-label::before{content:'';width:1.25rem;height:1px;background:var(--red);flex-shrink:0;}
+.story-h2{font-family:var(--ff-d);font-size:clamp(1.75rem,3.5vw,2.75rem);font-weight:600;line-height:1.05;letter-spacing:-.02em;margin-bottom:1.25rem;}
+.story-body{font-family:var(--ff-d);font-size:1rem;line-height:1.85;color:var(--mid);margin-bottom:2rem;}
+.story-body p+p{margin-top:.85rem;}
+.story-creds{display:flex;flex-wrap:wrap;gap:.4rem;margin-bottom:2rem;}
+.tag{font-family:var(--ff-m);font-size:.5rem;letter-spacing:.14em;text-transform:uppercase;padding:.3rem .7rem;border:1px solid var(--border);color:var(--low);}
+.tag.g{border-color:var(--green);color:var(--green);}
+.btn-link{font-family:var(--ff-m);font-size:.6rem;letter-spacing:.16em;text-transform:uppercase;padding:.65rem 1.5rem;border:1px solid var(--bold);color:var(--ink);display:inline-block;transition:all .15s;}
+.btn-link:hover{background:var(--ink);color:var(--bg);}
+
+/* ── PRESS ────────────────────────────── */
+.press{border-top:1px solid var(--border);padding:1.75rem clamp(1rem,3.5vw,3rem);display:flex;align-items:center;gap:2.5rem;overflow-x:auto;-webkit-overflow-scrolling:touch;}
+.press-label{font-family:var(--ff-m);font-size:.55rem;letter-spacing:.2em;text-transform:uppercase;color:var(--low);flex-shrink:0;}
+.press-list{display:flex;gap:2.5rem;align-items:center;flex-shrink:0;}
+.press-item{font-family:var(--ff-d);font-style:italic;font-size:1.1rem;font-weight:600;color:var(--low);white-space:nowrap;transition:color .15s;cursor:default;}
+.press-item:hover{color:var(--mid);}
+
+/* ── FOOTER ───────────────────────────── */
+.foot{background:var(--ink);color:var(--bg);}
+.foot-inner{max-width:1400px;margin:0 auto;padding:clamp(3rem,5vw,5rem) clamp(1rem,3.5vw,3rem);display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:3rem;}
+.foot-brand-name{font-family:var(--ff-sc);font-size:1.15rem;font-weight:600;letter-spacing:.06em;margin-bottom:.65rem;}
+.foot-brand-name span{color:var(--red);}
+.foot-tagline{font-family:var(--ff-d);font-style:italic;font-size:.9rem;color:rgba(243,237,226,.45);line-height:1.75;max-width:26ch;margin-bottom:1.25rem;}
+.foot-socials{display:flex;gap:.4rem;flex-wrap:wrap;}
+.foot-social{font-family:var(--ff-m);font-size:.55rem;letter-spacing:.14em;text-transform:uppercase;padding:.3rem .7rem;border:1px solid rgba(243,237,226,.18);color:rgba(243,237,226,.45);transition:all .15s;}
+.foot-social:hover{color:var(--bg);border-color:rgba(243,237,226,.45);}
+.foot-col-label{font-family:var(--ff-m);font-size:.55rem;letter-spacing:.2em;text-transform:uppercase;color:rgba(243,237,226,.3);margin-bottom:1rem;}
+.foot-links{list-style:none;display:flex;flex-direction:column;gap:.6rem;}
+.foot-links a{font-family:var(--ff-d);font-size:.95rem;color:rgba(243,237,226,.5);transition:color .15s;}
+.foot-links a:hover{color:var(--bg);}
+.foot-bottom{border-top:1px solid rgba(243,237,226,.1);}
+.foot-bottom-inner{max-width:1400px;margin:0 auto;padding:1.1rem clamp(1rem,3.5vw,3rem);display:flex;align-items:center;justify-content:space-between;gap:1rem;}
+.foot-copy{font-family:var(--ff-m);font-size:.54rem;letter-spacing:.1em;text-transform:uppercase;color:rgba(243,237,226,.25);}
+.foot-cert{font-family:var(--ff-m);font-size:.54rem;letter-spacing:.12em;text-transform:uppercase;color:var(--green);}
+
+/* ── BADGE ────────────────────────────── */
+.design-badge{position:fixed;bottom:1rem;right:1rem;z-index:9001;background:var(--red);color:#fff;font-family:var(--ff-m);font-size:.52rem;letter-spacing:.16em;text-transform:uppercase;padding:.35rem .8rem;}
+
+/* ── RESPONSIVE ───────────────────────── */
+@media(max-width:900px){
+  .hero{grid-template-columns:1fr;}
+  .hero-photo{min-height:45vw;}
+  .feature{grid-template-columns:1fr;}
+  .csa-banner{grid-template-columns:1fr;}
+  .csa-photo{min-height:40vw;}
+  .story-strip{grid-template-columns:1fr;}
+  .story-photo{min-height:60vw;}
+  .grid{grid-template-columns:repeat(2,1fr);}
+  .box-strip{grid-template-columns:repeat(2,1fr);}
+  .foot-inner{grid-template-columns:1fr 1fr;}
+  .nav{grid-template-columns:auto 1fr auto;}
+  .nav-links li:not(:first-child):not(:last-child){display:none;}
+  .testi-grid{grid-template-columns:1fr;}
+  .email-inner{grid-template-columns:1fr;}
+  .sticky-atc-note{display:none;}
+}
+@media(max-width:560px){
+  .grid{grid-template-columns:1fr;}
+  .box-strip{grid-template-columns:repeat(2,1fr);}
+  .nav-links{display:none;}
+  .foot-inner{grid-template-columns:1fr;}
+}
+</style>
+</head>
+<body>
+
+<!-- ANNOUNCE -->
+<div class="ann">
+  <span>Free shipping on orders over <em>$65</em></span>
+  <span class="ann-dot">✦</span>
+  <span>Sundays at <em>Sebastopol Farmers Market</em> · 10am – 1:30pm</span>
+  <span class="ann-dot">✦</span>
+  <span>CSA waitlist open for <em>Summer 2025</em></span>
+</div>
+
+<!-- NAV -->
+<nav class="nav">
+  <ul class="nav-links">
+    <li><a href="#">Shop</a></li>
+    <li><a href="#">CSA</a></li>
+    <li><a href="#">The Farm</a></li>
+    <li><a href="#">Press</a></li>
+  </ul>
+  <div class="nav-logo">
+    <div class="nav-logo-main">Radical Family Farms</div>
+    <div class="nav-logo-sub">Certified Organic · Sebastopol, CA</div>
+  </div>
+  <ul class="nav-right">
+    <li><a href="#">Account</a></li>
+    <li><a href="#">Search</a></li>
+    <li><a href="#" class="nav-cart">Cart (0)</a></li>
+  </ul>
+</nav>
+
+<!-- STICKY ATC (appears when scrolled past featured product) -->
+<div class="sticky-atc" id="sticky-atc">
+  <div>
+    <div class="sticky-atc-name">Pó Pó's Malà Hot Sauce — 3-Pack</div>
+    <div class="sticky-atc-note">★★★★★ 47 reviews · Farm-grown · Small batch</div>
+  </div>
+  <div class="sticky-atc-right">
+    <div class="sticky-atc-price">$39</div>
+    <button class="sticky-atc-btn">Add to Cart</button>
+  </div>
+</div>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-photo">
+    <img src="https://images.squarespace-cdn.com/content/v1/5b9a74685cfd798a41d7a36e/1603304931067-FE9TYC8PU7ZK95BAAO7A/RadicalFamilyFarms2020._0001.jpg?format=2500w"
+         alt="Radical Family Farms field" loading="eager">
+    <div class="hero-photo-overlay"></div>
+    <div class="hero-photo-tag">Sebastopol, CA · Certified Organic</div>
+  </div>
+  <div class="hero-shop">
+    <div class="hero-shop-top">
+      <div class="hero-label">Now available</div>
+      <h1 class="hero-h1">Pó Pó's<br><em>Pantry.</em></h1>
+      <p class="hero-sub">Heritage flavors, farm-grown and finished by hand.</p>
+      <div class="hero-product">
+        <div class="hero-product-img">
+          <img src="https://images.squarespace-cdn.com/content/v1/5b9a74685cfd798a41d7a36e/cdf8c345-392f-48cd-9295-29af231eb1d2/IMG_6034%252B2.png?format=1000w"
+               alt="Pó Pó's Malà Hot Sauce 3-Pack" loading="eager">
+        </div>
+        <div class="hero-product-body">
+          <div class="hero-product-cat">Hot Sauce · Gift Set · Bestseller</div>
+          <div class="hero-product-name">Pó Pó's Malà Hot Sauce — 3-Pack</div>
+          <div class="hero-product-desc">Numbing Sichuan peppercorn meets Sonoma-grown chilies. A grandmother's recipe, bottled.</div>
+          <div class="hero-product-footer">
+            <div class="hero-product-price">$39</div>
+            <button class="btn-atc">Add to Cart</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="hero-shop-bottom">
+      <div class="hero-stat"><strong>100%</strong><span>Certified Organic</span></div>
+      <div class="hero-stat"><strong>No-Till</strong><span>Regenerative</span></div>
+      <div class="hero-stat"><strong>NON-GMO</strong><span>No-Spray</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- MARQUEE -->
+<div class="mq" aria-hidden="true">
+  <div class="mq-track">
+    <div class="mq-item">Chrysanthemum Greens</div><div class="mq-item">Bitter Melon</div><div class="mq-item">Shiso</div>
+    <div class="mq-item">Yu Choy</div><div class="mq-item">Malà Chilies</div><div class="mq-item">Lemongrass</div>
+    <div class="mq-item">Edamame</div><div class="mq-item">Thai Basil</div><div class="mq-item">Garlic Chives</div>
+    <div class="mq-item">Winter Melon</div><div class="mq-item">Chrysanthemum Greens</div><div class="mq-item">Bitter Melon</div>
+    <div class="mq-item">Shiso</div><div class="mq-item">Yu Choy</div><div class="mq-item">Malà Chilies</div>
+    <div class="mq-item">Lemongrass</div><div class="mq-item">Edamame</div><div class="mq-item">Thai Basil</div>
+    <div class="mq-item">Garlic Chives</div><div class="mq-item">Winter Melon</div>
+  </div>
+</div>
+
+<!-- COLLECTION PILLS -->
+<div class="collection-nav">
+  <span class="collection-nav-label">Browse:</span>
+  <button class="pill active">All Products</button>
+  <button class="pill">Pó Pó's Pantry</button>
+  <button class="pill">CSA Boxes</button>
+  <button class="pill">Dried Goods</button>
+  <button class="pill">Gift Sets</button>
+</div>
+
+<!-- PRODUCT GRID -->
+<section class="shop">
+  <div class="shop-header">
+    <div>
+      <h2 class="shop-title">Shop <em>the farm.</em></h2>
+    </div>
+    <div style="display:flex;align-items:center;gap:1rem;">
+      <span class="shop-count">6 products</span>
+      <select class="shop-sort"><option>Sort: Featured</option><option>Price: Low–High</option><option>Newest</option></select>
+    </div>
+  </div>
+
+  <div class="grid">
+
+    <!-- Product 1 -->
+    <div class="card">
+      <div class="card-img">
+        <img src="https://images.squarespace-cdn.com/content/v1/5b9a74685cfd798a41d7a36e/cdf8c345-392f-48cd-9295-29af231eb1d2/IMG_6034%252B2.png?format=800w"
+             alt="Pó Pó's Malà Hot Sauce 3-Pack" loading="lazy">
+        <div class="card-badge red">Bestseller</div>
+        <div class="card-quick">Quick Add to Cart</div>
+      </div>
+      <div class="card-body">
+        <div class="card-cat">Hot Sauce · Gift Set</div>
+        <div class="card-name">Pó Pó's Malà Hot Sauce — 3-Pack</div>
+        <div class="card-stars">
+          <span class="stars">★★★★★</span>
+          <span class="card-review-count">47 reviews</span>
+        </div>
+        <div class="card-social">14 sold this week</div>
+      </div>
+      <div class="card-foot">
+        <div>
+          <div class="card-price">$39</div>
+        </div>
+        <button class="card-add">Add to Cart</button>
+      </div>
+    </div>
+
+    <!-- Product 2 -->
+    <div class="card">
+      <div class="card-img">
+        <img src="https://images.squarespace-cdn.com/content/v1/5b9a74685cfd798a41d7a36e/ab845bda-4c81-4754-81ae-86ec09530680/464933667_10228610750108431_1599072205175666808_n.jpg?format=800w"
+             alt="Dried Chrysanthemum Tea" loading="lazy">
+        <div class="card-badge">New</div>
+        <div class="card-quick">Quick Add to Cart</div>
+      </div>
+      <div class="card-body">
+        <div class="card-cat">Herbal · Dried Goods</div>
+        <div class="card-name">Dried Chrysanthemum Tea</div>
+        <div class="card-stars">
+          <span class="stars">★★★★★</span>
+          <span class="card-review-count">18 reviews</span>
+        </div>
+      </div>
+      <div class="card-foot">
+        <div>
+          <div class="card-price">$12</div>
+        </div>
+        <button class="card-add">Add to Cart</button>
+      </div>
+    </div>
+
+    <!-- Product 3 -->
+    <div class="card">
+      <div class="card-img">
+        <img src="https://images.squarespace-cdn.com/content/v1/5b9a74685cfd798a41d7a36e/b88be954-20fd-46e4-8f51-4713a85fbd0e/IMG_3864%2B2.jpg?format=800w"
+             alt="Heirloom Dried Chili Pepper Set" loading="lazy">
+        <div class="card-quick">Quick Add to Cart</div>
+      </div>
+      <div class="card-body">
+        <div class="card-cat">Dried Goods · Set of 3</div>
+        <div class="card-name">Heirloom Dried Chili Pepper Set</div>
+        <div class="card-stars">
+          <span class="stars">★★★★☆</span>
+          <span class="card-review-count">9 reviews</span>
+        </div>
+        <div class="card-social" style="background:rgba(193,59,26,.08);color:var(--red);border-color:rgba(193,59,26,.25);">Only 6 left</div>
+      </div>
+      <div class="card-foot">
+        <div>
+          <div class="card-price">$40</div>
+        </div>
+        <button class="card-add">Add to Cart</button>
+      </div>
+    </div>
+
+    <!-- Product 4: CSA -->
+    <div class="card">
+      <div class="card-img">
+        <img src="https://images.squarespace-cdn.com/content/v1/5b9a74685cfd798a41d7a36e/1635111127908-VSV95T4U8M30VZZSTKRA/5.14DragonSonomaBoard1.jpg?format=800w"
+             alt="CSA Box — Full Share" loading="lazy">
+        <div class="card-badge green">Subscribe</div>
+        <div class="card-quick">Choose a Plan →</div>
+      </div>
+      <div class="card-body">
+        <div class="card-cat">CSA · Weekly Box</div>
+        <div class="card-name">Full Share Vegetable Box</div>
+      </div>
+      <div class="card-foot">
+        <div>
+          <div class="card-price">$36<span style="font-size:.85rem;font-weight:400;">/wk</span></div>
+          <div class="card-price-note">subscribe &amp; save</div>
+        </div>
+        <button class="card-add">Join CSA</button>
+      </div>
+    </div>
+
+    <!-- Product 5: CSA + Flowers -->
+    <div class="card">
+      <div class="card-img">
+        <img src="https://images.squarespace-cdn.com/content/v1/5b9a74685cfd798a41d7a36e/1635111189888-RMF3RSGFGHRZTWIHG0ZK/DragonFlowers1.jpg?format=800w"
+             alt="CSA Box + Flowers" loading="lazy">
+        <div class="card-badge green">Subscribe</div>
+        <div class="card-quick">Choose a Plan →</div>
+      </div>
+      <div class="card-body">
+        <div class="card-cat">CSA · Vegetables + Flowers</div>
+        <div class="card-name">Full Share + Seasonal Blooms</div>
+      </div>
+      <div class="card-foot">
+        <div>
+          <div class="card-price">$48<span style="font-size:.85rem;font-weight:400;">/wk</span></div>
+          <div class="card-price-note">subscribe &amp; save</div>
+        </div>
+        <button class="card-add">Join CSA</button>
+      </div>
+    </div>
+
+    <!-- Product 6: Gift Box -->
+    <div class="card">
+      <div class="card-img">
+        <img src="https://images.squarespace-cdn.com/content/v1/5b9a74685cfd798a41d7a36e/1635111127336-A99FCN0XWFCH0BJET32O/5.19.BunnyWeekOne1.jpg?format=800w"
+             alt="Farm Gift Box" loading="lazy">
+        <div class="card-badge">Gift</div>
+        <div class="card-quick">Quick Add to Cart</div>
+      </div>
+      <div class="card-body">
+        <div class="card-cat">Gift Set · Farm Pantry</div>
+        <div class="card-name">Pó Pó's Farm Gift Box</div>
+      </div>
+      <div class="card-foot">
+        <div>
+          <div class="card-price">$75</div>
+        </div>
+        <button class="card-add">Add to Cart</button>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- FEATURED PRODUCT DEEP DIVE -->
+<section class="feature">
+  <div class="feature-photo">
+    <img src="https://images.squarespace-cdn.com/content/v1/5b9a74685cfd798a41d7a36e/cdf8c345-392f-48cd-9295-29af231eb1d2/IMG_6034%252B2.png?format=1500w"
+         alt="Pó Pó's Malà Hot Sauce" loading="lazy">
+    <div class="feature-photo-caption">Pó Pó's Malà · Sonoma County</div>
+  </div>
+  <div class="feature-info">
+    <div class="feature-label">Featured Product</div>
+    <h2 class="feature-name">Pó Pó's Malà<br><em>Hot Sauce.</em></h2>
+    <p class="feature-tagline">Numbing Sichuan peppercorn · Sonoma-grown chilies · A grandmother's heat</p>
+    <div style="display:flex;align-items:center;gap:.75rem;margin-bottom:1rem;">
+      <span class="stars" style="font-size:.9rem;">★★★★★</span>
+      <span style="font-family:var(--ff-m);font-size:.55rem;letter-spacing:.12em;text-transform:uppercase;color:var(--mid);">47 reviews</span>
+      <span style="font-family:var(--ff-m);font-size:.55rem;letter-spacing:.12em;text-transform:uppercase;color:var(--green);margin-left:.5rem;">✓ In stock</span>
+    </div>
+    <div class="feature-price-row">
+      <div class="feature-price">$39</div>
+      <div class="feature-price-note">3-pack gift set · Free shipping over $65</div>
+    </div>
+    <div class="feature-divider"></div>
+    <p class="feature-story">"Malà means 'numbing and spicy' — it's what my grandmother used to say before she poured the sauce. We grow the chilies ourselves, dry them in the California sun, and finish every batch by hand."</p>
+    <div class="qty-row">
+      <span class="qty-label">Quantity</span>
+      <div class="qty">
+        <button class="qty-btn" onclick="this.nextElementSibling.textContent=Math.max(1,+this.nextElementSibling.textContent-1)">−</button>
+        <div class="qty-val">1</div>
+        <button class="qty-btn" onclick="this.previousElementSibling.textContent=+this.previousElementSibling.textContent+1">+</button>
+      </div>
+    </div>
+    <div class="feature-actions">
+      <button class="btn-primary">Add to Cart — $39</button>
+      <button class="btn-secondary">View Full Details</button>
+    </div>
+    <div class="feature-trust">
+      <span class="trust-tag g">Farm-Grown</span>
+      <span class="trust-tag g">Certified Organic</span>
+      <span class="trust-tag">Small Batch</span>
+      <span class="trust-tag">Gift-Ready</span>
+    </div>
+  </div>
+</section>
+
+<!-- CSA -->
+<section class="csa">
+  <div class="csa-banner">
+    <div class="csa-photo">
+      <img src="https://images.squarespace-cdn.com/content/v1/5b9a74685cfd798a41d7a36e/1635111142418-LL87JUR44TEAF1YNVSRY/CSABoardBunnyJuly71+%281%29.jpg?format=1200w"
+           alt="CSA Box contents" loading="lazy">
+    </div>
+    <div class="csa-content">
+      <div class="csa-label">Community Supported Agriculture</div>
+      <h2 class="csa-h2">A weekly box<br>from the <em>field.</em></h2>
+      <p class="csa-sub">Subscribe and receive what's alive on the farm that week — heirloom vegetables, ancestral herbs, and seasonal pantry additions, picked the morning of delivery.</p>
+      <div class="csa-plans">
+        <div class="csa-plan">
+          <div class="csa-plan-left">
+            <div class="csa-plan-name">Half Share</div>
+            <div class="csa-plan-freq">Bi-weekly · 1–2 people</div>
+          </div>
+          <div class="csa-plan-price">From $24/wk</div>
+        </div>
+        <div class="csa-plan feat">
+          <div class="csa-plan-left">
+            <div class="csa-plan-name">Full Share ★</div>
+            <div class="csa-plan-freq">Weekly · 2–3 people</div>
+          </div>
+          <div class="csa-plan-price">From $36/wk</div>
+        </div>
+        <div class="csa-plan">
+          <div class="csa-plan-left">
+            <div class="csa-plan-name">Full Share + Flowers</div>
+            <div class="csa-plan-freq">Weekly · vegetables + blooms</div>
+          </div>
+          <div class="csa-plan-price">From $48/wk</div>
+        </div>
+      </div>
+      <div class="csa-note">Pickup at the farm or Sebastopol Farmers Market · No commitment required</div>
+    </div>
+  </div>
+</section>
+
+<!-- CSA BOX PHOTO STRIP -->
+<div class="box-strip">
+  <div class="box-strip-item">
+    <img src="https://images.squarespace-cdn.com/content/v1/5b9a74685cfd798a41d7a36e/1635111180501-7F5TN6W5UXXSXF4GBY3E/Dragon6.16.1.jpg?format=800w" alt="CSA box" loading="lazy">
+    <div class="box-strip-label">Summer 2021</div>
+  </div>
+  <div class="box-strip-item">
+    <img src="https://images.squarespace-cdn.com/content/v1/5b9a74685cfd798a41d7a36e/1611597115549-GTQ41U6NS3YL3XK70DFD/9.8+Dragons+CSA.jpg?format=800w" alt="CSA box" loading="lazy">
+    <div class="box-strip-label">Fall 2020</div>
+  </div>
+  <div class="box-strip-item">
+    <img src="https://images.squarespace-cdn.com/content/v1/5b9a74685cfd798a41d7a36e/1635111208226-HZNF27D2Y7NXBDK4N4OK/IMG_0617.jpeg?format=800w" alt="CSA box" loading="lazy">
+    <div class="box-strip-label">Week Harvest</div>
+  </div>
+  <div class="box-strip-item">
+    <img src="https://images.squarespace-cdn.com/content/v1/5b9a74685cfd798a41d7a36e/1635111127336-A99FCN0XWFCH0BJET32O/5.19.BunnyWeekOne1.jpg?format=800w" alt="CSA box" loading="lazy">
+    <div class="box-strip-label">Spring 2021</div>
+  </div>
+</div>
+
+<!-- STORY -->
+<section class="story-strip">
+  <div class="story-photo">
+    <img src="https://images.squarespace-cdn.com/content/v1/5b9a74685cfd798a41d7a36e/1564455294749-2AQL1AVMC7UW34DHLZL7/028_RadicalFamilyFarm_06102019_paigegreen.jpg?format=1500w"
+         alt="Farmer at Radical Family Farms" loading="lazy">
+    <div class="story-photo-overlay"></div>
+    <div class="story-photo-text">
+      <blockquote class="story-photo-quote">"Farming is how we remember — and how we insist on being here."</blockquote>
+      <cite class="story-photo-cite">— Radical Family Farms</cite>
+    </div>
+  </div>
+  <div class="story-content">
+    <div class="story-label">Our Story</div>
+    <h2 class="story-h2">Mixed-Asian American heritage, rooted in Sonoma soil.</h2>
+    <div class="story-body">
+      <p>Radical Family Farms grows at the intersection of cultural heritage and regenerative agriculture — cultivating the vegetables, herbs, and flavors that shaped our family's table and reflect the Asian-American communities often absent from Sonoma County's farm-to-table scene.</p>
+      <p>We farm radically not in opposition, but in deep rootedness — to our ancestors, our land, and our neighbors. Certified Organic, No-Till, No-Spray. The radical way.</p>
+    </div>
+    <div class="story-creds">
+      <span class="tag g">Certified Organic</span>
+      <span class="tag g">No-Till</span>
+      <span class="tag g">Regenerative Agriculture</span>
+      <span class="tag">NON-GMO</span>
+      <span class="tag">No-Spray</span>
+      <span class="tag">Feed Sonoma</span>
+    </div>
+    <a href="#" class="btn-link">Meet the Farmer →</a>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section class="testi">
+  <div class="testi-inner">
+    <div class="testi-header">
+      <div class="testi-label">What people are saying</div>
+      <div class="testi-avg"><strong>4.9</strong> out of 5 · 74 reviews</div>
+    </div>
+    <div class="testi-grid">
+      <div class="testi-card reveal">
+        <div class="testi-stars">★★★★★</div>
+        <blockquote class="testi-quote">"The hot sauce is everything. I grew up eating Sichuan food and this is the closest I've found to my grandmother's. Bought three sets to give as gifts and kept one for myself."</blockquote>
+        <div class="testi-author">Michelle T. — San Francisco, CA</div>
+        <div class="testi-product">Purchased: Pó Pó's Malà 3-Pack</div>
+      </div>
+      <div class="testi-card reveal reveal-delay-1">
+        <div class="testi-stars">★★★★★</div>
+        <blockquote class="testi-quote">"Our CSA box is the highlight of our week. The vegetables are unlike anything at the grocery store — you can taste how well they're grown. The bitter melon alone is worth it."</blockquote>
+        <div class="testi-author">David & Sara L. — Sebastopol, CA</div>
+        <div class="testi-product">Purchased: Full Share CSA · 2 seasons</div>
+      </div>
+      <div class="testi-card reveal reveal-delay-2">
+        <div class="testi-stars">★★★★★</div>
+        <blockquote class="testi-quote">"I ordered the chrysanthemum tea not knowing what to expect. It's now my daily ritual. Delicate, floral, calming — and knowing it's grown this way makes it even better."</blockquote>
+        <div class="testi-author">Yuki M. — Oakland, CA</div>
+        <div class="testi-product">Purchased: Dried Chrysanthemum Tea</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EMAIL CAPTURE -->
+<section class="email-capture">
+  <div class="email-inner">
+    <div>
+      <h2 class="email-heading">Get the harvest<br><em>before anyone else.</em></h2>
+      <p class="email-sub">Join our list for seasonal drops, CSA openings, market updates, and recipes from the farm table — straight to your inbox.</p>
+      <div class="email-perks">
+        <span class="email-perk">10% off your first order</span>
+        <span class="email-perk">CSA early access</span>
+        <span class="email-perk">Seasonal recipes</span>
+        <span class="email-perk">No spam, ever</span>
+      </div>
+    </div>
+    <div>
+      <form class="email-form" onsubmit="return false;">
+        <div class="email-field">
+          <input type="email" class="email-input" placeholder="your@email.com">
+          <button class="email-submit">Subscribe</button>
+        </div>
+        <div class="email-note">By subscribing you agree to our privacy policy. Unsubscribe anytime.</div>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- PRESS -->
+<div class="press">
+  <div class="press-label">As seen in</div>
+  <div class="press-list">
+    <span class="press-item">Edible Marin & Wine Country</span>
+    <span class="press-item">Civil Eats</span>
+    <span class="press-item">Sonoma Magazine</span>
+    <span class="press-item">SF Chronicle</span>
+    <span class="press-item">Eater SF</span>
+    <span class="press-item">Huffington Post</span>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer class="foot">
+  <div class="foot-inner">
+    <div>
+      <div class="foot-brand-name">Radical<span>Family</span>Farms</div>
+      <p class="foot-tagline">Mixed-Asian American heritage grown in Sonoma County. Certified Organic. No-Till. Radical.</p>
+      <div class="foot-socials">
+        <a href="#" class="foot-social">Instagram</a>
+        <a href="#" class="foot-social">Facebook</a>
+        <a href="#" class="foot-social">Newsletter</a>
+      </div>
+    </div>
+    <div>
+      <div class="foot-col-label">Shop</div>
+      <ul class="foot-links">
+        <li><a href="#">Pó Pó's Hot Sauce</a></li>
+        <li><a href="#">Chrysanthemum Tea</a></li>
+        <li><a href="#">Dried Chilies</a></li>
+        <li><a href="#">Gift Sets</a></li>
+        <li><a href="#">CSA Subscription</a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="foot-col-label">The Farm</div>
+      <ul class="foot-links">
+        <li><a href="#">Our Story</a></li>
+        <li><a href="#">The Farmer</a></li>
+        <li><a href="#">Practices</a></li>
+        <li><a href="#">Press</a></li>
+        <li><a href="#">Videos</a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="foot-col-label">Visit &amp; Give</div>
+      <ul class="foot-links">
+        <li><a href="#">Farmers Market</a></li>
+        <li><a href="#">Wholesale</a></li>
+        <li><a href="#">Donate</a></li>
+        <li><a href="#">Resources</a></li>
+        <li><a href="#">Contact</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="foot-bottom">
+    <div class="foot-bottom-inner">
+      <span class="foot-copy">© 2025 Radical Family Farms · Sebastopol, California · All rights reserved</span>
+      <span class="foot-cert">✦ Certified Organic · No-Till · Regenerative Agriculture</span>
+    </div>
+  </div>
+</footer>
+
+<div class="design-badge">Concept — Localhouse Designs</div>
+
+<script>
+// Collection pill toggle
+document.querySelectorAll('.pill').forEach(p=>{
+  p.addEventListener('click',()=>{
+    document.querySelectorAll('.pill').forEach(x=>x.classList.remove('active'));
+    p.classList.add('active');
+  });
+});
+
+// Scroll-reveal
+const revealObs = new IntersectionObserver((entries)=>{
+  entries.forEach(e=>{ if(e.isIntersecting) e.target.classList.add('in'); });
+},{threshold:0.12});
+document.querySelectorAll('.reveal').forEach(el=>revealObs.observe(el));
+
+// Sticky ATC — appears after featured product section
+const featureSection = document.querySelector('.feature');
+const stickyBar = document.getElementById('sticky-atc');
+const stickyObs = new IntersectionObserver((entries)=>{
+  entries.forEach(e=>{
+    stickyBar.classList.toggle('visible', !e.isIntersecting && e.boundingClientRect.top < 0);
+  });
+},{threshold:0});
+if(featureSection) stickyObs.observe(featureSection);
+
+// Cart count increment simulation
+let cartCount = 0;
+document.querySelectorAll('.btn-atc, .card-add, .sticky-atc-btn, .btn-primary').forEach(btn=>{
+  btn.addEventListener('click',()=>{
+    cartCount++;
+    document.querySelector('.nav-cart').textContent = `Cart (${cartCount})`;
+    btn.textContent = '✓ Added!';
+    setTimeout(()=>{ btn.textContent = btn.classList.contains('sticky-atc-btn') ? 'Add to Cart' : btn.dataset.original || 'Add to Cart'; }, 1500);
+  });
+});
+document.querySelectorAll('.card-add').forEach(btn=>btn.dataset.original='Add to Cart');
+</script>
+</body>
+</html>
