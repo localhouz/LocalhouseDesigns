@@ -456,6 +456,78 @@
   }
 }
 
+@media (max-width: 768px) {
+  .hero {
+    height: auto;
+    min-height: 100svh;
+    align-items: flex-start;
+    padding: 7rem 0 4rem;
+
+    &__content {
+      max-width: none;
+    }
+
+    .label {
+      margin-bottom: 1.25rem;
+    }
+
+    &__headline {
+      font-size: clamp(2.7rem, 14vw, 4.4rem);
+      margin-bottom: 1.35rem;
+    }
+
+    &__sub {
+      font-size: 1rem;
+      line-height: 1.7;
+      margin-bottom: 2rem;
+    }
+
+    &__actions {
+      flex-direction: column;
+
+      .btn {
+        width: 100%;
+      }
+    }
+
+    &__offer {
+      margin-top: 1.25rem;
+    }
+
+    &__modes {
+      gap: 1.25rem;
+      margin-top: 2rem;
+      padding-top: 1.5rem;
+    }
+
+    &__mode {
+      flex-basis: 100%;
+      min-width: 0;
+    }
+
+    &__scroll {
+      display: none;
+    }
+  }
+
+  .service-card,
+  .signal-card,
+  .answer-card,
+  .insight-preview-card,
+  .next-step-card,
+  .project-card__info {
+    padding: 1.5rem;
+  }
+
+  .cta-band {
+    padding: 4rem 0;
+
+    h2 {
+      font-size: clamp(2rem, 11vw, 3rem);
+    }
+  }
+}
+
 .next-step-card {
   background: var(--mid);
   padding: 2rem;

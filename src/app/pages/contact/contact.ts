@@ -1,4 +1,4 @@
-import { Component, inject, OnInit, signal } from '@angular/core';
+﻿import { Component, inject, OnInit, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
 import { SeoService } from '../../shared/seo/seo.service';
@@ -45,7 +45,7 @@ export class ContactComponent implements OnInit {
   ];
 
   ngOnInit() {
-    const base = 'https://localhousedesigns.netlify.app';
+    const base = 'https://localhousedesigns.com';
     this.seo.setPage({
       title: 'Contact | Localhouse Designs - Start a Project',
       description: 'Ready to build something worth finding? Send a quick project outline and receive a 48-hour audit response from Localhouse Designs in Broken Arrow, Oklahoma.',
@@ -74,7 +74,7 @@ export class ContactComponent implements OnInit {
             {
               '@type': 'Question',
               name: 'How do I start a project with Localhouse Designs?',
-              acceptedAnswer: { '@type': 'Answer', text: 'Fill out the contact form at localhousedesigns.netlify.app/contact. Share your name, email, website or page URL if you have one, what feels off right now, and any timeline or budget context. Expect a reply within 48 hours with a practical audit path.' }
+              acceptedAnswer: { '@type': 'Answer', text: 'Fill out the contact form at localhousedesigns.com/contact. Share your name, email, website or page URL if you have one, what feels off right now, and any timeline or budget context. Expect a reply within 48 hours with a practical audit path.' }
             },
             {
               '@type': 'Question',

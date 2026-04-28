@@ -1,4 +1,4 @@
-import { Component, inject, OnInit } from '@angular/core';
+﻿import { Component, inject, OnInit } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { SeoService } from '../../shared/seo/seo.service';
 
@@ -140,7 +140,7 @@ export class ServicesComponent implements OnInit {
   ];
 
   ngOnInit() {
-    const base = 'https://localhousedesigns.netlify.app';
+    const base = 'https://localhousedesigns.com';
     this.seo.setPage({
       title: 'Services | Websites For Oklahoma Service Businesses',
       description: 'Website rebuilds, local SEO/GEO foundations, audit-first conversion work, and ERP-aware tooling from Localhouse Designs in Broken Arrow, serving businesses across Oklahoma.',

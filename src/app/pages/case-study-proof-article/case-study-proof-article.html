@@ -1,0 +1,57 @@
+<article class="article-page">
+  <div class="article-hero container">
+    <p class="label">Insight</p>
+    <h1>What a useful case study page<br><em>needs to prove.</em></h1>
+    <p class="article-hero__sub">A case study should do more than show a nice result. It should prove the problem, the thinking, and the change that made the work worth doing.</p>
+    <p class="article-hero__byline">Written by <a routerLink="/about">Steven Rausch</a> from Localhouse Designs in Broken Arrow, Oklahoma.</p>
+  </div>
+
+  <div class="article-layout container">
+    <aside class="article-aside">
+      <span class="article-aside__label">Quick take</span>
+      <ul>
+        @for (item of takeaways; track item) {
+          <li>{{ item }}</li>
+        }
+      </ul>
+    </aside>
+
+    <div class="article-body">
+      <p>A lot of case studies are really just decorated project summaries. They say what was built, show a few screenshots, and call it proof. That is not enough. A useful case study should help the next buyer understand why the work mattered.</p>
+
+      <p>The reader needs to see the before state, the constraint, the decision, and the result. Without those pieces, the page is mostly a gallery with captions.</p>
+
+      <h2>Start with the problem, not the deliverable</h2>
+      <p>"We built a new website" is not the story. The story is what the old site failed to do. Maybe the offer was vague. Maybe the quote path was buried. Maybe the workflow forced people through too many manual steps.</p>
+
+      <p>The clearer the starting problem is, the easier it is for a similar buyer to recognize themselves.</p>
+
+      <h2>Show the constraint</h2>
+      <p>Good work happens inside constraints: time, budget, existing systems, old content, business rules, platform limitations, operational habits. A case study that ignores constraints can feel fake because real projects always have them.</p>
+
+      <p>Constraints make the decisions more meaningful.</p>
+
+      <h2>Explain the decision</h2>
+      <p>The page should explain why the work took the shape it did. Why that page structure? Why that CTA? Why that data model? Why that workflow?</p>
+
+      <p>This is where a case study becomes more than a result. It shows judgment.</p>
+
+      <h2>Make the outcome concrete</h2>
+      <p>Not every case study will have perfect analytics. That is fine. But the outcome should still be concrete: clearer contact path, fewer steps, better service framing, stronger proof, faster lookup, cleaner handoff.</p>
+
+      <p>Vague outcomes make the work feel vague. Specific outcomes make it easier to trust.</p>
+
+      <h2>The practical takeaway</h2>
+      <p>A useful case study does not just say "look what we made." It says "here is what was broken, here is what changed, and here is why that change matters." That is the proof a serious buyer needs.</p>
+
+      <div class="article-related">
+        <h3>Related reading</h3>
+        <ul>
+          <li><a routerLink="/insights/how-a-local-service-rebuild-turns-traffic-into-leads">How a local service rebuild turns traffic into leads</a> - a case-study direction for local sites.</li>
+          <li><a routerLink="/insights/erp-lite-designing-an-operational-decision-surface">ERP Lite: Designing an operational decision surface</a> - a case study for operations tooling.</li>
+          <li><a routerLink="/work">Work</a> - current proof and project examples.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</article>

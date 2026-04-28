@@ -19,7 +19,7 @@ export class ContactPathArticleComponent implements OnInit {
   ];
 
   ngOnInit() {
-    const base = 'https://localhousedesigns.netlify.app';
+    const base = 'https://localhousedesigns.com';
     const url = `${base}/insights/why-local-seo-fails-when-the-contact-path-is-vague`;
     this.seo.setPage({
       title: 'Why Local SEO Fails When the Contact Path Is Vague | Localhouse Designs',

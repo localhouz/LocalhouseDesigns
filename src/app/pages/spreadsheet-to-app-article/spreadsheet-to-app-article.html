@@ -1,0 +1,52 @@
+<article class="article-page">
+  <div class="article-hero container">
+    <p class="label">Insight</p>
+    <h1>When a spreadsheet should become<br><em>a real internal app.</em></h1>
+    <p class="article-hero__sub">Spreadsheets are useful until they become the place where process, permissions, validation, and operational risk all get tangled together.</p>
+    <p class="article-hero__byline">Written by <a routerLink="/about">Steven Rausch</a> from Localhouse Designs in Broken Arrow, Oklahoma.</p>
+  </div>
+
+  <div class="article-layout container">
+    <aside class="article-aside">
+      <span class="article-aside__label">Quick take</span>
+      <ul>
+        @for (item of takeaways; track item) {
+          <li>{{ item }}</li>
+        }
+      </ul>
+    </aside>
+
+    <div class="article-body">
+      <p>Spreadsheets are not the enemy. A lot of good internal software starts as a spreadsheet because spreadsheets are fast, flexible, and close to the people doing the work. The problem starts when the spreadsheet becomes the process instead of a tool for thinking through it.</p>
+
+      <p>That is usually the point where an internal app starts to make sense.</p>
+
+      <h2>The workflow repeats</h2>
+      <p>If the same spreadsheet is used every week, every shift, every job, or every close cycle, it may no longer be a one-off. It may be a workflow wearing spreadsheet clothes.</p>
+
+      <p>Repeated work benefits from structure: standard inputs, validation, status, ownership, and a cleaner way to see what changed.</p>
+
+      <h2>The file has become fragile</h2>
+      <p>Warning signs are easy to recognize: hidden formulas nobody wants to touch, copied tabs, manual cleanup, version confusion, emailed files, broken references, and one person who knows how the whole thing works.</p>
+
+      <p>At that point, the risk is not that the spreadsheet is ugly. The risk is that the business depends on something too easy to break.</p>
+
+      <h2>Multiple people need different views</h2>
+      <p>Spreadsheets struggle when different roles need different views of the same process. The planner, floor lead, manager, and finance person may all need related information, but not the same screen.</p>
+
+      <p>An internal app can keep one model underneath while giving each role a view that makes sense.</p>
+
+      <h2>The practical takeaway</h2>
+      <p>A spreadsheet should become an app when the work needs guardrails, repeatability, sharing, validation, or safer updates. The goal is not to punish the spreadsheet. The goal is to keep what worked and remove the fragile parts.</p>
+
+      <div class="article-related">
+        <h3>Related reading</h3>
+        <ul>
+          <li><a routerLink="/insights/what-manufacturers-actually-need-from-erp-connected-tooling">What manufacturers actually need from ERP-connected tooling</a> - where internal tooling should start.</li>
+          <li><a routerLink="/insights/why-most-dashboards-do-not-fix-the-workflow">Why most dashboards don't fix the workflow</a> - why visibility alone is not enough.</li>
+          <li><a routerLink="/work">Work</a> - examples of practical business tooling.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</article>

@@ -19,7 +19,7 @@ export class ServicePagesArticleComponent implements OnInit {
   ];
 
   ngOnInit() {
-    const base = 'https://localhousedesigns.netlify.app';
+    const base = 'https://localhousedesigns.com';
     const url = `${base}/insights/what-local-service-pages-need-to-rank-and-get-cited`;
     this.seo.setPage({
       title: 'What Local Service Pages Need to Rank and Get Cited | Localhouse Designs',

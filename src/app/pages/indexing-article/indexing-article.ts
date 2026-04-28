@@ -12,14 +12,14 @@ export class IndexingArticleComponent implements OnInit {
   private seo = inject(SeoService);
 
   takeaways = [
-    'A page being discovered or crawled does not guarantee Google sees it as worth indexing yet.',
+    "A page being discovered or crawled doesn't guarantee Google sees it as worth indexing yet.",
     'Indexing problems are often part technical and part page-quality or page-priority issue.',
     'Clearer canonicals, stronger internal links, and more distinct page value usually matter more than panic.',
     'The pages to fight for first are the ones that define the business: home, services, about, contact, and the best support content.'
   ];
 
   ngOnInit() {
-    const base = 'https://localhousedesigns.netlify.app';
+    const base = 'https://localhousedesigns.com';
     const url = `${base}/insights/why-google-can-find-your-page-and-still-not-index-it`;
     this.seo.setPage({
       title: 'Why Google Can Find Your Page and Still Not Index It | Localhouse Designs',

@@ -12,14 +12,14 @@ export class ErpArticleComponent implements OnInit {
   private seo = inject(SeoService);
 
   takeaways = [
-    'Most manufacturing teams do not need more software. They need fewer bottlenecks.',
+    "Most manufacturing teams don't need more software. They need fewer bottlenecks.",
     'Useful ERP-connected tools reduce friction around visibility, data handling, and repeat work.',
     'The best internal tooling is shaped by how people actually work, not just by what the ERP technically exposes.',
-    'If a tool makes the floor, planner, or operations lead slower, it is not helping.'
+    "If a tool makes the floor, planner, or operations lead slower, it isn't helping."
   ];
 
   ngOnInit() {
-    const base = 'https://localhousedesigns.netlify.app';
+    const base = 'https://localhousedesigns.com';
     const url = `${base}/insights/what-manufacturers-actually-need-from-erp-connected-tooling`;
     this.seo.setPage({
       title: 'What Manufacturers Actually Need from ERP-Connected Tooling | Localhouse Designs',

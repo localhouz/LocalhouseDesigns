@@ -19,7 +19,7 @@ export class SytelineMobileCaseStudyComponent implements OnInit {
   ];
 
   ngOnInit() {
-    const base = 'https://localhousedesigns.netlify.app';
+    const base = 'https://localhousedesigns.com';
     const url = `${base}/insights/syteline-mobile-making-erp-access-work-on-the-floor`;
     this.seo.setPage({
       title: 'SyteLine Mobile: Making ERP Access Work on the Floor | Localhouse Designs',

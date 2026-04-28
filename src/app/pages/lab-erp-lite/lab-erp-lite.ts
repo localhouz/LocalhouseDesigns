@@ -1,4 +1,4 @@
-import { Component, OnInit, computed, inject, signal } from '@angular/core';
+﻿import { Component, OnInit, computed, inject, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
 import { SeoService } from '../../shared/seo/seo.service';
@@ -99,7 +99,7 @@ export class LabErpLiteComponent implements OnInit {
   });
 
   ngOnInit() {
-    const base = 'https://localhousedesigns.netlify.app';
+    const base = 'https://localhousedesigns.com';
     this.seo.setPage({
       title: 'ERP Lite Floor Map | Localhouse Designs Lab',
       description: 'A lightweight ERP front end demo that visualizes shop floor status without vendor lock-in. Mock data, real UI pattern.',

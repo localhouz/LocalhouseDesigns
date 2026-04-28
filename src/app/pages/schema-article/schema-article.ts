@@ -14,12 +14,12 @@ export class SchemaArticleComponent implements OnInit {
   takeaways = [
     'Structured data helps machines interpret a page with less guesswork, but it works best when the visible copy is already clear.',
     'Schema supports entity clarity, service understanding, FAQ meaning, and stronger page classification.',
-    'It cannot rescue a vague or thin page on its own.',
+    "It can't rescue a vague or thin page on its own.",
     'The strongest results come when content, structure, and schema all reinforce the same facts.'
   ];
 
   ngOnInit() {
-    const base = 'https://localhousedesigns.netlify.app';
+    const base = 'https://localhousedesigns.com';
     const url = `${base}/insights/how-structured-data-helps-ai-search-understand-your-business`;
     this.seo.setPage({
       title: 'How Structured Data Helps AI Search Understand Your Business | Localhouse Designs',

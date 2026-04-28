@@ -31,7 +31,7 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
   ];
 
   services = [
-    { num: '01', title: 'Website Rebuilds', desc: 'For service businesses stuck with vague messaging, weak structure, or platform-limited sites that do not turn visits into real inquiries.' },
+    { num: '01', title: 'Website Rebuilds', desc: "For service businesses stuck with vague messaging, weak structure, or platform-limited sites that don't turn visits into real inquiries." },
     { num: '02', title: 'Local SEO / GEO', desc: 'NAP clarity, structured data, FAQ coverage, service-page depth, and contact-path cleanup so search and AI systems understand the business clearly.' },
     { num: '03', title: 'Audit-First Conversion Work', desc: 'We start with what is unclear, what is slowing trust down, and what is making the next step harder than it should be.' },
     { num: '04', title: 'Operational Tooling', desc: 'Still available for ERP-connected dashboards, internal tools, and workflow automation when the problem extends beyond the website.' },
@@ -62,7 +62,7 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
     },
     {
       question: 'What kind of projects are the best fit?',
-      answer: 'The strongest fit is rebuilding service-business websites that feel vague, outdated, or boxed in by templates, especially when trust and local visibility need work.'
+      answer: "The strongest fit is rebuilding service-business websites that feel vague, outdated, or boxed in by templates, especially when trust and local visibility need work."
     },
     {
       question: 'Why does the ERP background matter?',
@@ -90,6 +90,24 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
       tag: 'SEO / GEO'
     },
     {
+      title: 'Why local business websites need clear service-area pages',
+      desc: 'A practical look at when local pages help and when they turn into thin SEO clutter.',
+      route: '/insights/why-local-business-websites-need-clear-service-area-pages',
+      tag: 'Local SEO'
+    },
+    {
+      title: 'What to put above the fold on a local service homepage',
+      desc: 'A plain-English breakdown of what the first screen needs to say before someone calls, books, or leaves.',
+      route: '/insights/what-to-put-above-the-fold-on-a-local-service-homepage',
+      tag: 'Conversion'
+    },
+    {
+      title: 'Why your Google Business Profile and website need to say the same thing',
+      desc: 'A practical article on local trust, search consistency, and the path from profile to contact.',
+      route: '/insights/why-your-google-business-profile-and-website-need-to-say-the-same-thing',
+      tag: 'Local SEO'
+    },
+    {
       title: 'What manufacturers actually need from ERP-connected tooling',
       desc: 'A practical article on internal tooling, operational friction, and why useful systems start with real workflow needs.',
       route: '/insights/what-manufacturers-actually-need-from-erp-connected-tooling',
@@ -103,7 +121,7 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
     },
     {
       title: 'How structured data helps AI search understand your business',
-      desc: 'A practical explanation of what schema actually does, what it cannot do alone, and how it supports clearer machine understanding.',
+      desc: "A practical explanation of what schema actually does, what it can't do alone, and how it supports clearer machine understanding.",
       route: '/insights/how-structured-data-helps-ai-search-understand-your-business',
       tag: 'Structured Data'
     },
@@ -114,7 +132,7 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
       tag: 'Local SEO'
     },
     {
-      title: 'Why most dashboards do not fix the workflow',
+      title: "Why most dashboards don't fix the workflow",
       desc: 'A practical article on why more visibility often fails to reduce friction in ERP and operations work.',
       route: '/insights/why-most-dashboards-do-not-fix-the-workflow',
       tag: 'ERP / Workflows'
@@ -173,7 +191,7 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
   ];
 
   ngOnInit() {
-    const base = 'https://localhousedesigns.netlify.app';
+    const base = 'https://localhousedesigns.com';
     this.seo.setPage({
       title: 'Localhouse Designs | Broken Arrow Web Studio for Angular, ERP, SEO/GEO',
       description: 'Broken Arrow, Oklahoma web studio building clearer, higher-converting websites for service businesses across Oklahoma, with stronger local SEO/GEO and cleaner contact paths.',

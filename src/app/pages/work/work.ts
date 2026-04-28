@@ -1,4 +1,4 @@
-import { Component, inject, OnInit, signal } from '@angular/core';
+﻿import { Component, inject, OnInit, signal } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 import { Router, RouterLink } from '@angular/router';
@@ -34,19 +34,19 @@ export class WorkComponent implements OnInit {
   caseStudies = [
     {
       title: 'North Styles',
-      subtitle: 'Local grooming brand site',
+      subtitle: 'Proof: platform replacement for a local service brand',
       url: 'https://north-styles.com/',
       previewUrl: 'https://north-styles.com/',
       previewDomain: 'north-styles.com',
       imageUrl: '',
-      outcome: 'Built from scratch to replace the old GlossGenius site with a custom standalone brand site. Added dedicated About and Contact flows, stronger local SEO / GEO / AEO foundations, trust-building content, and a cleaner path from discovery to booking.',
+      outcome: 'Replaced a platform-limited grooming site with a custom standalone brand site built to carry the full business story: clearer service framing, stronger trust signals, and a cleaner booking path.',
       challenge: 'The original web presence lived on a limited booking-platform site, which constrained the brand, reduced flexibility, and left little room for stronger local search visibility or richer trust-building content.',
       work: [
-        'Built a custom standalone site from scratch to replace the older GlossGenius presence.',
-        'Added clearer About and Contact flows, stronger business context, and cleaner content structure.',
-        'Improved local SEO / GEO / AEO foundations with more answer-ready and machine-readable signals.'
+        'Rebuilt the web presence from scratch so the business was no longer boxed in by GlossGenius.',
+        'Added dedicated About and Contact flows, stronger service context, and clearer local trust signals.',
+        'Improved the local SEO / GEO / AEO foundation with answer-ready structure and cleaner machine-readable signals.'
       ],
-      result: 'North Styles now has a site it actually owns: stronger branding, more flexibility, and a much better foundation for discovery, trust, and booking.',
+      result: 'North Styles now has a site it actually owns, with a stronger local front door and a much better path from discovery to booking.',
       stack: ['Astro', 'Tailwind', 'JSON-LD', 'Local SEO', 'AEO'],
       metrics: [
         { val: 'Custom', label: 'Built from scratch' },
@@ -56,48 +56,72 @@ export class WorkComponent implements OnInit {
       comingSoon: false,
     },
     {
+      title: 'Local GEO Standard',
+      subtitle: 'Proof: repeatable local visibility method',
+      url: '',
+      previewUrl: '',
+      imageUrl: 'local-geo-results.svg',
+      outcome: 'Results-only GEO/SEO case study showing that Localhouse is not guessing. Three live sites were scored against the same local-visibility checklist and improved through targeted fixes.',
+      challenge: 'All three sites had different weak points: inconsistent NAP visibility, unclear contact flows, and incomplete structured signals that made local discovery and trust less reliable.',
+      work: [
+        'Scored each site against the same local checklist: NAP placement, LocalBusiness schema, contact clarity, CTA path, map/directions flow, FAQs, and reviews.',
+        'Applied the same before-and-after method across North Styles, Prescribed Burn Sauces, and NorCal Sauce Worx.',
+        'Published the results layer only, keeping the implementation details private while still showing what moved and why.'
+      ],
+      result: 'The public case study shows that the method is repeatable across different sites, not just a one-off story. Full audits are available by request.',
+      stack: ['Local GEO', 'Schema.org', 'On-page SEO', 'AEO'],
+      metrics: [
+        { val: '+26', label: 'Avg score lift' },
+        { val: '3', label: 'Sites audited' },
+        { val: 'Repeatable', label: 'Method shown' },
+      ],
+      ctaLabel: 'Request the full audit ->',
+      ctaRoute: '/local-geo-audit',
+      comingSoon: false,
+    },
+    {
       title: 'NorCal Sauce Worx',
-      subtitle: 'Co-packing brand site',
+      subtitle: 'Proof: clarifying a hybrid service business',
       url: 'https://norcalsauceworx.com',
       previewUrl: 'https://norcalsauceworx.com',
       previewDomain: 'norcalsauceworx.com',
       imageUrl: '',
-      outcome: 'Built a co-packing brand site with a quote wizard, stronger service positioning, and structured SEO/GEO foundations that support a clearer path from discovery to inquiry.',
+      outcome: 'Built a sauce co-packing site that turns a complex hybrid offer into something easier to understand, easier to qualify, and easier to request a quote from.',
       challenge: 'The site needed to explain a specialized co-packing offer clearly enough for potential clients to understand the process, self-qualify, and request a quote without a lot of back-and-forth.',
       work: [
-        'Built the site in Angular with a quote flow that helps turn a complex service conversation into a cleaner intake experience.',
-        'Added FAQPage, HowTo, and Service schema coverage so search engines and answer engines can extract the right service context.',
-        'Structured the content around co-packing questions, process clarity, and inquiry readiness instead of generic brochure copy.'
+        'Built the site in Angular with a quote flow that turns a complex service conversation into a cleaner intake experience.',
+        'Structured the site around co-packing questions, process clarity, and inquiry readiness instead of generic brochure copy.',
+        'Added structured data and support content so search engines and answer engines can pull back the right service context.'
       ],
-      result: 'The finished site gives NorCal Sauce Worx a stronger service narrative, cleaner lead path, and a more credible search-ready presence for a niche offer.',
+      result: 'NorCal now has a clearer service identity, a stronger quote path, and a more credible search-ready foundation for a niche B2B offer.',
       stack: ['Angular 21', 'SCSS', 'Netlify Forms', 'JSON-LD', 'Schema.org'],
       metrics: [
-        { val: '8', label: 'FAQ schemas' },
-        { val: '5', label: 'Service schemas' },
-        { val: '100%', label: 'Form uptime' },
+        { val: 'Quote', label: 'Wizard flow' },
+        { val: 'FAQ + Service', label: 'Schema layers' },
+        { val: 'B2B', label: 'Inquiry-ready' },
       ],
       comingSoon: false,
     },
     {
       title: 'Prescribed Burn Sauces',
-      subtitle: 'E-commerce brand site',
+      subtitle: 'Proof: stronger brand-source structure',
       url: 'https://prescribedburnsauces.com',
       previewUrl: 'https://prescribedburnsauces.com',
       previewDomain: 'prescribedburnsauces.com',
       imageUrl: '',
-      outcome: 'Built an e-commerce brand site with a custom WebGL hero, strong product schema coverage, and analytics foundations that support both brand presentation and richer search visibility.',
+      outcome: 'Built an e-commerce brand site with a stronger official-source foundation: cleaner product structure, clearer brand presentation, and a better base for search visibility.',
       challenge: 'The site needed to feel distinct as a brand while still handling the practical side of search visibility, product understanding, and performance-conscious frontend work.',
       work: [
-        'Built a more distinctive frontend experience with WebGL and Three.js instead of relying on a generic storefront feel.',
+        'Built a more distinctive front-end experience with WebGL and Three.js instead of default storefront presentation.',
         'Added product schema, FAQ content, GA4, and Search Console setup so the site is easier for search systems to understand and track.',
-        'Balanced branding, performance, and structured product information so the site can support both discovery and shopping behavior.'
+        'Balanced brand feel, structured product information, and measurement so the site supports both discovery and shopping behavior.'
       ],
-      result: 'Prescribed Burn Sauces now has a stronger visual identity and a much better technical foundation for product visibility, tracking, and rich-result readiness.',
+      result: 'Prescribed Burn now has a stronger visual identity and a much better technical base for product visibility, tracking, and official brand-source clarity.',
       stack: ['Angular 21', 'Three.js', 'GA4', 'Schema.org', 'Netlify DNS'],
       metrics: [
-        { val: '26', label: 'Rich results' },
-        { val: '15', label: 'FAQ entries' },
         { val: '10', label: 'Product schemas' },
+        { val: '15', label: 'FAQ entries' },
+        { val: 'GA4 + GSC', label: 'Measurement ready' },
       ],
       comingSoon: false,
     },
@@ -124,30 +148,6 @@ export class WorkComponent implements OnInit {
       ],
       ctaLabel: 'Open the prototype ->',
       ctaRoute: '/lab/local-service-hvac-prototype',
-      comingSoon: false,
-    },
-    {
-      title: 'Local GEO Standard',
-      subtitle: 'Results-only case study',
-      url: '',
-      previewUrl: '',
-      imageUrl: 'local-geo-results.svg',
-      outcome: 'Results-only GEO/SEO case study showing measurable lifts across North Styles, Prescribed Burn Sauces, and NorCal Sauce Worx while keeping the implementation private.',
-      challenge: 'All three sites had different gaps: inconsistent NAP visibility, unclear contact flows, and incomplete structured signals that made local discovery less reliable.',
-      work: [
-        'Scored each site against a fixed checklist: NAP placement, LocalBusiness schema, contact clarity, CTA path, map/directions, FAQs, and reviews.',
-        'Applied the same scoring rubric before and after targeted fixes.',
-        'Shared results only, withholding templates and implementation details.'
-      ],
-      result: 'The public case study shows the outcome and score lift, plus why each site moved (clearer NAP placement, tighter contact flow, and stronger structured signals). Full audits are available by request.',
-      stack: ['Local GEO', 'Schema.org', 'On-page SEO', 'AEO'],
-      metrics: [
-        { val: '+26', label: 'Avg score lift' },
-        { val: '3', label: 'Sites audited' },
-        { val: 'Results-only', label: 'Public view' },
-      ],
-      ctaLabel: 'Request the full audit ->',
-      ctaRoute: '/local-geo-audit',
       comingSoon: false,
     },
     {
@@ -213,7 +213,7 @@ export class WorkComponent implements OnInit {
   ];
 
   ngOnInit() {
-    const base = 'https://localhousedesigns.netlify.app';
+    const base = 'https://localhousedesigns.com';
     this.seo.setPage({
       title: 'Work | Localhouse Designs - Angular Builds, SEO/GEO, Live Projects',
       description: 'Case studies and live projects from Localhouse Designs in Broken Arrow, Oklahoma. Angular builds, full SEO/GEO treatment, and operational software work reaching as far as Sacramento, California.',
@@ -225,7 +225,7 @@ export class WorkComponent implements OnInit {
           '@id': `${base}/work#webpage`,
           url: `${base}/work`,
           name: 'Work | Localhouse Designs',
-          description: 'Portfolio of web development and enterprise projects by Localhouse Designs, based in Broken Arrow, Oklahoma and serving clients locally and remotely.',
+      description: 'Portfolio of web development and enterprise projects by Localhouse Designs, based in Broken Arrow, Oklahoma and serving clients locally and remotely.',
           isPartOf: { '@id': `${base}/#website` },
           breadcrumb: {
             '@type': 'BreadcrumbList',
@@ -249,20 +249,20 @@ export class WorkComponent implements OnInit {
             },
             {
               '@type': 'ListItem', position: 2,
-              url: 'https://norcalsauceworx.com',
-              name: 'NorCal Sauce Worx',
-              description: 'Angular 21 co-packing brand site with quote wizard, Netlify Forms, FAQPage + HowTo + Service schemas, sitemap, and full GEO coverage.'
+              name: 'Local GEO Standard',
+              description: 'Results-only case study across three live sites showing repeatable improvements in local visibility and trust signals using the same scoring method.'
             },
             {
               '@type': 'ListItem', position: 3,
-              url: 'https://prescribedburnsauces.com',
-              name: 'Prescribed Burn Sauces',
-              description: 'Angular 21 e-commerce brand site with WebGL hero, 10 product schemas, GA4, Google Search Console verified, 26 rich result items all valid.'
+              url: 'https://norcalsauceworx.com',
+              name: 'NorCal Sauce Worx',
+              description: 'Angular 21 co-packing brand site with a quote wizard, stronger service positioning, resource support content, and structured SEO/GEO foundations for a niche B2B offer.'
             },
             {
               '@type': 'ListItem', position: 4,
-              name: 'Local GEO Standard',
-              description: 'Results-only case study across three local brands showing before and after improvements in local visibility signals. Full audit available by request.'
+              url: 'https://prescribedburnsauces.com',
+              name: 'Prescribed Burn Sauces',
+              description: 'Angular 21 e-commerce brand site with a WebGL hero, stronger product structure, product schema, GA4, and Search Console foundations for clearer brand-source visibility.'
             },
             {
               '@type': 'ListItem', position: 5,

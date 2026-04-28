@@ -17,26 +17,26 @@
     </aside>
 
     <div class="article-body">
-      <p>ERP Lite started from a simple observation: most ERP screens are good at transactions, but not especially good at decisions. They store the data, enforce the workflow, and keep the business moving. What they do not usually do is give a floor lead or planner a fast, readable answer to "what needs attention right now?"</p>
+      <p>ERP Lite started from a simple observation: most ERP screens are good at transactions, but not especially good at decisions. They store the data, enforce the workflow, and keep the business moving. What they don't usually do is give a floor lead or planner a fast, readable answer to "what needs attention right now?"</p>
 
-      <p>That gap is where a lot of internal frustration lives. The data exists, but the interface still makes people interpret too much of it for themselves.</p>
+      <p>That gap is where a lot of internal frustration lives. The data exists, but the interface still makes people interpret too much of it for themselves. ERP Lite is a study in what happens when the front end is allowed to be opinionated about attention.</p>
 
       <h2>The design problem</h2>
-      <p>The design problem was not "how do we build another dashboard?" It was "how do we reduce interpretation time without pretending the ERP should be replaced?"</p>
+      <p>The design problem wasn't "how do we build another dashboard?" It was "how do we reduce interpretation time without pretending the ERP should be replaced?"</p>
 
       <p>That changes the framing. Instead of starting from charts or reports, ERP Lite starts from operational questions:</p>
 
       <ul>
         <li>What is running, idle, down, or in setup?</li>
         <li>Which exceptions actually matter right now?</li>
-        <li>What view does a floor lead need that leadership does not?</li>
+        <li>What view does a floor lead need that leadership doesn't?</li>
         <li>How can the front end stay stable even if the ERP connector changes?</li>
       </ul>
 
       <p>Once the problem is framed that way, the right interface starts to look less like a reporting screen and more like a decision surface.</p>
 
       <h2>What a decision surface means here</h2>
-      <p>A decision surface is not just a prettier dashboard. It is a front end that narrows the field of attention. Instead of making the user scan menus, tabs, and status codes, it shows the handful of states that move the day forward.</p>
+      <p>A decision surface isn't just a prettier dashboard. It's a front end that narrows the field of attention. Instead of making the user scan menus, tabs, and status codes, it shows the handful of states that move the day forward.</p>
 
       <p>For ERP Lite, that meant designing around status, exception, and role:</p>
 
@@ -47,7 +47,7 @@
       </ul>
 
       <h2>Why the adapter-first model matters</h2>
-      <p>The most important architectural choice was not visual. It was the adapter contract. The front end only consumes one normalized model: machine, line, status, shift, throughput, work order, and last heartbeat. That gives the UI a stable shape even when the upstream ERP changes.</p>
+      <p>The most important architectural choice wasn't visual. It was the adapter contract. The front end only consumes one normalized model: machine, line, status, shift, throughput, work order, and last heartbeat. That gives the UI a stable shape even when the upstream ERP changes.</p>
 
       <p>That matters because real ERP environments are inconsistent. SAP, Epicor, and SyteLine all expose different nouns, different APIs, and different assumptions. If the UI is tightly coupled to each one, every connector becomes a redesign problem. ERP Lite avoids that by making connector variability an adapter concern, not a UI concern.</p>
 
@@ -57,7 +57,7 @@
       <p>The goal was never to pretend IoT data is ERP data. The goal was to prove that the interface could survive real operational messiness while staying legible.</p>
 
       <h2>The UX layer: floor, planner, leadership</h2>
-      <p>One of the core UX ideas in ERP Lite is that the same data should not be rendered the same way for every role.</p>
+      <p>One of the core UX ideas in ERP Lite is that the same data shouldn't be rendered the same way for every role.</p>
 
       <ul>
         <li>The floor view prioritizes status and machine-level state.</li>
@@ -65,12 +65,12 @@
         <li>The leadership view compresses the system into uptime, bottlenecks, and risk summaries.</li>
       </ul>
 
-      <p>That is a small shift with a big effect. It makes the interface feel designed for decisions instead of designed for database completeness.</p>
+      <p>That's a small shift with a big effect. It makes the interface feel designed for decisions instead of designed for database completeness.</p>
 
       <h2>What this proves</h2>
       <p>ERP Lite proves that a vendor-agnostic operations front end is realistic if the design starts from readability and the architecture starts from normalization. The ERP remains the system of record. The interface becomes the system of interpretation.</p>
 
-      <p>That is the difference between software that stores the operation and software that helps people run it.</p>
+      <p>That's the difference between software that stores the operation and software that helps people run it.</p>
 
       <div class="article-related">
         <h3>Related work</h3>
@@ -78,13 +78,13 @@
         <ul>
           <li><a routerLink="/lab/erp-lite">ERP Lite demo</a> - the current adapter-first floor map.</li>
           <li><a routerLink="/insights/what-manufacturers-actually-need-from-erp-connected-tooling">What manufacturers actually need from ERP-connected tooling</a> - the broader operations framing.</li>
-          <li><a routerLink="/insights/why-most-dashboards-do-not-fix-the-workflow">Why most dashboards do not fix the workflow</a> - the critique that led to this UX direction.</li>
+          <li><a routerLink="/insights/why-most-dashboards-do-not-fix-the-workflow">Why most dashboards don't fix the workflow</a> - the critique that led to this UX direction.</li>
         </ul>
       </div>
 
       <div class="article-callout">
-        <h3>Want to build an ERP front end that is easier to use than the ERP itself?</h3>
-        <p>That is the point of ERP Lite. If you want a role-aware, connector-friendly operational UI, start with the <a routerLink="/lab/erp-lite">lab demo</a> or reach out through <a routerLink="/contact">contact</a>.</p>
+        <h3>Want to build an ERP front end that's easier to use than the ERP itself?</h3>
+        <p>That's the point of ERP Lite. If you want a role-aware, connector-friendly operational UI, start with the <a routerLink="/lab/erp-lite">lab demo</a> or reach out through <a routerLink="/contact">contact</a>.</p>
       </div>
     </div>
   </div>

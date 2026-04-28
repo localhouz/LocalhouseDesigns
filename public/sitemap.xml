@@ -1,128 +1,188 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://localhousedesigns.netlify.app/</loc>
-    <lastmod>2026-04-09</lastmod>
+    <loc>https://localhousedesigns.com/</loc>
+    <lastmod>2026-04-26</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>https://localhousedesigns.netlify.app/services</loc>
-    <lastmod>2026-04-09</lastmod>
+    <loc>https://localhousedesigns.com/services</loc>
+    <lastmod>2026-04-26</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://localhousedesigns.netlify.app/about</loc>
-    <lastmod>2026-04-09</lastmod>
+    <loc>https://localhousedesigns.com/work</loc>
+    <lastmod>2026-04-26</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://localhousedesigns.com/about</loc>
+    <lastmod>2026-04-26</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://localhousedesigns.netlify.app/insights</loc>
-    <lastmod>2026-04-09</lastmod>
+    <loc>https://localhousedesigns.com/contact</loc>
+    <lastmod>2026-04-26</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://localhousedesigns.com/local-geo-audit</loc>
+    <lastmod>2026-04-26</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://localhousedesigns.com/insights</loc>
+    <lastmod>2026-04-26</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://localhousedesigns.netlify.app/insights/what-geo-means-for-local-businesses</loc>
+    <loc>https://localhousedesigns.com/insights/what-geo-means-for-local-businesses</loc>
     <lastmod>2026-04-09</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://localhousedesigns.netlify.app/insights/what-manufacturers-actually-need-from-erp-connected-tooling</loc>
-    <lastmod>2026-04-09</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://localhousedesigns.netlify.app/insights/erp-lite-designing-an-operational-decision-surface</loc>
-    <lastmod>2026-04-14</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://localhousedesigns.netlify.app/insights/how-structured-data-helps-ai-search-understand-your-business</loc>
-    <lastmod>2026-04-09</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://localhousedesigns.netlify.app/insights/why-a-custom-site-beats-a-booking-platform-page-for-local-search</loc>
-    <lastmod>2026-04-09</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://localhousedesigns.netlify.app/insights/why-most-dashboards-do-not-fix-the-workflow</loc>
-    <lastmod>2026-04-09</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://localhousedesigns.netlify.app/insights/what-local-service-pages-need-to-rank-and-get-cited</loc>
-    <lastmod>2026-04-09</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://localhousedesigns.netlify.app/insights/why-branded-search-ownership-matters-before-local-seo-promises</loc>
-    <lastmod>2026-04-22</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://localhousedesigns.netlify.app/insights/why-google-can-find-your-page-and-still-not-index-it</loc>
-    <lastmod>2026-04-22</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://localhousedesigns.netlify.app/insights/why-local-seo-fails-when-the-contact-path-is-vague</loc>
-    <lastmod>2026-04-14</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://localhousedesigns.netlify.app/insights/how-a-local-service-rebuild-turns-traffic-into-leads</loc>
-    <lastmod>2026-04-14</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://localhousedesigns.netlify.app/insights/syteline-mobile-making-erp-access-work-on-the-floor</loc>
-    <lastmod>2026-04-14</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://localhousedesigns.netlify.app/work</loc>
-    <lastmod>2026-04-09</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.9</priority>
-  </url>
-  <url>
-    <loc>https://localhousedesigns.netlify.app/contact</loc>
-    <lastmod>2026-04-09</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://localhousedesigns.netlify.app/local-geo-audit</loc>
+    <loc>https://localhousedesigns.com/insights/why-local-business-websites-need-clear-service-area-pages</loc>
     <lastmod>2026-04-10</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://localhousedesigns.netlify.app/lab</loc>
-    <lastmod>2026-04-09</lastmod>
-    <changefreq>weekly</changefreq>
+    <loc>https://localhousedesigns.com/insights/what-to-put-above-the-fold-on-a-local-service-homepage</loc>
+    <lastmod>2026-04-11</lastmod>
+    <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://localhousedesigns.netlify.app/lab/erp-lite</loc>
-    <lastmod>2026-04-10</lastmod>
+    <loc>https://localhousedesigns.com/insights/why-your-google-business-profile-and-website-need-to-say-the-same-thing</loc>
+    <lastmod>2026-04-12</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://localhousedesigns.com/insights/why-before-and-after-project-pages-build-more-trust-than-generic-portfolios</loc>
+    <lastmod>2026-04-20</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://localhousedesigns.com/insights/what-a-small-business-website-audit-should-actually-check</loc>
+    <lastmod>2026-04-21</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://localhousedesigns.com/insights/what-a-useful-case-study-page-needs-to-prove</loc>
+    <lastmod>2026-04-22</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://localhousedesigns.com/insights/what-manufacturers-actually-need-from-erp-connected-tooling</loc>
+    <lastmod>2026-04-09</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://localhousedesigns.com/insights/erp-lite-designing-an-operational-decision-surface</loc>
+    <lastmod>2026-04-14</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://localhousedesigns.com/insights/how-structured-data-helps-ai-search-understand-your-business</loc>
+    <lastmod>2026-04-09</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://localhousedesigns.com/insights/why-a-custom-site-beats-a-booking-platform-page-for-local-search</loc>
+    <lastmod>2026-04-09</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://localhousedesigns.com/insights/why-most-dashboards-do-not-fix-the-workflow</loc>
+    <lastmod>2026-04-09</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://localhousedesigns.com/insights/why-internal-dashboards-fail-when-they-ignore-the-next-action</loc>
+    <lastmod>2026-04-23</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://localhousedesigns.com/insights/what-erp-connected-tools-should-expose-to-floor-teams</loc>
+    <lastmod>2026-04-24</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://localhousedesigns.com/insights/when-a-spreadsheet-should-become-a-real-internal-app</loc>
+    <lastmod>2026-04-25</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://localhousedesigns.com/insights/how-custom-business-software-reduces-handoff-friction</loc>
+    <lastmod>2026-04-26</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://localhousedesigns.com/insights/what-local-service-pages-need-to-rank-and-get-cited</loc>
+    <lastmod>2026-04-09</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://localhousedesigns.com/insights/why-branded-search-ownership-matters-before-local-seo-promises</loc>
+    <lastmod>2026-04-22</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://localhousedesigns.com/insights/why-google-can-find-your-page-and-still-not-index-it</loc>
+    <lastmod>2026-04-22</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://localhousedesigns.com/insights/why-local-seo-fails-when-the-contact-path-is-vague</loc>
+    <lastmod>2026-04-14</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://localhousedesigns.com/insights/how-a-local-service-rebuild-turns-traffic-into-leads</loc>
+    <lastmod>2026-04-17</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://localhousedesigns.com/insights/syteline-mobile-making-erp-access-work-on-the-floor</loc>
+    <lastmod>2026-04-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://localhousedesigns.com/lab</loc>
+    <lastmod>2026-04-26</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://localhousedesigns.com/lab/erp-lite</loc>
+    <lastmod>2026-04-26</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>

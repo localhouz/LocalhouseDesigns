@@ -297,3 +297,28 @@ button[type="submit"] {
     a { color: var(--accent); }
   }
 }
+
+@media (max-width: 768px) {
+  .contact-page {
+    padding-top: 6rem;
+  }
+
+  .contact-info {
+    position: static;
+  }
+
+  .contact-form {
+    grid-template-columns: 1fr;
+  }
+
+  .contact-step,
+  .track-btn,
+  .scope-opt,
+  .contact-success {
+    padding: 1.5rem;
+  }
+
+  button[type="submit"] {
+    width: 100%;
+  }
+}

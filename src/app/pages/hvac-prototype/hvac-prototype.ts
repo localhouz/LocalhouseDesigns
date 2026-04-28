@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+﻿import { CommonModule } from '@angular/common';
 import { Component, computed, inject, OnDestroy, OnInit, signal } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { SeoService } from '../../shared/seo/seo.service';
@@ -181,7 +181,7 @@ export class HvacPrototypeComponent implements OnInit, OnDestroy {
   });
 
   ngOnInit() {
-    const base = 'https://localhousedesigns.netlify.app';
+    const base = 'https://localhousedesigns.com';
     const url = `${base}/lab/local-service-hvac-prototype`;
     this.seo.setPage({
       title: 'HVAC Lead Prototype | Localhouse Designs',

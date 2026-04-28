@@ -12,14 +12,14 @@ export class BrandedSerpArticleComponent implements OnInit {
   private seo = inject(SeoService);
 
   takeaways = [
-    'If your business does not own its own name in search, broader SEO claims are usually premature.',
+    "If your business doesn't own its own name in search, broader SEO claims are usually premature.",
     'Branded search is where Google decides whether your site is the clearest source for the entity.',
     'Third-party pages can help validate a brand, but they can also crowd or define it when the official site is weak.',
     'Owning branded search usually starts with clearer identity, stronger support pages, and cleaner outside signals.'
   ];
 
   ngOnInit() {
-    const base = 'https://localhousedesigns.netlify.app';
+    const base = 'https://localhousedesigns.com';
     const url = `${base}/insights/why-branded-search-ownership-matters-before-local-seo-promises`;
     this.seo.setPage({
       title: 'Why Branded Search Ownership Matters Before Local SEO Promises | Localhouse Designs',

@@ -19,7 +19,7 @@ export class ErpLiteCaseStudyComponent implements OnInit {
   ];
 
   ngOnInit() {
-    const base = 'https://localhousedesigns.netlify.app';
+    const base = 'https://localhousedesigns.com';
     const url = `${base}/insights/erp-lite-designing-an-operational-decision-surface`;
     this.seo.setPage({
       title: 'ERP Lite: Designing an Operational Decision Surface | Localhouse Designs',

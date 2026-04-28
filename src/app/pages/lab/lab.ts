@@ -1,4 +1,4 @@
-import {
+﻿import {
   AfterViewInit, Component, ElementRef, inject, NgZone,
   OnDestroy, OnInit, signal, ViewChild,
 } from '@angular/core';
@@ -236,7 +236,7 @@ export class LabComponent implements OnInit, AfterViewInit, OnDestroy {
   private readonly CAM_FROM  = new THREE.Vector3(0, 2.5, 7);
 
   ngOnInit() {
-    const base = 'https://localhousedesigns.netlify.app';
+    const base = 'https://localhousedesigns.com';
     this.seo.setPage({
       title: 'Lab | Localhouse Designs — Commit Solar System',
       description: 'GitHub repos rendered as a live 3D solar system. Each planet is a real repo — texture sourced from the site preview. Built with Three.js WebGL.',

@@ -15,11 +15,11 @@ export class PlatformArticleComponent implements OnInit {
     'Booking-platform pages are good at transactions, but usually weak at search depth, trust signals, and local differentiation.',
     'Custom sites create more room for About content, service clarity, FAQ content, structured data, and proof.',
     'That extra room helps both classic local SEO and AI-driven discovery.',
-    'The goal is not just booking. It is better discovery, stronger trust, and more control.'
+    "The goal isn't just booking. It's better discovery, stronger trust, and more control."
   ];
 
   ngOnInit() {
-    const base = 'https://localhousedesigns.netlify.app';
+    const base = 'https://localhousedesigns.com';
     const url = `${base}/insights/why-a-custom-site-beats-a-booking-platform-page-for-local-search`;
     this.seo.setPage({
       title: 'Why a Custom Site Beats a Booking-Platform Page for Local Search | Localhouse Designs',

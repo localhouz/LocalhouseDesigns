@@ -19,11 +19,11 @@ export class GeoArticleComponent implements OnInit {
   ];
 
   ngOnInit() {
-    const base = 'https://localhousedesigns.netlify.app';
+    const base = 'https://localhousedesigns.com';
     const url = `${base}/insights/what-geo-means-for-local-businesses`;
     this.seo.setPage({
       title: 'What GEO Actually Means for Local Businesses | Localhouse Designs',
-      description: 'A practical explanation of GEO for local businesses: what it is, what it is not, and how it works alongside SEO, structured data, and clearer website messaging.',
+      description: "A practical explanation of GEO for local businesses: what it is, what it isn't, and how it works alongside SEO, structured data, and clearer website messaging.",
       url,
       schemas: [
         {
@@ -31,7 +31,7 @@ export class GeoArticleComponent implements OnInit {
           '@type': ['TechArticle', 'Article'],
           '@id': `${url}#article`,
           headline: 'What GEO Actually Means for Local Businesses',
-          description: 'A practical explanation of GEO for local businesses: what it is, what it is not, and how it works alongside SEO, structured data, and clearer website messaging.',
+          description: "A practical explanation of GEO for local businesses: what it is, what it isn't, and how it works alongside SEO, structured data, and clearer website messaging.",
           datePublished: '2026-04-09',
           dateModified: '2026-04-09',
           author: { '@id': `${base}/about#person` },

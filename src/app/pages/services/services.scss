@@ -425,3 +425,30 @@
     }
   }
 }
+
+@media (max-width: 768px) {
+  .services-page {
+    padding-top: 6rem;
+  }
+
+  .service-row,
+  .service-breakdown,
+  .process__step,
+  .fit-card,
+  .service-answer,
+  .service-reading__card {
+    padding: 1.5rem;
+  }
+
+  .process__heading {
+    margin-bottom: 2rem;
+  }
+
+  .services-cta {
+    padding: 4rem 0;
+
+    h2 {
+      font-size: clamp(2rem, 11vw, 3rem);
+    }
+  }
+}

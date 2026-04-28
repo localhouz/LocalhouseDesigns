@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="627" viewBox="0 0 1200 627">
+﻿<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="627" viewBox="0 0 1200 627">
   <defs>
     <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
       <stop offset="0%" stop-color="#05070d"/>
@@ -45,13 +45,13 @@
 
   <g font-family="Courier New, monospace" font-size="14" fill="rgba(245,245,240,0.6)">
     <text x="120" y="420">Status model</text>
-    <text x="120" y="445">Running · Idle · Down · Setup</text>
+    <text x="120" y="445">Running Â· Idle Â· Down Â· Setup</text>
   </g>
 
   <g>
     <rect x="120" y="480" width="260" height="40" rx="20" fill="none" stroke="url(#accent)" stroke-width="2"/>
     <text x="150" y="506" font-family="Courier New, monospace" font-size="14" fill="#ff3c00">
-      localhousedesigns.netlify.app/lab/erp-lite
+      localhousedesigns.com/lab/erp-lite
     </text>
   </g>
 

@@ -1,4 +1,4 @@
-import { Component, inject, OnInit } from '@angular/core';
+﻿import { Component, inject, OnInit } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { SeoService } from '../../shared/seo/seo.service';
 
@@ -76,7 +76,7 @@ export class AboutComponent implements OnInit {
   ];
 
   ngOnInit() {
-    const base = 'https://localhousedesigns.netlify.app';
+    const base = 'https://localhousedesigns.com';
     this.seo.setPage({
       title: 'About | Localhouse Designs - Broken Arrow Web Studio, ERP and SEO/GEO',
       description: 'About Localhouse Designs: a Broken Arrow, Oklahoma web studio in the Tulsa market led by Steven Rausch, with experience in Angular development, ERP migration, workflow automation, product management, and structured-data-first SEO/GEO.',

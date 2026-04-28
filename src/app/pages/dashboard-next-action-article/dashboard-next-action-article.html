@@ -1,0 +1,52 @@
+<article class="article-page">
+  <div class="article-hero container">
+    <p class="label">Insight</p>
+    <h1>Why internal dashboards fail<br><em>when they ignore the next action.</em></h1>
+    <p class="article-hero__sub">Visibility is useful only when it helps someone decide what to do. Otherwise the dashboard becomes another place to stare at the same problem.</p>
+    <p class="article-hero__byline">Written by <a routerLink="/about">Steven Rausch</a> from Localhouse Designs in Broken Arrow, Oklahoma.</p>
+  </div>
+
+  <div class="article-layout container">
+    <aside class="article-aside">
+      <span class="article-aside__label">Quick take</span>
+      <ul>
+        @for (item of takeaways; track item) {
+          <li>{{ item }}</li>
+        }
+      </ul>
+    </aside>
+
+    <div class="article-body">
+      <p>A dashboard can be accurate and still not be useful. It can show the right numbers, the right statuses, and the right charts while still leaving the user with the same hard question: what am I supposed to do now?</p>
+
+      <p>That is where a lot of internal tooling stalls. It improves visibility but leaves interpretation untouched.</p>
+
+      <h2>Status is not enough</h2>
+      <p>Status tells the user what is happening. It does not always tell them what matters, who owns the next step, or whether the issue is urgent. A screen full of status can still create more work if the user has to inspect every row manually.</p>
+
+      <p>The dashboard should narrow attention, not just present the whole room at once.</p>
+
+      <h2>Exceptions need context</h2>
+      <p>Most teams do not need every data point equally. They need to know what is stale, blocked, late, missing, duplicated, or risky. Even then, an exception is more useful when it explains why it matters.</p>
+
+      <p>"Order delayed" is a start. "Order delayed because material is short and production starts tomorrow" is much closer to a decision.</p>
+
+      <h2>The next action should be visible</h2>
+      <p>A strong dashboard should make the next useful move easier to see: call purchasing, update the routing, review the blocked order, check the stale machine, approve the exception, or escalate the shortage.</p>
+
+      <p>If the user has to leave the dashboard, open the ERP, compare three screens, and ask someone what to do, the dashboard has not carried enough of the workflow.</p>
+
+      <h2>The practical takeaway</h2>
+      <p>Dashboards fail when they stop at "here is what is happening." Better internal tools move closer to "here is what needs attention, why it matters, and what should happen next."</p>
+
+      <div class="article-related">
+        <h3>Related reading</h3>
+        <ul>
+          <li><a routerLink="/insights/why-most-dashboards-do-not-fix-the-workflow">Why most dashboards don't fix the workflow</a> - the broader dashboard critique.</li>
+          <li><a routerLink="/insights/erp-lite-designing-an-operational-decision-surface">ERP Lite: Designing an operational decision surface</a> - a UI case study built around attention.</li>
+          <li><a routerLink="/lab/erp-lite">ERP Lite demo</a> - the working prototype.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</article>

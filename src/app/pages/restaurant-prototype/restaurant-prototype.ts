@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+﻿import { CommonModule } from '@angular/common';
 import { Component, computed, inject, OnInit, signal } from '@angular/core';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { SeoService } from '../../shared/seo/seo.service';
@@ -79,7 +79,7 @@ export class RestaurantPrototypeComponent implements OnInit {
 
       if (!prototype) return;
 
-      const base = 'https://localhousedesigns.netlify.app';
+      const base = 'https://localhousedesigns.com';
       const url = `${base}/private-preview/${prototype.shareSlug}`;
       this.seo.setPage({
         title: `${prototype.businessName} Prototype | Localhouse Designs`,

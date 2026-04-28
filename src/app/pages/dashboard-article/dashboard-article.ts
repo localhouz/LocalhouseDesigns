@@ -12,14 +12,14 @@ export class DashboardArticleComponent implements OnInit {
   private seo = inject(SeoService);
 
   takeaways = [
-    'More visibility is not the same thing as less friction.',
-    'A dashboard that does not help a decision happen faster usually becomes another screen to babysit.',
+    "More visibility isn't the same thing as less friction.",
+    "A dashboard that doesn't help a decision happen faster usually becomes another screen to babysit.",
     'Better internal tools are built around exceptions, actions, and repeated pain points.',
     'Workflow-aware software usually creates more value than dashboard-first software.'
   ];
 
   ngOnInit() {
-    const base = 'https://localhousedesigns.netlify.app';
+    const base = 'https://localhousedesigns.com';
     const url = `${base}/insights/why-most-dashboards-do-not-fix-the-workflow`;
     this.seo.setPage({
       title: 'Why Most Dashboards Do Not Fix the Workflow | Localhouse Designs',

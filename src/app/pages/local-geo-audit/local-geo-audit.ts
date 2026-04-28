@@ -1,4 +1,4 @@
-import { Component, inject, OnInit, signal } from '@angular/core';
+﻿import { Component, inject, OnInit, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { SeoService } from '../../shared/seo/seo.service';
 
@@ -52,7 +52,7 @@ export class LocalGeoAuditComponent implements OnInit {
   ];
 
   ngOnInit() {
-    const base = 'https://localhousedesigns.netlify.app';
+    const base = 'https://localhousedesigns.com';
     this.seo.setPage({
       title: 'Local GEO Audit | Localhouse Designs',
       description: 'Request a Local GEO audit for your business. Get a scorecard, top fixes, and a prioritized action list for local visibility and answer-ready content.',

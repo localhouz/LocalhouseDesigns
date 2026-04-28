@@ -202,3 +202,14 @@ Summary:
 - Logged the new Prescribed Burn `/sold-at` page that turns recent in-person retail presence into a first-party stockist surface on the official domain.
 - Recorded the guardrails used for the rollout: no co-ops, no personal contacts, no price or stock-count claims, and a clear call-ahead disclaimer for availability.
 - Reframed the stockist page as both a customer-helpful page and an entity-control move so retailer intent is less dependent on third-party listings alone.
+
+## [2026-04-24] ingest | Prescribed Burn canonical and sitemap normalization
+
+Touched:
+- `raw/sources/2026-04-21-prescribed-burn-search-console-indexing-and-schema.md`
+
+Summary:
+- Investigated new Search Console exclusion buckets for Prescribed Burn and confirmed a real mismatch between the live site and the emitted SEO layer.
+- The live site resolves on the apex domain with trailing slashes on inner routes, while the codebase was still outputting `www` canonicals and non-slash sitemap URLs.
+- Normalized the canonical source of truth to `https://prescribedburnsauces.com`, updated the sitemap and robots reference, and aligned page-level schema/canonical URLs to the final served route shape.
+- Left `noindex` and `404` as open URL-level follow-ups because those buckets are not currently explained by the application code alone.

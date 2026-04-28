@@ -19,7 +19,7 @@ export class LocalServiceRebuildArticleComponent implements OnInit {
   ];
 
   ngOnInit() {
-    const base = 'https://localhousedesigns.netlify.app';
+    const base = 'https://localhousedesigns.com';
     const url = `${base}/insights/how-a-local-service-rebuild-turns-traffic-into-leads`;
     this.seo.setPage({
       title: 'How a Local Service Rebuild Turns Traffic Into Leads | Localhouse Designs',

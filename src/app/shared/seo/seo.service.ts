@@ -1,4 +1,4 @@
-import { inject, Injectable } from '@angular/core';
+﻿import { inject, Injectable } from '@angular/core';
 import { Meta, Title } from '@angular/platform-browser';
 import { DOCUMENT } from '@angular/common';
 
@@ -17,7 +17,7 @@ export class SeoService {
   private readonly meta = inject(Meta);
   private readonly doc = inject(DOCUMENT);
 
-  private readonly baseUrl = 'https://localhousedesigns.netlify.app';
+  private readonly baseUrl = 'https://localhousedesigns.com';
   private readonly defaultImage = `${this.baseUrl}/og.png`;
 
   setPage(config: SeoConfig): void {
