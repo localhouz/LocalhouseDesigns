@@ -1,0 +1,61 @@
+<div class="local-page">
+  <section class="page-header container">
+    <p class="label">Tulsa service business websites</p>
+    <h1>Clearer websites for<br><em>Tulsa-area service businesses.</em></h1>
+    <p class="page-header__sub">Localhouse Designs is based in Broken Arrow and helps Oklahoma service businesses replace vague, dated, or platform-limited sites with clearer pages, stronger trust signals, and a contact path people can follow.</p>
+    <div class="local-page__actions">
+      <a routerLink="/contact" class="btn btn--filled">Request a Quick Audit -&gt;</a>
+      <a routerLink="/work" class="btn btn--accent">See Proof -&gt;</a>
+    </div>
+  </section>
+
+  <section class="local-signals section">
+    <div class="container">
+      <p class="label">Local fit</p>
+      <div class="local-signals__grid">
+        @for (signal of signals; track signal) {
+          <article class="signal-card">
+            <p>{{ signal }}</p>
+          </article>
+        }
+      </div>
+    </div>
+  </section>
+
+  <section class="local-work section container">
+    <div class="local-work__intro">
+      <p class="label">What gets fixed</p>
+      <h2>Not a prettier template.<br><em>A clearer path to contact.</em></h2>
+    </div>
+    <div class="local-work__grid">
+      @for (fix of fixes; track fix) {
+        <article class="fix-card">
+          <p>{{ fix }}</p>
+        </article>
+      }
+    </div>
+  </section>
+
+  <section class="local-proof section">
+    <div class="container">
+      <p class="label">Proof points</p>
+      <div class="local-proof__grid">
+        <a routerLink="/work/north-styles" class="proof-card">
+          <span>Case study</span>
+          <h2>North Styles</h2>
+          <p>Platform replacement for a local service brand with stronger local search and booking foundations.</p>
+        </a>
+        <a routerLink="/work/norcal-sauce-worx" class="proof-card">
+          <span>Case study</span>
+          <h2>NorCal Sauce Worx</h2>
+          <p>AI-assisted ecommerce prototype shaped around product clarity, speed, and buyer confidence.</p>
+        </a>
+        <a routerLink="/work/local-geo-standard" class="proof-card">
+          <span>Case study</span>
+          <h2>Local GEO Standard</h2>
+          <p>Repeatable scoring method for local visibility, trust signals, and contact-path clarity.</p>
+        </a>
+      </div>
+    </div>
+  </section>
+</div>

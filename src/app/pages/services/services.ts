@@ -106,6 +106,33 @@ export class ServicesComponent implements OnInit {
     'Launch, analytics, forms, and follow-through handled in the same build instead of split across vendors'
   ];
 
+  pricingTiers = [
+    {
+      name: 'Landing page or simple business site',
+      range: 'Up to $3K',
+      note: 'For a focused one-page build or a small 3-5 page site that needs to look credible, load fast, and point people toward contact.',
+      items: ['One-page landing page or simple brochure site', 'Responsive frontend build', 'Contact form and CTA path', 'Basic SEO metadata and launch support']
+    },
+    {
+      name: 'Local service site or advanced frontend',
+      range: 'Up to $6K',
+      note: 'For a stronger local business site, a more polished frontend, or interactive pieces that go beyond a basic brochure build.',
+      items: ['Service pages and stronger local trust signals', 'Custom sections, proof, FAQs, and case-study structure', 'Interactive frontend elements when useful', 'Local SEO/GEO, schema, tracking, and deployment']
+    },
+    {
+      name: 'CMS, backend, or database-backed web build',
+      range: 'Up to $20K',
+      note: 'For web projects that need editable content, custom data, backend logic, dashboards, quote flows, or a small application layer.',
+      items: ['CMS-backed pages, blogs, resources, or case studies', 'Backend APIs, forms, auth, or admin workflows', 'Database setup or structured data storage', 'More testing, launch planning, and iteration']
+    },
+    {
+      name: 'Ongoing support',
+      range: '$250-$2.5K/mo',
+      note: 'For keeping a site healthy after launch or steadily improving content, SEO/GEO, analytics, and small frontend features.',
+      items: ['Maintenance and small updates', 'SEO/GEO and analytics review', 'Content or landing-page iteration', 'Monthly feature and support capacity']
+    }
+  ];
+
   services = [
     {
       num: '01',
@@ -162,11 +189,36 @@ export class ServicesComponent implements OnInit {
             '@type': 'OfferCatalog',
             name: 'Website And Operational Tooling Services',
             itemListElement: [
-              { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'Website Rebuilds', description: 'Custom websites for Oklahoma service businesses that need more clarity, more trust, and a better contact path.' } },
+              {
+                '@type': 'Offer',
+                name: 'Landing page or simple business site',
+                priceCurrency: 'USD',
+                priceSpecification: { '@type': 'PriceSpecification', priceCurrency: 'USD', maxPrice: 3000 },
+                itemOffered: { '@type': 'Service', name: 'Landing Page Or Simple Business Site', description: 'Focused landing pages and simple 3-5 page business websites with responsive frontend, contact flow, SEO metadata, and launch support.' }
+              },
+              {
+                '@type': 'Offer',
+                name: 'Local service site or advanced frontend',
+                priceCurrency: 'USD',
+                priceSpecification: { '@type': 'PriceSpecification', priceCurrency: 'USD', maxPrice: 6000 },
+                itemOffered: { '@type': 'Service', name: 'Local Service Site Or Advanced Frontend', description: 'Local service websites and custom frontend builds with stronger page structure, trust signals, schema, tracking, and interactive frontend elements where useful.' }
+              },
+              {
+                '@type': 'Offer',
+                name: 'CMS, backend, or database-backed web build',
+                priceCurrency: 'USD',
+                priceSpecification: { '@type': 'PriceSpecification', priceCurrency: 'USD', maxPrice: 20000 },
+                itemOffered: { '@type': 'Service', name: 'CMS Backend Or Database Backed Web Build', description: 'Web projects with CMS content, backend logic, APIs, dashboards, quote flows, auth, admin workflows, or database-backed features.' }
+              },
+              {
+                '@type': 'Offer',
+                name: 'Ongoing website support',
+                priceCurrency: 'USD',
+                priceSpecification: { '@type': 'UnitPriceSpecification', priceCurrency: 'USD', minPrice: 250, maxPrice: 2500, unitText: 'month' },
+                itemOffered: { '@type': 'Service', name: 'Ongoing Website Support', description: 'Maintenance, SEO/GEO iteration, analytics review, content updates, and small frontend improvements.' }
+              },
               { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'Local SEO And GEO Foundations', description: 'Visible NAP, structured data, FAQ coverage, metadata, and map-driven contact flow improvements.' } },
-              { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'Audit-First Conversion Cleanup', description: 'Async website clarity and local visibility review with a short list of practical fixes.' } },
-              { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'ERP-Connected Tooling', description: 'Operational dashboards, workflow tools, and ERP-aware interfaces for Business Central, SAP, and Infor SyteLine environments.' } },
-              { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'Launch And Tracking Support', description: 'Deployment, forms, analytics, Search Console, and post-launch cleanup handled in the same workflow.' } }
+              { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'ERP And Software Consulting', description: 'ERP/software consulting and builds are scoped separately using broader project budget ranges.' } }
             ]
           }
         },
@@ -213,6 +265,11 @@ export class ServicesComponent implements OnInit {
               '@type': 'Question',
               name: 'What ERP systems does Localhouse Designs work with?',
               acceptedAnswer: { '@type': 'Answer', text: 'Localhouse Designs has hands-on familiarity with Microsoft Business Central, SAP, and Infor SyteLine. ERP-related work includes operational dashboards, workflow helpers, reporting views, and front ends that make internal data easier to read.' }
+            },
+            {
+              '@type': 'Question',
+              name: 'How much does a Localhouse Designs project cost?',
+              acceptedAnswer: { '@type': 'Answer', text: 'Web pricing is scoped by complexity. Landing pages and simple business sites are usually up to $3K. Local service sites and more advanced frontend builds are usually up to $6K. CMS, backend, or database-backed web builds can run up to $20K. Ongoing support ranges from $250 to $2.5K per month. ERP/software consulting and builds are scoped separately with broader budget ranges.' }
             },
             {
               '@type': 'Question',

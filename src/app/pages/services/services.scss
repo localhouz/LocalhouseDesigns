@@ -246,6 +246,93 @@
   }
 }
 
+.pricing {
+  &__header {
+    max-width: 52rem;
+    margin-bottom: 2rem;
+
+    h2 {
+      margin: 1rem 0;
+      font-size: clamp(2rem, 4vw, 3.5rem);
+
+      em {
+        font-style: normal;
+        color: var(--accent);
+      }
+    }
+
+    p {
+      color: rgba(10, 10, 18, 0.64);
+      font-size: 1rem;
+      line-height: 1.8;
+    }
+  }
+
+  &__grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1px;
+    border: 1px solid var(--border);
+    background: var(--border);
+
+    @media (max-width: 900px) {
+      grid-template-columns: 1fr;
+    }
+  }
+}
+
+.pricing-card {
+  display: flex;
+  min-height: 100%;
+  flex-direction: column;
+  gap: 1rem;
+  padding: 2rem;
+  background: var(--bg);
+
+  &__range {
+    color: var(--accent);
+    font-family: var(--font-mono);
+    font-size: 1.65rem;
+    font-weight: 700;
+    line-height: 1;
+  }
+
+  h3 {
+    font-size: 1.2rem;
+  }
+
+  p {
+    color: rgba(10, 10, 18, 0.64);
+    font-size: 0.94rem;
+    line-height: 1.75;
+  }
+
+  ul {
+    display: flex;
+    flex-direction: column;
+    gap: 0.7rem;
+    margin-top: 0.3rem;
+    list-style: none;
+  }
+
+  li {
+    position: relative;
+    padding-left: 1rem;
+    color: rgba(10, 10, 18, 0.62);
+    font-size: 0.9rem;
+    line-height: 1.65;
+
+    &::before {
+      content: '>';
+      position: absolute;
+      left: 0;
+      color: var(--accent);
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+    }
+  }
+}
+
 .process {
   background: var(--mid);
 
@@ -433,6 +520,7 @@
 
   .service-row,
   .service-breakdown,
+  .pricing-card,
   .process__step,
   .fit-card,
   .service-answer,

@@ -31,10 +31,23 @@
     object-fit: contain;
   }
 
+  &__local {
+    color: rgba(10,10,18,0.48);
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+    font-style: normal;
+    letter-spacing: 0.05em;
+    line-height: 1.7;
+    text-transform: uppercase;
+  }
+
   &__nav {
     display: flex;
+    flex-wrap: wrap;
     gap: 2rem;
     align-items: center;
+    justify-content: flex-end;
+    max-width: 760px;
 
     a {
       font-family: var(--font-mono);

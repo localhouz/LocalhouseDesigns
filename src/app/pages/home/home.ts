@@ -220,8 +220,14 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
           name: 'Localhouse Designs',
           description: 'Boutique web studio helping Oklahoma service businesses rebuild vague or underperforming websites into clearer, higher-converting sites with stronger local SEO/GEO foundations. Enterprise and ERP-connected tooling also available.',
           url: base,
+          priceRange: '$5K-$40K+',
           logo: { '@type': 'ImageObject', url: `${base}/og.png`, width: 1200, height: 630 },
           sameAs: ['https://github.com/localhouz', 'https://www.linkedin.com/in/steven-rausch83/'],
+          founder: {
+            '@type': 'Person',
+            name: 'Steven Rausch',
+            url: 'https://www.linkedin.com/in/steven-rausch83/'
+          },
           address: {
             '@type': 'PostalAddress',
             addressLocality: 'Broken Arrow',
@@ -254,6 +260,9 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
             'Mobile Floor Apps', 'GA4'
           ],
           areaServed: [
+            { '@type': 'City', name: 'Broken Arrow' },
+            { '@type': 'City', name: 'Tulsa' },
+            { '@type': 'City', name: 'Oklahoma City' },
             { '@type': 'State', name: 'Oklahoma' },
             { '@type': 'Country', name: 'United States' }
           ]

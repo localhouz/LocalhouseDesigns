@@ -53,6 +53,8 @@ export class WorkComponent implements OnInit {
         { val: '3', label: 'SEO / GEO / AEO' },
         { val: 'Old -> New', label: 'Platform replaced' },
       ],
+      ctaLabel: 'Read the case study ->',
+      ctaRoute: '/work/north-styles',
       comingSoon: false,
     },
     {
@@ -76,7 +78,7 @@ export class WorkComponent implements OnInit {
         { val: 'Repeatable', label: 'Method shown' },
       ],
       ctaLabel: 'Request the full audit ->',
-      ctaRoute: '/local-geo-audit',
+      ctaRoute: '/work/local-geo-standard',
       comingSoon: false,
     },
     {
@@ -100,6 +102,8 @@ export class WorkComponent implements OnInit {
         { val: 'FAQ + Service', label: 'Schema layers' },
         { val: 'B2B', label: 'Inquiry-ready' },
       ],
+      ctaLabel: 'Read the case study ->',
+      ctaRoute: '/work/norcal-sauce-worx',
       comingSoon: false,
     },
     {

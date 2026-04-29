@@ -1,0 +1,125 @@
+.case-page {
+  padding-top: 8rem;
+}
+
+.case-hero {
+  padding: 4rem 0 2rem;
+
+  h1 {
+    margin: 1.5rem 0 1rem;
+    font-size: clamp(3rem, 7vw, 6rem);
+
+    em {
+      color: var(--accent);
+      font-style: normal;
+    }
+  }
+
+  p {
+    max-width: 840px;
+    color: rgba(10,10,18,0.64);
+    font-size: 1.08rem;
+    line-height: 1.85;
+  }
+
+  &__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-top: 2rem;
+  }
+}
+
+.case-body__grid,
+.case-changes__grid,
+.case-metrics {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1px;
+  border: 1px solid var(--border);
+  background: var(--border);
+}
+
+.case-changes {
+  margin-top: 4rem;
+
+  .label {
+    margin-bottom: 2rem;
+  }
+
+  &__grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+.case-panel,
+.change-card,
+.metric-card {
+  background: var(--bg);
+  padding: 2rem;
+
+  p {
+    color: rgba(10,10,18,0.64);
+    font-size: 0.95rem;
+    line-height: 1.8;
+  }
+}
+
+.case-panel span,
+.metric-card span {
+  display: block;
+  color: var(--accent);
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  letter-spacing: 0.12em;
+  margin-bottom: 0.9rem;
+  text-transform: uppercase;
+}
+
+.case-metrics {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  margin-top: 4rem;
+}
+
+.metric-card strong {
+  display: block;
+  color: var(--accent);
+  font-family: var(--font-mono);
+  font-size: 2rem;
+  line-height: 1;
+  margin-bottom: 0.5rem;
+}
+
+.case-stack {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 2rem;
+
+  span {
+    border: 1px solid var(--border);
+    color: rgba(10,10,18,0.5);
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+    letter-spacing: 0.08em;
+    padding: 0.25rem 0.55rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .case-page {
+    padding-top: 6rem;
+  }
+
+  .case-body__grid,
+  .case-changes__grid,
+  .case-metrics {
+    grid-template-columns: 1fr;
+  }
+
+  .case-panel,
+  .change-card,
+  .metric-card {
+    padding: 1.5rem;
+  }
+}

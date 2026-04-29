@@ -23,18 +23,40 @@ export class ContactComponent implements OnInit {
   timeline = '';
 
   projectTypeOptions = [
-    'Local business site or lead-path rebuild',
-    'Brand or ecommerce site',
+    'Website: landing page or simple business site',
+    'Website: local service site or advanced frontend',
+    'Website: CMS, backend, or database-backed build',
+    'Ongoing website support',
     'ERP integration or internal tooling',
+    'Software consulting or custom build',
     'Not sure yet'
   ];
 
-  budgetOptions = [
-    'Under $5K',
-    '$5K - $15K',
-    '$15K - $40K',
-    '$40K+',
-    "Not sure yet - let's scope it"
+  budgetGroups = [
+    {
+      label: 'Website budgets',
+      options: [
+        'Up to $3K',
+        'Up to $6K',
+        'Up to $20K',
+        '$250-$2.5K/mo ongoing support'
+      ]
+    },
+    {
+      label: 'ERP / software budgets',
+      options: [
+        'Under $5K',
+        '$5K - $15K',
+        '$15K - $40K',
+        '$40K+'
+      ]
+    },
+    {
+      label: 'Still scoping',
+      options: [
+        "Not sure yet - let's scope it"
+      ]
+    }
   ];
 
   timelineOptions = [
