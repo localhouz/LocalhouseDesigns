@@ -1,5 +1,6 @@
-import { Component, signal, OnDestroy, ViewChild, ElementRef, AfterViewChecked, inject } from '@angular/core';
+import { Component, signal, OnDestroy, ViewChild, ElementRef, AfterViewChecked } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { RouterLink } from '@angular/router';
 import { GenomeRelayClient } from '../genome/genome-relay-client';
 import { environment } from '../../../environments/environment';
 
@@ -12,7 +13,7 @@ interface Message {
 @Component({
   selector: 'app-chat-widget',
   standalone: true,
-  imports: [FormsModule],
+  imports: [FormsModule, RouterLink],
   templateUrl: './chat-widget.html',
   styleUrl: './chat-widget.scss',
 })
