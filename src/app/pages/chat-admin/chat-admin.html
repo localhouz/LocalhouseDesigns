@@ -1,3 +1,20 @@
+@if (needsSeed()) {
+  <div class="chat-admin-setup">
+    <div class="chat-admin-setup__card">
+      <h2>Admin setup</h2>
+      <p>Paste your 64-character admin seed to connect.</p>
+      <input
+        type="password"
+        [(ngModel)]="seedInput"
+        placeholder="64-char hex seed"
+        (keydown.enter)="saveSeed()"
+        autocomplete="off"
+        spellcheck="false"
+      />
+      <button class="btn btn--filled" (click)="saveSeed()" [disabled]="seedInput.trim().length !== 64">Connect</button>
+    </div>
+  </div>
+} @else {
 <div class="chat-admin" [class.chat-admin--show-thread]="mobileView() === 'thread'">
 
   <!-- ── Inbox list ── -->
@@ -80,3 +97,4 @@
   </div>
 
 </div>
+}

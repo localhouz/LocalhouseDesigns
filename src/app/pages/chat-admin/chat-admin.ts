@@ -25,20 +25,32 @@ export class ChatAdminComponent implements OnDestroy, AfterViewChecked {
   threads      = signal<Thread[]>([]);
   activeThread = signal<Thread | null>(null);
   mobileView   = signal<'list' | 'thread'>('list');
+  needsSeed    = signal(false);
+  seedInput    = '';
   replyText    = '';
   private shouldScroll = false;
   private readonly STORAGE_KEY = 'lh_chat_threads';
 
-  private readonly ADMIN_SEED = environment.adminSeedHex
-    || localStorage.getItem('lh_admin_seed')
-    || '';
+  private get ADMIN_SEED(): string {
+    return environment.adminSeedHex || localStorage.getItem('lh_admin_seed') || '';
+  }
   private client: GenomeRelayClient | null = null;
 
   constructor() {
     this.threads.set(this.loadThreads());
     if (!this.ADMIN_SEED) {
-      console.warn('[chat-admin] No admin seed — set lh_admin_seed in localStorage or environment.adminSeedHex');
+      this.needsSeed.set(true);
+    } else {
+      this.connect();
     }
+  }
+
+  saveSeed(): void {
+    const s = this.seedInput.trim();
+    if (s.length !== 64) return;
+    localStorage.setItem('lh_admin_seed', s);
+    this.seedInput = '';
+    this.needsSeed.set(false);
     this.connect();
   }
 
