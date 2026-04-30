@@ -1,6 +1,6 @@
 import { Component, signal, OnDestroy, ViewChild, ElementRef, AfterViewChecked } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { SlicePipe } from '@angular/common';
+import { SlicePipe, DatePipe } from '@angular/common';
 import { GenomeRelayClient } from '../../shared/genome/genome-relay-client';
 import { environment } from '../../../environments/environment';
 
@@ -14,7 +14,7 @@ interface Thread {
 @Component({
   selector: 'app-chat-admin',
   standalone: true,
-  imports: [FormsModule, SlicePipe],
+  imports: [FormsModule, SlicePipe, DatePipe],
   templateUrl: './chat-admin.html',
   styleUrl: './chat-admin.scss',
 })
