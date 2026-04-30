@@ -38,5 +38,6 @@ export const routes: Routes = [
   { path: 'lab/erp-lite', loadComponent: () => import('./pages/lab-erp-lite/lab-erp-lite').then(m => m.LabErpLiteComponent) },
   { path: 'lab/local-service-hvac-prototype', loadComponent: () => import('./pages/hvac-prototype/hvac-prototype').then(m => m.HvacPrototypeComponent) },
   { path: 'private-preview/:slug', loadComponent: () => import('./pages/restaurant-prototype/restaurant-prototype').then(m => m.RestaurantPrototypeComponent) },
+  { path: 's/chat', loadComponent: () => import('./pages/chat-admin/chat-admin').then(m => m.ChatAdminComponent) },
   { path: '**',       redirectTo: '' },
 ];

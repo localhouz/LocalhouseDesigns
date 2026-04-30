@@ -1,0 +1,43 @@
+<div class="chat-admin">
+  <div class="chat-admin__sidebar">
+    <div class="chat-admin__sidebar-header">
+      <span class="chat-admin__title">Inbox</span>
+      <span class="chat-admin__status" [class.chat-admin__status--online]="status() === 'online'">
+        {{ status() }}
+      </span>
+    </div>
+    @if (threads().length === 0) {
+      <p class="chat-admin__empty">No messages yet.</p>
+    }
+    @for (thread of threads(); track thread.visitorDid) {
+      <button class="chat-admin__thread" [class.chat-admin__thread--active]="activeThread()?.visitorDid === thread.visitorDid" (click)="selectThread(thread)">
+        <span class="chat-admin__thread-name">{{ thread.name }}</span>
+        <span class="chat-admin__thread-preview">{{ thread.messages[thread.messages.length - 1]?.text | slice:0:40 }}...</span>
+        @if (thread.unread > 0) {
+          <span class="chat-admin__badge">{{ thread.unread }}</span>
+        }
+      </button>
+    }
+  </div>
+
+  <div class="chat-admin__main">
+    @if (!activeThread()) {
+      <div class="chat-admin__placeholder">
+        <p>Select a conversation to reply.</p>
+      </div>
+    } @else {
+      <div class="chat-admin__messages" #messagesEl>
+        @for (msg of activeThread()!.messages; track msg.ts) {
+          <div class="chat-admin__msg" [class.chat-admin__msg--visitor]="msg.from === 'visitor'" [class.chat-admin__msg--steve]="msg.from === 'steve'">
+            <span class="chat-admin__msg-label">{{ msg.from === 'visitor' ? activeThread()!.name : 'You' }}</span>
+            <p>{{ msg.text }}</p>
+          </div>
+        }
+      </div>
+      <div class="chat-admin__reply-row">
+        <textarea [(ngModel)]="replyText" (keydown)="onKeydown($event)" placeholder="Type a reply — Enter to send" rows="2"></textarea>
+        <button class="btn btn--filled" (click)="sendReply()" [disabled]="!replyText.trim() || status() !== 'online'">Send</button>
+      </div>
+    }
+  </div>
+</div>

@@ -1,0 +1,64 @@
+<div class="chat-widget">
+  <button class="chat-widget__bubble" (click)="toggleOpen()" [class.chat-widget__bubble--open]="open()" aria-label="Chat with us">
+    @if (!open()) {
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+      </svg>
+    } @else {
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+        <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
+      </svg>
+    }
+  </button>
+
+  @if (open()) {
+    <div class="chat-widget__panel">
+      <div class="chat-widget__header">
+        <div class="chat-widget__header-info">
+          <span class="chat-widget__name">Localhouse Designs</span>
+          <span class="chat-widget__status" [class.chat-widget__status--online]="status() === 'online'">
+            {{ status() === 'online' ? 'Online now' : status() === 'connecting' ? 'Connecting...' : 'Offline — try the contact form' }}
+          </span>
+        </div>
+      </div>
+
+      <div class="chat-widget__messages" #messagesEl>
+        @if (messages().length === 0) {
+          <div class="chat-widget__intro">
+            <p>Ask anything about your site or project. No sales script.</p>
+          </div>
+        }
+        @for (msg of messages(); track msg.ts) {
+          <div class="chat-widget__msg" [class.chat-widget__msg--visitor]="msg.from === 'visitor'" [class.chat-widget__msg--steve]="msg.from === 'steve'">
+            <span>{{ msg.text }}</span>
+          </div>
+        }
+        @if (submitted() && status() === 'online' && messages().length > 0) {
+          <p class="chat-widget__receipt">Sent — typically replies within a few minutes during business hours.</p>
+        }
+      </div>
+
+      @if (status() === 'offline') {
+        <div class="chat-widget__offline">
+          <p>Steve's PC is offline right now.</p>
+          <a routerLink="/contact" class="btn btn--filled" style="font-size:0.75rem;padding:0.5rem 1rem">Use the contact form -></a>
+        </div>
+      } @else {
+        <div class="chat-widget__input-row">
+          <textarea
+            [(ngModel)]="inputText"
+            (keydown)="onKeydown($event)"
+            placeholder="Type a message..."
+            rows="2"
+            [disabled]="status() !== 'online'"
+          ></textarea>
+          <button class="chat-widget__send" (click)="send()" [disabled]="!inputText.trim() || status() !== 'online' || sending()">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/>
+            </svg>
+          </button>
+        </div>
+      }
+    </div>
+  }
+</div>
