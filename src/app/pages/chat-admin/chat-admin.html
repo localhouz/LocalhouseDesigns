@@ -24,6 +24,9 @@
       <span class="chat-admin__dot" [class.chat-admin__dot--online]="status() === 'online'" [title]="status()"></span>
     </div>
 
+    @if (errorMsg()) {
+      <p class="chat-admin__error">⚠ {{ errorMsg() }}</p>
+    }
     @if (threads().length === 0) {
       <p class="chat-admin__empty">No messages yet.</p>
     }

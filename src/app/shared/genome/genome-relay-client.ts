@@ -141,11 +141,20 @@ export class GenomeRelayClient {
   get isConnected(): boolean { return this.connected; }
 
   async connect(): Promise<void> {
-    const { privateKey, publicKeyBytes } = await deriveKeypair(this.config.seedHex, this.config.publicKeyHex);
+    console.log('[relay-client] deriving keypair…', { seedHex: this.config.seedHex ? this.config.seedHex.slice(0,8)+'…' : 'none', publicKeyHex: this.config.publicKeyHex ? this.config.publicKeyHex.slice(0,8)+'…' : 'none' });
+    let privateKey: CryptoKey;
+    let publicKeyBytes: Uint8Array;
+    try {
+      ({ privateKey, publicKeyBytes } = await deriveKeypair(this.config.seedHex, this.config.publicKeyHex));
+    } catch (err) {
+      console.error('[relay-client] deriveKeypair failed:', err);
+      throw err;
+    }
     this.privateKey = privateKey;
     const { did, publicKeyHex } = pubKeyToDidAndHex(publicKeyBytes);
     this.did = did;
     this.publicKeyHex = publicKeyHex;
+    console.log('[relay-client] connecting as DID:', did);
     return this._open();
   }
 
@@ -165,12 +174,19 @@ export class GenomeRelayClient {
 
         switch (msg.type) {
           case 'register_challenge': {
-            const payload = new TextEncoder().encode(`${this.did}:${msg.nonce}`);
-            const sig = await signBytes(this.privateKey!, payload);
-            this._send({ type: 'register_resp', did: this.did, nonce: msg.nonce, sig });
+            console.log('[relay-client] signing challenge…');
+            try {
+              const payload = new TextEncoder().encode(`${this.did}:${msg.nonce}`);
+              const sig = await signBytes(this.privateKey!, payload);
+              this._send({ type: 'register_resp', did: this.did, nonce: msg.nonce, sig });
+            } catch (err) {
+              console.error('[relay-client] sign failed:', err);
+              reject(err as Error);
+            }
             break;
           }
           case 'registered':
+            console.log('[relay-client] registered ✓ queued:', (msg as any).queuedCount);
             this.connected = true;
             this.reconnectDelay = 1_000;
             registered = true;

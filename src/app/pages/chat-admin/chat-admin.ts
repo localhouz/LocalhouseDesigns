@@ -22,6 +22,7 @@ export class ChatAdminComponent implements OnDestroy, AfterViewChecked {
   @ViewChild('messagesEl') private messagesEl!: ElementRef<HTMLElement>;
 
   status       = signal<'offline' | 'connecting' | 'online'>('offline');
+  errorMsg     = signal('');
   threads      = signal<Thread[]>([]);
   activeThread = signal<Thread | null>(null);
   mobileView   = signal<'list' | 'thread'>('list');
@@ -112,7 +113,13 @@ export class ChatAdminComponent implements OnDestroy, AfterViewChecked {
       this.shouldScroll = true;
     });
 
-    try { await this.client.connect(); } catch { this.status.set('offline'); }
+    try {
+      await this.client.connect();
+    } catch (err) {
+      this.status.set('offline');
+      this.errorMsg.set(err instanceof Error ? err.message : String(err));
+      console.error('[chat-admin] connect failed:', err);
+    }
   }
 
   selectThread(thread: Thread): void {
