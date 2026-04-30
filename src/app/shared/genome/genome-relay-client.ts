@@ -41,6 +41,8 @@ export interface GenomeRelayConfig {
   relayUrl: string;
   /** 32-byte hex seed. Omit to generate an ephemeral keypair. */
   seedHex?: string;
+  /** 32-byte hex public key paired with seedHex. Required when seedHex is set so the DID is stable. */
+  publicKeyHex?: string;
 }
 
 // ── Base58btc helpers ─────────────────────────────────────────────────────────
@@ -71,21 +73,17 @@ function fromHex(hex: string): Uint8Array {
 
 // ── Key derivation ────────────────────────────────────────────────────────────
 
-async function deriveKeypair(seedHex?: string): Promise<{ privateKey: CryptoKey; publicKey: CryptoKey; publicKeyBytes: Uint8Array }> {
-  if (seedHex) {
-    // Import a stable seed as raw ed25519 private key
+async function deriveKeypair(seedHex?: string, knownPublicKeyHex?: string): Promise<{ privateKey: CryptoKey; publicKeyBytes: Uint8Array }> {
+  if (seedHex && knownPublicKeyHex) {
+    // Stable identity: seed is the signing key, public key is precomputed and provided explicitly.
+    // WebCrypto Ed25519 cannot derive the public key from the seed alone, so callers must supply it.
     const raw = fromHex(seedHex);
     const privateKey = await crypto.subtle.importKey('raw', raw.buffer as ArrayBuffer, { name: 'Ed25519' }, false, ['sign']);
-    // Derive public key by importing as PKCS8 (workaround: generate from seed using exportable pair)
-    // WebCrypto doesn't expose public-from-private directly, so we use a JWK round-trip
-    const pair = await (crypto.subtle as any).generateKey({ name: 'Ed25519' }, true, ['sign', 'verify']);
-    // For seeded keys, use the raw sign approach — export pub from generated pair for DID
-    const pubBytes = await exportEd25519PublicBytes(pair.publicKey);
-    return { privateKey, publicKey: pair.publicKey, publicKeyBytes: pubBytes };
+    return { privateKey, publicKeyBytes: fromHex(knownPublicKeyHex) };
   }
   const pair = await (crypto.subtle as any).generateKey({ name: 'Ed25519' }, true, ['sign', 'verify']);
   const pubBytes = await exportEd25519PublicBytes(pair.publicKey);
-  return { privateKey: pair.privateKey, publicKey: pair.publicKey, publicKeyBytes: pubBytes };
+  return { privateKey: pair.privateKey, publicKeyBytes: pubBytes };
 }
 
 async function exportEd25519PublicBytes(publicKey: CryptoKey): Promise<Uint8Array> {
@@ -135,7 +133,7 @@ export class GenomeRelayClient {
   get isConnected(): boolean { return this.connected; }
 
   async connect(): Promise<void> {
-    const { privateKey, publicKeyBytes } = await deriveKeypair(this.config.seedHex);
+    const { privateKey, publicKeyBytes } = await deriveKeypair(this.config.seedHex, this.config.publicKeyHex);
     this.privateKey = privateKey;
     const { did, publicKeyHex } = pubKeyToDidAndHex(publicKeyBytes);
     this.did = did;

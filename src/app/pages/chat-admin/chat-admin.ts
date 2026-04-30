@@ -21,11 +21,13 @@ interface Thread {
 export class ChatAdminComponent implements OnDestroy, AfterViewChecked {
   @ViewChild('messagesEl') private messagesEl!: ElementRef<HTMLElement>;
 
-  status      = signal<'offline' | 'connecting' | 'online'>('offline');
-  threads     = signal<Thread[]>([]);
+  status       = signal<'offline' | 'connecting' | 'online'>('offline');
+  threads      = signal<Thread[]>([]);
   activeThread = signal<Thread | null>(null);
-  replyText   = '';
+  mobileView   = signal<'list' | 'thread'>('list');
+  replyText    = '';
   private shouldScroll = false;
+  private readonly STORAGE_KEY = 'lh_chat_threads';
 
   private readonly ADMIN_SEED = environment.adminSeedHex
     || localStorage.getItem('lh_admin_seed')
@@ -33,10 +35,22 @@ export class ChatAdminComponent implements OnDestroy, AfterViewChecked {
   private client: GenomeRelayClient | null = null;
 
   constructor() {
+    this.threads.set(this.loadThreads());
     if (!this.ADMIN_SEED) {
       console.warn('[chat-admin] No admin seed — set lh_admin_seed in localStorage or environment.adminSeedHex');
     }
     this.connect();
+  }
+
+  private loadThreads(): Thread[] {
+    try {
+      const raw = localStorage.getItem(this.STORAGE_KEY);
+      return raw ? (JSON.parse(raw) as Thread[]) : [];
+    } catch { return []; }
+  }
+
+  private saveThreads(threads: Thread[]): void {
+    try { localStorage.setItem(this.STORAGE_KEY, JSON.stringify(threads)); } catch { /* storage full */ }
   }
 
   private async connect(): Promise<void> {
@@ -46,6 +60,7 @@ export class ChatAdminComponent implements OnDestroy, AfterViewChecked {
     this.client = new GenomeRelayClient({
       relayUrl: environment.relayUrl,
       seedHex: this.ADMIN_SEED,
+      publicKeyHex: environment.adminPublicKeyHex,
     });
 
     this.client.onConnect((did) => {
@@ -66,16 +81,19 @@ export class ChatAdminComponent implements OnDestroy, AfterViewChecked {
       this.threads.update(threads => {
         const idx = threads.findIndex(t => t.visitorDid === visitorDid);
         const msg = { from: 'visitor' as const, text, ts: env.ts };
+        let updated: Thread[];
         if (idx >= 0) {
-          const updated = [...threads];
+          updated = [...threads];
           updated[idx] = {
             ...updated[idx],
             messages: [...updated[idx].messages, msg],
             unread: this.activeThread()?.visitorDid === visitorDid ? 0 : updated[idx].unread + 1,
           };
-          return updated;
+        } else {
+          updated = [...threads, { visitorDid, name, messages: [msg], unread: 1 }];
         }
-        return [...threads, { visitorDid, name, messages: [msg], unread: 1 }];
+        this.saveThreads(updated);
+        return updated;
       });
 
       this.shouldScroll = true;
@@ -85,9 +103,18 @@ export class ChatAdminComponent implements OnDestroy, AfterViewChecked {
   }
 
   selectThread(thread: Thread): void {
-    this.threads.update(ts => ts.map(t => t.visitorDid === thread.visitorDid ? { ...t, unread: 0 } : t));
-    this.activeThread.set(thread);
+    this.threads.update(ts => {
+      const updated = ts.map(t => t.visitorDid === thread.visitorDid ? { ...t, unread: 0 } : t);
+      this.saveThreads(updated);
+      return updated;
+    });
+    this.activeThread.set({ ...thread, unread: 0 });
+    this.mobileView.set('thread');
     this.shouldScroll = true;
+  }
+
+  backToList(): void {
+    this.mobileView.set('list');
   }
 
   async sendReply(): Promise<void> {
@@ -97,10 +124,15 @@ export class ChatAdminComponent implements OnDestroy, AfterViewChecked {
 
     this.replyText = '';
     const msg = { from: 'steve' as const, text, ts: Date.now() };
+    const updatedMessages = [...thread.messages, msg];
 
-    this.threads.update(ts => ts.map(t => t.visitorDid === thread.visitorDid
-      ? { ...t, messages: [...t.messages, msg] } : t));
-    this.activeThread.set({ ...thread, messages: [...thread.messages, msg] });
+    this.threads.update(ts => {
+      const updated = ts.map(t => t.visitorDid === thread.visitorDid
+        ? { ...t, messages: updatedMessages } : t);
+      this.saveThreads(updated);
+      return updated;
+    });
+    this.activeThread.set({ ...thread, messages: updatedMessages });
     this.shouldScroll = true;
 
     try {
