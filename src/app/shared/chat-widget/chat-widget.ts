@@ -50,11 +50,13 @@ export class ChatWidgetComponent implements OnDestroy, AfterViewChecked {
     });
 
     this.client.onDeliver((env) => {
-      const p = env.payload as { type?: string; message?: string };
-      if (p.type === 'contact_reply' || p.type === 'contact_bounce') {
+      const p = env.payload as { type?: string; message?: string; text?: string };
+      const text = p.message ?? p.text ?? '';
+      const isReply = !p.type || p.type === 'contact_reply' || p.type === 'contact_bounce';
+      if (isReply && text) {
         this.messages.update(msgs => [...msgs, {
           from: 'steve',
-          text: String(p.message ?? ''),
+          text: String(text),
           ts: env.ts,
         }]);
         this.shouldScroll = true;
