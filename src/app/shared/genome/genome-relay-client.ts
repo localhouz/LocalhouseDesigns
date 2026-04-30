@@ -73,12 +73,20 @@ function fromHex(hex: string): Uint8Array {
 
 // ── Key derivation ────────────────────────────────────────────────────────────
 
+// PKCS8 DER header for Ed25519: SEQUENCE { INTEGER 0, SEQUENCE { OID 1.3.101.112 }, OCTET STRING { OCTET STRING { seed } } }
+const ED25519_PKCS8_HEADER = new Uint8Array([
+  0x30, 0x2e, 0x02, 0x01, 0x00, 0x30, 0x05, 0x06, 0x03, 0x2b, 0x65, 0x70, 0x04, 0x22, 0x04, 0x20,
+]);
+
 async function deriveKeypair(seedHex?: string, knownPublicKeyHex?: string): Promise<{ privateKey: CryptoKey; publicKeyBytes: Uint8Array }> {
   if (seedHex && knownPublicKeyHex) {
-    // Stable identity: seed is the signing key, public key is precomputed and provided explicitly.
-    // WebCrypto Ed25519 cannot derive the public key from the seed alone, so callers must supply it.
-    const raw = fromHex(seedHex);
-    const privateKey = await crypto.subtle.importKey('raw', raw.buffer as ArrayBuffer, { name: 'Ed25519' }, false, ['sign']);
+    // Stable identity: wrap the 32-byte seed in PKCS8 DER so WebCrypto can import it.
+    // 'raw' format is only supported for public keys in WebCrypto Ed25519.
+    const seed = fromHex(seedHex);
+    const pkcs8 = new Uint8Array(48);
+    pkcs8.set(ED25519_PKCS8_HEADER);
+    pkcs8.set(seed, 16);
+    const privateKey = await crypto.subtle.importKey('pkcs8', pkcs8.buffer as ArrayBuffer, { name: 'Ed25519' }, false, ['sign']);
     return { privateKey, publicKeyBytes: fromHex(knownPublicKeyHex) };
   }
   const pair = await (crypto.subtle as any).generateKey({ name: 'Ed25519' }, true, ['sign', 'verify']);
