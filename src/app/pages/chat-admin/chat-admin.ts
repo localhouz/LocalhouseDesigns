@@ -38,6 +38,7 @@ export class ChatAdminComponent implements OnDestroy, AfterViewChecked {
 
   constructor() {
     this.threads.set(this.loadThreads());
+    document.body.classList.add('chat-admin-active');
     if (!this.ADMIN_SEED) {
       this.needsSeed.set(true);
     } else {
@@ -165,5 +166,8 @@ export class ChatAdminComponent implements OnDestroy, AfterViewChecked {
     }
   }
 
-  ngOnDestroy(): void { this.client?.disconnect(); }
+  ngOnDestroy(): void {
+    this.client?.disconnect();
+    document.body.classList.remove('chat-admin-active');
+  }
 }

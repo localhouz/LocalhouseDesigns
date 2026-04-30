@@ -155,3 +155,10 @@ p, li, a, span {
     }
   }
 }
+
+// ── Admin panel full-screen mode ──────────────────────────────────────────────
+body.chat-admin-active {
+  overflow: hidden;
+
+  app-chat-widget { display: none !important; }
+}

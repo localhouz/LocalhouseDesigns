@@ -1,5 +1,7 @@
 .chat-admin-setup {
-  height: 100dvh;
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -43,8 +45,10 @@
 }
 
 .chat-admin {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
   display: flex;
-  height: 100dvh;
   font-family: var(--font-mono);
   font-size: 0.82rem;
   background: var(--bg);
@@ -53,7 +57,7 @@
   // ── Sidebar ───────────────────────────────────────────────────────────────────
 
   &__sidebar {
-    width: 280px;
+    width: clamp(280px, 28%, 380px);
     flex-shrink: 0;
     border-right: 1px solid var(--border);
     display: flex;
@@ -327,8 +331,6 @@
 
   @media (max-width: 640px) {
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-    position: fixed;
-    inset: 0;
 
     &__sidebar {
       width: 100%;
