@@ -2,10 +2,14 @@
   "manifest_version": 3,
   "name": "LH Universe",
   "version": "0.1.0",
-  "description": "Private experiment — feeds browsing context to the Localhouse Designs intent universe.",
+  "description": "Private experiment - feeds browsing context to the Localhouse Designs intent universe.",
 
   "permissions": ["history", "tabs"],
-  "host_permissions": ["https://localhousedesigns.com/*"],
+  "host_permissions": [
+    "https://localhousedesigns.com/*",
+    "http://localhost:*/*",
+    "http://127.0.0.1:*/*"
+  ],
 
   "background": {
     "service_worker": "background.js"
@@ -13,7 +17,11 @@
 
   "content_scripts": [
     {
-      "matches": ["https://localhousedesigns.com/lab/universe*"],
+      "matches": [
+        "https://localhousedesigns.com/lab/universe*",
+        "http://localhost:*/lab/universe*",
+        "http://127.0.0.1:*/lab/universe*"
+      ],
       "js": ["content.js"],
       "run_at": "document_idle"
     }

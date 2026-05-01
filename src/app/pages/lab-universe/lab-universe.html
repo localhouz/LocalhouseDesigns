@@ -9,10 +9,15 @@
   }
 
   @if (phase() !== 'idle') {
-    <button class="universe__back" (click)="goBack()">← back</button>
+    <button class="universe__back" (click)="goBack()">&lt;- back</button>
   }
 
   @if (phase() === 'open') {
+    <div class="universe__status" [class.visible]="inputVisible()">
+      <span>{{ contextMode() }}</span>
+      <p>{{ statusLine() }}</p>
+    </div>
+
     <div class="universe__input-wrap" [class.visible]="inputVisible()">
       <input
         class="universe__input"
@@ -21,22 +26,39 @@
       />
     </div>
 
-    @for (cluster of clusters(); track cluster.id) {
+    <svg class="universe__strings" viewBox="0 0 100 100" preserveAspectRatio="none">
+      @for (pin of pins(); track pin.id) {
+        <line
+          x1="50"
+          y1="50"
+          [attr.x2]="50 + pin.x"
+          [attr.y2]="50 + pin.y"
+          [style.animation-delay]="pin.delay + 'ms'"
+        />
+      }
+    </svg>
+
+    @if (!extensionConnected()) {
+      <div class="universe__empty" [class.visible]="clustersVisible()">
+        <span>private extension needed</span>
+        <p>Install the local Chrome extension and this board becomes the places you have actually visited.</p>
+      </div>
+    }
+
+    @for (pin of pins(); track pin.id) {
       <button
-        class="universe__cluster"
+        class="universe__pin"
+        [class.universe__pin--small]="pin.size === 'small'"
+        [class.universe__pin--large]="pin.size === 'large'"
         [class.visible]="clustersVisible()"
-        [style.--cx]="cluster.x + 'vw'"
-        [style.--cy]="cluster.y + 'vh'"
-        [style.--delay]="cluster.delay + 'ms'"
-        (click)="navigate(cluster)"
+        [style.--cx]="pin.x + 'vw'"
+        [style.--cy]="pin.y + 'vh'"
+        [style.--delay]="pin.delay + 'ms'"
+        (click)="openPin(pin)"
       >
-        <span class="universe__cluster-icon">{{ cluster.icon }}</span>
-        <span class="universe__cluster-label">{{ cluster.label }}</span>
-        <ul class="universe__cluster-points">
-          @for (point of cluster.points; track point) {
-            <li>{{ point }}</li>
-          }
-        </ul>
+        <span class="universe__pin-topic">{{ pin.topic }}</span>
+        <span class="universe__pin-title">{{ pin.title }}</span>
+        <span class="universe__pin-domain">{{ pin.domain }}</span>
       </button>
     }
   }

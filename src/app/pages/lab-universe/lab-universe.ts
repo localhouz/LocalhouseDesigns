@@ -1,25 +1,24 @@
 import {
-  AfterViewInit, Component, ElementRef, inject,
+  AfterViewInit, Component, ElementRef, computed, inject,
   NgZone, OnDestroy, OnInit, PLATFORM_ID, signal, ViewChild,
 } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { Router } from '@angular/router';
 import * as THREE from 'three';
 import { SeoService } from '../../shared/seo/seo.service';
 
 type Phase = 'idle' | 'exploding' | 'open';
 
-interface Cluster {
+interface UniversePin {
   id: string;
-  label: string;
-  icon: string;
-  points: string[];
+  title: string;
+  domain: string;
+  topic: string;
   href: string;
-  external: boolean;
   x: number;
   y: number;
   delay: number;
+  size: 'small' | 'medium' | 'large';
 }
 
 interface ExtCluster {
@@ -34,7 +33,6 @@ interface ExtensionContext {
   clusters?: ExtCluster[];
 }
 
-// Slot positions — extension clusters borrow these coordinates
 const SLOTS = [
   { x: 30, y: -24, delay: 200 },
   { x: 38, y:   8, delay: 350 },
@@ -44,44 +42,7 @@ const SLOTS = [
   { x: -22, y: -26, delay: 150 },
 ];
 
-const BASE_CLUSTERS: Cluster[] = [
-  {
-    id: 'services', label: 'What do you need built?', icon: '⚡',
-    points: ['Angular SPA', 'ERP dashboard', 'Custom web app'],
-    href: '/services', external: false,
-    ...SLOTS[0],
-  },
-  {
-    id: 'erp', label: 'ERP & operations', icon: '⚙',
-    points: ['Business Central', 'Infor SyteLine', 'Floor tools'],
-    href: '/insights/what-manufacturers-actually-need-from-erp-connected-tooling', external: false,
-    ...SLOTS[1],
-  },
-  {
-    id: 'work', label: 'See the work', icon: '→',
-    points: ['Client case studies', 'Live prototypes', 'Real outcomes'],
-    href: '/work', external: false,
-    ...SLOTS[2],
-  },
-  {
-    id: 'geo', label: 'GEO & AI search', icon: '◎',
-    points: ['Structured data', 'AI visibility', 'Schema.org'],
-    href: '/insights/what-geo-means-for-local-businesses', external: false,
-    ...SLOTS[3],
-  },
-  {
-    id: 'contact', label: 'Talk to Steve', icon: '◈',
-    points: ['Open a chat', 'No sales pitch', 'Get an estimate'],
-    href: '/contact', external: false,
-    ...SLOTS[4],
-  },
-  {
-    id: 'lab', label: 'The lab', icon: '✦',
-    points: ['Three.js / WebGL', 'ERP prototypes', 'Live experiments'],
-    href: '/lab', external: false,
-    ...SLOTS[5],
-  },
-];
+const PIN_SIZES: Array<UniversePin['size']> = ['large', 'medium', 'small', 'medium', 'large', 'small'];
 
 @Component({
   selector: 'app-lab-universe',
@@ -95,21 +56,26 @@ export class LabUniverseComponent implements OnInit, AfterViewInit, OnDestroy {
 
   private seo      = inject(SeoService);
   private zone     = inject(NgZone);
-  private router   = inject(Router);
   private platform = inject(PLATFORM_ID);
 
-  phase           = signal<Phase>('idle');
-  clustersVisible = signal(false);
-  inputVisible    = signal(false);
-  intentText      = '';
-  clusters        = signal<Cluster[]>(BASE_CLUSTERS);
+  phase              = signal<Phase>('idle');
+  clustersVisible    = signal(false);
+  inputVisible       = signal(false);
+  extensionConnected = signal(false);
+  intentText         = '';
+  pins               = signal<UniversePin[]>([]);
+  contextMode        = computed(() => this.extensionConnected() ? 'extension context received' : 'site-only context');
+  statusLine         = computed(() => this.extensionConnected()
+    ? 'Visited pages from the private extension, connected by topic.'
+    : 'Waiting on the private extension. A website alone cannot read your browsing history.'
+  );
 
   private renderer!:  THREE.WebGLRenderer;
   private scene!:     THREE.Scene;
   private camera!:    THREE.PerspectiveCamera;
   private animId      = 0;
-  private startMs     = 0;   // performance.now() at init
-  private explodeMs   = 0;   // performance.now() at explosion
+  private startMs     = 0;
+  private explodeMs   = 0;
 
   private dotMesh!:   THREE.Mesh;
   private burstGeo!:  THREE.BufferGeometry;
@@ -118,12 +84,12 @@ export class LabUniverseComponent implements OnInit, AfterViewInit, OnDestroy {
   private isExploding = false;
 
   private readonly PARTICLE_COUNT = 380;
-  private readonly BURST_DURATION = 2.0; // seconds
+  private readonly BURST_DURATION = 2.0;
 
   ngOnInit() {
     this.seo.setPage({
       title: 'Universe | Localhouse Designs Lab',
-      description: 'Click to map your intent — an experimental intent visualizer built with Three.js and browser context signals.',
+      description: 'Click to map your intent - an experimental browser-context visualizer built with Three.js.',
       url: 'https://localhousedesigns.com/lab/universe',
       noIndex: true,
     });
@@ -136,7 +102,6 @@ export class LabUniverseComponent implements OnInit, AfterViewInit, OnDestroy {
     window.addEventListener('resize', this.onResize);
     window.addEventListener('message', this.onExtensionMessage);
     document.body.classList.add('universe-active');
-    // Signal content script to send context (handles SPA navigation case)
     document.dispatchEvent(new CustomEvent('LH_UNIVERSE_REQUEST'));
     this.zone.runOutsideAngular(() => this.animate());
   }
@@ -147,6 +112,7 @@ export class LabUniverseComponent implements OnInit, AfterViewInit, OnDestroy {
     window.removeEventListener('message', this.onExtensionMessage);
     document.body.classList.remove('universe-active');
     this.renderer?.dispose();
+    this.burstGeo?.dispose();
   }
 
   onCanvasClick() {
@@ -154,10 +120,20 @@ export class LabUniverseComponent implements OnInit, AfterViewInit, OnDestroy {
     this.triggerExplosion();
   }
 
+  openPin(pin: UniversePin) {
+    if (pin.href.startsWith('https://') || pin.href.startsWith('http://')) {
+      window.open(pin.href, '_blank', 'noopener noreferrer');
+    }
+  }
+
+  goBack() {
+    history.back();
+  }
+
   private triggerExplosion() {
     this.phase.set('exploding');
     this.isExploding = true;
-    this.explodeMs   = performance.now();
+    this.explodeMs = performance.now();
 
     setTimeout(() => {
       this.zone.run(() => {
@@ -171,67 +147,60 @@ export class LabUniverseComponent implements OnInit, AfterViewInit, OnDestroy {
     }, (this.BURST_DURATION + 0.9) * 1000);
   }
 
-  navigate(cluster: Cluster) {
-    if (cluster.external) {
-      const href = cluster.href;
-      if (href.startsWith('https://') || href.startsWith('http://')) {
-        window.open(href, '_blank', 'noopener noreferrer');
-      }
-    } else {
-      this.router.navigateByUrl(cluster.href);
-    }
-  }
-
-  goBack() {
-    history.back();
-  }
-
-  // Extension message handler.
-  // The private Chrome extension (chrome-extension/) sends this after reading
-  // the user's tabs + history, clustered by topic. Replaces base clusters with
-  // real browsing context — up to 4 extension clusters, rest filled from BASE_CLUSTERS.
   private onExtensionMessage = (e: MessageEvent) => {
     if (e.origin !== location.origin) return;
     const data = e.data as ExtensionContext;
     if (data?.type !== 'LH_UNIVERSE_CONTEXT' || !data.clusters?.length) return;
 
     this.zone.run(() => {
-      const extClusters: Cluster[] = data.clusters!.slice(0, 4).map((ext, i) => ({
-        id:       ext.id,
-        label:    ext.label,
-        icon:     ext.icon,
-        points:   ext.pages.slice(0, 3).map(p => p.title || p.url),
-        href:     ext.pages[0]?.url ?? '/',
-        external: true,
-        ...SLOTS[i],
-      }));
+      const pins = data.clusters!
+        .flatMap(ext => ext.pages.slice(0, 4).map(page => ({ page, topic: ext.label })))
+        .slice(0, 12)
+        .map(({ page, topic }, i): UniversePin => {
+          const slot = SLOTS[i % SLOTS.length];
+          const ring = Math.floor(i / SLOTS.length);
+          const offset = ring * 7;
+          return {
+            id: `${topic}-${i}-${page.url}`,
+            title: this.cleanTitle(page.title || page.url),
+            domain: this.domainFromUrl(page.url),
+            topic,
+            href: page.url,
+            x: slot.x + (ring ? (slot.x > 0 ? -offset : offset) : 0),
+            y: slot.y + (ring ? (slot.y > 0 ? -offset : offset) : 0),
+            delay: slot.delay + ring * 140,
+            size: PIN_SIZES[i % PIN_SIZES.length],
+          };
+        });
 
-      // Fill remaining slots with base clusters that weren't displaced
-      const extIds   = new Set(extClusters.map(c => c.id));
-      const fillFrom = BASE_CLUSTERS.filter(c => !extIds.has(c.id));
-      const merged   = [
-        ...extClusters,
-        ...fillFrom.slice(0, 6 - extClusters.length).map((c, i) => ({
-          ...c, ...SLOTS[extClusters.length + i],
-        })),
-      ];
-
-      this.clusters.set(merged);
+      this.pins.set(pins);
+      this.extensionConnected.set(true);
     });
   };
 
-  // ─── Three.js ────────────────────────────────────────────────────────────────
+  private cleanTitle(title: string) {
+    return title.replace(/\s+/g, ' ').trim().slice(0, 92);
+  }
+
+  private domainFromUrl(url: string) {
+    try {
+      return new URL(url).hostname.replace(/^www\./, '');
+    } catch {
+      return url;
+    }
+  }
 
   private initScene() {
     const canvas = this.canvasRef.nativeElement;
-    const w = window.innerWidth, h = window.innerHeight;
+    const w = window.innerWidth;
+    const h = window.innerHeight;
 
-    this.renderer = new THREE.WebGLRenderer({ canvas, antialias: true });
+    this.renderer = new THREE.WebGLRenderer({ canvas, antialias: true, preserveDrawingBuffer: true });
     this.renderer.setSize(w, h);
     this.renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
     this.renderer.outputColorSpace = THREE.SRGBColorSpace;
 
-    this.scene  = new THREE.Scene();
+    this.scene = new THREE.Scene();
     this.scene.background = new THREE.Color(0xffffff);
 
     this.camera = new THREE.PerspectiveCamera(60, w / h, 0.1, 100);
@@ -245,11 +214,11 @@ export class LabUniverseComponent implements OnInit, AfterViewInit, OnDestroy {
 
   private buildStars() {
     const count = 1400;
-    const pos   = new Float32Array(count * 3);
+    const pos = new Float32Array(count * 3);
     for (let i = 0; i < count; i++) {
-      pos[i*3]   = (Math.random() - 0.5) * 28;
-      pos[i*3+1] = (Math.random() - 0.5) * 18;
-      pos[i*3+2] = (Math.random() - 0.5) * 4;
+      pos[i * 3] = (Math.random() - 0.5) * 28;
+      pos[i * 3 + 1] = (Math.random() - 0.5) * 18;
+      pos[i * 3 + 2] = (Math.random() - 0.5) * 4;
     }
     const geo = new THREE.BufferGeometry();
     geo.setAttribute('position', new THREE.BufferAttribute(pos, 3));
@@ -268,7 +237,7 @@ export class LabUniverseComponent implements OnInit, AfterViewInit, OnDestroy {
 
   private buildBurstParticles() {
     const positions = new Float32Array(this.PARTICLE_COUNT * 3);
-    const colors    = new Float32Array(this.PARTICLE_COUNT * 3);
+    const colors = new Float32Array(this.PARTICLE_COUNT * 3);
 
     for (let i = 0; i < this.PARTICLE_COUNT; i++) {
       const angle = Math.random() * Math.PI * 2;
@@ -278,16 +247,15 @@ export class LabUniverseComponent implements OnInit, AfterViewInit, OnDestroy {
         Math.sin(angle) * speed,
         (Math.random() - 0.5) * 0.5,
       ));
-      // Black → dark navy, slower = slightly more blue
-      const t       = speed / 4.6;
-      colors[i*3]   = 0.04;
-      colors[i*3+1] = 0.04;
-      colors[i*3+2] = 0.08 + 0.14 * (1 - t);
+      const t = speed / 4.6;
+      colors[i * 3] = 0.04;
+      colors[i * 3 + 1] = 0.04;
+      colors[i * 3 + 2] = 0.08 + 0.14 * (1 - t);
     }
 
     this.burstGeo = new THREE.BufferGeometry();
     this.burstGeo.setAttribute('position', new THREE.BufferAttribute(positions, 3));
-    this.burstGeo.setAttribute('color',    new THREE.BufferAttribute(colors, 3));
+    this.burstGeo.setAttribute('color', new THREE.BufferAttribute(colors, 3));
 
     this.burstMesh = new THREE.Points(this.burstGeo, new THREE.PointsMaterial({
       size: 0.04, vertexColors: true, transparent: true, opacity: 0,
@@ -298,34 +266,31 @@ export class LabUniverseComponent implements OnInit, AfterViewInit, OnDestroy {
 
   private animate = () => {
     this.animId = requestAnimationFrame(this.animate);
-    const t = (performance.now() - this.startMs) / 1000; // seconds since init
+    const t = (performance.now() - this.startMs) / 1000;
 
     if (!this.isExploding) {
       this.dotMesh.scale.setScalar(1 + 0.3 * Math.sin(t * 1.9));
       (this.burstMesh.material as THREE.PointsMaterial).opacity = 0;
     } else {
-      const elapsed  = (performance.now() - this.explodeMs) / 1000;
+      const elapsed = (performance.now() - this.explodeMs) / 1000;
       const progress = Math.min(elapsed / this.BURST_DURATION, 1);
 
-      // Dot shrinks and disappears as particles burst
       const dotScale = Math.max(0, 1 - progress * 4);
       this.dotMesh.scale.setScalar(dotScale);
       this.dotMesh.visible = dotScale > 0.01;
 
-      // Particles: fade in → hold → fade out
       let opacity: number;
-      if      (progress < 0.12) opacity = progress / 0.12;
+      if (progress < 0.12) opacity = progress / 0.12;
       else if (progress < 0.65) opacity = 1;
-      else                      opacity = 1 - (progress - 0.65) / 0.35;
+      else opacity = 1 - (progress - 0.65) / 0.35;
       (this.burstMesh.material as THREE.PointsMaterial).opacity = Math.max(0, opacity);
 
-      // position = velocity × t × exp(-drag × t) — peaks at t = 1/drag ≈ 1.33s
-      const d      = Math.exp(-0.75 * elapsed);
+      const drag = Math.exp(-0.75 * elapsed);
       const posArr = this.burstGeo.attributes['position'].array as Float32Array;
       for (let i = 0; i < this.PARTICLE_COUNT; i++) {
-        posArr[i*3]   = this.velocities[i].x * elapsed * d;
-        posArr[i*3+1] = this.velocities[i].y * elapsed * d;
-        posArr[i*3+2] = this.velocities[i].z * elapsed * d;
+        posArr[i * 3] = this.velocities[i].x * elapsed * drag;
+        posArr[i * 3 + 1] = this.velocities[i].y * elapsed * drag;
+        posArr[i * 3 + 2] = this.velocities[i].z * elapsed * drag;
       }
       this.burstGeo.attributes['position'].needsUpdate = true;
     }
@@ -334,7 +299,8 @@ export class LabUniverseComponent implements OnInit, AfterViewInit, OnDestroy {
   };
 
   private onResize = () => {
-    const w = window.innerWidth, h = window.innerHeight;
+    const w = window.innerWidth;
+    const h = window.innerHeight;
     this.camera.aspect = w / h;
     this.camera.updateProjectionMatrix();
     this.renderer.setSize(w, h);
