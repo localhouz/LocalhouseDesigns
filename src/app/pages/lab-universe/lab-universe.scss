@@ -216,9 +216,9 @@
 
     path {
       fill: none;
-      stroke: rgba(143, 34, 0, 0.52);
-      stroke-width: 0.2;
-      stroke-dasharray: 0.55 0.78;
+      stroke: rgba(143, 34, 0, 0.78);
+      stroke-width: 0.22;
+      stroke-dasharray: 0.9 0.55;
       opacity: 0;
       animation: universe-string-in 0.9s ease both;
     }
@@ -434,14 +434,13 @@
   &__pin {
     top: 50%;
     left: 50%;
-    width: 8.8rem;
-    min-height: 11.8rem;
-    padding: 0.48rem;
-    transform: translate(calc(-50% + var(--cx, 0vw)), calc(-50% + var(--cy, 0vh))) rotate(var(--rot, 0deg)) scale(0.82);
+    width: 9.8rem;
+    padding: 0.42rem 0.42rem 0.7rem;
+    transform: translate(calc(-50% + var(--cx, 0vw)), calc(-50% + var(--cy, 0vh))) scale(0.86);
     background: #ffffff;
-    border: 1px solid rgba(10, 10, 18, 0.12);
-    border-radius: 2px;
-    box-shadow: 0 1px 3px rgba(10, 10, 18, 0.06), 0 4px 16px rgba(10, 10, 18, 0.09);
+    border: 1px solid rgba(10, 10, 18, 0.1);
+    border-radius: 10px;
+    box-shadow: 0 2px 6px rgba(10, 10, 18, 0.07), 0 6px 22px rgba(10, 10, 18, 0.1);
     z-index: 10;
     text-align: left;
     cursor: pointer;
@@ -456,38 +455,35 @@
       content: '';
       position: absolute;
       left: 50%;
-      top: -0.42rem;
+      top: -0.38rem;
       transform: translateX(-50%);
-      width: 0.52rem;
-      height: 0.52rem;
+      width: 0.48rem;
+      height: 0.48rem;
       background: hsl(var(--tone, 16deg) 60% 42%);
       border-radius: 50%;
-      box-shadow: 0 2px 5px rgba(10, 10, 18, 0.28);
+      box-shadow: 0 2px 4px rgba(10, 10, 18, 0.24);
     }
 
     &.visible {
       opacity: 1;
-      transform: translate(calc(-50% + var(--cx, 0vw)), calc(-50% + var(--cy, 0vh))) rotate(var(--rot, 0deg)) scale(1);
+      transform: translate(calc(-50% + var(--cx, 0vw)), calc(-50% + var(--cy, 0vh))) scale(1);
     }
 
     &:hover {
-      border-color: rgba(197, 41, 0, 0.38);
-      box-shadow: 0 3px 8px rgba(10, 10, 18, 0.09), 0 8px 28px rgba(10, 10, 18, 0.13);
+      border-color: rgba(197, 41, 0, 0.3);
+      box-shadow: 0 4px 12px rgba(10, 10, 18, 0.1), 0 12px 36px rgba(10, 10, 18, 0.13);
     }
 
     &--small {
-      width: 8.2rem;
-      min-height: 10.6rem;
-      transform: translate(calc(-50% + var(--cx, 0vw)), calc(-50% + var(--cy, 0vh))) rotate(var(--rot, 0deg)) scale(0.82);
-
+      width: 8.6rem;
+      transform: translate(calc(-50% + var(--cx, 0vw)), calc(-50% + var(--cy, 0vh))) scale(0.86);
       &.visible {
-        transform: translate(calc(-50% + var(--cx, 0vw)), calc(-50% + var(--cy, 0vh))) rotate(var(--rot, 0deg)) scale(1);
+        transform: translate(calc(-50% + var(--cx, 0vw)), calc(-50% + var(--cy, 0vh))) scale(1);
       }
     }
 
     &--large {
-      width: 9.4rem;
-      min-height: 13.2rem;
+      width: 10.8rem;
     }
   }
 
@@ -516,7 +512,7 @@
   &__pin-visual {
     display: grid;
     place-items: center;
-    aspect-ratio: 1 / 1.18;
+    aspect-ratio: 2 / 3;
     margin-bottom: 0.68rem;
     border-radius: 6px;
     border: 1px solid hsl(var(--tone, 16deg) 62% 36% / 0.25);
@@ -602,10 +598,10 @@
       width: 9.5rem;
       min-height: 6.5rem;
       padding: 0.72rem;
-      transform: translate(calc(-50% + var(--cx, 0vw) * 0.58), calc(-50% + var(--cy, 0vh) * 0.62)) rotate(var(--rot, 0deg)) scale(0.82);
+      transform: translate(calc(-50% + var(--cx, 0vw) * 0.58), calc(-50% + var(--cy, 0vh) * 0.62)) scale(0.82);
 
       &.visible {
-        transform: translate(calc(-50% + var(--cx, 0vw) * 0.58), calc(-50% + var(--cy, 0vh) * 0.62)) rotate(var(--rot, 0deg)) scale(1);
+        transform: translate(calc(-50% + var(--cx, 0vw) * 0.58), calc(-50% + var(--cy, 0vh) * 0.62)) scale(1);
       }
     }
 

@@ -87,16 +87,16 @@ interface ExtensionContext {
 }
 
 const SLOTS = [
-  { x: -43, y: -26, delay: 150, rotate: -2.4 },
-  { x: -43, y:   2, delay: 230, rotate:  1.7 },
-  { x: -43, y:  31, delay: 310, rotate: -1.5 },
-  { x: -30, y: -16, delay: 390, rotate:  2.9 },
-  { x: -30, y:  18, delay: 470, rotate: -1.1 },
-  { x:  31, y: -28, delay: 200, rotate:  1.8 },
-  { x:  31, y:   6, delay: 280, rotate: -2.7 },
-  { x:  31, y:  34, delay: 360, rotate:  1.3 },
-  { x:  43, y: -11, delay: 440, rotate: -1.9 },
-  { x:  43, y:  21, delay: 520, rotate:  2.3 },
+  { x: -40, y: -26, delay: 120, rotate: 0 },
+  { x: -40, y:  16, delay: 260, rotate: 0 },
+  { x: -21, y: -34, delay: 180, rotate: 0 },
+  { x: -21, y:  -2, delay: 310, rotate: 0 },
+  { x: -21, y:  32, delay: 440, rotate: 0 },
+  { x:  21, y: -34, delay: 160, rotate: 0 },
+  { x:  21, y:  -2, delay: 290, rotate: 0 },
+  { x:  21, y:  32, delay: 420, rotate: 0 },
+  { x:  40, y: -26, delay: 200, rotate: 0 },
+  { x:  40, y:  16, delay: 340, rotate: 0 },
 ];
 
 const PIN_SIZES: Array<UniversePin['size']> = ['large', 'medium', 'small', 'medium', 'large', 'small'];
@@ -266,14 +266,14 @@ export class LabUniverseComponent implements OnInit, AfterViewInit, OnDestroy {
 
   stringPath(pin: UniversePin, index: number) {
     const startX = 50;
-    const startY = 50;
+    const startY = 4; // search bar at top
     const endX = 50 + pin.x;
     const endY = 50 + pin.y;
     const dx = endX - startX;
     const dy = endY - startY;
-    const bend = (index % 2 === 0 ? 1 : -1) * (5 + (index % 4) * 2.2);
-    const controlX = startX + dx * 0.52 - dy * 0.08 + bend;
-    const controlY = startY + dy * 0.52 + dx * 0.08 - bend * 0.45;
+    const bend = (index % 2 === 0 ? 1 : -1) * (3 + (index % 4) * 1.8);
+    const controlX = startX + dx * 0.55 + bend;
+    const controlY = startY + dy * 0.55 - bend * 0.3;
     return `M ${startX} ${startY} Q ${controlX} ${controlY} ${endX} ${endY}`;
   }
 
