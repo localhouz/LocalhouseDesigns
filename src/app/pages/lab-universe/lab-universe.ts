@@ -20,7 +20,7 @@ interface UniversePin {
   y: number;
   delay: number;
   rotate: number;
-  size: 'small' | 'medium' | 'large';
+  size: 'small' | 'medium' | 'large' | 'featured';
 }
 
 interface IntentField {
@@ -90,8 +90,6 @@ const COLUMN_X = [-57, -43, -29, -15, -1, 13, 27, 41, 55];
 const COLUMN_START_Y = [-27, -12, -31, -16, -29, -10, -33, -14, -28];
 const ROW_GAP = 30;
 const MAX_HISTORY_PINS = 36;
-
-const PIN_SIZES: Array<UniversePin['size']> = ['large', 'medium', 'small', 'medium', 'large', 'small'];
 
 const GHOST_SLOTS = [
   { x: -55, y: -16, delay: 680 },
@@ -255,9 +253,10 @@ export class LabUniverseComponent implements OnInit, AfterViewInit, OnDestroy {
       y: -6 + (existing.length % 4) * 4,
       delay: 80,
     };
-    const next = [...existing.slice(-4), trail];
+    const next = [...existing.filter(item => item.query !== trail.query).slice(-4), trail];
     this.searchTrails.set(next);
     localStorage.setItem('lh_universe_searches', JSON.stringify(next.map(t => t.query)));
+    this.resizePinsForIntent(query);
     this.intentText = '';
   }
 
@@ -334,7 +333,7 @@ export class LabUniverseComponent implements OnInit, AfterViewInit, OnDestroy {
             y: slot.y,
             delay: slot.delay,
             rotate: slot.rotate,
-            size: PIN_SIZES[i % PIN_SIZES.length],
+            size: this.pinSizeForScore(this.intentScore(page, topic)),
           };
         });
 
@@ -347,10 +346,31 @@ export class LabUniverseComponent implements OnInit, AfterViewInit, OnDestroy {
     });
   };
 
+  private resizePinsForIntent(query: string) {
+    const active = this.tokenize(query);
+    if (!active.length) return;
+
+    const scored = this.pins()
+      .map((pin, index) => ({ pin, index, score: this.intentScore(pin, pin.topic, active) }))
+      .sort((a, b) => b.score - a.score);
+    const featuredIds = new Set(scored.filter(item => item.score >= 8).slice(0, 2).map(item => item.pin.id));
+    const largeIds = new Set(scored.filter(item => item.score >= 5).slice(0, 5).map(item => item.pin.id));
+
+    this.pins.update(pins => pins.map(pin => {
+      const score = scored.find(item => item.pin.id === pin.id)?.score ?? 0;
+      const size: UniversePin['size'] = featuredIds.has(pin.id)
+        ? 'featured'
+        : largeIds.has(pin.id)
+          ? 'large'
+          : this.pinSizeForScore(score);
+      return { ...pin, size };
+    }));
+  }
+
   private buildIntentFields(clusters: ExtCluster[]) {
     return clusters.slice(0, 4).map((cluster, i): IntentField => {
       const related = this.pins().filter(pin => pin.topic === cluster.label);
-      const slot = SLOTS[(i * 2) % SLOTS.length];
+      const slot = this.pinSlot(i * 2);
       const avgX = related.length ? related.reduce((sum, pin) => sum + pin.x, 0) / related.length : slot.x;
       const avgY = related.length ? related.reduce((sum, pin) => sum + pin.y, 0) / related.length : slot.y;
       return {
@@ -481,6 +501,44 @@ export class LabUniverseComponent implements OnInit, AfterViewInit, OnDestroy {
 
   private cleanTitle(title: string) {
     return title.replace(/\s+/g, ' ').trim().slice(0, 92);
+  }
+
+  private intentScore(
+    page: { url?: string; title?: string; domain?: string },
+    topic: string,
+    tokens = this.activeIntentTokens(),
+  ) {
+    if (!tokens.length) return 1;
+    const title = (page.title ?? '').toLowerCase();
+    const href = (page.url ?? page['href' as keyof typeof page] ?? '').toString().toLowerCase();
+    const domain = (page.domain ?? this.domainFromUrl(href)).toLowerCase();
+    const haystack = `${title} ${href} ${domain} ${topic}`.toLowerCase();
+    const matches = tokens.filter(token => haystack.includes(token));
+    const domainMatches = tokens.filter(token => domain.includes(token));
+    const titleMatches = tokens.filter(token => title.includes(token));
+    return 1 + matches.length * 2 + domainMatches.length * 3 + titleMatches.length * 2;
+  }
+
+  private pinSizeForScore(score: number): UniversePin['size'] {
+    if (score >= 8) return 'featured';
+    if (score >= 5) return 'large';
+    if (score >= 3) return 'medium';
+    return 'small';
+  }
+
+  private activeIntentTokens() {
+    const active = this.intentText || this.searchTrails().at(-1)?.query || '';
+    return this.tokenize(active);
+  }
+
+  private tokenize(value: string) {
+    return value
+      .toLowerCase()
+      .replace(/https?:\/\//g, ' ')
+      .replace(/[^a-z0-9]+/g, ' ')
+      .split(' ')
+      .map(token => token.trim())
+      .filter(token => token.length > 2);
   }
 
   private domainFromUrl(url: string) {

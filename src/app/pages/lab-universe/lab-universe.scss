@@ -483,6 +483,10 @@
     &--large {
       width: min(9rem, 11.5vw);
     }
+
+    &--featured {
+      width: min(10.2rem, 13vw);
+    }
   }
 
   &__pin-mark,

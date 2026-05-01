@@ -106,6 +106,7 @@
         class="universe__pin"
         [class.universe__pin--small]="pin.size === 'small'"
         [class.universe__pin--large]="pin.size === 'large'"
+        [class.universe__pin--featured]="pin.size === 'featured'"
         [class.visible]="clustersVisible()"
         [style.--cx]="pin.x + 'vw'"
         [style.--cy]="pin.y + 'vh'"
