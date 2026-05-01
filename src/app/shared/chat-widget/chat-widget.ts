@@ -44,12 +44,13 @@ export class ChatWidgetComponent implements OnDestroy, AfterViewChecked {
   private client: GenomeRelayClient | null = null;
   private shouldScroll = false;
 
-  readonly GATEKEEPER_DID  = window.LHChatConfig?.gatekeeperDid ?? environment.gatekeeperDid;
-  readonly RELAY_URL       = window.LHChatConfig?.relayUrl      ?? environment.relayUrl;
-  readonly TENANT_ID       = window.LHChatConfig?.tenantId      ?? environment.tenantId;
-  readonly BUSINESS_NAME   = window.LHChatConfig?.businessName  ?? environment.businessName;
-  readonly INTRO_TEXT      = window.LHChatConfig?.introText     ?? environment.introText;
-  readonly OFFLINE_TEXT    = window.LHChatConfig?.offlineText   ?? environment.offlineText;
+  private readonly _cfg    = typeof window !== 'undefined' ? window.LHChatConfig : undefined;
+  readonly GATEKEEPER_DID  = this._cfg?.gatekeeperDid ?? environment.gatekeeperDid;
+  readonly RELAY_URL       = this._cfg?.relayUrl      ?? environment.relayUrl;
+  readonly TENANT_ID       = this._cfg?.tenantId      ?? environment.tenantId;
+  readonly BUSINESS_NAME   = this._cfg?.businessName  ?? environment.businessName;
+  readonly INTRO_TEXT      = this._cfg?.introText     ?? environment.introText;
+  readonly OFFLINE_TEXT    = this._cfg?.offlineText   ?? environment.offlineText;
 
   async toggleOpen(): Promise<void> {
     this.open.update(v => !v);
