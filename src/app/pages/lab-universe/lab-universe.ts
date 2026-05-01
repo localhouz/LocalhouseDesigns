@@ -84,15 +84,28 @@ interface ExtensionContext {
 }
 
 const SLOTS = [
-  { x: 36, y: -27, delay: 200 },
-  { x: 43, y:  13, delay: 350 },
-  { x: 24, y:  36, delay: 500 },
-  { x: -29, y: 37, delay: 400 },
-  { x: -43, y:  9, delay: 250 },
-  { x: -28, y: -29, delay: 150 },
+  { x: -38, y: -25, delay: 150 },
+  { x: -39, y: 14, delay: 250 },
+  { x: -23, y: 37, delay: 400 },
+  { x: 28, y: 35, delay: 500 },
+  { x: 39, y: 10, delay: 350 },
+  { x: 37, y: -25, delay: 200 },
+  { x: -8, y: -38, delay: 300 },
+  { x: 9, y: 39, delay: 450 },
+  { x: -40, y: -3, delay: 320 },
+  { x: 40, y: -6, delay: 360 },
 ];
 
 const PIN_SIZES: Array<UniversePin['size']> = ['large', 'medium', 'small', 'medium', 'large', 'small'];
+
+const GHOST_SLOTS = [
+  { x: -40, y: -36, delay: 680 },
+  { x: -40, y: 34, delay: 780 },
+  { x: 40, y: -36, delay: 880 },
+  { x: 40, y: 34, delay: 980 },
+  { x: -15, y: -37, delay: 1080 },
+  { x: 16, y: 38, delay: 1180 },
+];
 
 const GHOST_SITES: Record<string, Array<{ title: string; domain: string; href: string }>> = {
   'seo & content': [
@@ -280,17 +293,15 @@ export class LabUniverseComponent implements OnInit, AfterViewInit, OnDestroy {
         .slice(0, 10)
         .map(({ page, topic }, i): UniversePin => {
           const slot = SLOTS[i % SLOTS.length];
-          const ring = Math.floor(i / SLOTS.length);
-          const offset = ring * 7;
           return {
             id: `${topic}-${i}-${page.url}`,
             title: this.cleanTitle(page.title || page.url),
             domain: this.domainFromUrl(page.url),
             topic,
             href: page.url,
-            x: this.clamp(slot.x + (ring ? (slot.x > 0 ? -offset : offset) : 0), -44, 44),
-            y: this.clamp(slot.y + (ring ? (slot.y > 0 ? -offset : offset) : 0), -38, 38),
-            delay: slot.delay + ring * 140,
+            x: slot.x,
+            y: slot.y,
+            delay: slot.delay,
             size: PIN_SIZES[i % PIN_SIZES.length],
           };
         });
@@ -325,20 +336,17 @@ export class LabUniverseComponent implements OnInit, AfterViewInit, OnDestroy {
     return clusters.slice(0, 4).flatMap((cluster, ci) => {
       const key = cluster.label.toLowerCase();
       const suggestions = GHOST_SITES[key] ?? [];
-      return suggestions.slice(0, 2).map((site, si): GhostNode => {
-        const slot = SLOTS[(ci + si + 2) % SLOTS.length];
-        const drift = 10 + ci * 3 + si * 5;
-        const x = slot.x + (slot.x > 0 ? drift : -drift);
-        const y = slot.y + (slot.y > 0 ? -drift * 0.55 : drift * 0.55);
+      return suggestions.slice(0, 1).map((site): GhostNode => {
+        const slot = GHOST_SLOTS[ci % GHOST_SLOTS.length];
         return {
           id: `${cluster.id}-${site.domain}`,
           title: site.title,
           domain: site.domain,
           topic: cluster.label,
           href: site.href,
-          x: this.clamp(x, -42, 42),
-          y: this.clamp(y, -34, 34),
-          delay: 640 + ci * 160 + si * 100,
+          x: slot.x,
+          y: slot.y,
+          delay: slot.delay,
         };
       });
     });
@@ -382,20 +390,17 @@ export class LabUniverseComponent implements OnInit, AfterViewInit, OnDestroy {
 
   private buildWikiGhostNodes(intents: NonNullable<IntentWikiResponse['intents']>) {
     return intents.slice(0, 4).flatMap((intent, ci) => {
-      return intent.ghosts.slice(0, 2).map((site, si): GhostNode => {
-        const slot = SLOTS[(ci + si + 2) % SLOTS.length];
-        const drift = 10 + ci * 3 + si * 5;
-        const x = slot.x + (slot.x > 0 ? drift : -drift);
-        const y = slot.y + (slot.y > 0 ? -drift * 0.55 : drift * 0.55);
+      return intent.ghosts.slice(0, 1).map((site): GhostNode => {
+        const slot = GHOST_SLOTS[ci % GHOST_SLOTS.length];
         return {
           id: `wiki-${intent.id}-${site.domain}`,
           title: site.title,
           domain: site.domain,
           topic: intent.intent,
           href: site.href,
-          x: this.clamp(x, -42, 42),
-          y: this.clamp(y, -34, 34),
-          delay: 700 + ci * 160 + si * 100,
+          x: slot.x,
+          y: slot.y,
+          delay: slot.delay,
         };
       });
     });
