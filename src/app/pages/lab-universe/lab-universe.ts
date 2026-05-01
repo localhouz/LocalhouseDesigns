@@ -303,9 +303,18 @@ export class LabUniverseComponent implements OnInit, AfterViewInit, OnDestroy {
     if (data?.type !== 'LH_UNIVERSE_CONTEXT' || !data.clusters?.length) return;
 
     this.zone.run(() => {
-      const pins = data.clusters!
-        .flatMap(ext => ext.pages.slice(0, 4).map(page => ({ page, topic: ext.label })))
-        .slice(0, 10)
+      const seenDomains = new Set<string>();
+      const uniquePages = data.clusters!
+        .flatMap(ext => ext.pages.slice(0, 6).map(page => ({ page, topic: ext.label })))
+        .filter(({ page }) => {
+          const domain = this.domainFromUrl(page.url);
+          if (seenDomains.has(domain)) return false;
+          seenDomains.add(domain);
+          return true;
+        })
+        .slice(0, 10);
+
+      const pins = uniquePages
         .map(({ page, topic }, i): UniversePin => {
           const slot = SLOTS[i % SLOTS.length];
           return {

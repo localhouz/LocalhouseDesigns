@@ -74,8 +74,17 @@ function scoreText(url = '', title = '') {
 
 function addPage(topicPages, id, page) {
   if (!topicPages[id]) topicPages[id] = [];
-  if (topicPages[id].some(existing => existing.url === page.url)) return;
+  const domain = domainFromUrl(page.url);
+  if (topicPages[id].some(existing => existing.url === page.url || domainFromUrl(existing.url) === domain)) return;
   if (topicPages[id].length < 8) topicPages[id].push(page);
+}
+
+function domainFromUrl(url = '') {
+  try {
+    return new URL(url).hostname.replace(/^www\./, '');
+  } catch {
+    return url;
+  }
 }
 
 function extractSearch(url = '') {
