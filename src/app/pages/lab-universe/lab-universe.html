@@ -85,10 +85,13 @@
         [class.visible]="clustersVisible()"
         [style.--cx]="node.x + 'vw'"
         [style.--cy]="node.y + 'vh'"
+        [style.--tone]="visualTone(node.domain, node.topic)"
         [style.--delay]="node.delay + 'ms'"
         (click)="openGhost(node)"
       >
-        <span class="universe__ghost-mark">{{ domainMark(node.domain) }}</span>
+        <span class="universe__ghost-visual">
+          <span class="universe__ghost-mark">{{ domainMark(node.domain) }}</span>
+        </span>
         <span class="universe__ghost-domain">{{ node.domain }}</span>
         <span class="universe__ghost-title">{{ node.title }}</span>
       </button>
@@ -102,10 +105,13 @@
         [class.visible]="clustersVisible()"
         [style.--cx]="pin.x + 'vw'"
         [style.--cy]="pin.y + 'vh'"
+        [style.--tone]="visualTone(pin.domain, pin.topic)"
         [style.--delay]="pin.delay + 'ms'"
         (click)="openPin(pin)"
       >
-        <span class="universe__pin-mark">{{ domainMark(pin.domain) }}</span>
+        <span class="universe__pin-visual">
+          <span class="universe__pin-mark">{{ domainMark(pin.domain) }}</span>
+        </span>
         <span class="universe__pin-domain">{{ pin.domain }}</span>
         <span class="universe__pin-title">{{ pin.title }}</span>
       </button>
