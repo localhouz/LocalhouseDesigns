@@ -13,11 +13,18 @@
   }
 
   @if (phase() === 'open') {
-    <div class="universe__search-shield" [class.visible]="inputVisible()"></div>
-
     <div class="universe__status" [class.visible]="inputVisible()">
       <span>{{ contextMode() }}</span>
       <p>{{ statusLine() }}</p>
+    </div>
+
+    <div class="universe__input-wrap" [class.visible]="inputVisible()">
+      <input
+        class="universe__input"
+        [(ngModel)]="intentText"
+        placeholder="what would you like to see?"
+        (keydown.enter)="submitSearch()"
+      />
     </div>
 
     @if (memoryCore(); as memory) {
@@ -28,15 +35,6 @@
         <span class="universe__memory-count">{{ memory.eventCount }}</span>
       </div>
     }
-
-    <div class="universe__input-wrap" [class.visible]="inputVisible()">
-      <input
-        class="universe__input"
-        [(ngModel)]="intentText"
-        placeholder="what would you like to see?"
-        (keydown.enter)="submitSearch()"
-      />
-    </div>
 
     @for (field of intentFields(); track field.id) {
       <div
