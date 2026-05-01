@@ -6,9 +6,6 @@ import { isPlatformBrowser } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import * as THREE from 'three';
-import { EffectComposer } from 'three/examples/jsm/postprocessing/EffectComposer.js';
-import { RenderPass } from 'three/examples/jsm/postprocessing/RenderPass.js';
-import { UnrealBloomPass } from 'three/examples/jsm/postprocessing/UnrealBloomPass.js';
 import { SeoService } from '../../shared/seo/seo.service';
 
 type Phase = 'idle' | 'exploding' | 'open';
@@ -110,7 +107,6 @@ export class LabUniverseComponent implements OnInit, AfterViewInit, OnDestroy {
   private renderer!:  THREE.WebGLRenderer;
   private scene!:     THREE.Scene;
   private camera!:    THREE.PerspectiveCamera;
-  private composer!:  EffectComposer;
   private animId      = 0;
   private startMs     = 0;   // performance.now() at init
   private explodeMs   = 0;   // performance.now() at explosion
@@ -233,12 +229,10 @@ export class LabUniverseComponent implements OnInit, AfterViewInit, OnDestroy {
     this.renderer = new THREE.WebGLRenderer({ canvas, antialias: true });
     this.renderer.setSize(w, h);
     this.renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-    this.renderer.outputColorSpace  = THREE.SRGBColorSpace;
-    this.renderer.toneMapping       = THREE.ACESFilmicToneMapping;
-    this.renderer.toneMappingExposure = 1.0;
+    this.renderer.outputColorSpace = THREE.SRGBColorSpace;
 
     this.scene  = new THREE.Scene();
-    this.scene.background = new THREE.Color(0x010203);
+    this.scene.background = new THREE.Color(0xffffff);
 
     this.camera = new THREE.PerspectiveCamera(60, w / h, 0.1, 100);
     this.camera.position.set(0, 0, 5);
@@ -247,15 +241,6 @@ export class LabUniverseComponent implements OnInit, AfterViewInit, OnDestroy {
     this.buildStars();
     this.buildDot();
     this.buildBurstParticles();
-
-    this.composer = new EffectComposer(this.renderer);
-    this.composer.addPass(new RenderPass(this.scene, this.camera));
-    this.composer.addPass(new UnrealBloomPass(
-      new THREE.Vector2(w, h),
-      0.9,   // strength
-      0.5,   // radius
-      0.55,  // threshold — only the bright dot and burst particles glow
-    ));
   }
 
   private buildStars() {
@@ -269,14 +254,14 @@ export class LabUniverseComponent implements OnInit, AfterViewInit, OnDestroy {
     const geo = new THREE.BufferGeometry();
     geo.setAttribute('position', new THREE.BufferAttribute(pos, 3));
     this.scene.add(new THREE.Points(geo, new THREE.PointsMaterial({
-      color: 0x6677aa, size: 0.014, transparent: true, opacity: 0.45, sizeAttenuation: true,
+      color: 0x888898, size: 0.014, transparent: true, opacity: 0.28, sizeAttenuation: true,
     })));
   }
 
   private buildDot() {
     this.dotMesh = new THREE.Mesh(
       new THREE.SphereGeometry(0.07, 16, 16),
-      new THREE.MeshBasicMaterial({ color: 0xaabbff }),
+      new THREE.MeshBasicMaterial({ color: 0x0a0a14 }),
     );
     this.scene.add(this.dotMesh);
   }
@@ -293,11 +278,11 @@ export class LabUniverseComponent implements OnInit, AfterViewInit, OnDestroy {
         Math.sin(angle) * speed,
         (Math.random() - 0.5) * 0.5,
       ));
-      // White-blue → purple, faster = more purple
+      // Black → dark navy, slower = slightly more blue
       const t       = speed / 4.6;
-      colors[i*3]   = 0.65 + 0.35 * (1 - t);
-      colors[i*3+1] = 0.72 + 0.28 * (1 - t);
-      colors[i*3+2] = 1.0;
+      colors[i*3]   = 0.04;
+      colors[i*3+1] = 0.04;
+      colors[i*3+2] = 0.08 + 0.14 * (1 - t);
     }
 
     this.burstGeo = new THREE.BufferGeometry();
@@ -345,7 +330,7 @@ export class LabUniverseComponent implements OnInit, AfterViewInit, OnDestroy {
       this.burstGeo.attributes['position'].needsUpdate = true;
     }
 
-    this.composer.render();
+    this.renderer.render(this.scene, this.camera);
   };
 
   private onResize = () => {
@@ -353,6 +338,5 @@ export class LabUniverseComponent implements OnInit, AfterViewInit, OnDestroy {
     this.camera.aspect = w / h;
     this.camera.updateProjectionMatrix();
     this.renderer.setSize(w, h);
-    this.composer.setSize(w, h);
   };
 }
