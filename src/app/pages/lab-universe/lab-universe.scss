@@ -2,7 +2,9 @@
   position: fixed;
   inset: 0;
   z-index: 900;
-  overflow: hidden;
+  overflow-y: auto;
+  overflow-x: hidden;
+  min-height: 180vh;
   background: #f4efe7;
 
   *,
@@ -18,7 +20,7 @@
     inset: 0;
     display: block;
     width: 100%;
-    height: 100%;
+    height: 180vh;
     cursor: crosshair;
   }
 
@@ -211,7 +213,7 @@
     position: absolute;
     inset: 0;
     width: 100%;
-    height: 100%;
+    height: 180vh;
     z-index: 6;
     pointer-events: none;
 
@@ -434,7 +436,7 @@
   &__pin {
     top: 50%;
     left: 50%;
-    width: 9.2rem;
+    width: min(8.4rem, 11vw);
     padding: 0.42rem 0.42rem 0.7rem;
     transform: translate(calc(-50% + var(--cx, 0vw)), calc(-50% + var(--cy, 0vh))) scale(0.86);
     background: #ffffff;
@@ -471,7 +473,7 @@
     }
 
     &--small {
-      width: 8.7rem;
+      width: min(7.8rem, 10.5vw);
       transform: translate(calc(-50% + var(--cx, 0vw)), calc(-50% + var(--cy, 0vh))) scale(0.86);
       &.visible {
         transform: translate(calc(-50% + var(--cx, 0vw)), calc(-50% + var(--cy, 0vh))) scale(1);
@@ -479,7 +481,7 @@
     }
 
     &--large {
-      width: 9.7rem;
+      width: min(9rem, 11.5vw);
     }
   }
 

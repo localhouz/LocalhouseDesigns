@@ -86,22 +86,10 @@ interface ExtensionContext {
   domains?: Array<{ domain: string; count: number }>;
 }
 
-const SLOTS = [
-  { x: -45, y: -11, delay: 120, rotate: 0 },
-  { x: -45, y:  31, delay: 260, rotate: 0 },
-  { x: -27, y:  -3, delay: 180, rotate: 0 },
-  { x: -27, y:  39, delay: 310, rotate: 0 },
-  { x:  -9, y: -14, delay: 440, rotate: 0 },
-  { x:  -9, y:  28, delay: 160, rotate: 0 },
-  { x:   9, y:  -3, delay: 290, rotate: 0 },
-  { x:   9, y:  39, delay: 420, rotate: 0 },
-  { x:  27, y: -13, delay: 200, rotate: 0 },
-  { x:  27, y:  29, delay: 340, rotate: 0 },
-  { x:  45, y:  -3, delay: 380, rotate: 0 },
-  { x:  45, y:  39, delay: 460, rotate: 0 },
-  { x: -55, y:  10, delay: 500, rotate: 0 },
-  { x:  55, y:  10, delay: 540, rotate: 0 },
-];
+const COLUMN_X = [-57, -43, -29, -15, -1, 13, 27, 41, 55];
+const COLUMN_START_Y = [-27, -12, -31, -16, -29, -10, -33, -14, -28];
+const ROW_GAP = 30;
+const MAX_HISTORY_PINS = 36;
 
 const PIN_SIZES: Array<UniversePin['size']> = ['large', 'medium', 'small', 'medium', 'large', 'small'];
 
@@ -330,11 +318,11 @@ export class LabUniverseComponent implements OnInit, AfterViewInit, OnDestroy {
           seenDomains.add(domain);
           return true;
         })
-        .slice(0, SLOTS.length);
+        .slice(0, MAX_HISTORY_PINS);
 
       const pins = uniquePages
         .map(({ page, topic }, i): UniversePin => {
-          const slot = SLOTS[i % SLOTS.length];
+          const slot = this.pinSlot(i);
           return {
             id: `${topic}-${i}-${page.url}`,
             title: this.cleanTitle(page.title || page.url),
@@ -501,6 +489,17 @@ export class LabUniverseComponent implements OnInit, AfterViewInit, OnDestroy {
     } catch {
       return url;
     }
+  }
+
+  private pinSlot(index: number) {
+    const column = index % COLUMN_X.length;
+    const row = Math.floor(index / COLUMN_X.length);
+    return {
+      x: COLUMN_X[column],
+      y: COLUMN_START_Y[column] + row * ROW_GAP,
+      delay: 120 + index * 55,
+      rotate: 0,
+    };
   }
 
   private isLocalUrl(url: string) {
