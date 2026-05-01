@@ -201,7 +201,7 @@ export class LabUniverseComponent implements OnInit, AfterViewInit, OnDestroy {
     this.renderer.outputColorSpace = THREE.SRGBColorSpace;
 
     this.scene = new THREE.Scene();
-    this.scene.background = new THREE.Color(0xffffff);
+    this.scene.background = new THREE.Color(0xf4efe7);
 
     this.camera = new THREE.PerspectiveCamera(60, w / h, 0.1, 100);
     this.camera.position.set(0, 0, 5);
@@ -223,7 +223,7 @@ export class LabUniverseComponent implements OnInit, AfterViewInit, OnDestroy {
     const geo = new THREE.BufferGeometry();
     geo.setAttribute('position', new THREE.BufferAttribute(pos, 3));
     this.scene.add(new THREE.Points(geo, new THREE.PointsMaterial({
-      color: 0x888898, size: 0.014, transparent: true, opacity: 0.28, sizeAttenuation: true,
+      color: 0x6f6870, size: 0.018, transparent: true, opacity: 0.36, sizeAttenuation: true,
     })));
   }
 
