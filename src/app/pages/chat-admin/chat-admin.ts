@@ -1,7 +1,7 @@
 import { Component, signal, OnDestroy, ViewChild, ElementRef, AfterViewChecked } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { SlicePipe, DatePipe } from '@angular/common';
-import { GenomeRelayClient } from '../../shared/genome/genome-relay-client';
+import { GenomeRelayClient, verifyEnvelope } from '../../shared/genome/genome-relay-client';
 import { environment } from '../../../environments/environment';
 
 interface Thread {
@@ -84,7 +84,12 @@ export class ChatAdminComponent implements OnDestroy, AfterViewChecked {
 
     this.client.onDisconnect(() => this.status.set('offline'));
 
-    this.client.onDeliver((env) => {
+    this.client.onDeliver(async (env) => {
+      // Reject any envelope not signed by the known gatekeeper — prevents direct relay bypass.
+      if (env.from !== environment.gatekeeperDid) return;
+      const valid = await verifyEnvelope(env);
+      if (!valid) { console.warn('[chat-admin] Dropped envelope: invalid signature'); return; }
+
       const p = env.payload as { type?: string; message?: string; visitorDid?: string; name?: string };
       if (p.type !== 'contact_message' || !p.visitorDid) return;
 
@@ -135,6 +140,40 @@ export class ChatAdminComponent implements OnDestroy, AfterViewChecked {
 
   backToList(): void {
     this.mobileView.set('list');
+  }
+
+  logout(): void {
+    this.client?.disconnect();
+    this.client = null;
+    localStorage.removeItem('lh_admin_seed');
+    this.status.set('offline');
+    this.activeThread.set(null);
+    this.mobileView.set('list');
+    this.needsSeed.set(true);
+  }
+
+  markUnread(): void {
+    const thread = this.activeThread();
+    if (!thread) return;
+    this.threads.update(ts => {
+      const updated = ts.map(t => t.visitorDid === thread.visitorDid ? { ...t, unread: 1 } : t);
+      this.saveThreads(updated);
+      return updated;
+    });
+    this.activeThread.set(null);
+    this.mobileView.set('list');
+  }
+
+  deleteThread(visitorDid: string): void {
+    this.threads.update(ts => {
+      const updated = ts.filter(t => t.visitorDid !== visitorDid);
+      this.saveThreads(updated);
+      return updated;
+    });
+    if (this.activeThread()?.visitorDid === visitorDid) {
+      this.activeThread.set(null);
+      this.mobileView.set('list');
+    }
   }
 
   async sendReply(): Promise<void> {

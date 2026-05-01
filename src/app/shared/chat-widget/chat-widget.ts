@@ -4,6 +4,19 @@ import { RouterLink } from '@angular/router';
 import { GenomeRelayClient } from '../genome/genome-relay-client';
 import { environment } from '../../../environments/environment';
 
+declare global {
+  interface Window {
+    LHChatConfig?: {
+      relayUrl?: string;
+      gatekeeperDid?: string;
+      tenantId?: string;
+      businessName?: string;
+      introText?: string;
+      offlineText?: string;
+    };
+  }
+}
+
 interface Message {
   from: 'visitor' | 'steve';
   text: string;
@@ -23,15 +36,20 @@ export class ChatWidgetComponent implements OnDestroy, AfterViewChecked {
   open       = signal(false);
   status     = signal<'offline' | 'connecting' | 'online'>('offline');
   messages   = signal<Message[]>([]);
-  inputText  = '';
-  sending    = signal(false);
-  submitted  = signal(false);
+  inputText    = '';
+  visitorName  = '';
+  sending      = signal(false);
+  submitted    = signal(false);
 
   private client: GenomeRelayClient | null = null;
   private shouldScroll = false;
 
-  readonly GATEKEEPER_DID = environment.gatekeeperDid;
-  readonly RELAY_URL      = environment.relayUrl;
+  readonly GATEKEEPER_DID  = window.LHChatConfig?.gatekeeperDid ?? environment.gatekeeperDid;
+  readonly RELAY_URL       = window.LHChatConfig?.relayUrl      ?? environment.relayUrl;
+  readonly TENANT_ID       = window.LHChatConfig?.tenantId      ?? environment.tenantId;
+  readonly BUSINESS_NAME   = window.LHChatConfig?.businessName  ?? environment.businessName;
+  readonly INTRO_TEXT      = window.LHChatConfig?.introText     ?? environment.introText;
+  readonly OFFLINE_TEXT    = window.LHChatConfig?.offlineText   ?? environment.offlineText;
 
   async toggleOpen(): Promise<void> {
     this.open.update(v => !v);
@@ -85,6 +103,8 @@ export class ChatWidgetComponent implements OnDestroy, AfterViewChecked {
       await this.client.route(this.GATEKEEPER_DID, {
         type: 'contact_message',
         message: text,
+        name: this.visitorName.trim() || 'Visitor',
+        tenantId: this.TENANT_ID,
       });
     } catch {
       // Already shows in bubble — silently ignore route errors

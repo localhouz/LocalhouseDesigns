@@ -48,6 +48,7 @@ export interface GenomeRelayConfig {
 // ── Base58btc helpers ─────────────────────────────────────────────────────────
 
 const BASE58 = '123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz';
+const BASE58_MAP: Record<string, number> = Object.fromEntries([...BASE58].map((c, i) => [c, i]));
 
 function base58Encode(bytes: Uint8Array): string {
   let n = 0n;
@@ -56,6 +57,52 @@ function base58Encode(bytes: Uint8Array): string {
   while (n > 0n) { result = BASE58[Number(n % 58n)] + result; n /= 58n; }
   for (const b of bytes) { if (b === 0) result = BASE58[0] + result; else break; }
   return result;
+}
+
+function base58Decode(s: string): Uint8Array {
+  let n = 0n;
+  for (const c of s) {
+    const v = BASE58_MAP[c];
+    if (v === undefined) throw new Error(`Invalid base58 character: ${c}`);
+    n = n * 58n + BigInt(v);
+  }
+  const bytes: number[] = [];
+  while (n > 0n) { bytes.unshift(Number(n & 0xffn)); n >>= 8n; }
+  for (const c of s) { if (c === BASE58[0]) bytes.unshift(0); else break; }
+  return new Uint8Array(bytes);
+}
+
+// ── DID → public key ──────────────────────────────────────────────────────────
+
+function didToPublicKeyBytes(did: string): Uint8Array {
+  // did:key:z<base58(multikey)> where multikey = [0xed, 0x01, ...32 pubkey bytes]
+  const parts = did.split(':');
+  if (parts[0] !== 'did' || parts[1] !== 'key') throw new Error('Not a did:key DID');
+  const encoded = parts[2];
+  if (!encoded || encoded[0] !== 'z') throw new Error('Expected base58btc multikey');
+  const multikey = base58Decode(encoded.slice(1));
+  if (multikey[0] !== 0xed || multikey[1] !== 0x01) throw new Error('Not an Ed25519 multikey');
+  return multikey.slice(2); // 32-byte raw public key
+}
+
+// ── Envelope signature verification ──────────────────────────────────────────
+
+/**
+ * Verify that an envelope was signed by the DID in its `from` field.
+ * Returns false (not throws) on any failure — treat as untrusted.
+ */
+export async function verifyEnvelope(env: GenomeEnvelope): Promise<boolean> {
+  try {
+    const pubBytes = didToPublicKeyBytes(env.from);
+    const pubKey = await crypto.subtle.importKey(
+      'raw', pubBytes.buffer as ArrayBuffer, { name: 'Ed25519' }, false, ['verify']
+    );
+    const sigBytes = fromHex(env.sig);
+    const msgBytes = canonicalBytes(env);
+    return crypto.subtle.verify({ name: 'Ed25519' }, pubKey, sigBytes.buffer as ArrayBuffer, msgBytes.buffer as ArrayBuffer);
+  } catch {
+    return false;
+  }
 }
 
 // ── Hex helpers ───────────────────────────────────────────────────────────────

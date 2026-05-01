@@ -73,6 +73,28 @@
     justify-content: space-between;
   }
 
+  &__sidebar-header-actions {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+  }
+
+  &__logout {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 28px;
+    border: none;
+    background: none;
+    cursor: pointer;
+    color: rgba(10,10,18,0.3);
+    border-radius: 6px;
+    transition: color 0.15s, background 0.15s;
+
+    &:hover { color: #dc2626; background: rgba(220,38,38,0.08); }
+  }
+
   &__title { font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; }
 
   &__dot {
@@ -101,18 +123,48 @@
   &__thread {
     display: flex;
     align-items: center;
-    gap: 0.75rem;
-    padding: 0.85rem 1rem 0.85rem 1.25rem;
-    border: none;
     border-bottom: 1px solid var(--border);
-    background: none;
-    cursor: pointer;
-    text-align: left;
-    transition: background 0.15s;
-    width: 100%;
+    position: relative;
 
     &:hover { background: rgba(10,10,18,0.04); }
     &--active { background: rgba(10,10,18,0.06); }
+
+    &:not(:hover) .chat-admin__delete { opacity: 0; }
+  }
+
+  &__thread-btn {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.85rem 0 0.85rem 1.25rem;
+    border: none;
+    background: none;
+    cursor: pointer;
+    text-align: left;
+    color: inherit;
+    font-family: inherit;
+    font-size: inherit;
+  }
+
+  &__delete {
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    margin-right: 0.5rem;
+    border: none;
+    background: none;
+    cursor: pointer;
+    color: rgba(10,10,18,0.35);
+    border-radius: 6px;
+    transition: color 0.15s, opacity 0.15s, background 0.15s;
+
+    &:hover { color: #dc2626; background: rgba(220,38,38,0.08); }
+    &:active { opacity: 0.7; }
   }
 
   &__thread-body {
@@ -234,6 +286,24 @@
     white-space: nowrap;
   }
 
+  &__mark-unread {
+    margin-left: auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    flex-shrink: 0;
+    border: none;
+    background: none;
+    cursor: pointer;
+    color: rgba(10,10,18,0.3);
+    border-radius: 6px;
+    transition: color 0.15s, background 0.15s;
+
+    &:hover { color: var(--accent); background: rgba(0,0,0,0.05); }
+  }
+
   &__placeholder {
     flex: 1;
     display: flex;
@@ -350,8 +420,13 @@
     }
 
     &__thread {
-      padding: 1rem 1rem 1rem 1.25rem;
       min-height: 72px;
+
+      &:not(:hover) .chat-admin__delete { opacity: 1; } // always visible on mobile
+    }
+
+    &__thread-btn {
+      padding: 1rem 0 1rem 1.25rem;
     }
 
     &__main {

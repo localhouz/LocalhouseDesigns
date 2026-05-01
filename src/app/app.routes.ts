@@ -31,6 +31,7 @@ export const routes: Routes = [
   { path: 'work/norcal-sauce-worx', loadComponent: () => import('./pages/case-study/case-study').then(m => m.CaseStudyComponent) },
   { path: 'work/local-geo-standard', loadComponent: () => import('./pages/case-study/case-study').then(m => m.CaseStudyComponent) },
   { path: 'services', loadComponent: () => import('./pages/services/services').then(m => m.ServicesComponent) },
+  { path: 'services/live-chat', loadComponent: () => import('./pages/live-chat-service/live-chat-service').then(m => m.LiveChatServiceComponent) },
   { path: 'tulsa-service-business-websites', loadComponent: () => import('./pages/tulsa-service-business-websites/tulsa-service-business-websites').then(m => m.TulsaServiceBusinessWebsitesComponent) },
   { path: 'contact',  loadComponent: () => import('./pages/contact/contact').then(m => m.ContactComponent) },
   { path: 'local-geo-audit', loadComponent: () => import('./pages/local-geo-audit/local-geo-audit').then(m => m.LocalGeoAuditComponent) },

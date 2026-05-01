@@ -122,6 +122,25 @@
     p { font-size: 0.8rem; color: rgba(10,10,18,0.55); margin-bottom: 0.75rem; }
   }
 
+  &__name-row {
+    padding: 0.5rem 1rem 0;
+  }
+
+  &__name-input {
+    width: 100%;
+    border: none;
+    border-bottom: 1px solid var(--border);
+    padding: 0.35rem 0;
+    font-size: 0.78rem;
+    font-family: inherit;
+    background: transparent;
+    color: var(--fg);
+    box-sizing: border-box;
+
+    &:focus { outline: none; border-color: var(--accent); }
+    &::placeholder { color: rgba(10,10,18,0.35); }
+  }
+
   &__input-row {
     display: flex;
     align-items: flex-end;

@@ -1,0 +1,141 @@
+<div class="lc-page">
+
+  <!-- ── Hero ── -->
+  <div class="page-header lc-hero container">
+    <p class="label">Live Chat Add-On</p>
+    <h1>Real conversations.<br><em>No SaaS bill.</em></h1>
+    <p class="page-header__sub">A real-time chat widget for your website, running on a private relay you control. No Intercom. No Drift. No monthly vendor fee. When a visitor has a question, you answer it — live, from your phone.</p>
+    <div class="lc-hero__actions">
+      <a routerLink="/contact" class="btn btn--filled">Get it on your site</a>
+      <a routerLink="/contact" class="btn">Ask a question first</a>
+    </div>
+  </div>
+
+  <!-- ── How it works ── -->
+  <section class="lc-steps section container">
+    <p class="label">How it works</p>
+    <div class="lc-steps__grid">
+      @for (step of steps; track step.num) {
+        <div class="lc-step">
+          <span class="lc-step__num">{{ step.num }}</span>
+          <h2>{{ step.title }}</h2>
+          <p>{{ step.body }}</p>
+        </div>
+      }
+    </div>
+  </section>
+
+  <!-- ── Why not Intercom ── -->
+  <section class="lc-reasons section">
+    <div class="container">
+      <p class="label">Why not Intercom</p>
+      <h2 class="lc-reasons__heading">You pay Intercom $74/month to sit between you and your customers.<br>This doesn't do that.</h2>
+      <div class="lc-reasons__grid">
+        @for (r of reasons; track r.title) {
+          <div class="lc-reason">
+            <h3>{{ r.title }}</h3>
+            <p>{{ r.body }}</p>
+          </div>
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Features ── -->
+  <section class="lc-features section container">
+    <p class="label">What's included</p>
+    <ul class="lc-features__list">
+      @for (f of features; track f) {
+        <li>{{ f }}</li>
+      }
+    </ul>
+  </section>
+
+  <!-- ── Pricing ── -->
+  <section class="lc-pricing section container">
+    <p class="label">How to get it</p>
+    <div class="lc-pricing__grid">
+      @for (tier of pricing; track tier.name) {
+        <div class="lc-pricing__card" [class.lc-pricing__card--highlight]="tier.highlight">
+          <div class="lc-pricing__top">
+            <span class="lc-pricing__name">{{ tier.name }}</span>
+            <span class="lc-pricing__price">{{ tier.price }}</span>
+            <span class="lc-pricing__note">{{ tier.note }}</span>
+          </div>
+          <ul class="lc-pricing__items">
+            @for (item of tier.items; track item) {
+              <li>{{ item }}</li>
+            }
+          </ul>
+        </div>
+      }
+    </div>
+    <p class="lc-pricing__footer">Not sure which fits? Start a conversation — we'll figure it out in a few messages.</p>
+  </section>
+
+  <!-- ── FAQ ── -->
+  <section class="lc-faq section container">
+    <p class="label">Common questions</p>
+    <div class="lc-faq__grid">
+      @for (item of faqs; track item.q) {
+        <div class="lc-faq__item">
+          <h3>{{ item.q }}</h3>
+          <p>{{ item.a }}</p>
+        </div>
+      }
+    </div>
+  </section>
+
+  <!-- ── Signup form ── -->
+  <section class="lc-signup section container">
+    <p class="label">Get started</p>
+    <div class="lc-signup__grid">
+      <div class="lc-signup__intro">
+        <h2>Ready to put it on your site?</h2>
+        <p>Fill this out and we'll follow up with next steps — usually within one business day.</p>
+        <ul class="lc-signup__checklist">
+          <li>Setup takes about a week</li>
+          <li>Works on any website</li>
+          <li>No SaaS vendors in your data path</li>
+        </ul>
+      </div>
+
+      @if (signupState() === 'sent') {
+        <div class="lc-signup__success">
+          <p>Got it — we'll be in touch shortly.</p>
+        </div>
+      } @else {
+        <form class="lc-signup__form" (ngSubmit)="submitSignup()">
+          <div class="lc-signup__field">
+            <label>Business name</label>
+            <input type="text" [(ngModel)]="signupName" name="signupName" placeholder="Acme Design Co." required />
+          </div>
+          <div class="lc-signup__field">
+            <label>Website domain</label>
+            <input type="text" [(ngModel)]="signupDomain" name="signupDomain" placeholder="acme.com" />
+          </div>
+          <div class="lc-signup__field">
+            <label>Your email</label>
+            <input type="email" [(ngModel)]="signupEmail" name="signupEmail" placeholder="you@acme.com" required />
+          </div>
+          <div class="lc-signup__field">
+            <label>Which option fits best?</label>
+            <select [(ngModel)]="signupTier" name="signupTier">
+              <option value="">Not sure yet</option>
+              <option value="addon">One-time add-on ($500–800)</option>
+              <option value="monthly">Setup + monthly ($300 + $29/mo)</option>
+              <option value="bundled">Bundled into a site build</option>
+            </select>
+          </div>
+          @if (signupState() === 'error') {
+            <p class="lc-signup__error">Something went wrong — try the <a routerLink="/contact">contact page</a> instead.</p>
+          }
+          <button type="submit" class="btn btn--filled" [disabled]="signupState() === 'sending' || !signupName.trim() || !signupEmail.trim()">
+            {{ signupState() === 'sending' ? 'Sending...' : 'Request setup' }}
+          </button>
+        </form>
+      }
+    </div>
+  </section>
+
+</div>

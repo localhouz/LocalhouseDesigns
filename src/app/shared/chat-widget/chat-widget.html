@@ -15,7 +15,7 @@
     <div class="chat-widget__panel">
       <div class="chat-widget__header">
         <div class="chat-widget__header-info">
-          <span class="chat-widget__name">Localhouse Designs</span>
+          <span class="chat-widget__name">{{ BUSINESS_NAME }}</span>
           <span class="chat-widget__status" [class.chat-widget__status--online]="status() === 'online'">
             {{ status() === 'online' ? 'Online now' : status() === 'connecting' ? 'Connecting...' : 'Offline — try the contact form' }}
           </span>
@@ -25,7 +25,7 @@
       <div class="chat-widget__messages" #messagesEl>
         @if (messages().length === 0) {
           <div class="chat-widget__intro">
-            <p>Real-time chat, real person. When you're here, we are too — ask anything about your project.</p>
+            <p>{{ INTRO_TEXT }}</p>
           </div>
         }
         @for (msg of messages(); track msg.ts) {
@@ -38,9 +38,21 @@
         }
       </div>
 
+      @if (!submitted() && status() !== 'offline') {
+        <div class="chat-widget__name-row">
+          <input
+            class="chat-widget__name-input"
+            [(ngModel)]="visitorName"
+            placeholder="Your name (optional)"
+            maxlength="100"
+            autocomplete="given-name"
+          />
+        </div>
+      }
+
       @if (status() === 'offline') {
         <div class="chat-widget__offline">
-          <p>Steve's PC is offline right now.</p>
+          <p>{{ OFFLINE_TEXT }}</p>
           <a routerLink="/contact" class="btn btn--filled" style="font-size:0.75rem;padding:0.5rem 1rem">Use the contact form -></a>
         </div>
       } @else {
