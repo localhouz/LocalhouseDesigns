@@ -1,0 +1,21 @@
+{
+  "manifest_version": 3,
+  "name": "LH Universe",
+  "version": "0.1.0",
+  "description": "Private experiment — feeds browsing context to the Localhouse Designs intent universe.",
+
+  "permissions": ["history", "tabs"],
+  "host_permissions": ["https://localhousedesigns.com/*"],
+
+  "background": {
+    "service_worker": "background.js"
+  },
+
+  "content_scripts": [
+    {
+      "matches": ["https://localhousedesigns.com/lab/universe*"],
+      "js": ["content.js"],
+      "run_at": "document_idle"
+    }
+  ]
+}

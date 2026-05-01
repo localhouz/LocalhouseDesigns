@@ -1,0 +1,221 @@
+.universe {
+  position: fixed;
+  inset: 0;
+  z-index: 900;
+  overflow: hidden;
+  background: #010203;
+
+  &__canvas {
+    position: absolute;
+    inset: 0;
+    display: block;
+    width: 100%;
+    height: 100%;
+    cursor: crosshair;
+  }
+
+  &__badge {
+    position: absolute;
+    top: 1.5rem;
+    right: 1.5rem;
+    font-family: var(--font-mono);
+    font-size: 0.6rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: rgba(120, 140, 200, 0.28);
+    border: 1px solid rgba(120, 140, 200, 0.15);
+    padding: 0.22rem 0.55rem;
+    border-radius: 2px;
+    pointer-events: none;
+    animation: universe-fade-in 3s ease 2s both;
+  }
+
+  &__hint {
+    position: absolute;
+    top: calc(50% + 5rem);
+    left: 50%;
+    transform: translateX(-50%);
+    color: rgba(155, 168, 220, 0.38);
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    pointer-events: none;
+    white-space: nowrap;
+    animation: universe-fade-in 3s ease 1.5s both;
+  }
+
+  &__back {
+    position: absolute;
+    top: 1.5rem;
+    left: 1.5rem;
+    background: none;
+    border: none;
+    color: rgba(150, 165, 215, 0.32);
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+    letter-spacing: 0.1em;
+    cursor: pointer;
+    padding: 0.5rem;
+    transition: color 0.25s;
+    z-index: 10;
+    animation: universe-fade-in 0.5s ease both;
+
+    &:hover { color: rgba(200, 215, 255, 0.7); }
+  }
+
+  &__input-wrap {
+    position: absolute;
+    bottom: calc(50% - 1.5rem);
+    left: 50%;
+    transform: translateX(-50%);
+    width: min(22rem, 86vw);
+    z-index: 10;
+    opacity: 0;
+    transition: opacity 0.7s ease;
+
+    &.visible { opacity: 1; }
+  }
+
+  &__input {
+    width: 100%;
+    background: none;
+    border: none;
+    border-bottom: 1px solid rgba(100, 140, 255, 0.22);
+    color: rgba(200, 212, 255, 0.82);
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    text-align: center;
+    padding: 0.5rem 0;
+    letter-spacing: 0.06em;
+    outline: none;
+    transition: border-color 0.25s;
+
+    &::placeholder {
+      color: rgba(100, 130, 195, 0.38);
+      letter-spacing: 0.12em;
+    }
+
+    &:focus {
+      border-bottom-color: rgba(130, 160, 255, 0.48);
+    }
+  }
+
+  &__cluster {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 12rem;
+    padding: 1rem 1.15rem;
+    background: rgba(4, 8, 22, 0.88);
+    border: 1px solid rgba(100, 140, 255, 0.14);
+    border-radius: 0.75rem;
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
+    text-align: left;
+    cursor: pointer;
+    z-index: 10;
+
+    opacity: 0;
+    transform: translate(
+      calc(-50% + var(--cx, 0vw)),
+      calc(-50% + var(--cy, 0vh))
+    ) scale(0.8);
+
+    transition:
+      opacity 0.55s ease var(--delay, 0ms),
+      transform 0.65s cubic-bezier(0.34, 1.4, 0.64, 1) var(--delay, 0ms),
+      border-color 0.22s ease,
+      background 0.22s ease;
+
+    &.visible {
+      opacity: 1;
+      transform: translate(
+        calc(-50% + var(--cx, 0vw)),
+        calc(-50% + var(--cy, 0vh))
+      ) scale(1);
+    }
+
+    &:hover {
+      border-color: rgba(140, 172, 255, 0.32);
+      background: rgba(8, 16, 36, 0.94);
+    }
+  }
+
+  &__cluster-icon {
+    display: block;
+    font-size: 1rem;
+    line-height: 1;
+    margin-bottom: 0.45rem;
+    opacity: 0.6;
+  }
+
+  &__cluster-label {
+    display: block;
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: rgba(220, 230, 255, 0.94);
+    font-family: var(--font-sans);
+    line-height: 1.3;
+    margin-bottom: 0.55rem;
+    text-align: left;
+  }
+
+  &__cluster-points {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+
+    li {
+      font-size: 0.67rem;
+      color: rgba(148, 165, 210, 0.52);
+      font-family: var(--font-mono);
+      padding: 0.07rem 0;
+      letter-spacing: 0.02em;
+      text-align: left;
+
+      &::before {
+        content: '·';
+        margin-right: 0.35em;
+        opacity: 0.4;
+      }
+    }
+  }
+}
+
+@keyframes universe-fade-in {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+// Mobile: scale down cluster positions so cards stay on screen
+@media (max-width: 640px) {
+  .universe {
+    &__cluster {
+      width: 9.5rem;
+      padding: 0.8rem 0.9rem;
+
+      opacity: 0;
+      transform: translate(
+        calc(-50% + var(--cx, 0vw) * 0.58),
+        calc(-50% + var(--cy, 0vh) * 0.62)
+      ) scale(0.8);
+
+      &.visible {
+        opacity: 1;
+        transform: translate(
+          calc(-50% + var(--cx, 0vw) * 0.58),
+          calc(-50% + var(--cy, 0vh) * 0.62)
+        ) scale(1);
+      }
+    }
+
+    &__cluster-label { font-size: 0.72rem; }
+    &__cluster-points li { font-size: 0.62rem; }
+
+    &__hint {
+      font-size: 0.6rem;
+      letter-spacing: 0.18em;
+    }
+  }
+}

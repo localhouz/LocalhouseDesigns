@@ -36,6 +36,7 @@ export const routes: Routes = [
   { path: 'contact',  loadComponent: () => import('./pages/contact/contact').then(m => m.ContactComponent) },
   { path: 'local-geo-audit', loadComponent: () => import('./pages/local-geo-audit/local-geo-audit').then(m => m.LocalGeoAuditComponent) },
   { path: 'lab',      loadComponent: () => import('./pages/lab/lab').then(m => m.LabComponent) },
+  { path: 'lab/universe', loadComponent: () => import('./pages/lab-universe/lab-universe').then(m => m.LabUniverseComponent) },
   { path: 'lab/erp-lite', loadComponent: () => import('./pages/lab-erp-lite/lab-erp-lite').then(m => m.LabErpLiteComponent) },
   { path: 'lab/local-service-hvac-prototype', loadComponent: () => import('./pages/hvac-prototype/hvac-prototype').then(m => m.HvacPrototypeComponent) },
   { path: 'private-preview/:slug', loadComponent: () => import('./pages/restaurant-prototype/restaurant-prototype').then(m => m.RestaurantPrototypeComponent) },

@@ -33,8 +33,9 @@ export const serverRoutes: ServerRoute[] = [
   { path: 'insights/what-erp-connected-tools-should-expose-to-floor-teams', renderMode: RenderMode.Prerender },
   { path: 'insights/when-a-spreadsheet-should-become-a-real-internal-app', renderMode: RenderMode.Prerender },
   { path: 'insights/how-custom-business-software-reduces-handoff-friction', renderMode: RenderMode.Prerender },
-  // Lab uses Three.js + a Netlify function and stays client-only.
+  // Lab uses Three.js and stays client-only.
   { path: 'lab', renderMode: RenderMode.Client },
+  { path: 'lab/universe', renderMode: RenderMode.Client },
   { path: 'lab/erp-lite', renderMode: RenderMode.Prerender },
   { path: '**', renderMode: RenderMode.Client },
 ];

@@ -162,3 +162,12 @@ body.chat-admin-active {
 
   app-chat-widget { display: none !important; }
 }
+
+// ── Universe experiment full-screen mode ───────────────────────────────────────
+body.universe-active {
+  overflow: hidden;
+
+  app-nav,
+  app-footer,
+  app-chat-widget { display: none !important; }
+}

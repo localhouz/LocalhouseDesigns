@@ -1,0 +1,42 @@
+<div class="universe">
+  <canvas #canvas class="universe__canvas" (click)="onCanvasClick()"></canvas>
+
+  <div class="universe__badge">experiment</div>
+
+  @if (phase() === 'idle') {
+    <div class="universe__hint">— click to map your intent —</div>
+  }
+
+  @if (phase() !== 'idle') {
+    <button class="universe__back" (click)="goBack()">← back</button>
+  }
+
+  @if (phase() === 'open') {
+    <div class="universe__input-wrap" [class.visible]="inputVisible()">
+      <input
+        class="universe__input"
+        [(ngModel)]="intentText"
+        placeholder="what are you trying to figure out?"
+      />
+    </div>
+
+    @for (cluster of clusters(); track cluster.id) {
+      <button
+        class="universe__cluster"
+        [class.visible]="clustersVisible()"
+        [style.--cx]="cluster.x + 'vw'"
+        [style.--cy]="cluster.y + 'vh'"
+        [style.--delay]="cluster.delay + 'ms'"
+        (click)="navigate(cluster)"
+      >
+        <span class="universe__cluster-icon">{{ cluster.icon }}</span>
+        <span class="universe__cluster-label">{{ cluster.label }}</span>
+        <ul class="universe__cluster-points">
+          @for (point of cluster.points; track point) {
+            <li>{{ point }}</li>
+          }
+        </ul>
+      </button>
+    }
+  }
+</div>
