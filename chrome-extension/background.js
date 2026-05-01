@@ -1,5 +1,5 @@
 // LH Universe - background service worker.
-// Collects open tabs + recent history, clusters by topic, returns page pins.
+// Collects open tabs + recent history, then annotates that history with secondary topic groups.
 
 const TOPICS = [
   {
@@ -167,7 +167,7 @@ async function buildClusters() {
     if (isLocalUrl(page.url)) return;
     const domain = domainFromUrl(page.url);
     if (recentPages.some(existing => existing.url === page.url || domainFromUrl(existing.url) === domain)) return;
-    if (recentPages.length < 24) recentPages.push(page);
+    if (recentPages.length < 40) recentPages.push(page);
   }
 
   function walkBookmarks(nodes = []) {
@@ -207,7 +207,7 @@ async function buildClusters() {
     }
   }
 
-  const clusters = Object.entries(topicScores)
+  const topicClusters = Object.entries(topicScores)
     .sort(([, a], [, b]) => b - a)
     .slice(0, 7)
     .map(([id]) => {
@@ -220,18 +220,16 @@ async function buildClusters() {
       };
     });
 
-  const clusteredDomains = new Set(
-    clusters.flatMap(cluster => cluster.pages.map(page => domainFromUrl(page.url))),
-  );
-  const uncategorizedPages = recentPages.filter(page => !clusteredDomains.has(domainFromUrl(page.url)));
-  if (uncategorizedPages.length) {
+  const clusters = [];
+  if (recentPages.length) {
     clusters.push({
       id: 'recent',
-      label: 'Recent sites',
+      label: 'History',
       icon: '...',
-      pages: uncategorizedPages.slice(0, 18),
+      pages: recentPages.slice(0, 28),
     });
   }
+  clusters.push(...topicClusters);
 
   return {
     clusters,

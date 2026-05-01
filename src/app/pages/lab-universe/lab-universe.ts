@@ -113,6 +113,7 @@ const GHOST_SLOTS = [
 ];
 
 const GHOST_SITES: Record<string, Array<{ title: string; domain: string; href: string }>> = {
+  history: [],
   'recent sites': [],
   socials: [],
   'food & flavor': [],
@@ -316,8 +317,12 @@ export class LabUniverseComponent implements OnInit, AfterViewInit, OnDestroy {
 
     this.zone.run(() => {
       const seenDomains = new Set<string>();
-      const uniquePages = data.clusters!
-        .flatMap(ext => ext.pages.slice(0, 10).map(page => ({ page, topic: ext.label })))
+      const historyCluster = data.clusters!.find(ext => ext.id === 'recent') ?? null;
+      const secondaryClusters = data.clusters!.filter(ext => ext.id !== 'recent');
+      const uniquePages = [
+        ...(historyCluster?.pages ?? []).map(page => ({ page, topic: historyCluster?.label ?? 'History' })),
+        ...secondaryClusters.flatMap(ext => ext.pages.slice(0, 4).map(page => ({ page, topic: ext.label }))),
+      ]
         .filter(({ page }) => {
           if (this.isLocalUrl(page.url)) return false;
           const domain = this.domainFromUrl(page.url);
