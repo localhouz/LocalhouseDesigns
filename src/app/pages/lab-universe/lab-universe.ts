@@ -21,6 +21,34 @@ interface UniversePin {
   size: 'small' | 'medium' | 'large';
 }
 
+interface IntentField {
+  id: string;
+  label: string;
+  x: number;
+  y: number;
+  strength: number;
+  delay: number;
+}
+
+interface GhostNode {
+  id: string;
+  title: string;
+  domain: string;
+  topic: string;
+  href: string;
+  x: number;
+  y: number;
+  delay: number;
+}
+
+interface SearchTrail {
+  id: string;
+  query: string;
+  x: number;
+  y: number;
+  delay: number;
+}
+
 interface ExtCluster {
   id: string;
   label: string;
@@ -31,6 +59,7 @@ interface ExtCluster {
 interface ExtensionContext {
   type: 'LH_UNIVERSE_CONTEXT';
   clusters?: ExtCluster[];
+  searches?: string[];
 }
 
 const SLOTS = [
@@ -43,6 +72,34 @@ const SLOTS = [
 ];
 
 const PIN_SIZES: Array<UniversePin['size']> = ['large', 'medium', 'small', 'medium', 'large', 'small'];
+
+const GHOST_SITES: Record<string, Array<{ title: string; domain: string; href: string }>> = {
+  'seo & content': [
+    { title: 'Technical SEO field guide', domain: 'developers.google.com', href: 'https://developers.google.com/search/docs' },
+    { title: 'Schema vocabulary explorer', domain: 'schema.org', href: 'https://schema.org' },
+    { title: 'Search visibility audit ideas', domain: 'ahrefs.com', href: 'https://ahrefs.com/blog/' },
+  ],
+  'frontend dev': [
+    { title: 'Angular docs', domain: 'angular.dev', href: 'https://angular.dev' },
+    { title: 'Three.js examples', domain: 'threejs.org', href: 'https://threejs.org/examples/' },
+    { title: 'MDN Web APIs', domain: 'developer.mozilla.org', href: 'https://developer.mozilla.org' },
+  ],
+  'ai tools': [
+    { title: 'OpenAI platform docs', domain: 'platform.openai.com', href: 'https://platform.openai.com/docs' },
+    { title: 'Browser agent research', domain: 'github.com', href: 'https://github.com/topics/browser-agent' },
+    { title: 'Perplexity search', domain: 'perplexity.ai', href: 'https://www.perplexity.ai' },
+  ],
+  'erp & ops': [
+    { title: 'Infor SyteLine resources', domain: 'infor.com', href: 'https://www.infor.com' },
+    { title: 'Microsoft Dynamics docs', domain: 'learn.microsoft.com', href: 'https://learn.microsoft.com/dynamics365/' },
+    { title: 'Manufacturing operations patterns', domain: 'lean.org', href: 'https://www.lean.org' },
+  ],
+  learning: [
+    { title: 'Deep-dive video search', domain: 'youtube.com', href: 'https://www.youtube.com' },
+    { title: 'Course marketplace', domain: 'udemy.com', href: 'https://www.udemy.com' },
+    { title: 'Developer Q&A', domain: 'stackoverflow.com', href: 'https://stackoverflow.com' },
+  ],
+};
 
 @Component({
   selector: 'app-lab-universe',
@@ -64,9 +121,12 @@ export class LabUniverseComponent implements OnInit, AfterViewInit, OnDestroy {
   extensionConnected = signal(false);
   intentText         = '';
   pins               = signal<UniversePin[]>([]);
+  intentFields       = signal<IntentField[]>([]);
+  ghostNodes         = signal<GhostNode[]>([]);
+  searchTrails       = signal<SearchTrail[]>([]);
   contextMode        = computed(() => this.extensionConnected() ? 'extension context received' : 'site-only context');
   statusLine         = computed(() => this.extensionConnected()
-    ? 'Visited pages from the private extension, connected by topic.'
+    ? 'Solid cards are visited. Soft fields are inferred intent. Ghost nodes are possible next sites.'
     : 'Waiting on the private extension. A website alone cannot read your browsing history.'
   );
 
@@ -102,6 +162,7 @@ export class LabUniverseComponent implements OnInit, AfterViewInit, OnDestroy {
     window.addEventListener('resize', this.onResize);
     window.addEventListener('message', this.onExtensionMessage);
     document.body.classList.add('universe-active');
+    this.loadSearchMemory();
     document.dispatchEvent(new CustomEvent('LH_UNIVERSE_REQUEST'));
     this.zone.runOutsideAngular(() => this.animate());
   }
@@ -124,6 +185,27 @@ export class LabUniverseComponent implements OnInit, AfterViewInit, OnDestroy {
     if (pin.href.startsWith('https://') || pin.href.startsWith('http://')) {
       window.open(pin.href, '_blank', 'noopener noreferrer');
     }
+  }
+
+  openGhost(node: GhostNode) {
+    window.open(node.href, '_blank', 'noopener noreferrer');
+  }
+
+  submitSearch() {
+    const query = this.intentText.trim();
+    if (!query) return;
+    const existing = this.searchTrails();
+    const trail: SearchTrail = {
+      id: `${Date.now()}-${query}`,
+      query: this.cleanTitle(query),
+      x: existing.length % 2 === 0 ? 16 + existing.length * 3 : -16 - existing.length * 3,
+      y: -6 + (existing.length % 4) * 4,
+      delay: 80,
+    };
+    const next = [...existing.slice(-4), trail];
+    this.searchTrails.set(next);
+    localStorage.setItem('lh_universe_searches', JSON.stringify(next.map(t => t.query)));
+    this.intentText = '';
   }
 
   stringPath(pin: UniversePin, index: number) {
@@ -187,9 +269,84 @@ export class LabUniverseComponent implements OnInit, AfterViewInit, OnDestroy {
         });
 
       this.pins.set(pins);
+      this.intentFields.set(this.buildIntentFields(data.clusters!));
+      this.ghostNodes.set(this.buildGhostNodes(data.clusters!));
+      if (data.searches?.length) this.mergeSearches(data.searches);
       this.extensionConnected.set(true);
     });
   };
+
+  private buildIntentFields(clusters: ExtCluster[]) {
+    return clusters.slice(0, 4).map((cluster, i): IntentField => {
+      const related = this.pins().filter(pin => pin.topic === cluster.label);
+      const slot = SLOTS[(i * 2) % SLOTS.length];
+      const avgX = related.length ? related.reduce((sum, pin) => sum + pin.x, 0) / related.length : slot.x;
+      const avgY = related.length ? related.reduce((sum, pin) => sum + pin.y, 0) / related.length : slot.y;
+      return {
+        id: cluster.id,
+        label: cluster.label,
+        x: avgX * 0.82,
+        y: avgY * 0.82,
+        strength: Math.min(1, 0.42 + cluster.pages.length * 0.08),
+        delay: 180 + i * 180,
+      };
+    });
+  }
+
+  private buildGhostNodes(clusters: ExtCluster[]) {
+    return clusters.slice(0, 4).flatMap((cluster, ci) => {
+      const key = cluster.label.toLowerCase();
+      const suggestions = GHOST_SITES[key] ?? [];
+      return suggestions.slice(0, 2).map((site, si): GhostNode => {
+        const slot = SLOTS[(ci + si + 2) % SLOTS.length];
+        const drift = 10 + ci * 3 + si * 5;
+        const x = slot.x + (slot.x > 0 ? drift : -drift);
+        const y = slot.y + (slot.y > 0 ? -drift * 0.55 : drift * 0.55);
+        return {
+          id: `${cluster.id}-${site.domain}`,
+          title: site.title,
+          domain: site.domain,
+          topic: cluster.label,
+          href: site.href,
+          x: this.clamp(x, -42, 42),
+          y: this.clamp(y, -34, 34),
+          delay: 640 + ci * 160 + si * 100,
+        };
+      });
+    });
+  }
+
+  private loadSearchMemory() {
+    try {
+      const raw = localStorage.getItem('lh_universe_searches');
+      const searches = raw ? JSON.parse(raw) as string[] : [];
+      this.searchTrails.set(searches.slice(-5).map((query, i): SearchTrail => ({
+        id: `stored-${i}-${query}`,
+        query: this.cleanTitle(query),
+        x: i % 2 === 0 ? 16 + i * 3 : -16 - i * 3,
+        y: -6 + (i % 4) * 4,
+        delay: 500 + i * 120,
+      })));
+    } catch {
+      this.searchTrails.set([]);
+    }
+  }
+
+  private mergeSearches(searches: string[]) {
+    const current = this.searchTrails().map(t => t.query);
+    const merged = [...current, ...searches.map(s => this.cleanTitle(s))]
+      .filter((query, index, all) => query && all.indexOf(query) === index)
+      .slice(-6);
+
+    this.searchTrails.set(merged.map((query, i): SearchTrail => ({
+      id: `search-${i}-${query}`,
+      query,
+      x: i % 2 === 0 ? 16 + i * 3 : -16 - i * 3,
+      y: -6 + (i % 4) * 4,
+      delay: 500 + i * 120,
+    })));
+    localStorage.setItem('lh_universe_searches', JSON.stringify(merged));
+  }
 
   private cleanTitle(title: string) {
     return title.replace(/\s+/g, ' ').trim().slice(0, 92);
@@ -201,6 +358,10 @@ export class LabUniverseComponent implements OnInit, AfterViewInit, OnDestroy {
     } catch {
       return url;
     }
+  }
+
+  private clamp(value: number, min: number, max: number) {
+    return Math.min(max, Math.max(min, value));
   }
 
   private initScene() {

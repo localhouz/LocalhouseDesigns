@@ -5,7 +5,7 @@ function sendContext() {
   chrome.runtime.sendMessage({ type: 'GET_CONTEXT' }, (response) => {
     if (chrome.runtime.lastError || !response?.clusters?.length) return;
     window.postMessage(
-      { type: 'LH_UNIVERSE_CONTEXT', clusters: response.clusters },
+      { type: 'LH_UNIVERSE_CONTEXT', clusters: response.clusters, searches: response.searches ?? [] },
       location.origin,
     );
   });

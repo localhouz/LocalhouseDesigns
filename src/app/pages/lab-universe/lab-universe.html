@@ -25,8 +25,22 @@
         class="universe__input"
         [(ngModel)]="intentText"
         placeholder="what would you like to see?"
+        (keydown.enter)="submitSearch()"
       />
     </div>
+
+    @for (field of intentFields(); track field.id) {
+      <div
+        class="universe__field"
+        [class.visible]="clustersVisible()"
+        [style.--cx]="field.x + 'vw'"
+        [style.--cy]="field.y + 'vh'"
+        [style.--delay]="field.delay + 'ms'"
+        [style.--strength]="field.strength"
+      >
+        <span>{{ field.label }}</span>
+      </div>
+    }
 
     <svg class="universe__strings" viewBox="0 0 100 100" preserveAspectRatio="none">
       @for (pin of pins(); track pin.id; let i = $index) {
@@ -42,6 +56,33 @@
         <span>private extension needed</span>
         <p>Install the local Chrome extension and this board becomes the places you have actually visited.</p>
       </div>
+    }
+
+    @for (trail of searchTrails(); track trail.id) {
+      <div
+        class="universe__trail"
+        [class.visible]="inputVisible()"
+        [style.--cx]="trail.x + 'vw'"
+        [style.--cy]="trail.y + 'vh'"
+        [style.--delay]="trail.delay + 'ms'"
+      >
+        <span>{{ trail.query }}</span>
+      </div>
+    }
+
+    @for (node of ghostNodes(); track node.id) {
+      <button
+        class="universe__ghost"
+        [class.visible]="clustersVisible()"
+        [style.--cx]="node.x + 'vw'"
+        [style.--cy]="node.y + 'vh'"
+        [style.--delay]="node.delay + 'ms'"
+        (click)="openGhost(node)"
+      >
+        <span class="universe__ghost-topic">{{ node.topic }}</span>
+        <span class="universe__ghost-title">{{ node.title }}</span>
+        <span class="universe__ghost-domain">{{ node.domain }}</span>
+      </button>
     }
 
     @for (pin of pins(); track pin.id) {

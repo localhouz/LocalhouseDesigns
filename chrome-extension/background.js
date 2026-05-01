@@ -78,6 +78,22 @@ function addPage(topicPages, id, page) {
   if (topicPages[id].length < 8) topicPages[id].push(page);
 }
 
+function extractSearch(url = '') {
+  try {
+    const parsed = new URL(url);
+    const host = parsed.hostname.replace(/^www\./, '');
+    const searchHosts = ['google.com', 'bing.com', 'duckduckgo.com', 'search.brave.com', 'perplexity.ai', 'youtube.com'];
+    if (!searchHosts.some(searchHost => host === searchHost || host.endsWith(`.${searchHost}`))) return '';
+    return parsed.searchParams.get('q')
+      || parsed.searchParams.get('p')
+      || parsed.searchParams.get('query')
+      || parsed.searchParams.get('search_query')
+      || '';
+  } catch {
+    return '';
+  }
+}
+
 async function buildClusters() {
   const oneWeekAgo = Date.now() - 7 * 24 * 60 * 60 * 1000;
 
@@ -88,9 +104,12 @@ async function buildClusters() {
 
   const topicScores = {};
   const topicPages = {};
+  const searches = [];
 
   for (const tab of openTabs) {
     if (!tab.url?.startsWith('http')) continue;
+    const search = extractSearch(tab.url);
+    if (search && !searches.includes(search)) searches.push(search);
     const scores = scoreText(tab.url, tab.title);
     for (const [id, score] of Object.entries(scores)) {
       topicScores[id] = (topicScores[id] || 0) + score * 8;
@@ -100,6 +119,8 @@ async function buildClusters() {
 
   for (const item of historyItems) {
     if (!item.url?.startsWith('http')) continue;
+    const search = extractSearch(item.url);
+    if (search && !searches.includes(search)) searches.push(search);
     const scores = scoreText(item.url, item.title);
     for (const [id, score] of Object.entries(scores)) {
       topicScores[id] = (topicScores[id] || 0) + score * Math.max(item.visitCount || 1, 1);
@@ -107,7 +128,7 @@ async function buildClusters() {
     }
   }
 
-  return Object.entries(topicScores)
+  const clusters = Object.entries(topicScores)
     .sort(([, a], [, b]) => b - a)
     .slice(0, 4)
     .map(([id]) => {
@@ -119,13 +140,15 @@ async function buildClusters() {
         pages: topicPages[id] ?? [],
       };
     });
+
+  return { clusters, searches: searches.slice(0, 8) };
 }
 
 chrome.runtime.onMessage.addListener((message, _sender, sendResponse) => {
   if (message.type !== 'GET_CONTEXT') return false;
 
   buildClusters()
-    .then(clusters => sendResponse({ clusters }))
+    .then(({ clusters, searches }) => sendResponse({ clusters, searches }))
     .catch(() => sendResponse({ clusters: [] }));
 
   return true;
