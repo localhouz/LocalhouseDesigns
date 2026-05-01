@@ -84,27 +84,25 @@ interface ExtensionContext {
 }
 
 const SLOTS = [
-  { x: -38, y: -25, delay: 150 },
-  { x: -39, y: 14, delay: 250 },
-  { x: -23, y: 37, delay: 400 },
-  { x: 28, y: 35, delay: 500 },
-  { x: 39, y: 10, delay: 350 },
-  { x: 37, y: -25, delay: 200 },
-  { x: -8, y: -38, delay: 300 },
-  { x: 9, y: 39, delay: 450 },
-  { x: -40, y: -3, delay: 320 },
-  { x: 40, y: -6, delay: 360 },
+  { x: -43, y: -26, delay: 150 },
+  { x: -43, y:   2, delay: 230 },
+  { x: -43, y:  31, delay: 310 },
+  { x: -30, y: -16, delay: 390 },
+  { x: -30, y:  18, delay: 470 },
+  { x:  31, y: -28, delay: 200 },
+  { x:  31, y:   6, delay: 280 },
+  { x:  31, y:  34, delay: 360 },
+  { x:  43, y: -11, delay: 440 },
+  { x:  43, y:  21, delay: 520 },
 ];
 
 const PIN_SIZES: Array<UniversePin['size']> = ['large', 'medium', 'small', 'medium', 'large', 'small'];
 
 const GHOST_SLOTS = [
-  { x: -40, y: -36, delay: 680 },
-  { x: -40, y: 34, delay: 780 },
-  { x: 40, y: -36, delay: 880 },
-  { x: 40, y: 34, delay: 980 },
-  { x: -15, y: -37, delay: 1080 },
-  { x: 16, y: 38, delay: 1180 },
+  { x: -55, y: -32, delay: 680 },
+  { x: -55, y:  30, delay: 780 },
+  { x:  55, y: -32, delay: 880 },
+  { x:  55, y:  30, delay: 980 },
 ];
 
 const GHOST_SITES: Record<string, Array<{ title: string; domain: string; href: string }>> = {

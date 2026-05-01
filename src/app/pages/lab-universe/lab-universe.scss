@@ -3,9 +3,15 @@
   inset: 0;
   z-index: 900;
   overflow: hidden;
-  background:
-    radial-gradient(circle at 50% 48%, rgba(255, 60, 0, 0.08), transparent 22rem),
-    linear-gradient(180deg, #f7f3ed 0%, #f2eee8 100%);
+  background: #f4efe7;
+
+  *,
+  *::before,
+  *::after {
+    box-shadow: none !important;
+    filter: none !important;
+    text-shadow: none !important;
+  }
 
   &__canvas {
     position: absolute;
@@ -190,12 +196,7 @@
     z-index: 12;
     opacity: 0;
     pointer-events: none;
-    background:
-      radial-gradient(ellipse at center,
-        rgba(244, 239, 231, 0.98) 0%,
-        rgba(244, 239, 231, 0.97) 42%,
-        rgba(244, 239, 231, 0.76) 64%,
-        rgba(244, 239, 231, 0) 82%);
+    background: rgba(244, 239, 231, 0.94);
     transition: opacity 0.65s ease;
 
     &.visible { opacity: 1; }
@@ -247,14 +248,11 @@
     aspect-ratio: 1;
     z-index: 5;
     transform: translate(calc(-50% + var(--cx, 0vw)), calc(-50% + var(--cy, 0vh))) scale(0.72);
-    border-radius: 50%;
+    border-radius: 8px;
     opacity: 0;
     pointer-events: none;
-    background:
-      radial-gradient(circle at center,
-        rgba(255, 60, 0, calc(0.14 * var(--strength, 0.5))) 0%,
-        rgba(255, 60, 0, calc(0.08 * var(--strength, 0.5))) 34%,
-        rgba(255, 60, 0, 0) 70%);
+    border: 1px solid rgba(197, 41, 0, calc(0.16 * var(--strength, 0.5)));
+    background: transparent;
     transition:
       opacity 0.9s ease var(--delay, 0ms),
       transform 1.1s cubic-bezier(0.16, 1, 0.3, 1) var(--delay, 0ms);
@@ -357,12 +355,12 @@
   &__ghost {
     top: 50%;
     left: 50%;
-    width: 8.2rem;
-    min-height: 9.2rem;
+    width: 7.5rem;
+    min-height: 9rem;
     z-index: 8;
     padding: 0.46rem;
     transform: translate(calc(-50% + var(--cx, 0vw)), calc(-50% + var(--cy, 0vh))) scale(0.82);
-    background: rgba(244, 239, 231, 0.66);
+    background: rgba(244, 239, 231, 0.72);
     border: 1px dashed rgba(10, 10, 18, 0.22);
     border-radius: 8px;
     text-align: left;
@@ -404,14 +402,15 @@
   &__ghost-visual {
     display: grid;
     place-items: center;
-    min-height: 5.4rem;
+    min-height: 5.2rem;
     margin-bottom: 0.55rem;
     border-radius: 6px;
     border: 1px dashed hsl(var(--tone, 16deg) 70% 38% / 0.34);
     background:
-      radial-gradient(circle at 24% 22%, hsl(var(--tone, 16deg) 80% 48% / 0.24), transparent 28%),
-      radial-gradient(circle at 78% 72%, hsl(calc(var(--tone, 16deg) + 50deg) 68% 44% / 0.22), transparent 32%),
-      linear-gradient(135deg, hsl(var(--tone, 16deg) 72% 72% / 0.2), rgba(244, 239, 231, 0.55));
+      linear-gradient(90deg, hsl(var(--tone, 16deg) 78% 72% / 0.24) 1px, transparent 1px),
+      linear-gradient(0deg, hsl(var(--tone, 16deg) 78% 72% / 0.2) 1px, transparent 1px),
+      hsl(var(--tone, 16deg) 70% 88% / 0.68);
+    background-size: 18px 18px;
   }
 
   &__ghost-title {
@@ -442,10 +441,10 @@
   &__pin {
     top: 50%;
     left: 50%;
-    width: 9.2rem;
-    min-height: 11.4rem;
+    width: 8.8rem;
+    min-height: 11.8rem;
     padding: 0.48rem;
-    transform: translate(calc(-50% + var(--cx, 0vw)), calc(-50% + var(--cy, 0vh))) rotate(-1deg) scale(0.82);
+    transform: translate(calc(-50% + var(--cx, 0vw)), calc(-50% + var(--cy, 0vh))) scale(0.82);
     background: rgba(255, 255, 255, 0.96);
     border: 1px solid rgba(10, 10, 18, 0.2);
     border-radius: 8px;
@@ -460,7 +459,7 @@
 
     &.visible {
       opacity: 1;
-      transform: translate(calc(-50% + var(--cx, 0vw)), calc(-50% + var(--cy, 0vh))) rotate(-1deg) scale(1);
+      transform: translate(calc(-50% + var(--cx, 0vw)), calc(-50% + var(--cy, 0vh))) scale(1);
     }
 
     &:hover {
@@ -468,18 +467,18 @@
     }
 
     &--small {
-      width: 8.35rem;
-      min-height: 10rem;
-      transform: translate(calc(-50% + var(--cx, 0vw)), calc(-50% + var(--cy, 0vh))) rotate(1.5deg) scale(0.82);
+      width: 8.2rem;
+      min-height: 10.6rem;
+      transform: translate(calc(-50% + var(--cx, 0vw)), calc(-50% + var(--cy, 0vh))) scale(0.82);
 
       &.visible {
-        transform: translate(calc(-50% + var(--cx, 0vw)), calc(-50% + var(--cy, 0vh))) rotate(1.5deg) scale(1);
+        transform: translate(calc(-50% + var(--cx, 0vw)), calc(-50% + var(--cy, 0vh))) scale(1);
       }
     }
 
     &--large {
-      width: 10.2rem;
-      min-height: 12.8rem;
+      width: 9.4rem;
+      min-height: 13.2rem;
     }
   }
 
@@ -508,15 +507,14 @@
   &__pin-visual {
     display: grid;
     place-items: center;
-    min-height: 6.9rem;
+    min-height: 7.4rem;
     margin-bottom: 0.68rem;
     border-radius: 6px;
     border: 1px solid hsl(var(--tone, 16deg) 62% 36% / 0.25);
     background:
-      radial-gradient(circle at 20% 20%, hsl(var(--tone, 16deg) 84% 48% / 0.24), transparent 30%),
-      radial-gradient(circle at 78% 28%, rgba(10, 10, 18, 0.12), transparent 25%),
-      radial-gradient(circle at 58% 82%, hsl(calc(var(--tone, 16deg) + 70deg) 66% 46% / 0.2), transparent 34%),
-      linear-gradient(145deg, rgba(255, 255, 255, 0.3), hsl(var(--tone, 16deg) 70% 70% / 0.24));
+      linear-gradient(135deg, hsl(var(--tone, 16deg) 74% 84% / 0.78) 0 25%, transparent 25% 50%, hsl(calc(var(--tone, 16deg) + 42deg) 72% 84% / 0.72) 50% 75%, transparent 75%),
+      linear-gradient(45deg, transparent 0 25%, hsl(calc(var(--tone, 16deg) + 90deg) 64% 88% / 0.88) 25% 50%, transparent 50% 75%, hsl(var(--tone, 16deg) 72% 88% / 0.82) 75%);
+    background-size: 28px 28px;
   }
 
   &__pin-title {
