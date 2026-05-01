@@ -101,13 +101,35 @@ async function buildClusters() {
     chrome.history.search({ text: '', startTime: oneWeekAgo, maxResults: 220 }),
     chrome.tabs.query({}),
   ]);
+  const bookmarkTree = await chrome.bookmarks.getTree().catch(() => []);
 
   const topicScores = {};
   const topicPages = {};
   const searches = [];
+  const domains = {};
+  const bookmarks = [];
+
+  function trackDomain(url) {
+    try {
+      const host = new URL(url).hostname.replace(/^www\./, '');
+      domains[host] = (domains[host] || 0) + 1;
+    } catch {}
+  }
+
+  function walkBookmarks(nodes = []) {
+    for (const node of nodes) {
+      if (node.url?.startsWith('http')) {
+        bookmarks.push({ url: node.url, title: node.title || node.url });
+        trackDomain(node.url);
+      }
+      if (node.children) walkBookmarks(node.children);
+    }
+  }
+  walkBookmarks(bookmarkTree);
 
   for (const tab of openTabs) {
     if (!tab.url?.startsWith('http')) continue;
+    trackDomain(tab.url);
     const search = extractSearch(tab.url);
     if (search && !searches.includes(search)) searches.push(search);
     const scores = scoreText(tab.url, tab.title);
@@ -119,6 +141,7 @@ async function buildClusters() {
 
   for (const item of historyItems) {
     if (!item.url?.startsWith('http')) continue;
+    trackDomain(item.url);
     const search = extractSearch(item.url);
     if (search && !searches.includes(search)) searches.push(search);
     const scores = scoreText(item.url, item.title);
@@ -141,14 +164,22 @@ async function buildClusters() {
       };
     });
 
-  return { clusters, searches: searches.slice(0, 8) };
+  return {
+    clusters,
+    searches: searches.slice(0, 8),
+    bookmarks: bookmarks.slice(0, 40),
+    domains: Object.entries(domains)
+      .sort(([, a], [, b]) => b - a)
+      .slice(0, 20)
+      .map(([domain, count]) => ({ domain, count })),
+  };
 }
 
 chrome.runtime.onMessage.addListener((message, _sender, sendResponse) => {
   if (message.type !== 'GET_CONTEXT') return false;
 
   buildClusters()
-    .then(({ clusters, searches }) => sendResponse({ clusters, searches }))
+    .then(context => sendResponse(context))
     .catch(() => sendResponse({ clusters: [] }));
 
   return true;

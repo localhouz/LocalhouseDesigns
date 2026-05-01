@@ -20,6 +20,15 @@
       <p>{{ statusLine() }}</p>
     </div>
 
+    @if (memoryCore(); as memory) {
+      <div class="universe__memory" [class.visible]="inputVisible()">
+        <span class="universe__memory-label">owned intent memory</span>
+        <span class="universe__memory-ring universe__memory-ring--one"></span>
+        <span class="universe__memory-ring universe__memory-ring--two"></span>
+        <span class="universe__memory-count">{{ memory.eventCount }}</span>
+      </div>
+    }
+
     <div class="universe__input-wrap" [class.visible]="inputVisible()">
       <input
         class="universe__input"
@@ -79,9 +88,9 @@
         [style.--delay]="node.delay + 'ms'"
         (click)="openGhost(node)"
       >
-        <span class="universe__ghost-topic">{{ node.topic }}</span>
-        <span class="universe__ghost-title">{{ node.title }}</span>
+        <span class="universe__ghost-mark">{{ domainMark(node.domain) }}</span>
         <span class="universe__ghost-domain">{{ node.domain }}</span>
+        <span class="universe__ghost-title">{{ node.title }}</span>
       </button>
     }
 
@@ -96,9 +105,9 @@
         [style.--delay]="pin.delay + 'ms'"
         (click)="openPin(pin)"
       >
-        <span class="universe__pin-topic">{{ pin.topic }}</span>
-        <span class="universe__pin-title">{{ pin.title }}</span>
+        <span class="universe__pin-mark">{{ domainMark(pin.domain) }}</span>
         <span class="universe__pin-domain">{{ pin.domain }}</span>
+        <span class="universe__pin-title">{{ pin.title }}</span>
       </button>
     }
   }

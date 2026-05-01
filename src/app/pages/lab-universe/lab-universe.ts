@@ -49,6 +49,25 @@ interface SearchTrail {
   delay: number;
 }
 
+interface IntentWikiMemory {
+  searches: string[];
+  domains: Array<{ domain: string; count: number }>;
+  eventCount: number;
+  updatedAt?: string;
+}
+
+interface IntentWikiResponse {
+  intents?: Array<{
+    id: string;
+    label: string;
+    intent: string;
+    confidence: number;
+    evidenceCount: number;
+    ghosts: Array<{ title: string; domain: string; href: string }>;
+  }>;
+  memory?: IntentWikiMemory;
+}
+
 interface ExtCluster {
   id: string;
   label: string;
@@ -60,15 +79,17 @@ interface ExtensionContext {
   type: 'LH_UNIVERSE_CONTEXT';
   clusters?: ExtCluster[];
   searches?: string[];
+  bookmarks?: Array<{ url: string; title: string }>;
+  domains?: Array<{ domain: string; count: number }>;
 }
 
 const SLOTS = [
-  { x: 30, y: -24, delay: 200 },
-  { x: 38, y:   8, delay: 350 },
-  { x: 20, y:  32, delay: 500 },
-  { x: -24, y: 34, delay: 400 },
-  { x: -38, y:  4, delay: 250 },
-  { x: -22, y: -26, delay: 150 },
+  { x: 36, y: -27, delay: 200 },
+  { x: 43, y:  13, delay: 350 },
+  { x: 24, y:  36, delay: 500 },
+  { x: -29, y: 37, delay: 400 },
+  { x: -43, y:  9, delay: 250 },
+  { x: -28, y: -29, delay: 150 },
 ];
 
 const PIN_SIZES: Array<UniversePin['size']> = ['large', 'medium', 'small', 'medium', 'large', 'small'];
@@ -124,6 +145,7 @@ export class LabUniverseComponent implements OnInit, AfterViewInit, OnDestroy {
   intentFields       = signal<IntentField[]>([]);
   ghostNodes         = signal<GhostNode[]>([]);
   searchTrails       = signal<SearchTrail[]>([]);
+  memoryCore         = signal<IntentWikiMemory | null>(null);
   contextMode        = computed(() => this.extensionConnected() ? 'extension context received' : 'site-only context');
   statusLine         = computed(() => this.extensionConnected()
     ? 'Solid cards are visited. Soft fields are inferred intent. Ghost nodes are possible next sites.'
@@ -191,6 +213,11 @@ export class LabUniverseComponent implements OnInit, AfterViewInit, OnDestroy {
     window.open(node.href, '_blank', 'noopener noreferrer');
   }
 
+  domainMark(domain: string) {
+    const clean = domain.replace(/^www\./, '').split('.')[0] || domain;
+    return clean.slice(0, 2).toUpperCase();
+  }
+
   submitSearch() {
     const query = this.intentText.trim();
     if (!query) return;
@@ -250,7 +277,7 @@ export class LabUniverseComponent implements OnInit, AfterViewInit, OnDestroy {
     this.zone.run(() => {
       const pins = data.clusters!
         .flatMap(ext => ext.pages.slice(0, 4).map(page => ({ page, topic: ext.label })))
-        .slice(0, 12)
+        .slice(0, 10)
         .map(({ page, topic }, i): UniversePin => {
           const slot = SLOTS[i % SLOTS.length];
           const ring = Math.floor(i / SLOTS.length);
@@ -261,8 +288,8 @@ export class LabUniverseComponent implements OnInit, AfterViewInit, OnDestroy {
             domain: this.domainFromUrl(page.url),
             topic,
             href: page.url,
-            x: slot.x + (ring ? (slot.x > 0 ? -offset : offset) : 0),
-            y: slot.y + (ring ? (slot.y > 0 ? -offset : offset) : 0),
+            x: this.clamp(slot.x + (ring ? (slot.x > 0 ? -offset : offset) : 0), -44, 44),
+            y: this.clamp(slot.y + (ring ? (slot.y > 0 ? -offset : offset) : 0), -38, 38),
             delay: slot.delay + ring * 140,
             size: PIN_SIZES[i % PIN_SIZES.length],
           };
@@ -272,6 +299,7 @@ export class LabUniverseComponent implements OnInit, AfterViewInit, OnDestroy {
       this.intentFields.set(this.buildIntentFields(data.clusters!));
       this.ghostNodes.set(this.buildGhostNodes(data.clusters!));
       if (data.searches?.length) this.mergeSearches(data.searches);
+      void this.syncIntentWiki(data);
       this.extensionConnected.set(true);
     });
   };
@@ -314,6 +342,72 @@ export class LabUniverseComponent implements OnInit, AfterViewInit, OnDestroy {
         };
       });
     });
+  }
+
+  private async syncIntentWiki(data: ExtensionContext) {
+    const fallbackMemory: IntentWikiMemory = {
+      searches: this.searchTrails().map(t => t.query).slice(-12),
+      domains: (data.domains ?? []).slice(0, 12),
+      eventCount: (data.clusters?.length ?? 0) + (data.searches?.length ?? 0),
+      updatedAt: new Date().toISOString(),
+    };
+
+    try {
+      const response = await fetch('/.netlify/functions/intent-wiki', {
+        method: 'POST',
+        headers: { 'content-type': 'application/json' },
+        body: JSON.stringify({
+          clusters: data.clusters ?? [],
+          searches: data.searches ?? [],
+          bookmarks: data.bookmarks ?? [],
+          domains: data.domains ?? [],
+          memory: this.loadWikiMemory(),
+        }),
+      });
+      if (!response.ok) throw new Error('intent wiki unavailable');
+      const wiki = await response.json() as IntentWikiResponse;
+      if (wiki.memory) {
+        this.memoryCore.set(wiki.memory);
+        localStorage.setItem('lh_universe_wiki', JSON.stringify(wiki.memory));
+        if (wiki.memory.searches?.length) this.mergeSearches(wiki.memory.searches);
+      }
+      if (wiki.intents?.length) {
+        this.ghostNodes.set(this.buildWikiGhostNodes(wiki.intents));
+      }
+    } catch {
+      this.memoryCore.set(fallbackMemory);
+      localStorage.setItem('lh_universe_wiki', JSON.stringify(fallbackMemory));
+    }
+  }
+
+  private buildWikiGhostNodes(intents: NonNullable<IntentWikiResponse['intents']>) {
+    return intents.slice(0, 4).flatMap((intent, ci) => {
+      return intent.ghosts.slice(0, 2).map((site, si): GhostNode => {
+        const slot = SLOTS[(ci + si + 2) % SLOTS.length];
+        const drift = 10 + ci * 3 + si * 5;
+        const x = slot.x + (slot.x > 0 ? drift : -drift);
+        const y = slot.y + (slot.y > 0 ? -drift * 0.55 : drift * 0.55);
+        return {
+          id: `wiki-${intent.id}-${site.domain}`,
+          title: site.title,
+          domain: site.domain,
+          topic: intent.intent,
+          href: site.href,
+          x: this.clamp(x, -42, 42),
+          y: this.clamp(y, -34, 34),
+          delay: 700 + ci * 160 + si * 100,
+        };
+      });
+    });
+  }
+
+  private loadWikiMemory(): IntentWikiMemory | null {
+    try {
+      const raw = localStorage.getItem('lh_universe_wiki');
+      return raw ? JSON.parse(raw) as IntentWikiMemory : null;
+    } catch {
+      return null;
+    }
   }
 
   private loadSearchMemory() {

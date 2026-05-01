@@ -4,7 +4,7 @@
   "version": "0.1.0",
   "description": "Private experiment - feeds browsing context to the Localhouse Designs intent universe.",
 
-  "permissions": ["history", "tabs"],
+  "permissions": ["history", "tabs", "bookmarks"],
   "host_permissions": [
     "https://localhousedesigns.com/*",
     "http://localhost:*/*",
