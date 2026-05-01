@@ -107,6 +107,7 @@
         [class.visible]="clustersVisible()"
         [style.--cx]="pin.x + 'vw'"
         [style.--cy]="pin.y + 'vh'"
+        [style.--rot]="pin.rotate + 'deg'"
         [style.--tone]="visualTone(pin.domain, pin.topic)"
         [style.--delay]="pin.delay + 'ms'"
         (click)="openPin(pin)"

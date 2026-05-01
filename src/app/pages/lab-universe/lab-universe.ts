@@ -19,6 +19,7 @@ interface UniversePin {
   x: number;
   y: number;
   delay: number;
+  rotate: number;
   size: 'small' | 'medium' | 'large';
 }
 
@@ -86,16 +87,16 @@ interface ExtensionContext {
 }
 
 const SLOTS = [
-  { x: -43, y: -26, delay: 150 },
-  { x: -43, y:   2, delay: 230 },
-  { x: -43, y:  31, delay: 310 },
-  { x: -30, y: -16, delay: 390 },
-  { x: -30, y:  18, delay: 470 },
-  { x:  31, y: -28, delay: 200 },
-  { x:  31, y:   6, delay: 280 },
-  { x:  31, y:  34, delay: 360 },
-  { x:  43, y: -11, delay: 440 },
-  { x:  43, y:  21, delay: 520 },
+  { x: -43, y: -26, delay: 150, rotate: -2.4 },
+  { x: -43, y:   2, delay: 230, rotate:  1.7 },
+  { x: -43, y:  31, delay: 310, rotate: -1.5 },
+  { x: -30, y: -16, delay: 390, rotate:  2.9 },
+  { x: -30, y:  18, delay: 470, rotate: -1.1 },
+  { x:  31, y: -28, delay: 200, rotate:  1.8 },
+  { x:  31, y:   6, delay: 280, rotate: -2.7 },
+  { x:  31, y:  34, delay: 360, rotate:  1.3 },
+  { x:  43, y: -11, delay: 440, rotate: -1.9 },
+  { x:  43, y:  21, delay: 520, rotate:  2.3 },
 ];
 
 const PIN_SIZES: Array<UniversePin['size']> = ['large', 'medium', 'small', 'medium', 'large', 'small'];
@@ -327,6 +328,7 @@ export class LabUniverseComponent implements OnInit, AfterViewInit, OnDestroy {
             x: slot.x,
             y: slot.y,
             delay: slot.delay,
+            rotate: slot.rotate,
             size: PIN_SIZES[i % PIN_SIZES.length],
           };
         });
