@@ -150,14 +150,13 @@
     inset: 0;
     width: 100%;
     height: 100%;
-    z-index: 4;
+    z-index: 6;
     pointer-events: none;
 
     line {
-      stroke: rgba(143, 34, 0, 0.5);
-      stroke-width: 0.13;
-      vector-effect: non-scaling-stroke;
-      stroke-dasharray: 4 8;
+      stroke: rgba(143, 34, 0, 0.56);
+      stroke-width: 0.16;
+      stroke-dasharray: 0.45 0.85;
       opacity: 0;
       animation: universe-string-in 0.9s ease both;
     }
