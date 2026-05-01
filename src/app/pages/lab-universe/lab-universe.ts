@@ -99,6 +99,8 @@ const SLOTS = [
   { x:  27, y:  29, delay: 340, rotate: 0 },
   { x:  45, y:  -3, delay: 380, rotate: 0 },
   { x:  45, y:  39, delay: 460, rotate: 0 },
+  { x: -55, y:  10, delay: 500, rotate: 0 },
+  { x:  55, y:  10, delay: 540, rotate: 0 },
 ];
 
 const PIN_SIZES: Array<UniversePin['size']> = ['large', 'medium', 'small', 'medium', 'large', 'small'];
@@ -111,6 +113,10 @@ const GHOST_SLOTS = [
 ];
 
 const GHOST_SITES: Record<string, Array<{ title: string; domain: string; href: string }>> = {
+  'recent sites': [],
+  socials: [],
+  'food & flavor': [],
+  design: [],
   'seo & content': [
     { title: 'Technical SEO field guide', domain: 'developers.google.com', href: 'https://developers.google.com/search/docs' },
     { title: 'Schema vocabulary explorer', domain: 'schema.org', href: 'https://schema.org' },
@@ -311,7 +317,7 @@ export class LabUniverseComponent implements OnInit, AfterViewInit, OnDestroy {
     this.zone.run(() => {
       const seenDomains = new Set<string>();
       const uniquePages = data.clusters!
-        .flatMap(ext => ext.pages.slice(0, 6).map(page => ({ page, topic: ext.label })))
+        .flatMap(ext => ext.pages.slice(0, 10).map(page => ({ page, topic: ext.label })))
         .filter(({ page }) => {
           if (this.isLocalUrl(page.url)) return false;
           const domain = this.domainFromUrl(page.url);
@@ -319,7 +325,7 @@ export class LabUniverseComponent implements OnInit, AfterViewInit, OnDestroy {
           seenDomains.add(domain);
           return true;
         })
-        .slice(0, 10);
+        .slice(0, SLOTS.length);
 
       const pins = uniquePages
         .map(({ page, topic }, i): UniversePin => {

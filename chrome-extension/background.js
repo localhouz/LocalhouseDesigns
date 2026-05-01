@@ -3,6 +3,27 @@
 
 const TOPICS = [
   {
+    id: 'socials',
+    label: 'Socials',
+    icon: '@',
+    keywords: ['instagram', 'facebook', 'threads', 'tiktok', 'x.com', 'twitter',
+      'linkedin', 'reddit', 'pinterest', 'youtube', 'social'],
+  },
+  {
+    id: 'food',
+    label: 'Food & flavor',
+    icon: 'hot',
+    keywords: ['sauce', 'sauces', 'hot sauce', 'spice', 'pepper', 'restaurant',
+      'food', 'drink', 'bar', 'gastropub', 'rooseveltstulsa'],
+  },
+  {
+    id: 'design',
+    label: 'Design',
+    icon: 'grid',
+    keywords: ['design', 'style', 'styles', 'north-styles', 'portfolio', 'brand',
+      'visual', 'ui', 'ux', 'web studio'],
+  },
+  {
     id: 'frontend',
     label: 'Frontend dev',
     icon: '+',
@@ -122,7 +143,7 @@ async function buildClusters() {
   const oneWeekAgo = Date.now() - 7 * 24 * 60 * 60 * 1000;
 
   const [historyItems, openTabs] = await Promise.all([
-    chrome.history.search({ text: '', startTime: oneWeekAgo, maxResults: 220 }),
+    chrome.history.search({ text: '', startTime: oneWeekAgo, maxResults: 800 }),
     chrome.tabs.query({}),
   ]);
   const bookmarkTree = await chrome.bookmarks.getTree().catch(() => []);
@@ -131,6 +152,7 @@ async function buildClusters() {
   const topicPages = {};
   const searches = [];
   const domains = {};
+  const recentPages = [];
   const bookmarks = [];
 
   function trackDomain(url) {
@@ -139,6 +161,13 @@ async function buildClusters() {
       const host = new URL(url).hostname.replace(/^www\./, '');
       domains[host] = (domains[host] || 0) + 1;
     } catch {}
+  }
+
+  function addRecentPage(page) {
+    if (isLocalUrl(page.url)) return;
+    const domain = domainFromUrl(page.url);
+    if (recentPages.some(existing => existing.url === page.url || domainFromUrl(existing.url) === domain)) return;
+    if (recentPages.length < 24) recentPages.push(page);
   }
 
   function walkBookmarks(nodes = []) {
@@ -155,6 +184,7 @@ async function buildClusters() {
   for (const tab of openTabs) {
     if (!tab.url?.startsWith('http') || isLocalUrl(tab.url)) continue;
     trackDomain(tab.url);
+    addRecentPage({ url: tab.url, title: tab.title || tab.url });
     const search = extractSearch(tab.url);
     if (search && !searches.includes(search)) searches.push(search);
     const scores = scoreText(tab.url, tab.title);
@@ -167,6 +197,7 @@ async function buildClusters() {
   for (const item of historyItems) {
     if (!item.url?.startsWith('http') || isLocalUrl(item.url)) continue;
     trackDomain(item.url);
+    addRecentPage({ url: item.url, title: item.title || item.url });
     const search = extractSearch(item.url);
     if (search && !searches.includes(search)) searches.push(search);
     const scores = scoreText(item.url, item.title);
@@ -178,7 +209,7 @@ async function buildClusters() {
 
   const clusters = Object.entries(topicScores)
     .sort(([, a], [, b]) => b - a)
-    .slice(0, 4)
+    .slice(0, 7)
     .map(([id]) => {
       const topic = TOPICS.find(t => t.id === id);
       return {
@@ -188,6 +219,19 @@ async function buildClusters() {
         pages: topicPages[id] ?? [],
       };
     });
+
+  const clusteredDomains = new Set(
+    clusters.flatMap(cluster => cluster.pages.map(page => domainFromUrl(page.url))),
+  );
+  const uncategorizedPages = recentPages.filter(page => !clusteredDomains.has(domainFromUrl(page.url)));
+  if (uncategorizedPages.length) {
+    clusters.push({
+      id: 'recent',
+      label: 'Recent sites',
+      icon: '...',
+      pages: uncategorizedPages.slice(0, 18),
+    });
+  }
 
   return {
     clusters,
