@@ -73,10 +73,25 @@ function scoreText(url = '', title = '') {
 }
 
 function addPage(topicPages, id, page) {
+  if (isLocalUrl(page.url)) return;
   if (!topicPages[id]) topicPages[id] = [];
   const domain = domainFromUrl(page.url);
   if (topicPages[id].some(existing => existing.url === page.url || domainFromUrl(existing.url) === domain)) return;
   if (topicPages[id].length < 8) topicPages[id].push(page);
+}
+
+function isLocalUrl(url = '') {
+  try {
+    const parsed = new URL(url);
+    const host = parsed.hostname.toLowerCase();
+    return parsed.protocol === 'file:'
+      || host === 'localhost'
+      || host === '127.0.0.1'
+      || host === '0.0.0.0'
+      || host === '::1';
+  } catch {
+    return /^[a-z]:[\\/]/i.test(url);
+  }
 }
 
 function domainFromUrl(url = '') {
@@ -119,6 +134,7 @@ async function buildClusters() {
   const bookmarks = [];
 
   function trackDomain(url) {
+    if (isLocalUrl(url)) return;
     try {
       const host = new URL(url).hostname.replace(/^www\./, '');
       domains[host] = (domains[host] || 0) + 1;
@@ -127,7 +143,7 @@ async function buildClusters() {
 
   function walkBookmarks(nodes = []) {
     for (const node of nodes) {
-      if (node.url?.startsWith('http')) {
+      if (node.url?.startsWith('http') && !isLocalUrl(node.url)) {
         bookmarks.push({ url: node.url, title: node.title || node.url });
         trackDomain(node.url);
       }
@@ -137,7 +153,7 @@ async function buildClusters() {
   walkBookmarks(bookmarkTree);
 
   for (const tab of openTabs) {
-    if (!tab.url?.startsWith('http')) continue;
+    if (!tab.url?.startsWith('http') || isLocalUrl(tab.url)) continue;
     trackDomain(tab.url);
     const search = extractSearch(tab.url);
     if (search && !searches.includes(search)) searches.push(search);
@@ -149,7 +165,7 @@ async function buildClusters() {
   }
 
   for (const item of historyItems) {
-    if (!item.url?.startsWith('http')) continue;
+    if (!item.url?.startsWith('http') || isLocalUrl(item.url)) continue;
     trackDomain(item.url);
     const search = extractSearch(item.url);
     if (search && !searches.includes(search)) searches.push(search);

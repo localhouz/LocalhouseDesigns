@@ -313,6 +313,7 @@ export class LabUniverseComponent implements OnInit, AfterViewInit, OnDestroy {
       const uniquePages = data.clusters!
         .flatMap(ext => ext.pages.slice(0, 6).map(page => ({ page, topic: ext.label })))
         .filter(({ page }) => {
+          if (this.isLocalUrl(page.url)) return false;
           const domain = this.domainFromUrl(page.url);
           if (seenDomains.has(domain)) return false;
           seenDomains.add(domain);
@@ -488,6 +489,20 @@ export class LabUniverseComponent implements OnInit, AfterViewInit, OnDestroy {
       return new URL(url).hostname.replace(/^www\./, '');
     } catch {
       return url;
+    }
+  }
+
+  private isLocalUrl(url: string) {
+    try {
+      const parsed = new URL(url);
+      const host = parsed.hostname.toLowerCase();
+      return parsed.protocol === 'file:'
+        || host === 'localhost'
+        || host === '127.0.0.1'
+        || host === '0.0.0.0'
+        || host === '::1';
+    } catch {
+      return /^[a-z]:[\\/]/i.test(url);
     }
   }
 
