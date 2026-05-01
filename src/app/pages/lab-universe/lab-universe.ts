@@ -15,6 +15,7 @@ interface UniversePin {
   domain: string;
   topic: string;
   href: string;
+  image?: string;
   x: number;
   y: number;
   delay: number;
@@ -36,6 +37,7 @@ interface GhostNode {
   domain: string;
   topic: string;
   href: string;
+  image?: string;
   x: number;
   y: number;
   delay: number;
@@ -72,7 +74,7 @@ interface ExtCluster {
   id: string;
   label: string;
   icon: string;
-  pages: Array<{ url: string; title: string }>;
+  pages: Array<{ url: string; title: string; image?: string }>;
 }
 
 interface ExtensionContext {
@@ -238,6 +240,12 @@ export class LabUniverseComponent implements OnInit, AfterViewInit, OnDestroy {
     return `${hash}deg`;
   }
 
+  pinImage(pin: { href: string; image?: string }) {
+    if (pin.image) return pin.image;
+    if (!/^https?:\/\//i.test(pin.href)) return '';
+    return `https://s.wordpress.com/mshots/v1/${encodeURIComponent(pin.href)}?w=640`;
+  }
+
   submitSearch() {
     const query = this.intentText.trim();
     if (!query) return;
@@ -306,6 +314,7 @@ export class LabUniverseComponent implements OnInit, AfterViewInit, OnDestroy {
             domain: this.domainFromUrl(page.url),
             topic,
             href: page.url,
+            image: page.image,
             x: slot.x,
             y: slot.y,
             delay: slot.delay,
