@@ -87,25 +87,27 @@ interface ExtensionContext {
 }
 
 const SLOTS = [
-  { x: -40, y: -26, delay: 120, rotate: 0 },
-  { x: -40, y:  16, delay: 260, rotate: 0 },
-  { x: -21, y: -34, delay: 180, rotate: 0 },
-  { x: -21, y:  -2, delay: 310, rotate: 0 },
-  { x: -21, y:  32, delay: 440, rotate: 0 },
-  { x:  21, y: -34, delay: 160, rotate: 0 },
-  { x:  21, y:  -2, delay: 290, rotate: 0 },
-  { x:  21, y:  32, delay: 420, rotate: 0 },
-  { x:  40, y: -26, delay: 200, rotate: 0 },
-  { x:  40, y:  16, delay: 340, rotate: 0 },
+  { x: -45, y: -11, delay: 120, rotate: 0 },
+  { x: -45, y:  31, delay: 260, rotate: 0 },
+  { x: -27, y:  -3, delay: 180, rotate: 0 },
+  { x: -27, y:  39, delay: 310, rotate: 0 },
+  { x:  -9, y: -14, delay: 440, rotate: 0 },
+  { x:  -9, y:  28, delay: 160, rotate: 0 },
+  { x:   9, y:  -3, delay: 290, rotate: 0 },
+  { x:   9, y:  39, delay: 420, rotate: 0 },
+  { x:  27, y: -13, delay: 200, rotate: 0 },
+  { x:  27, y:  29, delay: 340, rotate: 0 },
+  { x:  45, y:  -3, delay: 380, rotate: 0 },
+  { x:  45, y:  39, delay: 460, rotate: 0 },
 ];
 
 const PIN_SIZES: Array<UniversePin['size']> = ['large', 'medium', 'small', 'medium', 'large', 'small'];
 
 const GHOST_SLOTS = [
-  { x: -55, y: -32, delay: 680 },
-  { x: -55, y:  30, delay: 780 },
-  { x:  55, y: -32, delay: 880 },
-  { x:  55, y:  30, delay: 980 },
+  { x: -55, y: -16, delay: 680 },
+  { x: -55, y:  39, delay: 780 },
+  { x:  55, y: -16, delay: 880 },
+  { x:  55, y:  39, delay: 980 },
 ];
 
 const GHOST_SITES: Record<string, Array<{ title: string; domain: string; href: string }>> = {
@@ -265,15 +267,18 @@ export class LabUniverseComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   stringPath(pin: UniversePin, index: number) {
-    const startX = 50;
-    const startY = 4; // search bar at top
+    if (index === 0) return '';
+    const start = this.pins()[index - 1];
+    if (!start || start.topic !== pin.topic) return '';
+    const startX = 50 + (start?.x ?? pin.x);
+    const startY = 50 + (start?.y ?? pin.y);
     const endX = 50 + pin.x;
     const endY = 50 + pin.y;
     const dx = endX - startX;
     const dy = endY - startY;
-    const bend = (index % 2 === 0 ? 1 : -1) * (3 + (index % 4) * 1.8);
-    const controlX = startX + dx * 0.55 + bend;
-    const controlY = startY + dy * 0.55 - bend * 0.3;
+    const bend = (index % 2 === 0 ? 1 : -1) * 2.4;
+    const controlX = startX + dx * 0.5 - dy * 0.08 + bend;
+    const controlY = startY + dy * 0.5 + dx * 0.08;
     return `M ${startX} ${startY} Q ${controlX} ${controlY} ${endX} ${endY}`;
   }
 
