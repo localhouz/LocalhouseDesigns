@@ -21,6 +21,7 @@
   &__status,
   &__empty,
   &__pin,
+  &__search-shield,
   &__input-wrap {
     position: absolute;
     z-index: 10;
@@ -119,14 +120,35 @@
     width: min(26rem, 86vw);
     transform: translateX(-50%);
     opacity: 0;
+    z-index: 14;
     transition: opacity 0.7s ease;
+
+    &.visible { opacity: 1; }
+  }
+
+  &__search-shield {
+    left: 50%;
+    top: 50%;
+    width: min(42rem, 72vw);
+    height: 10rem;
+    transform: translate(-50%, -50%);
+    z-index: 12;
+    opacity: 0;
+    pointer-events: none;
+    background:
+      radial-gradient(ellipse at center,
+        rgba(244, 239, 231, 0.98) 0%,
+        rgba(244, 239, 231, 0.94) 34%,
+        rgba(244, 239, 231, 0.58) 58%,
+        rgba(244, 239, 231, 0) 78%);
+    transition: opacity 0.65s ease;
 
     &.visible { opacity: 1; }
   }
 
   &__input {
     width: 100%;
-    background: none;
+    background: rgba(244, 239, 231, 0.72);
     border: none;
     border-bottom: 1px solid rgba(10, 10, 30, 0.34);
     color: rgba(10, 10, 30, 0.92);

@@ -13,6 +13,8 @@
   }
 
   @if (phase() === 'open') {
+    <div class="universe__search-shield" [class.visible]="inputVisible()"></div>
+
     <div class="universe__status" [class.visible]="inputVisible()">
       <span>{{ contextMode() }}</span>
       <p>{{ statusLine() }}</p>
