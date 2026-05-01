@@ -27,12 +27,9 @@
     </div>
 
     <svg class="universe__strings" viewBox="0 0 100 100" preserveAspectRatio="none">
-      @for (pin of pins(); track pin.id) {
-        <line
-          x1="50"
-          y1="50"
-          [attr.x2]="50 + pin.x"
-          [attr.y2]="50 + pin.y"
+      @for (pin of pins(); track pin.id; let i = $index) {
+        <path
+          [attr.d]="stringPath(pin, i)"
           [style.animation-delay]="pin.delay + 'ms'"
         />
       }

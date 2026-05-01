@@ -126,6 +126,19 @@ export class LabUniverseComponent implements OnInit, AfterViewInit, OnDestroy {
     }
   }
 
+  stringPath(pin: UniversePin, index: number) {
+    const startX = 50;
+    const startY = 50;
+    const endX = 50 + pin.x;
+    const endY = 50 + pin.y;
+    const dx = endX - startX;
+    const dy = endY - startY;
+    const bend = (index % 2 === 0 ? 1 : -1) * (5 + (index % 4) * 2.2);
+    const controlX = startX + dx * 0.52 - dy * 0.08 + bend;
+    const controlY = startY + dy * 0.52 + dx * 0.08 - bend * 0.45;
+    return `M ${startX} ${startY} Q ${controlX} ${controlY} ${endX} ${endY}`;
+  }
+
   goBack() {
     history.back();
   }

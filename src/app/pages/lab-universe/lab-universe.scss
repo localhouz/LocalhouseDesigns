@@ -153,9 +153,10 @@
     z-index: 6;
     pointer-events: none;
 
-    line {
-      stroke: rgba(143, 34, 0, 0.56);
-      stroke-width: 0.16;
+    path {
+      fill: none;
+      stroke: rgba(143, 34, 0, 0.38);
+      stroke-width: 0.11;
       stroke-dasharray: 0.45 0.85;
       opacity: 0;
       animation: universe-string-in 0.9s ease both;
