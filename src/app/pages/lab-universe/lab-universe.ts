@@ -97,7 +97,7 @@ interface ExtensionContext {
 }
 
 const COLUMN_X = [-57, -43, -29, -15, -1, 13, 27, 41, 55];
-const COLUMN_START_Y = [-42, -25, -39, -22, -41, -24, -40, -21, -38];
+const COLUMN_START_Y = [-24, -9, -22, -7, -23, -8, -22, -6, -20];
 const ROW_GAP = 25;
 const MAX_HISTORY_PINS = 36;
 
@@ -191,8 +191,10 @@ export class LabUniverseComponent implements OnInit, AfterViewInit, OnDestroy {
   private readonly warmBg  = new THREE.Color(0xf4efe7);
   private readonly flashBg = new THREE.Color(0xfffdf8);
 
-  private readonly PARTICLE_COUNT = 800;
-  private readonly BURST_DURATION = 3.2;
+  private readonly PARTICLE_COUNT  = 800;
+  private readonly BURST_DURATION  = 4.0;
+  private readonly EXPANSION_RATIO = 0.44;
+  private particleColors = new Float32Array(0);
 
   ngOnInit() {
     this.seo.setPage({
@@ -320,11 +322,11 @@ export class LabUniverseComponent implements OnInit, AfterViewInit, OnDestroy {
         this.phase.set('open');
         this.clustersVisible.set(true);
       });
-    }, (this.BURST_DURATION + 0.4) * 1000);
+    }, (this.BURST_DURATION + 0.2) * 1000);
 
     setTimeout(() => {
       this.zone.run(() => this.inputVisible.set(true));
-    }, (this.BURST_DURATION + 0.9) * 1000);
+    }, (this.BURST_DURATION + 0.6) * 1000);
   }
 
   private onExtensionMessage = (e: MessageEvent) => {
@@ -791,6 +793,7 @@ export class LabUniverseComponent implements OnInit, AfterViewInit, OnDestroy {
       }
     }
 
+    this.particleColors = colors.slice();
     this.burstGeo = new THREE.BufferGeometry();
     this.burstGeo.setAttribute('position', new THREE.BufferAttribute(positions, 3));
     this.burstGeo.setAttribute('color', new THREE.BufferAttribute(colors, 3));
@@ -838,22 +841,51 @@ export class LabUniverseComponent implements OnInit, AfterViewInit, OnDestroy {
         : Math.max(0, 1 - (progress - 0.05) / 0.3);
       (this.ringMesh.material as THREE.MeshBasicMaterial).opacity = ringOp * 0.6;
 
-      // particles: fade in fast, hold, fade out
+      const expandEnd    = this.EXPANSION_RATIO * this.BURST_DURATION;
+      const isCollapsing = elapsed > expandEnd;
+
+      // particle opacity: fade in fast, hold through expansion, hold through most of collapse, snap off
       let pOp: number;
-      if (progress < 0.1) pOp = progress / 0.1;
-      else if (progress < 0.62) pOp = 1;
-      else pOp = 1 - (progress - 0.62) / 0.38;
+      if (progress < 0.1) {
+        pOp = progress / 0.1;
+      } else if (!isCollapsing) {
+        pOp = 1;
+      } else {
+        const ct = (elapsed - expandEnd) / (this.BURST_DURATION - expandEnd);
+        pOp = ct < 0.72 ? 1 : Math.max(0, 1 - (ct - 0.72) / 0.28);
+      }
       const mat = this.burstMesh.material as THREE.PointsMaterial;
       mat.opacity = Math.max(0, pOp);
-      mat.size = 0.09 * (1 - progress * 0.65) + 0.026;
+      mat.size    = 0.09 * (1 - progress * 0.65) + 0.026;
 
-      // move particles outward with gentle drag
-      const drag   = Math.exp(-0.52 * elapsed);
-      const posArr = this.burstGeo.attributes['position'].array as Float32Array;
-      for (let i = 0; i < this.PARTICLE_COUNT; i++) {
-        posArr[i * 3]     = this.velocities[i].x * elapsed * drag;
-        posArr[i * 3 + 1] = this.velocities[i].y * elapsed * drag;
-        posArr[i * 3 + 2] = this.velocities[i].z * elapsed * drag;
+      const posArr   = this.burstGeo.attributes['position'].array as Float32Array;
+      const peakDrag = Math.exp(-0.52 * expandEnd);
+
+      if (!isCollapsing) {
+        // expansion: particles fly outward with gentle drag
+        const drag = Math.exp(-0.52 * elapsed);
+        for (let i = 0; i < this.PARTICLE_COUNT; i++) {
+          posArr[i * 3]     = this.velocities[i].x * elapsed * drag;
+          posArr[i * 3 + 1] = this.velocities[i].y * elapsed * drag;
+          posArr[i * 3 + 2] = this.velocities[i].z * elapsed * drag;
+        }
+      } else {
+        // gravitational collapse: particles rush back to center, bleaching white-hot
+        const ct       = Math.min((elapsed - expandEnd) / (this.BURST_DURATION - expandEnd), 1);
+        const ease     = ct * ct * (3 - 2 * ct);
+        const colorArr = this.burstGeo.attributes['color'].array as Float32Array;
+        for (let i = 0; i < this.PARTICLE_COUNT; i++) {
+          const peakX = this.velocities[i].x * expandEnd * peakDrag;
+          const peakY = this.velocities[i].y * expandEnd * peakDrag;
+          const peakZ = this.velocities[i].z * expandEnd * peakDrag;
+          posArr[i * 3]     = peakX * (1 - ease);
+          posArr[i * 3 + 1] = peakY * (1 - ease);
+          posArr[i * 3 + 2] = peakZ * (1 - ease);
+          colorArr[i * 3]     = this.particleColors[i * 3]     + (1 - this.particleColors[i * 3])     * ease;
+          colorArr[i * 3 + 1] = this.particleColors[i * 3 + 1] + (1 - this.particleColors[i * 3 + 1]) * ease;
+          colorArr[i * 3 + 2] = this.particleColors[i * 3 + 2] + (1 - this.particleColors[i * 3 + 2]) * ease;
+        }
+        this.burstGeo.attributes['color'].needsUpdate = true;
       }
       this.burstGeo.attributes['position'].needsUpdate = true;
     }
