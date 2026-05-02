@@ -4,8 +4,10 @@
   <div class="universe__badge">experiment</div>
 
   @if (phase() === 'idle') {
-    <div class="universe__line"></div>
-    <div class="universe__hint">Click Here</div>
+    <div class="universe__idle-group">
+      <div class="universe__line"></div>
+      <div class="universe__hint">Click Here</div>
+    </div>
   }
 
   @if (phase() !== 'idle') {
