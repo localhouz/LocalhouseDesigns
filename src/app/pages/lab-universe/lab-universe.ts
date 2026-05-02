@@ -222,6 +222,8 @@ export class LabUniverseComponent implements OnInit, AfterViewInit, OnDestroy {
   ghostNodes         = signal<GhostNode[]>([]);
   searchTrails       = signal<SearchTrail[]>([]);
   memoryCore         = signal<IntentWikiMemory | null>(null);
+  hoveredPinId       = signal<string | null>(null);
+  hoveredIntentI     = signal(0);
   privacyState       = computed(() => {
     if (!this.extensionConnected()) return 'site-only';
     return this.memoryEnabled() ? 'wiki-bound identity' : 'extension session';
@@ -307,6 +309,39 @@ export class LabUniverseComponent implements OnInit, AfterViewInit, OnDestroy {
     if (pin.href.startsWith('https://') || pin.href.startsWith('http://')) {
       window.open(pin.href, '_blank', 'noopener noreferrer');
     }
+  }
+
+  onPinEnter(pin: UniversePin) {
+    this.hoveredPinId.set(pin.id);
+    this.hoveredIntentI.set(0);
+  }
+
+  onPinLeave() {
+    this.hoveredPinId.set(null);
+  }
+
+  onPinWheel(pin: UniversePin, event: WheelEvent) {
+    const intents = this.pinLinkedIntents(pin);
+    if (!intents.length) return;
+    event.preventDefault();
+    event.stopPropagation();
+    const delta = event.deltaY > 0 ? 1 : -1;
+    const next = (this.hoveredIntentI() + delta + intents.length) % intents.length;
+    this.hoveredIntentI.set(next);
+  }
+
+  pinLinkedIntents(pin: UniversePin): ExpressLink[] {
+    if (!pin.groupIds.length) return [];
+    return this.expressLinks().filter(link => pin.groupIds.includes(link.id));
+  }
+
+  pinDrawerItems(pin: UniversePin, intentIndex: number): UniversePin[] {
+    const intents = this.pinLinkedIntents(pin);
+    const intent = intents[intentIndex];
+    if (!intent) return [];
+    return this.allPins()
+      .filter(p => p.id !== pin.id && p.groupIds.includes(intent.id))
+      .slice(0, 5);
   }
 
   openGhost(node: GhostNode) {
