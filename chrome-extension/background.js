@@ -260,7 +260,7 @@ async function buildClusters() {
       id: 'recent',
       label: 'History',
       icon: '...',
-      pages: recentPages.slice(0, 28),
+      pages: recentPages.slice(0, 36),
     });
   }
   clusters.push(...topicClusters);

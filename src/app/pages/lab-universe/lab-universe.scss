@@ -11,7 +11,7 @@
   &::after {
     content: '';
     display: block;
-    height: 200vh;
+    height: 210vh;
     pointer-events: none;
   }
 
@@ -28,7 +28,7 @@
     inset: 0;
     display: block;
     width: 100%;
-    height: 200vh;
+    height: 210vh;
     cursor: crosshair;
   }
 
@@ -267,7 +267,7 @@
     position: absolute;
     inset: 0;
     width: 100%;
-    height: 200vh;
+    height: 210vh;
     z-index: 6;
     pointer-events: none;
 
@@ -282,12 +282,12 @@
   }
 
   &__field {
-    top: 50%;
+    top: 0;
     left: 50%;
     width: calc(13rem + 5rem * var(--strength, 0.5));
     aspect-ratio: 1;
     z-index: 5;
-    transform: translate(calc(-50% + var(--cx, 0vw)), calc(-50% + var(--cy, 0vh))) scale(0.72);
+    transform: translate(calc(-50% + var(--cx, 0vw)), calc(var(--cy, 0vh) - 50%)) scale(0.72);
     border-radius: 8px;
     opacity: 0;
     pointer-events: none;
@@ -299,7 +299,7 @@
 
     &.visible {
       opacity: 1;
-      transform: translate(calc(-50% + var(--cx, 0vw)), calc(-50% + var(--cy, 0vh))) scale(1);
+      transform: translate(calc(-50% + var(--cx, 0vw)), calc(var(--cy, 0vh) - 50%)) scale(1);
     }
 
     span {
@@ -351,10 +351,10 @@
   }
 
   &__trail {
-    top: 50%;
+    top: 0;
     left: 50%;
     z-index: 13;
-    transform: translate(calc(-50% + var(--cx, 0vw)), calc(-50% + var(--cy, 0vh))) scale(0.92);
+    transform: translate(calc(-50% + var(--cx, 0vw)), calc(var(--cy, 0vh) - 50%)) scale(0.92);
     opacity: 0;
     pointer-events: none;
     transition:
@@ -363,7 +363,7 @@
 
     &.visible {
       opacity: 1;
-      transform: translate(calc(-50% + var(--cx, 0vw)), calc(-50% + var(--cy, 0vh))) scale(1);
+      transform: translate(calc(-50% + var(--cx, 0vw)), calc(var(--cy, 0vh) - 50%)) scale(1);
     }
 
     &::before {
@@ -394,13 +394,13 @@
   }
 
   &__ghost {
-    top: 50%;
+    top: 0;
     left: 50%;
     width: 7.5rem;
     min-height: 9rem;
     z-index: 8;
     padding: 0.46rem;
-    transform: translate(calc(-50% + var(--cx, 0vw)), calc(-50% + var(--cy, 0vh))) scale(0.82);
+    transform: translate(calc(-50% + var(--cx, 0vw)), calc(var(--cy, 0vh) - 50%)) scale(0.82);
     background: rgba(244, 239, 231, 0.72);
     border: 1px dashed rgba(10, 10, 18, 0.22);
     border-radius: 8px;
@@ -415,7 +415,7 @@
 
     &.visible {
       opacity: 0.72;
-      transform: translate(calc(-50% + var(--cx, 0vw)), calc(-50% + var(--cy, 0vh))) scale(1);
+      transform: translate(calc(-50% + var(--cx, 0vw)), calc(var(--cy, 0vh) - 50%)) scale(1);
     }
 
     &:hover {
@@ -488,11 +488,11 @@
   }
 
   &__pin {
-    top: 50%;
+    top: 0;
     left: 50%;
     width: min(8.4rem, 11vw);
     padding: 0.42rem 0.42rem 0.7rem;
-    transform: translate(calc(-50% + var(--cx, 0vw)), calc(-50% + var(--cy, 0vh))) scale(0.86);
+    transform: translate(calc(-50% + var(--cx, 0vw)), calc(var(--cy, 0vh) - 50%)) scale(0.86);
     background: #ffffff;
     border: 1px solid rgba(10, 10, 18, 0.1);
     border-radius: 10px;
@@ -519,7 +519,7 @@
 
     &.visible {
       opacity: 1;
-      transform: translate(calc(-50% + var(--cx, 0vw)), calc(-50% + var(--cy, 0vh))) scale(1);
+      transform: translate(calc(-50% + var(--cx, 0vw)), calc(var(--cy, 0vh) - 50%)) scale(1);
     }
 
     &:hover {
@@ -528,9 +528,9 @@
 
     &--small {
       width: min(7.8rem, 10.5vw);
-      transform: translate(calc(-50% + var(--cx, 0vw)), calc(-50% + var(--cy, 0vh))) scale(0.86);
+      transform: translate(calc(-50% + var(--cx, 0vw)), calc(var(--cy, 0vh) - 50%)) scale(0.86);
       &.visible {
-        transform: translate(calc(-50% + var(--cx, 0vw)), calc(-50% + var(--cy, 0vh))) scale(1);
+        transform: translate(calc(-50% + var(--cx, 0vw)), calc(var(--cy, 0vh) - 50%)) scale(1);
       }
     }
 

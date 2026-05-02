@@ -107,8 +107,8 @@ interface ExtensionContext {
 }
 
 const COLUMN_X = [-57, -43, -29, -15, -1, 13, 27, 41, 55];
-const COLUMN_START_Y = [-24, -9, -22, -7, -23, -8, -22, -6, -20];
-const ROW_GAP = 25;
+const COLUMN_START_Y = [31, 48, 36, 53, 32, 49, 37, 54, 34];
+const ROW_GAP = 55;
 const MAX_HISTORY_PINS = 36;
 
 const GHOST_SLOTS = [
@@ -307,9 +307,9 @@ export class LabUniverseComponent implements OnInit, AfterViewInit, OnDestroy {
     const start = this.pins()[index - 1];
     if (!start || start.topic !== pin.topic) return '';
     const startX = 50 + (start?.x ?? pin.x);
-    const startY = 50 + (start?.y ?? pin.y);
+    const startY = start?.y ?? pin.y;
     const endX = 50 + pin.x;
-    const endY = 50 + pin.y;
+    const endY = pin.y;
     const dx = endX - startX;
     const dy = endY - startY;
     const bend = (index % 2 === 0 ? 1 : -1) * 2.4;
