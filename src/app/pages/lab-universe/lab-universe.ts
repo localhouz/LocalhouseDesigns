@@ -81,6 +81,14 @@ interface UniverseSearchResponse {
   message?: string;
 }
 
+interface UniversePreviewResponse {
+  previews?: Array<{
+    url: string;
+    domain: string;
+    image: string;
+  }>;
+}
+
 interface IntentWikiMemory {
   searches: string[];
   domains: Array<{ domain: string; count: number }>;
@@ -249,6 +257,7 @@ export class LabUniverseComponent implements OnInit, AfterViewInit, OnDestroy {
   private readonly BURST_DURATION  = 4.0;
   private readonly EXPANSION_RATIO = 0.44;
   private particleColors = new Float32Array(0);
+  private previewRequestId = 0;
 
   ngOnInit() {
     this.seo.setPage({
@@ -479,6 +488,7 @@ export class LabUniverseComponent implements OnInit, AfterViewInit, OnDestroy {
       if (data.importMode === 'event' && this.initialImportComplete() && this.allPins().length) {
         this.mergeEventContext(data);
         this.extensionConnected.set(true);
+        void this.enrichPinImages(false);
         return;
       }
 
@@ -498,6 +508,7 @@ export class LabUniverseComponent implements OnInit, AfterViewInit, OnDestroy {
         localStorage.setItem(STORAGE_KEYS.importComplete, '1');
       }
       this.extensionConnected.set(true);
+      void this.enrichPinImages(data.importMode === 'initial');
     });
   };
 
@@ -522,6 +533,59 @@ export class LabUniverseComponent implements OnInit, AfterViewInit, OnDestroy {
     this.allPins.set(nextPins);
     const active = this.expressLinks().find(link => link.id === this.activeBoard()) ?? this.expressLinks()[0];
     if (active) this.setBoard(active);
+  }
+
+  private async enrichPinImages(persistSnapshot: boolean) {
+    const requestId = ++this.previewRequestId;
+    const targets = this.allPins()
+      .filter(pin => !pin.image && pin.href?.startsWith('http'))
+      .slice(0, 30);
+    if (!targets.length) return;
+
+    try {
+      const response = await fetch('/.netlify/functions/universe-preview', {
+        method: 'POST',
+        headers: { 'content-type': 'application/json' },
+        body: JSON.stringify({ urls: targets.map(pin => pin.href) }),
+      });
+      if (!response.ok || requestId !== this.previewRequestId) return;
+      const payload = await response.json() as UniversePreviewResponse;
+      const previews = new Map((payload.previews ?? [])
+        .filter(preview => preview.domain && preview.image)
+        .map(preview => [preview.domain, preview.image]));
+      if (!previews.size) return;
+
+      this.zone.run(() => {
+        const applyPreview = (pin: UniversePin) => {
+          const image = previews.get(pin.domain);
+          return image && !pin.image ? { ...pin, image } : pin;
+        };
+        const nextAll = this.allPins().map(applyPreview);
+        this.allPins.set(nextAll);
+        this.pins.set(this.pins().map(applyPreview));
+        if (persistSnapshot) this.patchSnapshotImages(previews);
+      });
+    } catch {
+      // Public preview images are opportunistic; weak cards should still render.
+    }
+  }
+
+  private patchSnapshotImages(previews: Map<string, string>) {
+    try {
+      const raw = localStorage.getItem(STORAGE_KEYS.importSnapshot);
+      if (!raw) return;
+      const snapshot = JSON.parse(raw) as ExtensionContext;
+      snapshot.clusters = (snapshot.clusters ?? []).map(cluster => ({
+        ...cluster,
+        pages: cluster.pages.map(page => {
+          const image = previews.get(this.domainFromUrl(page.url));
+          return image && !page.image ? { ...page, image } : page;
+        }),
+      }));
+      localStorage.setItem(STORAGE_KEYS.importSnapshot, JSON.stringify(snapshot));
+    } catch {
+      localStorage.removeItem(STORAGE_KEYS.importSnapshot);
+    }
   }
 
   private contextToPins(data: ExtensionContext) {
