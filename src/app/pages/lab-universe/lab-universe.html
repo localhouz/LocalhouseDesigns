@@ -41,6 +41,29 @@
       </nav>
     }
 
+    @if (resultsMode()) {
+      <section class="universe__results" [class.visible]="inputVisible()" aria-label="Search results">
+        <div class="universe__results-head">
+          <span>candidate results</span>
+          <strong>{{ activeQuery() }}</strong>
+          <button type="button" (click)="clearSearchMode()">clear</button>
+        </div>
+
+        <div class="universe__results-board">
+          @for (result of candidateResults(); track result.id) {
+            <button class="universe__candidate" (click)="openCandidate(result)">
+              <span class="universe__candidate-visual">
+                <img [src]="siteIcon(result.domain)" [alt]="result.domain" loading="lazy">
+              </span>
+              <span class="universe__candidate-kind">real web search</span>
+              <span class="universe__candidate-title">{{ result.title }}</span>
+              <span class="universe__candidate-domain">{{ result.domain }}</span>
+            </button>
+          }
+        </div>
+      </section>
+    }
+
     @if (memoryCore(); as memory) {
       <div class="universe__memory" [class.visible]="inputVisible()">
         <span class="universe__memory-label">owned intent memory</span>

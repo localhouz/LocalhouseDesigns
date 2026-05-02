@@ -63,6 +63,14 @@ interface SearchTrail {
   delay: number;
 }
 
+interface CandidateResult {
+  id: string;
+  title: string;
+  domain: string;
+  href: string;
+  query: string;
+}
+
 interface IntentWikiMemory {
   searches: string[];
   domains: Array<{ domain: string; count: number }>;
@@ -171,9 +179,12 @@ export class LabUniverseComponent implements OnInit, AfterViewInit, OnDestroy {
   extensionConnected = signal(false);
   intentText         = '';
   activeBoard        = signal('history');
+  activeQuery        = signal('');
+  resultsMode        = signal(false);
   expressLinks       = signal<ExpressLink[]>([]);
   allPins            = signal<UniversePin[]>([]);
   pins               = signal<UniversePin[]>([]);
+  candidateResults   = signal<CandidateResult[]>([]);
   intentFields       = signal<IntentField[]>([]);
   ghostNodes         = signal<GhostNode[]>([]);
   searchTrails       = signal<SearchTrail[]>([]);
@@ -255,6 +266,10 @@ export class LabUniverseComponent implements OnInit, AfterViewInit, OnDestroy {
     window.open(node.href, '_blank', 'noopener noreferrer');
   }
 
+  openCandidate(result: CandidateResult) {
+    window.open(result.href, '_blank', 'noopener,noreferrer');
+  }
+
   domainMark(domain: string) {
     const clean = domain.replace(/^www\./, '').split('.')[0] || domain;
     return clean.slice(0, 2).toUpperCase();
@@ -304,8 +319,24 @@ export class LabUniverseComponent implements OnInit, AfterViewInit, OnDestroy {
     this.searchTrails.set(next);
     localStorage.setItem('lh_universe_searches', JSON.stringify(next.map(t => t.query)));
     this.resizePinsForIntent(query);
+    this.activeQuery.set(query);
+    this.resultsMode.set(true);
+    this.candidateResults.set([{
+      id: `search-${Date.now()}`,
+      title: `Search results for ${this.cleanTitle(query)}`,
+      domain: this.domainFromUrl(target),
+      href: target,
+      query,
+    }]);
     this.intentText = '';
-    window.open(target, '_blank', 'noopener,noreferrer');
+  }
+
+  clearSearchMode() {
+    this.resultsMode.set(false);
+    this.activeQuery.set('');
+    this.candidateResults.set([]);
+    const home = this.expressLinks()[0];
+    if (home) this.setBoard(home);
   }
 
   setBoard(link: ExpressLink, event?: Event) {

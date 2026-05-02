@@ -40,6 +40,7 @@
   &__ghost,
   &__memory,
   &__pin,
+  &__results,
   &__trail,
   &__express,
   &__input-wrap {
@@ -261,6 +262,120 @@
       border-color: rgba(197, 41, 0, 0.34);
       background: rgba(255, 249, 244, 0.92);
     }
+  }
+
+  &__results {
+    top: 8.35rem;
+    left: 50%;
+    z-index: 18;
+    width: min(48rem, calc(100vw - 4rem));
+    transform: translateX(-50%);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.45s ease;
+
+    &.visible {
+      opacity: 1;
+      pointer-events: auto;
+    }
+  }
+
+  &__results-head {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    margin-bottom: 0.8rem;
+    padding: 0.55rem 0.7rem;
+    border: 1px solid rgba(10, 10, 18, 0.12);
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.84);
+
+    span,
+    button {
+      font-family: var(--font-mono);
+      font-size: 0.58rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+
+    span { color: rgba(197, 41, 0, 0.78); }
+
+    strong {
+      min-width: 0;
+      flex: 1;
+      color: rgba(10, 10, 18, 0.8);
+      font-size: 0.86rem;
+      font-weight: 700;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    button {
+      border: 0;
+      background: transparent;
+      color: rgba(10, 10, 18, 0.52);
+      cursor: pointer;
+    }
+  }
+
+  &__results-board {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(13rem, 1fr));
+    gap: 0.8rem;
+  }
+
+  &__candidate {
+    min-height: 11rem;
+    padding: 0.75rem;
+    border: 1px dashed rgba(197, 41, 0, 0.42);
+    border-radius: 8px;
+    background: rgba(255, 249, 244, 0.92);
+    text-align: left;
+    cursor: pointer;
+  }
+
+  &__candidate-visual {
+    display: grid;
+    place-items: center;
+    height: 5.8rem;
+    margin-bottom: 0.7rem;
+    border-radius: 6px;
+    background:
+      linear-gradient(120deg, rgba(197, 41, 0, 0.1), transparent 55%),
+      rgba(255, 255, 255, 0.72);
+
+    img {
+      width: 3rem;
+      height: 3rem;
+      object-fit: contain;
+    }
+  }
+
+  &__candidate-kind,
+  &__candidate-domain {
+    display: block;
+    font-family: var(--font-mono);
+    font-size: 0.52rem;
+    font-weight: 700;
+    letter-spacing: 0.11em;
+    text-transform: uppercase;
+  }
+
+  &__candidate-kind { color: rgba(197, 41, 0, 0.78); }
+
+  &__candidate-title {
+    display: block;
+    margin: 0.38rem 0;
+    color: rgba(10, 10, 18, 0.92);
+    font-size: 0.88rem;
+    font-weight: 700;
+    line-height: 1.2;
+  }
+
+  &__candidate-domain {
+    color: rgba(10, 10, 18, 0.46);
+    text-transform: lowercase;
   }
 
   &__strings {
