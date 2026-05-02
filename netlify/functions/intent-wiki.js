@@ -54,6 +54,27 @@ function domainFromUrl(url = '') {
   }
 }
 
+function sanitizeUrl(url = '') {
+  try {
+    const parsed = new URL(url);
+    const host = parsed.hostname.toLowerCase();
+    const path = parsed.pathname.toLowerCase();
+    const tokenParams = ['token', 'code', 'key', 'session', 'auth', 'state', 'password', 'secret'];
+    if (!['http:', 'https:'].includes(parsed.protocol)) return '';
+    if (['localhost', '127.0.0.1', '0.0.0.0', '::1'].includes(host)) return '';
+    if (/\/(login|signin|sign-in|auth|oauth|password|checkout|billing|payment|account|settings|inbox|mail)/.test(path)) return '';
+    if (/(bank|paypal|venmo|stripe|gmail|mychart|health)/.test(host)) return '';
+    if (tokenParams.some(param => parsed.searchParams.has(param))) return '';
+    parsed.username = '';
+    parsed.password = '';
+    parsed.search = '';
+    parsed.hash = '';
+    return parsed.toString();
+  } catch {
+    return '';
+  }
+}
+
 function normalizeQuery(query = '') {
   return String(query).replace(/\s+/g, ' ').trim().slice(0, 120);
 }
@@ -67,9 +88,31 @@ exports.handler = async (event) => {
     };
   }
 
+  if ((event.body || '').length > 250_000) {
+    return {
+      statusCode: 413,
+      headers: { 'content-type': 'application/json' },
+      body: JSON.stringify({ error: 'payload_too_large' }),
+    };
+  }
+
   try {
     const payload = JSON.parse(event.body || '{}');
-    const clusters = Array.isArray(payload.clusters) ? payload.clusters : [];
+    if (payload.memoryEnabled !== true) {
+      return {
+        statusCode: 403,
+        headers: { 'content-type': 'application/json' },
+        body: JSON.stringify({ error: 'memory_not_enabled' }),
+      };
+    }
+    const clusters = (Array.isArray(payload.clusters) ? payload.clusters : [])
+      .map(cluster => ({
+        ...cluster,
+        pages: (Array.isArray(cluster.pages) ? cluster.pages : [])
+          .map(page => ({ ...page, url: sanitizeUrl(page.url) }))
+          .filter(page => page.url),
+      }))
+      .filter(cluster => cluster.pages.length);
     const searches = Array.isArray(payload.searches) ? payload.searches.map(normalizeQuery).filter(Boolean) : [];
     const prior = Array.isArray(payload.memory?.searches) ? payload.memory.searches.map(normalizeQuery).filter(Boolean) : [];
     const allSearches = [...prior, ...searches].filter((query, index, all) => all.indexOf(query) === index).slice(-24);

@@ -124,6 +124,12 @@ interface ExtensionContext {
   domains?: Array<{ domain: string; count: number }>;
 }
 
+const STORAGE_KEYS = {
+  memoryEnabled: 'lh_universe_memory_enabled',
+  searches: 'lh_universe_searches',
+  wiki: 'lh_universe_wiki',
+};
+
 const COLUMN_X = [-39, -26, -13, 0, 13, 26, 39];
 const COLUMN_START_Y = [32, 48, 38, 54, 34, 50, 40];
 const ROW_GAP = 31;
@@ -193,6 +199,7 @@ export class LabUniverseComponent implements OnInit, AfterViewInit, OnDestroy {
   resultsMode        = signal(false);
   searchLoading      = signal(false);
   searchError        = signal('');
+  memoryEnabled      = signal(false);
   expressLinks       = signal<ExpressLink[]>([]);
   allPins            = signal<UniversePin[]>([]);
   pins               = signal<UniversePin[]>([]);
@@ -201,9 +208,15 @@ export class LabUniverseComponent implements OnInit, AfterViewInit, OnDestroy {
   ghostNodes         = signal<GhostNode[]>([]);
   searchTrails       = signal<SearchTrail[]>([]);
   memoryCore         = signal<IntentWikiMemory | null>(null);
+  privacyState       = computed(() => {
+    if (!this.extensionConnected()) return 'site-only';
+    return this.memoryEnabled() ? 'memory-enabled' : 'extension session';
+  });
   contextMode        = computed(() => this.extensionConnected() ? 'extension context received' : 'site-only context');
   statusLine         = computed(() => this.extensionConnected()
-    ? 'History is the board. Text links route into real interest groups.'
+    ? this.memoryEnabled()
+      ? 'History is the board. Durable intent memory is enabled.'
+      : 'History is the board. This session is not writing durable memory.'
     : 'Waiting on the private extension. A website alone cannot read your browsing history.'
   );
 
@@ -245,6 +258,7 @@ export class LabUniverseComponent implements OnInit, AfterViewInit, OnDestroy {
     window.addEventListener('resize', this.onResize);
     window.addEventListener('message', this.onExtensionMessage);
     document.body.classList.add('universe-active');
+    this.memoryEnabled.set(localStorage.getItem(STORAGE_KEYS.memoryEnabled) === '1');
     this.loadSearchMemory();
     document.dispatchEvent(new CustomEvent('LH_UNIVERSE_REQUEST'));
     this.zone.runOutsideAngular(() => this.animate());
@@ -280,6 +294,23 @@ export class LabUniverseComponent implements OnInit, AfterViewInit, OnDestroy {
 
   openCandidate(result: CandidateResult) {
     window.open(result.href, '_blank', 'noopener,noreferrer');
+  }
+
+  enableMemory() {
+    this.memoryEnabled.set(true);
+    localStorage.setItem(STORAGE_KEYS.memoryEnabled, '1');
+  }
+
+  disableMemory() {
+    this.memoryEnabled.set(false);
+    localStorage.setItem(STORAGE_KEYS.memoryEnabled, '0');
+  }
+
+  clearIntentMemory() {
+    this.memoryCore.set(null);
+    this.searchTrails.set([]);
+    localStorage.removeItem(STORAGE_KEYS.wiki);
+    localStorage.removeItem(STORAGE_KEYS.searches);
   }
 
   domainMark(domain: string) {
@@ -328,7 +359,7 @@ export class LabUniverseComponent implements OnInit, AfterViewInit, OnDestroy {
     };
     const next = [...existing.filter(item => item.query !== trail.query).slice(-4), trail];
     this.searchTrails.set(next);
-    localStorage.setItem('lh_universe_searches', JSON.stringify(next.map(t => t.query)));
+    localStorage.setItem(STORAGE_KEYS.searches, JSON.stringify(next.map(t => t.query)));
     this.resizePinsForIntent(query);
     this.activeQuery.set(query);
     this.resultsMode.set(true);
@@ -424,7 +455,7 @@ export class LabUniverseComponent implements OnInit, AfterViewInit, OnDestroy {
 
   private onExtensionMessage = (e: MessageEvent) => {
     if (e.origin !== location.origin) return;
-    const data = e.data as ExtensionContext;
+    const data = this.sanitizeExtensionContext(e.data as ExtensionContext);
     if (data?.type !== 'LH_UNIVERSE_CONTEXT' || !data.clusters?.length) return;
 
     this.zone.run(() => {
@@ -437,7 +468,6 @@ export class LabUniverseComponent implements OnInit, AfterViewInit, OnDestroy {
         ...secondaryClusters.flatMap(ext => ext.pages.slice(0, 4).map(page => ({ page, topic: ext.label }))),
       ]
         .filter(({ page }) => {
-          if (this.isLocalUrl(page.url)) return false;
           const domain = this.domainFromUrl(page.url);
           if (seenDomains.has(domain)) return false;
           seenDomains.add(domain);
@@ -511,6 +541,7 @@ export class LabUniverseComponent implements OnInit, AfterViewInit, OnDestroy {
     for (const cluster of clusters) {
       for (const page of cluster.pages) {
         const domain = this.domainFromUrl(page.url);
+        if (!domain) continue;
         const next = groups.get(domain) ?? [];
         if (!next.includes(cluster.id)) next.push(cluster.id);
         groups.set(domain, next);
@@ -554,6 +585,98 @@ export class LabUniverseComponent implements OnInit, AfterViewInit, OnDestroy {
     }
 
     return [...links.values()].slice(0, 9);
+  }
+
+  private sanitizeExtensionContext(data: ExtensionContext): ExtensionContext {
+    if (data?.type !== 'LH_UNIVERSE_CONTEXT') return data;
+
+    const clusters = (data.clusters ?? [])
+      .map(cluster => ({
+        ...cluster,
+        pages: (cluster.pages ?? [])
+          .map(page => this.sanitizePage(page))
+          .filter((page): page is ExtPage => Boolean(page)),
+      }))
+      .filter(cluster => cluster.pages.length);
+
+    const interests = (data.interests ?? [])
+      .map(link => ({
+        ...link,
+        pages: (link.pages ?? [])
+          .map(page => this.sanitizePage(page))
+          .filter((page): page is ExtPage => Boolean(page)),
+      }))
+      .filter(link => link.pages.length);
+
+    const bookmarks = (data.bookmarks ?? [])
+      .map(bookmark => {
+        const url = this.sanitizeUrl(bookmark.url);
+        return url ? { ...bookmark, url } : null;
+      })
+      .filter((bookmark): bookmark is { url: string; title: string } => Boolean(bookmark));
+
+    const safeDomains = new Set(clusters.flatMap(cluster => cluster.pages.map(page => this.domainFromUrl(page.url))));
+
+    return {
+      ...data,
+      clusters,
+      interests,
+      bookmarks,
+      searches: (data.searches ?? []).map(search => this.cleanTitle(search)).filter(Boolean).slice(-12),
+      domains: (data.domains ?? [])
+        .filter(item => safeDomains.has(item.domain))
+        .slice(0, 16),
+    };
+  }
+
+  private sanitizePage(page: ExtPage): ExtPage | null {
+    const url = this.sanitizeUrl(page.url);
+    if (!url) return null;
+    return {
+      ...page,
+      url,
+      title: this.cleanTitle(page.title || this.domainFromUrl(url)),
+      image: this.sanitizeUrl(page.image || '') || undefined,
+    };
+  }
+
+  private sanitizeUrl(url: string) {
+    if (!url || this.isLocalUrl(url)) return '';
+    try {
+      const parsed = new URL(url);
+      if (!['http:', 'https:'].includes(parsed.protocol)) return '';
+      if (this.isSensitiveUrl(parsed)) return '';
+      parsed.username = '';
+      parsed.password = '';
+      parsed.hash = '';
+      parsed.search = '';
+      return parsed.toString();
+    } catch {
+      return '';
+    }
+  }
+
+  private isSensitiveUrl(parsed: URL) {
+    const host = parsed.hostname.toLowerCase().replace(/^www\./, '');
+    const path = parsed.pathname.toLowerCase();
+    const full = `${host}${path}`;
+    const sensitiveHosts = [
+      'bank', 'paypal.com', 'venmo.com', 'stripe.com', 'squareup.com', 'chase.com',
+      'wellsfargo.com', 'bankofamerica.com', 'capitalone.com', 'citi.com',
+      'gmail.com', 'mail.google.com', 'outlook.live.com', 'outlook.office.com',
+      'health', 'mychart', 'epic.com',
+    ];
+    const sensitivePaths = [
+      '/login', '/signin', '/sign-in', '/auth', '/oauth', '/password', '/account',
+      '/checkout', '/cart', '/billing', '/payment', '/settings', '/security',
+      '/inbox', '/mail',
+    ];
+    const tokenParams = ['token', 'code', 'key', 'session', 'auth', 'state', 'password', 'secret'];
+    return sensitiveHosts.some(value => host.includes(value))
+      || sensitivePaths.some(value => path.includes(value))
+      || tokenParams.some(param => parsed.searchParams.has(param))
+      || full.includes('2fa')
+      || full.includes('mfa');
   }
 
   private resizePinsForIntent(query: string) {
@@ -622,11 +745,17 @@ export class LabUniverseComponent implements OnInit, AfterViewInit, OnDestroy {
       updatedAt: new Date().toISOString(),
     };
 
+    if (!this.memoryEnabled()) {
+      this.memoryCore.set(fallbackMemory);
+      return;
+    }
+
     try {
       const response = await fetch('/.netlify/functions/intent-wiki', {
         method: 'POST',
         headers: { 'content-type': 'application/json' },
         body: JSON.stringify({
+          memoryEnabled: true,
           clusters: data.clusters ?? [],
           searches: data.searches ?? [],
           bookmarks: data.bookmarks ?? [],
@@ -638,7 +767,7 @@ export class LabUniverseComponent implements OnInit, AfterViewInit, OnDestroy {
       const wiki = await response.json() as IntentWikiResponse;
       if (wiki.memory) {
         this.memoryCore.set(wiki.memory);
-        localStorage.setItem('lh_universe_wiki', JSON.stringify(wiki.memory));
+        if (this.memoryEnabled()) localStorage.setItem(STORAGE_KEYS.wiki, JSON.stringify(wiki.memory));
         if (wiki.memory.searches?.length) this.mergeSearches(wiki.memory.searches);
       }
       if (wiki.intents?.length) {
@@ -646,7 +775,7 @@ export class LabUniverseComponent implements OnInit, AfterViewInit, OnDestroy {
       }
     } catch {
       this.memoryCore.set(fallbackMemory);
-      localStorage.setItem('lh_universe_wiki', JSON.stringify(fallbackMemory));
+      if (this.memoryEnabled()) localStorage.setItem(STORAGE_KEYS.wiki, JSON.stringify(fallbackMemory));
     }
   }
 
@@ -670,7 +799,7 @@ export class LabUniverseComponent implements OnInit, AfterViewInit, OnDestroy {
 
   private loadWikiMemory(): IntentWikiMemory | null {
     try {
-      const raw = localStorage.getItem('lh_universe_wiki');
+      const raw = localStorage.getItem(STORAGE_KEYS.wiki);
       return raw ? JSON.parse(raw) as IntentWikiMemory : null;
     } catch {
       return null;
@@ -679,7 +808,7 @@ export class LabUniverseComponent implements OnInit, AfterViewInit, OnDestroy {
 
   private loadSearchMemory() {
     try {
-      const raw = localStorage.getItem('lh_universe_searches');
+      const raw = localStorage.getItem(STORAGE_KEYS.searches);
       const searches = raw ? JSON.parse(raw) as string[] : [];
       this.searchTrails.set(searches.slice(-5).map((query, i): SearchTrail => ({
         id: `stored-${i}-${query}`,
@@ -706,7 +835,7 @@ export class LabUniverseComponent implements OnInit, AfterViewInit, OnDestroy {
       y: -6 + (i % 4) * 4,
       delay: 500 + i * 120,
     })));
-    localStorage.setItem('lh_universe_searches', JSON.stringify(merged));
+    localStorage.setItem(STORAGE_KEYS.searches, JSON.stringify(merged));
   }
 
   private cleanTitle(title: string) {
@@ -785,7 +914,7 @@ export class LabUniverseComponent implements OnInit, AfterViewInit, OnDestroy {
     try {
       const parsed = new URL(url);
       const host = parsed.hostname.toLowerCase();
-      return parsed.protocol === 'file:'
+      return ['file:', 'chrome:', 'chrome-extension:', 'edge:', 'about:'].includes(parsed.protocol)
         || host === 'localhost'
         || host === '127.0.0.1'
         || host === '0.0.0.0'

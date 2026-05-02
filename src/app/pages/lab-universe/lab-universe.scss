@@ -118,7 +118,10 @@
     transition: opacity 0.7s ease;
     pointer-events: none;
 
-    &.visible { opacity: 1; }
+    &.visible {
+      opacity: 1;
+      pointer-events: auto;
+    }
 
     span {
       display: block;
@@ -134,6 +137,40 @@
       font-size: 0.84rem;
       line-height: 1.45;
       font-weight: 500;
+    }
+  }
+
+  &__privacy {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.45rem;
+    margin-top: 0.8rem;
+
+    strong,
+    button {
+      font-family: var(--font-mono);
+      font-size: 0.55rem;
+      letter-spacing: 0.11em;
+      text-transform: uppercase;
+    }
+
+    strong {
+      color: rgba(10, 10, 18, 0.52);
+    }
+
+    button {
+      padding: 0.34rem 0.46rem;
+      border: 1px solid rgba(10, 10, 18, 0.16);
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.68);
+      color: rgba(10, 10, 18, 0.68);
+      cursor: pointer;
+    }
+
+    button:hover {
+      border-color: rgba(197, 41, 0, 0.3);
+      color: rgba(197, 41, 0, 0.82);
     }
   }
 

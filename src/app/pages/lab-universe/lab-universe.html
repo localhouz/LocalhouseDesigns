@@ -19,6 +19,16 @@
       <div class="universe__status" [class.visible]="inputVisible()">
         <span>{{ contextMode() }}</span>
         <p>{{ statusLine() }}</p>
+        <div class="universe__privacy">
+          <strong>{{ privacyState() }}</strong>
+          @if (extensionConnected() && !memoryEnabled()) {
+            <button type="button" (click)="enableMemory()">enable memory</button>
+          }
+          @if (extensionConnected() && memoryEnabled()) {
+            <button type="button" (click)="disableMemory()">pause memory</button>
+          }
+          <button type="button" (click)="clearIntentMemory()">clear memory</button>
+        </div>
       </div>
     }
 
@@ -54,7 +64,7 @@
         <div class="universe__results-board">
           @if (searchLoading()) {
             <div class="universe__search-state">
-              <span>searching brave</span>
+              <span>searching web</span>
               <p>Pulling real web results into this query space.</p>
             </div>
           }

@@ -1,7 +1,14 @@
+const WINDOW_MS = 60_000;
+const MAX_REQUESTS = 30;
+const buckets = new Map();
+
 function json(statusCode, body) {
   return {
     statusCode,
-    headers: { 'content-type': 'application/json' },
+    headers: {
+      'content-type': 'application/json',
+      'cache-control': 'no-store',
+    },
     body: JSON.stringify(body),
   };
 }
@@ -18,40 +25,54 @@ function domainFromUrl(url = '') {
   }
 }
 
-function normalizeBraveResult(result, index, query) {
-  const href = result.url || '';
+function clientKey(event) {
+  return event.headers?.['x-nf-client-connection-ip']
+    || event.headers?.['client-ip']
+    || event.headers?.['x-forwarded-for']?.split(',')[0]?.trim()
+    || 'unknown';
+}
+
+function isRateLimited(key) {
+  const now = Date.now();
+  const bucket = buckets.get(key) || { count: 0, resetAt: now + WINDOW_MS };
+  if (bucket.resetAt <= now) {
+    buckets.set(key, { count: 1, resetAt: now + WINDOW_MS });
+    return false;
+  }
+
+  bucket.count += 1;
+  buckets.set(key, bucket);
+  return bucket.count > MAX_REQUESTS;
+}
+
+function sanitizeResult(result, index, query, source) {
+  const href = result.href || result.url || result.link || '';
   const domain = domainFromUrl(href);
-  if (!href || !domain) return null;
+  if (!href || !domain || !/^https?:\/\//i.test(href)) return null;
 
   return {
-    id: `brave-${index}-${domain}`,
+    id: `${source}-${index}-${domain}`,
     title: result.title || domain,
     domain,
     href,
     query,
-    snippet: result.description || '',
-    source: 'brave',
+    snippet: result.snippet || result.description || '',
+    source,
   };
 }
 
-exports.handler = async (event) => {
-  if (event.httpMethod !== 'GET') {
-    return json(405, { error: 'method_not_allowed' });
-  }
-
-  const query = normalizeQuery(event.queryStringParameters?.q);
-  if (!query) {
-    return json(400, { error: 'missing_query' });
-  }
-
+async function searchBrave(query) {
   const apiKey = process.env.BRAVE_SEARCH_API_KEY;
   if (!apiKey) {
-    return json(503, {
-      error: 'search_provider_not_configured',
-      provider: 'brave',
-      message: 'Set BRAVE_SEARCH_API_KEY in Netlify to enable real web search results.',
-      results: [],
-    });
+    return {
+      statusCode: 503,
+      body: {
+        error: 'search_provider_not_configured',
+        provider: 'brave',
+        message: 'Set BRAVE_SEARCH_API_KEY in Netlify to enable Brave Search.',
+        results: [],
+      },
+    };
   }
 
   const params = new URLSearchParams({
@@ -61,39 +82,133 @@ exports.handler = async (event) => {
     safesearch: 'moderate',
     spellcheck: '1',
   });
+  const response = await fetch(`https://api.search.brave.com/res/v1/web/search?${params}`, {
+    headers: {
+      accept: 'application/json',
+      'X-Subscription-Token': apiKey,
+    },
+  });
+  const payload = await response.json().catch(() => ({}));
 
-  try {
-    const response = await fetch(`https://api.search.brave.com/res/v1/web/search?${params}`, {
-      headers: {
-        accept: 'application/json',
-        'X-Subscription-Token': apiKey,
-      },
-    });
-
-    const payload = await response.json().catch(() => ({}));
-    if (!response.ok) {
-      return json(response.status, {
+  if (!response.ok) {
+    return {
+      statusCode: response.status,
+      body: {
         error: 'search_provider_error',
         provider: 'brave',
         message: payload?.error?.detail || payload?.message || 'Brave Search request failed.',
         results: [],
-      });
-    }
+      },
+    };
+  }
 
-    const results = (payload.web?.results || [])
-      .map((result, index) => normalizeBraveResult(result, index, query))
-      .filter(Boolean)
-      .slice(0, 8);
-
-    return json(200, {
+  return {
+    statusCode: 200,
+    body: {
       provider: 'brave',
       query,
-      results,
+      results: (payload.web?.results || [])
+        .map((result, index) => sanitizeResult(result, index, query, 'brave'))
+        .filter(Boolean)
+        .slice(0, 8),
+    },
+  };
+}
+
+async function searchGoogle(query) {
+  const apiKey = process.env.GOOGLE_SEARCH_API_KEY;
+  const cx = process.env.GOOGLE_SEARCH_CX;
+  if (!apiKey || !cx) {
+    return {
+      statusCode: 503,
+      body: {
+        error: 'search_provider_not_configured',
+        provider: 'google',
+        message: 'Set GOOGLE_SEARCH_API_KEY and GOOGLE_SEARCH_CX in Netlify to enable Google Custom Search.',
+        results: [],
+      },
+    };
+  }
+
+  const params = new URLSearchParams({
+    key: apiKey,
+    cx,
+    q: query,
+    num: '10',
+    safe: 'active',
+  });
+  const response = await fetch(`https://www.googleapis.com/customsearch/v1?${params}`, {
+    headers: { accept: 'application/json' },
+  });
+  const payload = await response.json().catch(() => ({}));
+
+  if (!response.ok) {
+    return {
+      statusCode: response.status,
+      body: {
+        error: 'search_provider_error',
+        provider: 'google',
+        message: payload?.error?.message || 'Google Custom Search request failed.',
+        results: [],
+      },
+    };
+  }
+
+  return {
+    statusCode: 200,
+    body: {
+      provider: 'google',
+      query,
+      results: (payload.items || [])
+        .map((result, index) => sanitizeResult(result, index, query, 'google'))
+        .filter(Boolean)
+        .slice(0, 8),
+    },
+  };
+}
+
+exports.handler = async (event) => {
+  if (event.httpMethod !== 'GET') {
+    return json(405, { error: 'method_not_allowed', results: [] });
+  }
+
+  if (isRateLimited(clientKey(event))) {
+    return json(429, {
+      error: 'rate_limited',
+      message: 'Search is cooling down. Try again in a minute.',
+      results: [],
     });
+  }
+
+  const query = normalizeQuery(event.queryStringParameters?.q);
+  if (!query || query.length < 2) {
+    return json(400, { error: 'invalid_query', message: 'Search query is too short.', results: [] });
+  }
+
+  if (/[<>{}[\]\\]/.test(query)) {
+    return json(400, { error: 'invalid_query', message: 'Search query contains unsupported characters.', results: [] });
+  }
+
+  const provider = (process.env.UNIVERSE_SEARCH_PROVIDER || 'brave').toLowerCase();
+  if (!['brave', 'google'].includes(provider)) {
+    return json(503, {
+      error: 'search_provider_not_configured',
+      provider,
+      message: 'Set UNIVERSE_SEARCH_PROVIDER to google or brave.',
+      results: [],
+    });
+  }
+
+  try {
+    const result = provider === 'google'
+      ? await searchGoogle(query)
+      : await searchBrave(query);
+    return json(result.statusCode, result.body);
   } catch {
     return json(502, {
       error: 'search_provider_unreachable',
-      provider: 'brave',
+      provider,
+      message: 'Search provider is not reachable yet.',
       results: [],
     });
   }
