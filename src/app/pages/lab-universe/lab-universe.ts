@@ -365,7 +365,7 @@ export class LabUniverseComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   pinImage(pin: { href: string; image?: string }) {
-    return pin.image || '';
+    return pin.image && !this.isWeakPreviewImage(pin.image) ? pin.image : '';
   }
 
   siteIcon(domain: string) {
@@ -538,7 +538,7 @@ export class LabUniverseComponent implements OnInit, AfterViewInit, OnDestroy {
   private async enrichPinImages(persistSnapshot: boolean) {
     const requestId = ++this.previewRequestId;
     const targets = this.allPins()
-      .filter(pin => !pin.image && pin.href?.startsWith('http'))
+      .filter(pin => (!pin.image || this.isWeakPreviewImage(pin.image)) && pin.href?.startsWith('http'))
       .slice(0, 30);
     if (!targets.length) return;
 
@@ -558,7 +558,7 @@ export class LabUniverseComponent implements OnInit, AfterViewInit, OnDestroy {
       this.zone.run(() => {
         const applyPreview = (pin: UniversePin) => {
           const image = previews.get(pin.domain);
-          return image && !pin.image ? { ...pin, image } : pin;
+          return image && (!pin.image || this.isWeakPreviewImage(pin.image)) ? { ...pin, image } : pin;
         };
         const nextAll = this.allPins().map(applyPreview);
         this.allPins.set(nextAll);
@@ -579,7 +579,7 @@ export class LabUniverseComponent implements OnInit, AfterViewInit, OnDestroy {
         ...cluster,
         pages: cluster.pages.map(page => {
           const image = previews.get(this.domainFromUrl(page.url));
-          return image && !page.image ? { ...page, image } : page;
+          return image && (!page.image || this.isWeakPreviewImage(page.image)) ? { ...page, image } : page;
         }),
       }));
       localStorage.setItem(STORAGE_KEYS.importSnapshot, JSON.stringify(snapshot));
@@ -804,8 +804,17 @@ export class LabUniverseComponent implements OnInit, AfterViewInit, OnDestroy {
       ...page,
       url,
       title: this.cleanTitle(page.title || this.domainFromUrl(url)),
-      image: this.sanitizeUrl(page.image || '') || undefined,
+      image: this.sanitizePreviewImage(page.image || '') || undefined,
     };
+  }
+
+  private sanitizePreviewImage(image: string) {
+    const url = this.sanitizeUrl(image);
+    return url && !this.isWeakPreviewImage(url) ? url : '';
+  }
+
+  private isWeakPreviewImage(image: string) {
+    return /(?:^|[\/._-])(logo|icon|favicon|avatar|sprite|spinner|placeholder|pixel|captcha)(?:[\/._-]|$)/i.test(image);
   }
 
   private sanitizeUrl(url: string) {
