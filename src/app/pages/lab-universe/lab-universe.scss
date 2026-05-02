@@ -490,12 +490,12 @@
   &__pin {
     top: 0;
     left: 50%;
-    width: min(8.4rem, 11vw);
-    padding: 0.42rem 0.42rem 0.7rem;
+    width: min(12.4rem, 14vw);
+    padding: 0;
     transform: translate(calc(-50% + var(--cx, 0vw)), calc(var(--cy, 0vh) - 50%)) scale(0.86);
     background: #ffffff;
     border: 1px solid rgba(10, 10, 18, 0.1);
-    border-radius: 10px;
+    border-radius: 8px;
     z-index: 10;
     text-align: left;
     cursor: pointer;
@@ -527,7 +527,7 @@
     }
 
     &--small {
-      width: min(7.8rem, 10.5vw);
+      width: min(11rem, 12.5vw);
       transform: translate(calc(-50% + var(--cx, 0vw)), calc(var(--cy, 0vh) - 50%)) scale(0.86);
       &.visible {
         transform: translate(calc(-50% + var(--cx, 0vw)), calc(var(--cy, 0vh) - 50%)) scale(1);
@@ -535,11 +535,11 @@
     }
 
     &--large {
-      width: min(9rem, 11.5vw);
+      width: min(13.8rem, 15.6vw);
     }
 
     &--featured {
-      width: min(10.2rem, 13vw);
+      width: min(15.2rem, 17.2vw);
     }
   }
 
@@ -568,10 +568,9 @@
   &__pin-visual {
     display: grid;
     place-items: center;
-    aspect-ratio: 2 / 3;
-    margin-bottom: 0.68rem;
-    border-radius: 6px;
-    border: 1px solid hsl(var(--tone, 16deg) 62% 36% / 0.25);
+    aspect-ratio: 4 / 5;
+    border-radius: 8px;
+    border: 0;
     background:
       linear-gradient(135deg, hsl(var(--tone, 16deg) 74% 84% / 0.78) 0 25%, transparent 25% 50%, hsl(calc(var(--tone, 16deg) + 42deg) 72% 84% / 0.72) 50% 75%, transparent 75%),
       linear-gradient(45deg, transparent 0 25%, hsl(calc(var(--tone, 16deg) + 90deg) 64% 88% / 0.88) 25% 50%, transparent 50% 75%, hsl(var(--tone, 16deg) 72% 88% / 0.82) 75%);
@@ -587,17 +586,24 @@
   }
 
   &__pin-title {
+    position: absolute;
+    left: 0.48rem;
+    right: 0.48rem;
+    bottom: 0.48rem;
     display: block;
-    margin-top: 0.48rem;
-    color: rgba(10, 10, 18, 0.96);
+    padding: 0.32rem 0.46rem;
+    border: 1px solid rgba(10, 10, 18, 0.12);
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.86);
+    color: rgba(10, 10, 18, 0.88);
     font-family: var(--font-sans);
-    font-size: 0.76rem;
+    font-size: 0.74rem;
     font-weight: 700;
-    line-height: 1.18;
-    display: -webkit-box;
+    line-height: 1;
     overflow: hidden;
-    -webkit-line-clamp: 2;
-    -webkit-box-orient: vertical;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    text-transform: lowercase;
   }
 
   &__pin-domain {
@@ -651,13 +657,12 @@
     &__pin,
     &__pin--large,
     &__pin--small {
-      width: 9.5rem;
-      min-height: 6.5rem;
-      padding: 0.72rem;
-      transform: translate(calc(-50% + var(--cx, 0vw) * 0.58), calc(-50% + var(--cy, 0vh) * 0.62)) scale(0.82);
+      width: min(11.5rem, 42vw);
+      padding: 0;
+      transform: translate(calc(-50% + var(--cx, 0vw) * 0.58), calc(var(--cy, 0vh) - 50%)) scale(0.82);
 
       &.visible {
-        transform: translate(calc(-50% + var(--cx, 0vw) * 0.58), calc(-50% + var(--cy, 0vh) * 0.62)) scale(1);
+        transform: translate(calc(-50% + var(--cx, 0vw) * 0.58), calc(var(--cy, 0vh) - 50%)) scale(1);
       }
     }
 

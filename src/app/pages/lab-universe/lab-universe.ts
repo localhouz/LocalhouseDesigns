@@ -106,9 +106,9 @@ interface ExtensionContext {
   domains?: Array<{ domain: string; count: number }>;
 }
 
-const COLUMN_X = [-57, -43, -29, -15, -1, 13, 27, 41, 55];
-const COLUMN_START_Y = [31, 48, 36, 53, 32, 49, 37, 54, 34];
-const ROW_GAP = 55;
+const COLUMN_X = [-54, -36, -18, 0, 18, 36, 54];
+const COLUMN_START_Y = [32, 48, 38, 54, 34, 50, 40];
+const ROW_GAP = 31;
 const MAX_HISTORY_PINS = 36;
 
 const GHOST_SLOTS = [
@@ -258,6 +258,15 @@ export class LabUniverseComponent implements OnInit, AfterViewInit, OnDestroy {
   domainMark(domain: string) {
     const clean = domain.replace(/^www\./, '').split('.')[0] || domain;
     return clean.slice(0, 2).toUpperCase();
+  }
+
+  siteName(domain: string) {
+    return domain
+      .replace(/^www\./, '')
+      .split('.')[0]
+      .replace(/[-_]+/g, ' ')
+      .trim()
+      .slice(0, 28) || domain;
   }
 
   visualTone(domain: string, topic: string) {
