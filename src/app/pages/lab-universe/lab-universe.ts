@@ -97,8 +97,8 @@ interface ExtensionContext {
 }
 
 const COLUMN_X = [-57, -43, -29, -15, -1, 13, 27, 41, 55];
-const COLUMN_START_Y = [-27, -12, -31, -16, -29, -10, -33, -14, -28];
-const ROW_GAP = 30;
+const COLUMN_START_Y = [-42, -25, -39, -22, -41, -24, -40, -21, -38];
+const ROW_GAP = 25;
 const MAX_HISTORY_PINS = 36;
 
 const GHOST_SLOTS = [
