@@ -128,6 +128,7 @@ interface ExtensionContext {
 const STORAGE_KEYS = {
   identityId: 'lh_universe_identity_id',
   importComplete: 'lh_universe_import_complete',
+  importSnapshot: 'lh_universe_import_snapshot',
   memoryEnabled: 'lh_universe_memory_enabled',
   searches: 'lh_universe_searches',
   wiki: 'lh_universe_wiki',
@@ -269,6 +270,7 @@ export class LabUniverseComponent implements OnInit, AfterViewInit, OnDestroy {
     this.initialImportComplete.set(localStorage.getItem(STORAGE_KEYS.importComplete) === '1');
     this.memoryEnabled.set(localStorage.getItem(STORAGE_KEYS.memoryEnabled) === '1');
     this.loadSearchMemory();
+    this.loadImportSnapshot();
     this.requestExtensionContext();
     setTimeout(() => this.requestExtensionContext(), 1200);
     this.zone.runOutsideAngular(() => this.animate());
@@ -326,6 +328,7 @@ export class LabUniverseComponent implements OnInit, AfterViewInit, OnDestroy {
   resetInitialImport() {
     this.initialImportComplete.set(false);
     localStorage.removeItem(STORAGE_KEYS.importComplete);
+    localStorage.removeItem(STORAGE_KEYS.importSnapshot);
     this.requestExtensionContext();
   }
 
@@ -475,42 +478,14 @@ export class LabUniverseComponent implements OnInit, AfterViewInit, OnDestroy {
     if (data?.type !== 'LH_UNIVERSE_CONTEXT' || !data.clusters?.length) return;
 
     this.zone.run(() => {
-      const seenDomains = new Set<string>();
-      const primaryCluster = data.clusters!.find(ext => ext.id === 'recent' || ext.id === 'active') ?? null;
-      const secondaryClusters = data.clusters!.filter(ext => ext.id !== 'recent' && ext.id !== 'active');
-      const groupByDomain = this.groupMemberships(secondaryClusters);
-      const uniquePages = [
-        ...(primaryCluster?.pages ?? []).map(page => ({ page, topic: primaryCluster?.label ?? 'History' })),
-        ...secondaryClusters.flatMap(ext => ext.pages.slice(0, 4).map(page => ({ page, topic: ext.label }))),
-      ]
-        .filter(({ page }) => {
-          const domain = this.domainFromUrl(page.url);
-          if (seenDomains.has(domain)) return false;
-          seenDomains.add(domain);
-          return true;
-        })
-        .slice(0, MAX_HISTORY_PINS);
+      if (data.importMode === 'event' && this.initialImportComplete() && this.allPins().length) {
+        this.mergeEventContext(data);
+        this.extensionConnected.set(true);
+        return;
+      }
 
-      const pins = uniquePages
-        .map(({ page, topic }, i): UniversePin => {
-          const slot = this.pinSlot(i);
-          return {
-            id: `${topic}-${i}-${page.url}`,
-            title: this.cleanTitle(page.title || page.url),
-            domain: this.domainFromUrl(page.url),
-            topic,
-            href: page.url,
-            image: page.image,
-            visitCount: page.visitCount ?? 1,
-            lastVisitTime: page.lastVisitTime ?? 0,
-            groupIds: groupByDomain.get(this.domainFromUrl(page.url)) ?? [],
-            x: slot.x,
-            y: slot.y,
-            delay: slot.delay,
-            rotate: slot.rotate,
-            size: this.pinSizeForScore(this.intentScore(page, topic)),
-          };
-        });
+      const secondaryClusters = data.clusters!.filter(ext => ext.id !== 'recent' && ext.id !== 'active');
+      const pins = this.contextToPins(data);
 
       this.allPins.set(pins);
       this.expressLinks.set(this.buildExpressLinks(pins, secondaryClusters, data.interests));
@@ -520,12 +495,73 @@ export class LabUniverseComponent implements OnInit, AfterViewInit, OnDestroy {
       if (data.searches?.length) this.mergeSearches(data.searches);
       void this.syncIntentWiki(data);
       if (data.importMode === 'initial') {
+        this.saveImportSnapshot(data);
         this.initialImportComplete.set(true);
         localStorage.setItem(STORAGE_KEYS.importComplete, '1');
       }
       this.extensionConnected.set(true);
     });
   };
+
+  private mergeEventContext(data: ExtensionContext) {
+    if (data.searches?.length) this.mergeSearches(data.searches);
+    const eventPins = this.contextToPins(data);
+    if (!eventPins.length) return;
+
+    const byDomain = new Map(this.allPins().map(pin => [pin.domain, pin]));
+    for (const pin of eventPins) {
+      const existing = byDomain.get(pin.domain);
+      byDomain.set(pin.domain, existing
+        ? {
+            ...existing,
+            visitCount: Math.max(existing.visitCount, pin.visitCount),
+            lastVisitTime: Math.max(existing.lastVisitTime, pin.lastVisitTime),
+          }
+        : pin);
+    }
+
+    const nextPins = [...byDomain.values()].slice(0, MAX_HISTORY_PINS);
+    this.allPins.set(nextPins);
+    const active = this.expressLinks().find(link => link.id === this.activeBoard()) ?? this.expressLinks()[0];
+    if (active) this.setBoard(active);
+  }
+
+  private contextToPins(data: ExtensionContext) {
+    const seenDomains = new Set<string>();
+    const primaryCluster = data.clusters!.find(ext => ext.id === 'recent' || ext.id === 'active') ?? null;
+    const secondaryClusters = data.clusters!.filter(ext => ext.id !== 'recent' && ext.id !== 'active');
+    const groupByDomain = this.groupMemberships(secondaryClusters);
+    return [
+      ...(primaryCluster?.pages ?? []).map(page => ({ page, topic: primaryCluster?.label ?? 'History' })),
+      ...secondaryClusters.flatMap(ext => ext.pages.slice(0, 4).map(page => ({ page, topic: ext.label }))),
+    ]
+      .filter(({ page }) => {
+        const domain = this.domainFromUrl(page.url);
+        if (seenDomains.has(domain)) return false;
+        seenDomains.add(domain);
+        return true;
+      })
+      .slice(0, MAX_HISTORY_PINS)
+      .map(({ page, topic }, i): UniversePin => {
+        const slot = this.pinSlot(i);
+        return {
+          id: `${topic}-${i}-${page.url}`,
+          title: this.cleanTitle(page.title || page.url),
+          domain: this.domainFromUrl(page.url),
+          topic,
+          href: page.url,
+          image: page.image,
+          visitCount: page.visitCount ?? 1,
+          lastVisitTime: page.lastVisitTime ?? 0,
+          groupIds: groupByDomain.get(this.domainFromUrl(page.url)) ?? [],
+          x: slot.x,
+          y: slot.y,
+          delay: slot.delay,
+          rotate: slot.rotate,
+          size: this.pinSizeForScore(this.intentScore(page, topic)),
+        };
+      });
+  }
 
   private setVisiblePins(pins: UniversePin[]) {
     const visible = pins.slice(0, MAX_HISTORY_PINS);
@@ -611,6 +647,7 @@ export class LabUniverseComponent implements OnInit, AfterViewInit, OnDestroy {
     if (data?.type !== 'LH_UNIVERSE_CONTEXT') return data;
 
     const rawClusters = this.initialImportComplete()
+      && data.importMode === 'event'
       ? (data.clusters ?? []).filter(cluster => cluster.id !== 'recent')
       : (data.clusters ?? []);
 
@@ -655,9 +692,37 @@ export class LabUniverseComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   private requestExtensionContext() {
+    const needsSnapshot = this.initialImportComplete() && !localStorage.getItem(STORAGE_KEYS.importSnapshot);
     document.dispatchEvent(new CustomEvent('LH_UNIVERSE_REQUEST', {
-      detail: { includeHistoryImport: !this.initialImportComplete() },
+      detail: { includeHistoryImport: !this.initialImportComplete() || needsSnapshot },
     }));
+  }
+
+  private saveImportSnapshot(data: ExtensionContext) {
+    localStorage.setItem(STORAGE_KEYS.importSnapshot, JSON.stringify({
+      ...data,
+      importMode: 'initial',
+    }));
+  }
+
+  private loadImportSnapshot() {
+    if (!this.initialImportComplete()) return;
+    try {
+      const raw = localStorage.getItem(STORAGE_KEYS.importSnapshot);
+      if (!raw) return;
+      const data = JSON.parse(raw) as ExtensionContext;
+      if (!data.clusters?.length) return;
+      const pins = this.contextToPins(data);
+      const secondaryClusters = data.clusters.filter(ext => ext.id !== 'recent' && ext.id !== 'active');
+      this.allPins.set(pins);
+      this.expressLinks.set(this.buildExpressLinks(pins, secondaryClusters, data.interests));
+      this.setBoard(this.expressLinks()[0]);
+      this.intentFields.set(this.buildIntentFields(data.clusters));
+      this.ghostNodes.set(this.buildGhostNodes(data.clusters));
+      this.extensionConnected.set(true);
+    } catch {
+      localStorage.removeItem(STORAGE_KEYS.importSnapshot);
+    }
   }
 
   private loadIdentityId() {
