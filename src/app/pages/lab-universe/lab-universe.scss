@@ -11,7 +11,7 @@
   &::after {
     content: '';
     display: block;
-    height: 148vh;
+    height: 200vh;
     pointer-events: none;
   }
 
@@ -28,7 +28,7 @@
     inset: 0;
     display: block;
     width: 100%;
-    height: 148vh;
+    height: 200vh;
     cursor: crosshair;
   }
 
@@ -267,7 +267,7 @@
     position: absolute;
     inset: 0;
     width: 100%;
-    height: 148vh;
+    height: 200vh;
     z-index: 6;
     pointer-events: none;
 

@@ -97,7 +97,12 @@ function addPage(topicPages, id, page) {
   if (isLocalUrl(page.url)) return;
   if (!topicPages[id]) topicPages[id] = [];
   const domain = domainFromUrl(page.url);
-  if (topicPages[id].some(existing => existing.url === page.url || domainFromUrl(existing.url) === domain)) return;
+  const existing = topicPages[id].find(item => item.url === page.url || domainFromUrl(item.url) === domain);
+  if (existing) {
+    existing.visitCount = Math.max(existing.visitCount || 1, page.visitCount || 1);
+    existing.lastVisitTime = Math.max(existing.lastVisitTime || 0, page.lastVisitTime || 0);
+    return;
+  }
   if (topicPages[id].length < 8) topicPages[id].push(page);
 }
 
@@ -170,7 +175,12 @@ async function buildClusters() {
   function addRecentPage(page) {
     if (isLocalUrl(page.url)) return;
     const domain = domainFromUrl(page.url);
-    if (recentPages.some(existing => existing.url === page.url || domainFromUrl(existing.url) === domain)) return;
+    const existing = recentPages.find(item => item.url === page.url || domainFromUrl(item.url) === domain);
+    if (existing) {
+      existing.visitCount = Math.max(existing.visitCount || 1, page.visitCount || 1);
+      existing.lastVisitTime = Math.max(existing.lastVisitTime || 0, page.lastVisitTime || 0);
+      return;
+    }
     if (recentPages.length < 40) recentPages.push(page);
   }
 
@@ -188,26 +198,36 @@ async function buildClusters() {
   for (const tab of openTabs) {
     if (!tab.url?.startsWith('http') || isLocalUrl(tab.url)) continue;
     trackDomain(tab.url);
-    addRecentPage({ url: tab.url, title: tab.title || tab.url });
+    addRecentPage({ url: tab.url, title: tab.title || tab.url, visitCount: 8, lastVisitTime: Date.now() });
     const search = extractSearch(tab.url);
     if (search && !searches.includes(search)) searches.push(search);
     const scores = scoreText(tab.url, tab.title);
     for (const [id, score] of Object.entries(scores)) {
       topicScores[id] = (topicScores[id] || 0) + score * 8;
-      addPage(topicPages, id, { url: tab.url, title: tab.title || tab.url });
+      addPage(topicPages, id, { url: tab.url, title: tab.title || tab.url, visitCount: 8, lastVisitTime: Date.now() });
     }
   }
 
   for (const item of historyItems) {
     if (!item.url?.startsWith('http') || isLocalUrl(item.url)) continue;
     trackDomain(item.url);
-    addRecentPage({ url: item.url, title: item.title || item.url });
+    addRecentPage({
+      url: item.url,
+      title: item.title || item.url,
+      visitCount: item.visitCount || 1,
+      lastVisitTime: item.lastVisitTime || 0,
+    });
     const search = extractSearch(item.url);
     if (search && !searches.includes(search)) searches.push(search);
     const scores = scoreText(item.url, item.title);
     for (const [id, score] of Object.entries(scores)) {
       topicScores[id] = (topicScores[id] || 0) + score * Math.max(item.visitCount || 1, 1);
-      addPage(topicPages, id, { url: item.url, title: item.title || item.url });
+      addPage(topicPages, id, {
+        url: item.url,
+        title: item.title || item.url,
+        visitCount: item.visitCount || 1,
+        lastVisitTime: item.lastVisitTime || 0,
+      });
     }
   }
 

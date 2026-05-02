@@ -16,6 +16,8 @@ interface UniversePin {
   topic: string;
   href: string;
   image?: string;
+  visitCount: number;
+  lastVisitTime: number;
   groupIds: string[];
   x: number;
   y: number;
@@ -29,7 +31,7 @@ interface ExpressLink {
   label: string;
   href: string;
   score: number;
-  pages: Array<{ url: string; title: string; image?: string }>;
+  pages: ExtPage[];
 }
 
 interface IntentField {
@@ -84,7 +86,15 @@ interface ExtCluster {
   id: string;
   label: string;
   icon: string;
-  pages: Array<{ url: string; title: string; image?: string }>;
+  pages: ExtPage[];
+}
+
+interface ExtPage {
+  url: string;
+  title: string;
+  image?: string;
+  visitCount?: number;
+  lastVisitTime?: number;
 }
 
 interface ExtensionContext {
@@ -317,16 +327,19 @@ export class LabUniverseComponent implements OnInit, AfterViewInit, OnDestroy {
     this.isExploding = true;
     this.explodeMs = performance.now();
 
+    // Fire open state right as particles begin their fade-out so cards materialize from the collapsing matter
+    const collapseStart = this.EXPANSION_RATIO * this.BURST_DURATION;
+    const fadeStartMs   = (collapseStart + 0.68 * (this.BURST_DURATION - collapseStart)) * 1000;
     setTimeout(() => {
       this.zone.run(() => {
         this.phase.set('open');
         this.clustersVisible.set(true);
       });
-    }, (this.BURST_DURATION + 0.2) * 1000);
+    }, fadeStartMs);
 
     setTimeout(() => {
       this.zone.run(() => this.inputVisible.set(true));
-    }, (this.BURST_DURATION + 0.6) * 1000);
+    }, (this.BURST_DURATION + 0.3) * 1000);
   }
 
   private onExtensionMessage = (e: MessageEvent) => {
@@ -362,6 +375,8 @@ export class LabUniverseComponent implements OnInit, AfterViewInit, OnDestroy {
             topic,
             href: page.url,
             image: page.image,
+            visitCount: page.visitCount ?? 1,
+            lastVisitTime: page.lastVisitTime ?? 0,
             groupIds: groupByDomain.get(this.domainFromUrl(page.url)) ?? [],
             x: slot.x,
             y: slot.y,
@@ -383,15 +398,30 @@ export class LabUniverseComponent implements OnInit, AfterViewInit, OnDestroy {
   };
 
   private setVisiblePins(pins: UniversePin[]) {
-    this.pins.set(pins.slice(0, MAX_HISTORY_PINS).map((pin, i) => {
+    const visible = pins.slice(0, MAX_HISTORY_PINS);
+    const scored = visible
+      .map(pin => ({ pin, score: this.intentScore(pin, pin.topic) }))
+      .sort((a, b) => b.score - a.score);
+    const featuredIds = new Set(scored.filter(item => item.score >= 8).slice(0, 2).map(item => item.pin.id));
+    const largeIds = new Set(scored.filter(item => item.score >= 5 && !featuredIds.has(item.pin.id)).slice(0, 6).map(item => item.pin.id));
+
+    this.pins.set(visible.map((pin, i) => {
       const slot = this.pinSlot(i);
+      const score = scored.find(item => item.pin.id === pin.id)?.score ?? 0;
+      const size: UniversePin['size'] = featuredIds.has(pin.id)
+        ? 'featured'
+        : largeIds.has(pin.id)
+          ? 'large'
+          : score >= 3
+            ? 'medium'
+            : 'small';
       return {
         ...pin,
         x: slot.x,
         y: slot.y,
         delay: slot.delay,
         rotate: slot.rotate,
-        size: this.pinSizeForScore(this.intentScore(pin, pin.topic)),
+        size,
       };
     }));
   }
@@ -604,11 +634,12 @@ export class LabUniverseComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   private intentScore(
-    page: { url?: string; title?: string; domain?: string },
+    page: { url?: string; title?: string; domain?: string; visitCount?: number; lastVisitTime?: number; groupIds?: string[] },
     topic: string,
     tokens = this.activeIntentTokens(),
   ) {
-    if (!tokens.length) return 1;
+    const baseScore = this.historyWeightScore(page);
+    if (!tokens.length) return baseScore;
     const title = (page.title ?? '').toLowerCase();
     const href = (page.url ?? page['href' as keyof typeof page] ?? '').toString().toLowerCase();
     const domain = (page.domain ?? this.domainFromUrl(href)).toLowerCase();
@@ -616,7 +647,17 @@ export class LabUniverseComponent implements OnInit, AfterViewInit, OnDestroy {
     const matches = tokens.filter(token => haystack.includes(token));
     const domainMatches = tokens.filter(token => domain.includes(token));
     const titleMatches = tokens.filter(token => title.includes(token));
-    return 1 + matches.length * 2 + domainMatches.length * 3 + titleMatches.length * 2;
+    return baseScore + matches.length * 2 + domainMatches.length * 3 + titleMatches.length * 2;
+  }
+
+  private historyWeightScore(page: { visitCount?: number; lastVisitTime?: number; groupIds?: string[] }) {
+    const visitCount = Math.max(page.visitCount ?? 1, 1);
+    const lastVisitTime = page.lastVisitTime ?? 0;
+    const ageHours = lastVisitTime ? (Date.now() - lastVisitTime) / 36e5 : 168;
+    const recency = ageHours <= 6 ? 3 : ageHours <= 24 ? 2 : ageHours <= 72 ? 1 : 0;
+    const repetition = visitCount >= 20 ? 4 : visitCount >= 10 ? 3 : visitCount >= 4 ? 2 : visitCount >= 2 ? 1 : 0;
+    const adjacency = Math.min(page.groupIds?.length ?? 0, 2);
+    return 1 + recency + repetition + adjacency;
   }
 
   private pinSizeForScore(score: number): UniversePin['size'] {
@@ -852,7 +893,7 @@ export class LabUniverseComponent implements OnInit, AfterViewInit, OnDestroy {
         pOp = 1;
       } else {
         const ct = (elapsed - expandEnd) / (this.BURST_DURATION - expandEnd);
-        pOp = ct < 0.72 ? 1 : Math.max(0, 1 - (ct - 0.72) / 0.28);
+        pOp = ct < 0.68 ? 1 : Math.max(0, 1 - (ct - 0.68) / 0.32);
       }
       const mat = this.burstMesh.material as THREE.PointsMaterial;
       mat.opacity = Math.max(0, pOp);
