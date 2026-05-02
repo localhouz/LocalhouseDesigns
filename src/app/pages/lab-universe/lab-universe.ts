@@ -134,9 +134,9 @@ const STORAGE_KEYS = {
   wiki: 'lh_universe_wiki',
 };
 
-const COLUMN_X = [-39, -26, -13, 0, 13, 26, 39];
-const COLUMN_START_Y = [32, 48, 38, 54, 34, 50, 40];
-const ROW_GAP = 31;
+const COLUMN_X = [-40, -27, -14, -1, 12, 25, 38];
+const COLUMN_START_Y = [56, 34, 60, 40, 64, 44, 58];
+const ROW_GAP = 39;
 const MAX_HISTORY_PINS = 36;
 
 const GHOST_SLOTS = [
