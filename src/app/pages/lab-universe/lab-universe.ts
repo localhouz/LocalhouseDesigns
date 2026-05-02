@@ -184,11 +184,15 @@ export class LabUniverseComponent implements OnInit, AfterViewInit, OnDestroy {
   private dotMesh!:   THREE.Mesh;
   private burstGeo!:  THREE.BufferGeometry;
   private burstMesh!: THREE.Points;
+  private flashMesh!: THREE.Mesh;
+  private ringMesh!:  THREE.Mesh;
   private velocities: THREE.Vector3[] = [];
   private isExploding = false;
+  private readonly warmBg  = new THREE.Color(0xf4efe7);
+  private readonly flashBg = new THREE.Color(0xfffdf8);
 
-  private readonly PARTICLE_COUNT = 380;
-  private readonly BURST_DURATION = 2.0;
+  private readonly PARTICLE_COUNT = 800;
+  private readonly BURST_DURATION = 3.2;
 
   ngOnInit() {
     this.seo.setPage({
@@ -218,6 +222,10 @@ export class LabUniverseComponent implements OnInit, AfterViewInit, OnDestroy {
     document.body.classList.remove('universe-active');
     this.renderer?.dispose();
     this.burstGeo?.dispose();
+    this.flashMesh?.geometry.dispose();
+    (this.flashMesh?.material as THREE.Material)?.dispose();
+    this.ringMesh?.geometry.dispose();
+    (this.ringMesh?.material as THREE.Material)?.dispose();
   }
 
   onCanvasClick() {
@@ -362,10 +370,7 @@ export class LabUniverseComponent implements OnInit, AfterViewInit, OnDestroy {
         });
 
       this.allPins.set(pins);
-      this.expressLinks.set([
-        { id: 'history', label: 'history', href: '/lab/universe?board=history', score: pins.length, pages: [] },
-        ...(data.interests ?? []).filter(link => link.pages?.length).slice(0, 8),
-      ]);
+      this.expressLinks.set(this.buildExpressLinks(pins, secondaryClusters, data.interests));
       this.setBoard(this.expressLinks()[0]);
       this.intentFields.set(this.buildIntentFields(data.clusters!));
       this.ghostNodes.set(this.buildGhostNodes(data.clusters!));
@@ -400,6 +405,43 @@ export class LabUniverseComponent implements OnInit, AfterViewInit, OnDestroy {
       }
     }
     return groups;
+  }
+
+  private buildExpressLinks(
+    pins: UniversePin[],
+    clusters: ExtCluster[],
+    interests: ExpressLink[] = [],
+  ) {
+    const links = new Map<string, ExpressLink>();
+    links.set('history', {
+      id: 'history',
+      label: `history ${pins.length}`,
+      href: '/lab/universe?board=history',
+      score: pins.length,
+      pages: [],
+    });
+
+    const sourceLinks = interests.length
+      ? interests
+      : clusters.map(cluster => ({
+          id: cluster.id,
+          label: cluster.label,
+          href: `/lab/universe?board=${encodeURIComponent(cluster.id)}`,
+          score: cluster.pages.length,
+          pages: cluster.pages,
+        }));
+
+    for (const link of sourceLinks) {
+      const pages = (link.pages ?? []).filter(page => !this.isLocalUrl(page.url));
+      if (!pages.length) continue;
+      links.set(link.id, {
+        ...link,
+        label: `${link.label.toLowerCase()} ${pages.length}`,
+        pages,
+      });
+    }
+
+    return [...links.values()].slice(0, 9);
   }
 
   private resizePinsForIntent(query: string) {
@@ -653,6 +695,8 @@ export class LabUniverseComponent implements OnInit, AfterViewInit, OnDestroy {
 
     this.buildStars();
     this.buildDot();
+    this.buildFlash();
+    this.buildShockRing();
     this.buildBurstParticles();
   }
 
@@ -679,22 +723,72 @@ export class LabUniverseComponent implements OnInit, AfterViewInit, OnDestroy {
     this.scene.add(this.dotMesh);
   }
 
+  private makeGlowTexture(): THREE.Texture {
+    const size = 64;
+    const canvas = document.createElement('canvas');
+    canvas.width  = size;
+    canvas.height = size;
+    const ctx = canvas.getContext('2d')!;
+    const grad = ctx.createRadialGradient(32, 32, 0, 32, 32, 32);
+    grad.addColorStop(0,    'rgba(255,255,255,1)');
+    grad.addColorStop(0.35, 'rgba(255,255,255,0.75)');
+    grad.addColorStop(0.7,  'rgba(255,255,255,0.2)');
+    grad.addColorStop(1,    'rgba(255,255,255,0)');
+    ctx.fillStyle = grad;
+    ctx.fillRect(0, 0, size, size);
+    return new THREE.CanvasTexture(canvas);
+  }
+
+  private buildFlash() {
+    this.flashMesh = new THREE.Mesh(
+      new THREE.SphereGeometry(1, 24, 24),
+      new THREE.MeshBasicMaterial({ color: 0xfff6e8, transparent: true, opacity: 0, side: THREE.BackSide }),
+    );
+    this.scene.add(this.flashMesh);
+  }
+
+  private buildShockRing() {
+    this.ringMesh = new THREE.Mesh(
+      new THREE.RingGeometry(0.92, 1.0, 128),
+      new THREE.MeshBasicMaterial({ color: 0xffcc66, transparent: true, opacity: 0, side: THREE.DoubleSide }),
+    );
+    this.scene.add(this.ringMesh);
+  }
+
   private buildBurstParticles() {
     const positions = new Float32Array(this.PARTICLE_COUNT * 3);
-    const colors = new Float32Array(this.PARTICLE_COUNT * 3);
+    const colors    = new Float32Array(this.PARTICLE_COUNT * 3);
 
     for (let i = 0; i < this.PARTICLE_COUNT; i++) {
-      const angle = Math.random() * Math.PI * 2;
-      const speed = 0.6 + Math.random() * 4.0;
+      const theta = Math.random() * Math.PI * 2;
+      const speed = Math.pow(Math.random(), 0.55) * 6.8 + 0.3;
       this.velocities.push(new THREE.Vector3(
-        Math.cos(angle) * speed,
-        Math.sin(angle) * speed,
-        (Math.random() - 0.5) * 0.5,
+        Math.cos(theta) * speed,
+        Math.sin(theta) * speed,
+        (Math.random() - 0.5) * speed * 0.55,
       ));
-      const t = speed / 4.6;
-      colors[i * 3] = 0.04;
-      colors[i * 3 + 1] = 0.04;
-      colors[i * 3 + 2] = 0.08 + 0.14 * (1 - t);
+      const t = speed / 7.1;
+      if (t < 0.22) {
+        const b = t / 0.22;
+        colors[i * 3]     = 1.0;
+        colors[i * 3 + 1] = 1.0 - b * 0.08;
+        colors[i * 3 + 2] = 1.0 - b * 0.38;
+      } else if (t < 0.52) {
+        const b = (t - 0.22) / 0.3;
+        colors[i * 3]     = 1.0;
+        colors[i * 3 + 1] = 0.92 - b * 0.50;
+        colors[i * 3 + 2] = 0.62 - b * 0.58;
+      } else if (t < 0.78) {
+        const b = (t - 0.52) / 0.26;
+        colors[i * 3]     = 1.0 - b * 0.28;
+        colors[i * 3 + 1] = 0.42 - b * 0.36;
+        colors[i * 3 + 2] = 0.04;
+      } else {
+        const b = (t - 0.78) / 0.22;
+        colors[i * 3]     = 0.72 - b * 0.52;
+        colors[i * 3 + 1] = 0.06 - b * 0.04;
+        colors[i * 3 + 2] = 0.02;
+      }
     }
 
     this.burstGeo = new THREE.BufferGeometry();
@@ -702,8 +796,9 @@ export class LabUniverseComponent implements OnInit, AfterViewInit, OnDestroy {
     this.burstGeo.setAttribute('color', new THREE.BufferAttribute(colors, 3));
 
     this.burstMesh = new THREE.Points(this.burstGeo, new THREE.PointsMaterial({
-      size: 0.04, vertexColors: true, transparent: true, opacity: 0,
+      size: 0.10, vertexColors: true, transparent: true, opacity: 0,
       sizeAttenuation: true, depthWrite: false,
+      map: this.makeGlowTexture(), alphaTest: 0.005,
     }));
     this.scene.add(this.burstMesh);
   }
@@ -715,24 +810,48 @@ export class LabUniverseComponent implements OnInit, AfterViewInit, OnDestroy {
     if (!this.isExploding) {
       this.dotMesh.scale.setScalar(1 + 0.3 * Math.sin(t * 1.9));
       (this.burstMesh.material as THREE.PointsMaterial).opacity = 0;
+      (this.scene.background as THREE.Color).copy(this.warmBg);
     } else {
-      const elapsed = (performance.now() - this.explodeMs) / 1000;
+      const elapsed  = (performance.now() - this.explodeMs) / 1000;
       const progress = Math.min(elapsed / this.BURST_DURATION, 1);
 
-      const dotScale = Math.max(0, 1 - progress * 4);
+      // dot implodes
+      const dotScale = Math.max(0, 1 - progress * 5);
       this.dotMesh.scale.setScalar(dotScale);
       this.dotMesh.visible = dotScale > 0.01;
 
-      let opacity: number;
-      if (progress < 0.12) opacity = progress / 0.12;
-      else if (progress < 0.65) opacity = 1;
-      else opacity = 1 - (progress - 0.65) / 0.35;
-      (this.burstMesh.material as THREE.PointsMaterial).opacity = Math.max(0, opacity);
+      // background flash: white-hot at t=0, settles back to warm paper
+      const bgFlash = Math.max(0, 1 - elapsed * 3.2);
+      (this.scene.background as THREE.Color).copy(this.warmBg).lerp(this.flashBg, bgFlash);
 
-      const drag = Math.exp(-0.75 * elapsed);
+      // flash sphere: rapid expand + fade
+      this.flashMesh.scale.setScalar(Math.max(0.01, elapsed * 11));
+      const flashOp = progress < 0.07
+        ? (progress / 0.07) * 0.8
+        : Math.max(0, 0.8 - (progress - 0.07) / 0.22);
+      (this.flashMesh.material as THREE.MeshBasicMaterial).opacity = flashOp;
+
+      // shock ring: fast expanding halo
+      this.ringMesh.scale.setScalar(1 + elapsed * 10);
+      const ringOp = progress < 0.05
+        ? progress / 0.05
+        : Math.max(0, 1 - (progress - 0.05) / 0.3);
+      (this.ringMesh.material as THREE.MeshBasicMaterial).opacity = ringOp * 0.6;
+
+      // particles: fade in fast, hold, fade out
+      let pOp: number;
+      if (progress < 0.1) pOp = progress / 0.1;
+      else if (progress < 0.62) pOp = 1;
+      else pOp = 1 - (progress - 0.62) / 0.38;
+      const mat = this.burstMesh.material as THREE.PointsMaterial;
+      mat.opacity = Math.max(0, pOp);
+      mat.size = 0.09 * (1 - progress * 0.65) + 0.026;
+
+      // move particles outward with gentle drag
+      const drag   = Math.exp(-0.52 * elapsed);
       const posArr = this.burstGeo.attributes['position'].array as Float32Array;
       for (let i = 0; i < this.PARTICLE_COUNT; i++) {
-        posArr[i * 3] = this.velocities[i].x * elapsed * drag;
+        posArr[i * 3]     = this.velocities[i].x * elapsed * drag;
         posArr[i * 3 + 1] = this.velocities[i].y * elapsed * drag;
         posArr[i * 3 + 2] = this.velocities[i].z * elapsed * drag;
       }
