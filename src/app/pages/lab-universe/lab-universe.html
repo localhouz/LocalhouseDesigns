@@ -52,14 +52,33 @@
         </div>
 
         <div class="universe__results-board">
+          @if (searchLoading()) {
+            <div class="universe__search-state">
+              <span>searching brave</span>
+              <p>Pulling real web results into this query space.</p>
+            </div>
+          }
+
+          @if (!searchLoading() && searchError()) {
+            <div class="universe__search-state">
+              <span>search unavailable</span>
+              <p>{{ searchError() }}</p>
+            </div>
+          }
+
           @for (result of candidateResults(); track result.id) {
             <button class="universe__candidate" (click)="openCandidate(result)">
               <span class="universe__candidate-visual">
                 <img [src]="siteIcon(result.domain)" [alt]="result.domain" loading="lazy">
               </span>
-              <span class="universe__candidate-kind">search the web</span>
-              <span class="universe__candidate-title">{{ result.title }}</span>
-              <span class="universe__candidate-domain">{{ result.domain }}</span>
+              <span>
+                <span class="universe__candidate-kind">{{ result.source || 'search' }}</span>
+                <span class="universe__candidate-title">{{ result.title }}</span>
+                @if (result.snippet) {
+                  <span class="universe__candidate-snippet">{{ result.snippet }}</span>
+                }
+                <span class="universe__candidate-domain">{{ result.domain }}</span>
+              </span>
             </button>
           }
         </div>

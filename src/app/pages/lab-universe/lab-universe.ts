@@ -69,6 +69,16 @@ interface CandidateResult {
   domain: string;
   href: string;
   query: string;
+  snippet?: string;
+  source?: string;
+}
+
+interface UniverseSearchResponse {
+  provider?: string;
+  query?: string;
+  results?: CandidateResult[];
+  error?: string;
+  message?: string;
 }
 
 interface IntentWikiMemory {
@@ -181,6 +191,8 @@ export class LabUniverseComponent implements OnInit, AfterViewInit, OnDestroy {
   activeBoard        = signal('history');
   activeQuery        = signal('');
   resultsMode        = signal(false);
+  searchLoading      = signal(false);
+  searchError        = signal('');
   expressLinks       = signal<ExpressLink[]>([]);
   allPins            = signal<UniversePin[]>([]);
   pins               = signal<UniversePin[]>([]);
@@ -303,10 +315,9 @@ export class LabUniverseComponent implements OnInit, AfterViewInit, OnDestroy {
     return `https://www.google.com/s2/favicons?domain=${encodeURIComponent(domain)}&sz=256`;
   }
 
-  submitSearch() {
+  async submitSearch() {
     const query = this.intentText.trim();
     if (!query) return;
-    const target = this.browserTarget(query);
     const existing = this.searchTrails();
     const trail: SearchTrail = {
       id: `${Date.now()}-${query}`,
@@ -321,19 +332,42 @@ export class LabUniverseComponent implements OnInit, AfterViewInit, OnDestroy {
     this.resizePinsForIntent(query);
     this.activeQuery.set(query);
     this.resultsMode.set(true);
-    this.candidateResults.set([{
-      id: `search-${Date.now()}`,
-      title: `Search results for ${this.cleanTitle(query)}`,
-      domain: this.domainFromUrl(target),
-      href: target,
-      query,
-    }]);
+    this.searchLoading.set(true);
+    this.searchError.set('');
+    this.candidateResults.set([]);
     this.intentText = '';
+
+    try {
+      const response = await fetch(`/.netlify/functions/universe-search?q=${encodeURIComponent(query)}`);
+      const payload = await response.json() as UniverseSearchResponse;
+      if (!response.ok || payload.error) {
+        this.searchError.set(payload.message || 'Search provider is not available yet.');
+        return;
+      }
+
+      const results = (payload.results || [])
+        .filter(result => result.href && result.domain)
+        .map((result, index) => ({
+          ...result,
+          id: result.id || `search-${Date.now()}-${index}`,
+          query,
+          source: result.source || payload.provider || 'search',
+        }));
+
+      this.candidateResults.set(results);
+      if (!results.length) this.searchError.set('No real links came back for that search.');
+    } catch {
+      this.searchError.set('Search provider is not reachable yet.');
+    } finally {
+      this.searchLoading.set(false);
+    }
   }
 
   clearSearchMode() {
     this.resultsMode.set(false);
     this.activeQuery.set('');
+    this.searchLoading.set(false);
+    this.searchError.set('');
     this.candidateResults.set([]);
     const home = this.expressLinks()[0];
     if (home) this.setBoard(home);
@@ -677,14 +711,6 @@ export class LabUniverseComponent implements OnInit, AfterViewInit, OnDestroy {
 
   private cleanTitle(title: string) {
     return title.replace(/\s+/g, ' ').trim().slice(0, 92);
-  }
-
-  private browserTarget(value: string) {
-    const input = value.trim();
-    if (!input) return 'https://www.google.com';
-    if (/^https?:\/\//i.test(input)) return input;
-    if (/^[a-z0-9.-]+\.[a-z]{2,}(\/.*)?$/i.test(input)) return `https://${input}`;
-    return `https://www.google.com/search?q=${encodeURIComponent(input)}`;
   }
 
   private intentScore(

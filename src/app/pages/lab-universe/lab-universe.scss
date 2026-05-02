@@ -327,6 +327,32 @@
     gap: 1rem;
   }
 
+  &__search-state {
+    margin: 4rem auto 0;
+    width: min(26rem, 100%);
+    padding: 1rem;
+    border: 1px solid rgba(10, 10, 18, 0.14);
+    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.78);
+    text-align: center;
+
+    span {
+      color: rgba(197, 41, 0, 0.78);
+      font-family: var(--font-mono);
+      font-size: 0.58rem;
+      font-weight: 700;
+      letter-spacing: 0.13em;
+      text-transform: uppercase;
+    }
+
+    p {
+      margin-top: 0.55rem;
+      color: rgba(10, 10, 18, 0.64);
+      font-size: 0.88rem;
+      line-height: 1.4;
+    }
+  }
+
   &__candidate {
     display: grid;
     grid-template-columns: 8rem minmax(0, 1fr);
@@ -377,6 +403,14 @@
     font-size: 1.1rem;
     font-weight: 700;
     line-height: 1.2;
+  }
+
+  &__candidate-snippet {
+    display: block;
+    margin-bottom: 0.55rem;
+    color: rgba(10, 10, 18, 0.62);
+    font-size: 0.82rem;
+    line-height: 1.35;
   }
 
   &__candidate-domain {
