@@ -101,6 +101,10 @@ function addPage(topicPages, id, page) {
   if (topicPages[id].length < 8) topicPages[id].push(page);
 }
 
+function boardHref(id = '') {
+  return `/lab/universe?board=${encodeURIComponent(id)}`;
+}
+
 function isLocalUrl(url = '') {
   try {
     const parsed = new URL(url);
@@ -220,6 +224,16 @@ async function buildClusters() {
       };
     });
 
+  const interests = topicClusters
+    .filter(cluster => cluster.pages.length)
+    .map(cluster => ({
+      id: cluster.id,
+      label: cluster.label,
+      href: boardHref(cluster.id),
+      score: topicScores[cluster.id] || cluster.pages.length,
+      pages: cluster.pages,
+    }));
+
   const clusters = [];
   if (recentPages.length) {
     clusters.push({
@@ -233,6 +247,7 @@ async function buildClusters() {
 
   return {
     clusters,
+    interests,
     searches: searches.slice(0, 8),
     bookmarks: bookmarks.slice(0, 40),
     domains: Object.entries(domains)

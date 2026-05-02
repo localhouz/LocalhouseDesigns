@@ -16,11 +16,20 @@ interface UniversePin {
   topic: string;
   href: string;
   image?: string;
+  groupIds: string[];
   x: number;
   y: number;
   delay: number;
   rotate: number;
   size: 'small' | 'medium' | 'large' | 'featured';
+}
+
+interface ExpressLink {
+  id: string;
+  label: string;
+  href: string;
+  score: number;
+  pages: Array<{ url: string; title: string; image?: string }>;
 }
 
 interface IntentField {
@@ -81,6 +90,7 @@ interface ExtCluster {
 interface ExtensionContext {
   type: 'LH_UNIVERSE_CONTEXT';
   clusters?: ExtCluster[];
+  interests?: ExpressLink[];
   searches?: string[];
   bookmarks?: Array<{ url: string; title: string }>;
   domains?: Array<{ domain: string; count: number }>;
@@ -150,6 +160,9 @@ export class LabUniverseComponent implements OnInit, AfterViewInit, OnDestroy {
   inputVisible       = signal(false);
   extensionConnected = signal(false);
   intentText         = '';
+  activeBoard        = signal('history');
+  expressLinks       = signal<ExpressLink[]>([]);
+  allPins            = signal<UniversePin[]>([]);
   pins               = signal<UniversePin[]>([]);
   intentFields       = signal<IntentField[]>([]);
   ghostNodes         = signal<GhostNode[]>([]);
@@ -157,7 +170,7 @@ export class LabUniverseComponent implements OnInit, AfterViewInit, OnDestroy {
   memoryCore         = signal<IntentWikiMemory | null>(null);
   contextMode        = computed(() => this.extensionConnected() ? 'extension context received' : 'site-only context');
   statusLine         = computed(() => this.extensionConnected()
-    ? 'Solid cards are visited. Soft fields are inferred intent. Ghost nodes are possible next sites.'
+    ? 'History is the board. Text links route into real interest groups.'
     : 'Waiting on the private extension. A website alone cannot read your browsing history.'
   );
 
@@ -260,6 +273,15 @@ export class LabUniverseComponent implements OnInit, AfterViewInit, OnDestroy {
     this.intentText = '';
   }
 
+  setBoard(link: ExpressLink, event?: Event) {
+    event?.preventDefault();
+    this.activeBoard.set(link.id);
+    const next = link.id === 'history'
+      ? this.allPins()
+      : this.allPins().filter(pin => pin.groupIds.includes(link.id));
+    this.setVisiblePins(next);
+  }
+
   stringPath(pin: UniversePin, index: number) {
     if (index === 0) return '';
     const start = this.pins()[index - 1];
@@ -306,6 +328,7 @@ export class LabUniverseComponent implements OnInit, AfterViewInit, OnDestroy {
       const seenDomains = new Set<string>();
       const historyCluster = data.clusters!.find(ext => ext.id === 'recent') ?? null;
       const secondaryClusters = data.clusters!.filter(ext => ext.id !== 'recent');
+      const groupByDomain = this.groupMemberships(secondaryClusters);
       const uniquePages = [
         ...(historyCluster?.pages ?? []).map(page => ({ page, topic: historyCluster?.label ?? 'History' })),
         ...secondaryClusters.flatMap(ext => ext.pages.slice(0, 4).map(page => ({ page, topic: ext.label }))),
@@ -329,6 +352,7 @@ export class LabUniverseComponent implements OnInit, AfterViewInit, OnDestroy {
             topic,
             href: page.url,
             image: page.image,
+            groupIds: groupByDomain.get(this.domainFromUrl(page.url)) ?? [],
             x: slot.x,
             y: slot.y,
             delay: slot.delay,
@@ -337,7 +361,12 @@ export class LabUniverseComponent implements OnInit, AfterViewInit, OnDestroy {
           };
         });
 
-      this.pins.set(pins);
+      this.allPins.set(pins);
+      this.expressLinks.set([
+        { id: 'history', label: 'history', href: '/lab/universe?board=history', score: pins.length, pages: [] },
+        ...(data.interests ?? []).filter(link => link.pages?.length).slice(0, 8),
+      ]);
+      this.setBoard(this.expressLinks()[0]);
       this.intentFields.set(this.buildIntentFields(data.clusters!));
       this.ghostNodes.set(this.buildGhostNodes(data.clusters!));
       if (data.searches?.length) this.mergeSearches(data.searches);
@@ -345,6 +374,33 @@ export class LabUniverseComponent implements OnInit, AfterViewInit, OnDestroy {
       this.extensionConnected.set(true);
     });
   };
+
+  private setVisiblePins(pins: UniversePin[]) {
+    this.pins.set(pins.slice(0, MAX_HISTORY_PINS).map((pin, i) => {
+      const slot = this.pinSlot(i);
+      return {
+        ...pin,
+        x: slot.x,
+        y: slot.y,
+        delay: slot.delay,
+        rotate: slot.rotate,
+        size: this.pinSizeForScore(this.intentScore(pin, pin.topic)),
+      };
+    }));
+  }
+
+  private groupMemberships(clusters: ExtCluster[]) {
+    const groups = new Map<string, string[]>();
+    for (const cluster of clusters) {
+      for (const page of cluster.pages) {
+        const domain = this.domainFromUrl(page.url);
+        const next = groups.get(domain) ?? [];
+        if (!next.includes(cluster.id)) next.push(cluster.id);
+        groups.set(domain, next);
+      }
+    }
+    return groups;
+  }
 
   private resizePinsForIntent(query: string) {
     const active = this.tokenize(query);

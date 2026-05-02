@@ -8,6 +8,7 @@ function sendContext() {
       {
         type: 'LH_UNIVERSE_CONTEXT',
         clusters: response.clusters,
+        interests: response.interests ?? [],
         searches: response.searches ?? [],
         bookmarks: response.bookmarks ?? [],
         domains: response.domains ?? [],

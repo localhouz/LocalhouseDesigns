@@ -33,6 +33,7 @@
   &__memory,
   &__pin,
   &__trail,
+  &__express,
   &__input-wrap {
     position: absolute;
     z-index: 10;
@@ -207,6 +208,39 @@
     }
 
     &:focus { border-color: rgba(255, 60, 0, 0.55); }
+  }
+
+  &__express {
+    top: 4.65rem;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 15;
+    display: flex;
+    gap: 1.05rem;
+    max-width: min(56rem, 72vw);
+    overflow: hidden;
+    opacity: 0;
+    transition: opacity 0.7s ease;
+
+    &.visible { opacity: 1; }
+
+    a {
+      color: rgba(10, 10, 18, 0.54);
+      font-family: var(--font-mono);
+      font-size: 0.62rem;
+      letter-spacing: 0.11em;
+      text-decoration: none;
+      text-transform: lowercase;
+      white-space: nowrap;
+      border-bottom: 1px solid transparent;
+      padding-bottom: 0.18rem;
+    }
+
+    a:hover,
+    a.active {
+      color: rgba(197, 41, 0, 0.86);
+      border-color: rgba(197, 41, 0, 0.44);
+    }
   }
 
   &__strings {

@@ -27,6 +27,18 @@
       />
     </div>
 
+    @if (expressLinks().length) {
+      <nav class="universe__express" [class.visible]="inputVisible()" aria-label="Interest boards">
+        @for (link of expressLinks(); track link.id) {
+          <a
+            [href]="link.href"
+            [class.active]="activeBoard() === link.id"
+            (click)="setBoard(link, $event)"
+          >{{ link.label }}</a>
+        }
+      </nav>
+    }
+
     @if (memoryCore(); as memory) {
       <div class="universe__memory" [class.visible]="inputVisible()">
         <span class="universe__memory-label">owned intent memory</span>
