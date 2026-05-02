@@ -135,6 +135,7 @@
           } @else {
             <span class="universe__pin-mark">{{ domainMark(pin.domain) }}</span>
           }
+          <img class="universe__pin-logo" [src]="siteIcon(pin.domain)" [alt]="siteName(pin.domain)" loading="lazy">
         </span>
         <span class="universe__pin-title">{{ siteName(pin.domain) }}</span>
       </button>

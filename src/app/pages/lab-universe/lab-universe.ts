@@ -106,7 +106,7 @@ interface ExtensionContext {
   domains?: Array<{ domain: string; count: number }>;
 }
 
-const COLUMN_X = [-54, -36, -18, 0, 18, 36, 54];
+const COLUMN_X = [-39, -26, -13, 0, 13, 26, 39];
 const COLUMN_START_Y = [32, 48, 38, 54, 34, 50, 40];
 const ROW_GAP = 31;
 const MAX_HISTORY_PINS = 36;
@@ -281,7 +281,11 @@ export class LabUniverseComponent implements OnInit, AfterViewInit, OnDestroy {
   pinImage(pin: { href: string; image?: string }) {
     if (pin.image) return pin.image;
     if (!/^https?:\/\//i.test(pin.href)) return '';
-    return `https://s.wordpress.com/mshots/v1/${encodeURIComponent(pin.href)}?w=640`;
+    return `https://s.wordpress.com/mshots/v1/${encodeURIComponent(pin.href)}?w=1024`;
+  }
+
+  siteIcon(domain: string) {
+    return `https://www.google.com/s2/favicons?domain=${encodeURIComponent(domain)}&sz=256`;
   }
 
   submitSearch() {
