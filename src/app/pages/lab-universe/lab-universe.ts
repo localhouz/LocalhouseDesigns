@@ -356,9 +356,7 @@ export class LabUniverseComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   pinImage(pin: { href: string; image?: string }) {
-    if (pin.image) return pin.image;
-    if (!/^https?:\/\//i.test(pin.href)) return '';
-    return `https://s.wordpress.com/mshots/v1/${encodeURIComponent(pin.href)}?w=1024`;
+    return pin.image || '';
   }
 
   siteIcon(domain: string) {

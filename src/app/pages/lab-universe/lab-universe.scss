@@ -742,31 +742,39 @@
     }
   }
 
-  &__pin[style*="--cx: -40vw"],
-  &__pin[style*="--cx: -39vw"] {
-    z-index: 9;
-  }
-
-  &__pin-mark,
-  &__pin-domain {
-    display: block;
-    font-family: var(--font-mono);
-    font-size: 0.56rem;
-    letter-spacing: 0.1em;
-  }
-
   &__pin-mark {
     display: grid;
     place-items: center;
-    width: 3.1rem;
-    height: 3.1rem;
-    border: 1px solid hsl(var(--tone, 16deg) 68% 34% / 0.38);
-    border-radius: 50%;
-    background: rgba(244, 239, 231, 0.78);
+    width: 4.8rem;
+    height: 4.8rem;
+    border-radius: 22px;
+    background: hsl(var(--tone, 16deg) 72% 90% / 0.86);
     color: hsl(var(--tone, 16deg) 70% 28% / 0.9);
-    font-size: 0.78rem;
+    font-family: var(--font-mono);
+    font-size: 1rem;
     font-weight: 700;
     letter-spacing: 0.08em;
+  }
+
+  &__pin-brand {
+    display: grid;
+    place-items: center;
+    gap: 0.7rem;
+    width: 100%;
+    height: 100%;
+    padding: 1.2rem 0.9rem 3rem;
+    background: linear-gradient(145deg, hsl(var(--tone, 16deg) 70% 94% / 0.96), hsl(calc(var(--tone, 16deg) + 36deg) 72% 90% / 0.92));
+  }
+
+  &__pin-site {
+    max-width: 100%;
+    color: rgba(10, 10, 18, 0.66);
+    font-family: var(--font-mono);
+    font-size: 0.58rem;
+    font-weight: 700;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
   }
 
   &__pin-visual {
@@ -800,7 +808,7 @@
     object-fit: contain !important;
     border: 1px solid rgba(10, 10, 18, 0.12);
     border-radius: 18px;
-    background: rgba(255, 255, 255, 0.86);
+    background: rgba(255, 255, 255, 0.9);
     padding: 0.5rem;
   }
 
@@ -825,13 +833,6 @@
     text-transform: lowercase;
   }
 
-  &__pin-domain {
-    color: rgba(10, 10, 30, 0.66);
-    font-weight: 700;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-  }
 }
 
 @keyframes universe-fade-in {

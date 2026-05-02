@@ -191,7 +191,10 @@
             @if (pinImage(pin); as image) {
               <img [src]="image" [alt]="pin.title" loading="lazy">
             } @else {
-              <span class="universe__pin-mark">{{ domainMark(pin.domain) }}</span>
+              <span class="universe__pin-brand">
+                <span class="universe__pin-mark">{{ domainMark(pin.domain) }}</span>
+                <span class="universe__pin-site">{{ siteName(pin.domain) }}</span>
+              </span>
             }
             <img class="universe__pin-logo" [src]="siteIcon(pin.domain)" [alt]="siteName(pin.domain)" loading="lazy">
           </span>
