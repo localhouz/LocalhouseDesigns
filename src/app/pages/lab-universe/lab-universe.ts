@@ -291,6 +291,7 @@ export class LabUniverseComponent implements OnInit, AfterViewInit, OnDestroy {
   submitSearch() {
     const query = this.intentText.trim();
     if (!query) return;
+    const target = this.browserTarget(query);
     const existing = this.searchTrails();
     const trail: SearchTrail = {
       id: `${Date.now()}-${query}`,
@@ -304,6 +305,7 @@ export class LabUniverseComponent implements OnInit, AfterViewInit, OnDestroy {
     localStorage.setItem('lh_universe_searches', JSON.stringify(next.map(t => t.query)));
     this.resizePinsForIntent(query);
     this.intentText = '';
+    window.open(target, '_blank', 'noopener,noreferrer');
   }
 
   setBoard(link: ExpressLink, event?: Event) {
@@ -644,6 +646,14 @@ export class LabUniverseComponent implements OnInit, AfterViewInit, OnDestroy {
 
   private cleanTitle(title: string) {
     return title.replace(/\s+/g, ' ').trim().slice(0, 92);
+  }
+
+  private browserTarget(value: string) {
+    const input = value.trim();
+    if (!input) return 'https://www.google.com';
+    if (/^https?:\/\//i.test(input)) return input;
+    if (/^[a-z0-9.-]+\.[a-z]{2,}(\/.*)?$/i.test(input)) return `https://${input}`;
+    return `https://www.google.com/search?q=${encodeURIComponent(input)}`;
   }
 
   private intentScore(
