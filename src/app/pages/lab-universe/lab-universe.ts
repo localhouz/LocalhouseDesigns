@@ -117,6 +117,7 @@ interface ExtPage {
 
 interface ExtensionContext {
   type: 'LH_UNIVERSE_CONTEXT';
+  importMode?: 'initial' | 'event';
   clusters?: ExtCluster[];
   interests?: ExpressLink[];
   searches?: string[];
@@ -125,6 +126,8 @@ interface ExtensionContext {
 }
 
 const STORAGE_KEYS = {
+  identityId: 'lh_universe_identity_id',
+  importComplete: 'lh_universe_import_complete',
   memoryEnabled: 'lh_universe_memory_enabled',
   searches: 'lh_universe_searches',
   wiki: 'lh_universe_wiki',
@@ -199,7 +202,9 @@ export class LabUniverseComponent implements OnInit, AfterViewInit, OnDestroy {
   resultsMode        = signal(false);
   searchLoading      = signal(false);
   searchError        = signal('');
+  initialImportComplete = signal(false);
   memoryEnabled      = signal(false);
+  identityId         = signal('');
   expressLinks       = signal<ExpressLink[]>([]);
   allPins            = signal<UniversePin[]>([]);
   pins               = signal<UniversePin[]>([]);
@@ -210,13 +215,15 @@ export class LabUniverseComponent implements OnInit, AfterViewInit, OnDestroy {
   memoryCore         = signal<IntentWikiMemory | null>(null);
   privacyState       = computed(() => {
     if (!this.extensionConnected()) return 'site-only';
-    return this.memoryEnabled() ? 'memory-enabled' : 'extension session';
+    return this.memoryEnabled() ? 'wiki-bound identity' : 'extension session';
   });
   contextMode        = computed(() => this.extensionConnected() ? 'extension context received' : 'site-only context');
   statusLine         = computed(() => this.extensionConnected()
     ? this.memoryEnabled()
-      ? 'History is the board. Durable intent memory is enabled.'
-      : 'History is the board. This session is not writing durable memory.'
+      ? 'Identity is private and wiki-bound. External search only receives typed queries.'
+      : this.initialImportComplete()
+        ? 'Initial history is loaded. Ongoing mode only uses active/session events.'
+        : 'Initial import can map recent history once. This session is not writing durable memory.'
     : 'Waiting on the private extension. A website alone cannot read your browsing history.'
   );
 
@@ -258,9 +265,12 @@ export class LabUniverseComponent implements OnInit, AfterViewInit, OnDestroy {
     window.addEventListener('resize', this.onResize);
     window.addEventListener('message', this.onExtensionMessage);
     document.body.classList.add('universe-active');
+    this.identityId.set(this.loadIdentityId());
+    this.initialImportComplete.set(localStorage.getItem(STORAGE_KEYS.importComplete) === '1');
     this.memoryEnabled.set(localStorage.getItem(STORAGE_KEYS.memoryEnabled) === '1');
     this.loadSearchMemory();
-    document.dispatchEvent(new CustomEvent('LH_UNIVERSE_REQUEST'));
+    this.requestExtensionContext();
+    setTimeout(() => this.requestExtensionContext(), 1200);
     this.zone.runOutsideAngular(() => this.animate());
   }
 
@@ -311,6 +321,12 @@ export class LabUniverseComponent implements OnInit, AfterViewInit, OnDestroy {
     this.searchTrails.set([]);
     localStorage.removeItem(STORAGE_KEYS.wiki);
     localStorage.removeItem(STORAGE_KEYS.searches);
+  }
+
+  resetInitialImport() {
+    this.initialImportComplete.set(false);
+    localStorage.removeItem(STORAGE_KEYS.importComplete);
+    this.requestExtensionContext();
   }
 
   domainMark(domain: string) {
@@ -460,11 +476,11 @@ export class LabUniverseComponent implements OnInit, AfterViewInit, OnDestroy {
 
     this.zone.run(() => {
       const seenDomains = new Set<string>();
-      const historyCluster = data.clusters!.find(ext => ext.id === 'recent') ?? null;
-      const secondaryClusters = data.clusters!.filter(ext => ext.id !== 'recent');
+      const primaryCluster = data.clusters!.find(ext => ext.id === 'recent' || ext.id === 'active') ?? null;
+      const secondaryClusters = data.clusters!.filter(ext => ext.id !== 'recent' && ext.id !== 'active');
       const groupByDomain = this.groupMemberships(secondaryClusters);
       const uniquePages = [
-        ...(historyCluster?.pages ?? []).map(page => ({ page, topic: historyCluster?.label ?? 'History' })),
+        ...(primaryCluster?.pages ?? []).map(page => ({ page, topic: primaryCluster?.label ?? 'History' })),
         ...secondaryClusters.flatMap(ext => ext.pages.slice(0, 4).map(page => ({ page, topic: ext.label }))),
       ]
         .filter(({ page }) => {
@@ -503,6 +519,10 @@ export class LabUniverseComponent implements OnInit, AfterViewInit, OnDestroy {
       this.ghostNodes.set(this.buildGhostNodes(data.clusters!));
       if (data.searches?.length) this.mergeSearches(data.searches);
       void this.syncIntentWiki(data);
+      if (data.importMode === 'initial') {
+        this.initialImportComplete.set(true);
+        localStorage.setItem(STORAGE_KEYS.importComplete, '1');
+      }
       this.extensionConnected.set(true);
     });
   };
@@ -590,7 +610,11 @@ export class LabUniverseComponent implements OnInit, AfterViewInit, OnDestroy {
   private sanitizeExtensionContext(data: ExtensionContext): ExtensionContext {
     if (data?.type !== 'LH_UNIVERSE_CONTEXT') return data;
 
-    const clusters = (data.clusters ?? [])
+    const rawClusters = this.initialImportComplete()
+      ? (data.clusters ?? []).filter(cluster => cluster.id !== 'recent')
+      : (data.clusters ?? []);
+
+    const clusters = rawClusters
       .map(cluster => ({
         ...cluster,
         pages: (cluster.pages ?? [])
@@ -619,6 +643,7 @@ export class LabUniverseComponent implements OnInit, AfterViewInit, OnDestroy {
 
     return {
       ...data,
+      importMode: this.initialImportComplete() ? 'event' : data.importMode,
       clusters,
       interests,
       bookmarks,
@@ -627,6 +652,22 @@ export class LabUniverseComponent implements OnInit, AfterViewInit, OnDestroy {
         .filter(item => safeDomains.has(item.domain))
         .slice(0, 16),
     };
+  }
+
+  private requestExtensionContext() {
+    document.dispatchEvent(new CustomEvent('LH_UNIVERSE_REQUEST', {
+      detail: { includeHistoryImport: !this.initialImportComplete() },
+    }));
+  }
+
+  private loadIdentityId() {
+    const existing = localStorage.getItem(STORAGE_KEYS.identityId);
+    if (existing) return existing;
+    const bytes = new Uint8Array(12);
+    crypto.getRandomValues(bytes);
+    const next = Array.from(bytes, byte => byte.toString(16).padStart(2, '0')).join('');
+    localStorage.setItem(STORAGE_KEYS.identityId, next);
+    return next;
   }
 
   private sanitizePage(page: ExtPage): ExtPage | null {
@@ -756,6 +797,10 @@ export class LabUniverseComponent implements OnInit, AfterViewInit, OnDestroy {
         headers: { 'content-type': 'application/json' },
         body: JSON.stringify({
           memoryEnabled: true,
+          identity: {
+            scope: 'local-wiki',
+            id: this.identityId(),
+          },
           clusters: data.clusters ?? [],
           searches: data.searches ?? [],
           bookmarks: data.bookmarks ?? [],

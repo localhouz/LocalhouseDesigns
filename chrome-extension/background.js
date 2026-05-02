@@ -148,14 +148,18 @@ function extractSearch(url = '') {
   }
 }
 
-async function buildClusters() {
+async function buildClusters({ includeHistoryImport = false } = {}) {
   const oneWeekAgo = Date.now() - 7 * 24 * 60 * 60 * 1000;
 
   const [historyItems, openTabs] = await Promise.all([
-    chrome.history.search({ text: '', startTime: oneWeekAgo, maxResults: 800 }),
+    includeHistoryImport
+      ? chrome.history.search({ text: '', startTime: oneWeekAgo, maxResults: 800 })
+      : Promise.resolve([]),
     chrome.tabs.query({}),
   ]);
-  const bookmarkTree = await chrome.bookmarks.getTree().catch(() => []);
+  const bookmarkTree = includeHistoryImport
+    ? await chrome.bookmarks.getTree().catch(() => [])
+    : [];
 
   const topicScores = {};
   const topicPages = {};
@@ -257,8 +261,8 @@ async function buildClusters() {
   const clusters = [];
   if (recentPages.length) {
     clusters.push({
-      id: 'recent',
-      label: 'History',
+      id: includeHistoryImport ? 'recent' : 'active',
+      label: includeHistoryImport ? 'History' : 'Active tabs',
       icon: '...',
       pages: recentPages.slice(0, 36),
     });
@@ -266,6 +270,7 @@ async function buildClusters() {
   clusters.push(...topicClusters);
 
   return {
+    importMode: includeHistoryImport ? 'initial' : 'event',
     clusters,
     interests,
     searches: searches.slice(0, 8),
@@ -280,7 +285,7 @@ async function buildClusters() {
 chrome.runtime.onMessage.addListener((message, _sender, sendResponse) => {
   if (message.type !== 'GET_CONTEXT') return false;
 
-  buildClusters()
+  buildClusters({ includeHistoryImport: Boolean(message.includeHistoryImport) })
     .then(context => sendResponse(context))
     .catch(() => sendResponse({ clusters: [] }));
 

@@ -116,6 +116,9 @@ exports.handler = async (event) => {
     const searches = Array.isArray(payload.searches) ? payload.searches.map(normalizeQuery).filter(Boolean) : [];
     const prior = Array.isArray(payload.memory?.searches) ? payload.memory.searches.map(normalizeQuery).filter(Boolean) : [];
     const allSearches = [...prior, ...searches].filter((query, index, all) => all.indexOf(query) === index).slice(-24);
+    const identity = payload.identity?.scope === 'local-wiki' && typeof payload.identity?.id === 'string'
+      ? { scope: 'local-wiki', id: payload.identity.id.slice(0, 48) }
+      : undefined;
 
     const domains = clusters.flatMap(cluster => (cluster.pages || []).map(page => domainFromUrl(page.url)));
     const domainCounts = domains.reduce((acc, domain) => {
@@ -147,6 +150,7 @@ exports.handler = async (event) => {
       body: JSON.stringify({
         intents,
         memory: {
+          identity,
           searches: allSearches,
           domains: Object.entries(domainCounts)
             .sort(([, a], [, b]) => b - a)

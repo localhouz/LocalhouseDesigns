@@ -21,6 +21,9 @@
         <p>{{ statusLine() }}</p>
         <div class="universe__privacy">
           <strong>{{ privacyState() }}</strong>
+          @if (initialImportComplete()) {
+            <button type="button" (click)="resetInitialImport()">reset import</button>
+          }
           @if (extensionConnected() && !memoryEnabled()) {
             <button type="button" (click)="enableMemory()">enable memory</button>
           }
