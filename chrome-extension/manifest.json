@@ -1,12 +1,14 @@
 {
   "manifest_version": 3,
   "name": "LH Universe",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Private experiment - feeds browsing context to the Localhouse Designs intent universe.",
 
   "permissions": ["history", "tabs", "bookmarks"],
   "host_permissions": [
     "https://localhousedesigns.com/*",
+    "https://www.localhousedesigns.com/*",
+    "https://*.netlify.app/*",
     "http://localhost:*/*",
     "http://127.0.0.1:*/*"
   ],
@@ -19,6 +21,8 @@
     {
       "matches": [
         "https://localhousedesigns.com/lab/universe*",
+        "https://www.localhousedesigns.com/lab/universe*",
+        "https://*.netlify.app/lab/universe*",
         "http://localhost:*/lab/universe*",
         "http://127.0.0.1:*/lab/universe*"
       ],
