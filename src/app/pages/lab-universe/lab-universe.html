@@ -15,10 +15,12 @@
   }
 
   @if (phase() === 'open') {
-    <div class="universe__status" [class.visible]="inputVisible()">
-      <span>{{ contextMode() }}</span>
-      <p>{{ statusLine() }}</p>
-    </div>
+    @if (!resultsMode()) {
+      <div class="universe__status" [class.visible]="inputVisible()">
+        <span>{{ contextMode() }}</span>
+        <p>{{ statusLine() }}</p>
+      </div>
+    }
 
     <div class="universe__input-wrap" [class.visible]="inputVisible()">
       <input
@@ -29,7 +31,7 @@
       />
     </div>
 
-    @if (expressLinks().length) {
+    @if (!resultsMode() && expressLinks().length) {
       <nav class="universe__express" [class.visible]="inputVisible()" aria-label="Interest boards">
         @for (link of expressLinks(); track link.id) {
           <a
@@ -44,7 +46,7 @@
     @if (resultsMode()) {
       <section class="universe__results" [class.visible]="inputVisible()" aria-label="Search results">
         <div class="universe__results-head">
-          <span>candidate results</span>
+          <span>web results</span>
           <strong>{{ activeQuery() }}</strong>
           <button type="button" (click)="clearSearchMode()">clear</button>
         </div>
@@ -55,7 +57,7 @@
               <span class="universe__candidate-visual">
                 <img [src]="siteIcon(result.domain)" [alt]="result.domain" loading="lazy">
               </span>
-              <span class="universe__candidate-kind">real web search</span>
+              <span class="universe__candidate-kind">search the web</span>
               <span class="universe__candidate-title">{{ result.title }}</span>
               <span class="universe__candidate-domain">{{ result.domain }}</span>
             </button>
@@ -64,104 +66,106 @@
       </section>
     }
 
-    @if (memoryCore(); as memory) {
-      <div class="universe__memory" [class.visible]="inputVisible()">
-        <span class="universe__memory-label">owned intent memory</span>
-        <span class="universe__memory-ring universe__memory-ring--one"></span>
-        <span class="universe__memory-ring universe__memory-ring--two"></span>
-        <span class="universe__memory-count">{{ memory.eventCount }}</span>
-      </div>
-    }
-
-    @for (field of intentFields(); track field.id) {
-      <div
-        class="universe__field"
-        [class.visible]="clustersVisible()"
-        [style.--cx]="field.x + 'vw'"
-        [style.--cy]="field.y + 'vh'"
-        [style.--delay]="field.delay + 'ms'"
-        [style.--strength]="field.strength"
-      >
-        <span>{{ field.label }}</span>
-      </div>
-    }
-
-    <svg class="universe__strings" viewBox="0 0 100 210" preserveAspectRatio="none">
-      @for (pin of pins(); track pin.id; let i = $index) {
-        @if (stringPath(pin, i); as path) {
-          <path
-            [attr.d]="path"
-            [style.animation-delay]="pin.delay + 'ms'"
-          />
-        }
+    @if (!resultsMode()) {
+      @if (memoryCore(); as memory) {
+        <div class="universe__memory" [class.visible]="inputVisible()">
+          <span class="universe__memory-label">owned intent memory</span>
+          <span class="universe__memory-ring universe__memory-ring--one"></span>
+          <span class="universe__memory-ring universe__memory-ring--two"></span>
+          <span class="universe__memory-count">{{ memory.eventCount }}</span>
+        </div>
       }
-    </svg>
 
-    @if (!extensionConnected()) {
-      <div class="universe__empty" [class.visible]="clustersVisible()">
-        <span>private extension needed</span>
-        <p>Install the local Chrome extension and this board becomes the places you have actually visited.</p>
-      </div>
-    }
+      @for (field of intentFields(); track field.id) {
+        <div
+          class="universe__field"
+          [class.visible]="clustersVisible()"
+          [style.--cx]="field.x + 'vw'"
+          [style.--cy]="field.y + 'vh'"
+          [style.--delay]="field.delay + 'ms'"
+          [style.--strength]="field.strength"
+        >
+          <span>{{ field.label }}</span>
+        </div>
+      }
 
-    @for (trail of searchTrails(); track trail.id) {
-      <div
-        class="universe__trail"
-        [class.visible]="inputVisible()"
-        [style.--cx]="trail.x + 'vw'"
-        [style.--cy]="trail.y + 'vh'"
-        [style.--delay]="trail.delay + 'ms'"
-      >
-        <span>{{ trail.query }}</span>
-      </div>
-    }
-
-    @for (node of ghostNodes(); track node.id) {
-      <button
-        class="universe__ghost"
-        [class.visible]="clustersVisible()"
-        [style.--cx]="node.x + 'vw'"
-        [style.--cy]="node.y + 'vh'"
-        [style.--tone]="visualTone(node.domain, node.topic)"
-        [style.--delay]="node.delay + 'ms'"
-        (click)="openGhost(node)"
-      >
-        <span class="universe__ghost-visual">
-          @if (pinImage(node); as image) {
-            <img [src]="image" [alt]="node.title" loading="lazy">
-          } @else {
-            <span class="universe__ghost-mark">{{ domainMark(node.domain) }}</span>
+      <svg class="universe__strings" viewBox="0 0 100 210" preserveAspectRatio="none">
+        @for (pin of pins(); track pin.id; let i = $index) {
+          @if (stringPath(pin, i); as path) {
+            <path
+              [attr.d]="path"
+              [style.animation-delay]="pin.delay + 'ms'"
+            />
           }
-        </span>
-        <span class="universe__ghost-domain">{{ node.domain }}</span>
-        <span class="universe__ghost-title">{{ node.title }}</span>
-      </button>
-    }
+        }
+      </svg>
 
-    @for (pin of pins(); track pin.id) {
-      <button
-        class="universe__pin"
-        [class.universe__pin--small]="pin.size === 'small'"
-        [class.universe__pin--large]="pin.size === 'large'"
-        [class.universe__pin--featured]="pin.size === 'featured'"
-        [class.visible]="clustersVisible()"
-        [style.--cx]="pin.x + 'vw'"
-        [style.--cy]="pin.y + 'vh'"
-        [style.--rot]="pin.rotate + 'deg'"
-        [style.--tone]="visualTone(pin.domain, pin.topic)"
-        [style.--delay]="pin.delay + 'ms'"
-        (click)="openPin(pin)"
-      >
-        <span class="universe__pin-visual">
-          @if (pinImage(pin); as image) {
-            <img [src]="image" [alt]="pin.title" loading="lazy">
-          } @else {
-            <span class="universe__pin-mark">{{ domainMark(pin.domain) }}</span>
-          }
-          <img class="universe__pin-logo" [src]="siteIcon(pin.domain)" [alt]="siteName(pin.domain)" loading="lazy">
-        </span>
-        <span class="universe__pin-title">{{ siteName(pin.domain) }}</span>
-      </button>
+      @if (!extensionConnected()) {
+        <div class="universe__empty" [class.visible]="clustersVisible()">
+          <span>private extension needed</span>
+          <p>Install the local Chrome extension and this board becomes the places you have actually visited.</p>
+        </div>
+      }
+
+      @for (trail of searchTrails(); track trail.id) {
+        <div
+          class="universe__trail"
+          [class.visible]="inputVisible()"
+          [style.--cx]="trail.x + 'vw'"
+          [style.--cy]="trail.y + 'vh'"
+          [style.--delay]="trail.delay + 'ms'"
+        >
+          <span>{{ trail.query }}</span>
+        </div>
+      }
+
+      @for (node of ghostNodes(); track node.id) {
+        <button
+          class="universe__ghost"
+          [class.visible]="clustersVisible()"
+          [style.--cx]="node.x + 'vw'"
+          [style.--cy]="node.y + 'vh'"
+          [style.--tone]="visualTone(node.domain, node.topic)"
+          [style.--delay]="node.delay + 'ms'"
+          (click)="openGhost(node)"
+        >
+          <span class="universe__ghost-visual">
+            @if (pinImage(node); as image) {
+              <img [src]="image" [alt]="node.title" loading="lazy">
+            } @else {
+              <span class="universe__ghost-mark">{{ domainMark(node.domain) }}</span>
+            }
+          </span>
+          <span class="universe__ghost-domain">{{ node.domain }}</span>
+          <span class="universe__ghost-title">{{ node.title }}</span>
+        </button>
+      }
+
+      @for (pin of pins(); track pin.id) {
+        <button
+          class="universe__pin"
+          [class.universe__pin--small]="pin.size === 'small'"
+          [class.universe__pin--large]="pin.size === 'large'"
+          [class.universe__pin--featured]="pin.size === 'featured'"
+          [class.visible]="clustersVisible()"
+          [style.--cx]="pin.x + 'vw'"
+          [style.--cy]="pin.y + 'vh'"
+          [style.--rot]="pin.rotate + 'deg'"
+          [style.--tone]="visualTone(pin.domain, pin.topic)"
+          [style.--delay]="pin.delay + 'ms'"
+          (click)="openPin(pin)"
+        >
+          <span class="universe__pin-visual">
+            @if (pinImage(pin); as image) {
+              <img [src]="image" [alt]="pin.title" loading="lazy">
+            } @else {
+              <span class="universe__pin-mark">{{ domainMark(pin.domain) }}</span>
+            }
+            <img class="universe__pin-logo" [src]="siteIcon(pin.domain)" [alt]="siteName(pin.domain)" loading="lazy">
+          </span>
+          <span class="universe__pin-title">{{ siteName(pin.domain) }}</span>
+        </button>
+      }
     }
   }
 </div>
