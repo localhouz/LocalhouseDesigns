@@ -689,7 +689,7 @@
   &__pin {
     top: 0;
     left: 50%;
-    width: min(11rem, 12.5vw);
+    width: clamp(12rem, 13.5vw, 15rem);
     padding: 0;
     display: flex;
     flex-direction: column;
@@ -738,7 +738,7 @@
 
     // SMALL — horizontal strip, no image, just a colored accent bar + text
     &--small {
-      width: min(14rem, 16vw);
+      width: clamp(12rem, 15vw, 16rem);
       flex-direction: row;
       align-items: stretch;
 
@@ -773,22 +773,22 @@
 
     // LARGE — taller visual, 2-line prominent title
     &--large {
-      width: min(13rem, 14.5vw);
+      width: clamp(15rem, 16vw, 18rem);
 
-      .universe__pin-visual { aspect-ratio: 4 / 3; }
+      .universe__pin-visual { aspect-ratio: 16 / 10; }
 
-      .universe__pin-footer { padding: 0.5rem 0.58rem 0.56rem; }
+      .universe__pin-footer { padding: 0.58rem 0.68rem 0.64rem; }
 
       .universe__pin-title {
-        font-size: 0.78rem;
+        font-size: 0.86rem;
         -webkit-line-clamp: 2;
       }
     }
 
     // FEATURED — full-cover card, footer overlays bottom of visual
     &--featured {
-      width: min(14.5rem, 16.5vw);
-      min-height: 16rem;
+      width: clamp(18rem, 21vw, 23rem);
+      min-height: 13.5rem;
 
       .universe__pin-visual {
         flex: 1;
@@ -836,9 +836,9 @@
 
       .universe__pin-title {
         color: rgba(255, 255, 255, 0.94);
-        font-size: 0.94rem;
+        font-size: 1.18rem;
         -webkit-line-clamp: 3;
-        line-height: 1.24;
+        line-height: 1.18;
       }
     }
   }
@@ -913,41 +913,55 @@
   // Intent drawer — dots column + sliding panel on pin hover
   &__pin-dots {
     position: absolute;
-    right: -0.92rem;
+    right: -1.75rem;
     top: 50%;
     display: grid;
-    gap: 0.28rem;
+    gap: 0.42rem;
     transform: translateY(-50%);
     opacity: 0;
     pointer-events: none;
+    padding: 0.28rem 0.18rem;
   }
 
   &__pin:hover &__pin-dots,
   &__pin--drawer-open &__pin-dots { opacity: 1; }
 
   &__pin-dot {
-    width: 0.28rem;
-    height: 0.28rem;
+    width: 0.58rem;
+    height: 0.58rem;
     border-radius: 9999px;
-    background: hsl(var(--tone, 16deg) 50% 46% / 0.45);
+    border: 1px solid rgba(10, 10, 18, 0.2);
+    background:
+      radial-gradient(circle at 34% 28%, rgba(255, 255, 255, 0.86), transparent 35%),
+      hsl(var(--tone, 16deg) 18% 12% / 0.78);
+
     &--active {
-      height: 0.9rem;
-      background: hsl(var(--tone, 16deg) 62% 54%);
+      width: 0.78rem;
+      height: 0.78rem;
+      margin-left: -0.1rem;
+      border-color: hsl(var(--tone, 16deg) 82% 58% / 0.95);
+      outline: 2px solid hsl(var(--tone, 16deg) 92% 62% / 0.38);
+      outline-offset: 3px;
+      background:
+        radial-gradient(circle at 34% 28%, rgba(255, 255, 255, 0.92), transparent 34%),
+        hsl(var(--tone, 16deg) 82% 52%);
     }
   }
 
   &__pin-drawer {
     position: absolute;
-    left: calc(100% + 0.6rem);
+    left: calc(100% + 2.1rem);
     top: 0;
     z-index: 20;
     display: grid;
-    gap: 0.34rem;
-    width: 10rem;
-    padding: 0.58rem 0.62rem;
-    border: 1px solid rgba(255, 255, 255, 0.07);
+    gap: 0.48rem;
+    width: 11.75rem;
+    padding: 0.7rem 0.76rem;
+    border: 1px solid hsl(var(--tone, 16deg) 72% 62% / 0.24);
     border-radius: 6px;
-    background: rgba(12, 11, 18, 0.93);
+    background:
+      radial-gradient(ellipse at 0% 0%, hsl(var(--tone, 16deg) 80% 58% / 0.18), transparent 55%),
+      rgba(12, 11, 18, 0.94);
     pointer-events: none;
   }
 

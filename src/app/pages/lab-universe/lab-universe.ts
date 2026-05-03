@@ -682,9 +682,10 @@ export class LabUniverseComponent implements OnInit, AfterViewInit, OnDestroy {
           : mediumIds.has(pin.id)
             ? 'medium'
             : 'small';
+      const x = this.pinSafeX(slot.x, size);
       return {
         ...pin,
-        x: slot.x,
+        x,
         y: slot.y,
         delay: slot.delay,
         rotate: slot.rotate,
@@ -915,7 +916,7 @@ export class LabUniverseComponent implements OnInit, AfterViewInit, OnDestroy {
           : mediumIds.has(pin.id)
             ? 'medium'
             : this.pinSizeForScore(score);
-      return { ...pin, size };
+      return { ...pin, size, x: this.pinSafeX(pin.x, size) };
     }));
   }
 
@@ -1131,6 +1132,12 @@ export class LabUniverseComponent implements OnInit, AfterViewInit, OnDestroy {
       delay: 120 + index * 55,
       rotate: 0,
     };
+  }
+
+  private pinSafeX(x: number, size: UniversePin['size']) {
+    if (size === 'featured' && x < 0) return this.clamp(x, -20, 34);
+    const limit = size === 'featured' ? 34 : size === 'large' ? 36 : 40;
+    return this.clamp(x, -limit, limit);
   }
 
   private isLocalUrl(url: string) {
