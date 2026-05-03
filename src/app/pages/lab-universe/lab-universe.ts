@@ -337,11 +337,12 @@ export class LabUniverseComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   pinIntentLinks(pin: UniversePin): UniversePin[] {
-    const groups = new Set(pin.groupIds);
-    if (!groups.size) return [pin];
     const related = this.allPins()
-      .filter(p => p.id !== pin.id && p.groupIds.some(group => groups.has(group)))
-      .sort((a, b) => (b.visitCount - a.visitCount) || (b.lastVisitTime - a.lastVisitTime));
+      .filter(p => p.id !== pin.id)
+      .map(candidate => ({ candidate, score: this.intentLaneScore(pin, candidate) }))
+      .filter(item => item.score >= 8)
+      .sort((a, b) => (b.score - a.score) || (b.candidate.visitCount - a.candidate.visitCount) || (b.candidate.lastVisitTime - a.candidate.lastVisitTime))
+      .map(item => item.candidate);
     const unique = new Map<string, UniversePin>();
     related.forEach(item => unique.set(item.domain, item));
     return [pin, ...Array.from(unique.values()).slice(0, 6)];
@@ -1099,6 +1100,46 @@ export class LabUniverseComponent implements OnInit, AfterViewInit, OnDestroy {
     const repetition = visitCount >= 20 ? 4 : visitCount >= 10 ? 3 : visitCount >= 4 ? 2 : visitCount >= 2 ? 1 : 0;
     const adjacency = Math.min(page.groupIds?.length ?? 0, 2);
     return 1 + recency + repetition + adjacency;
+  }
+
+  private intentLaneScore(source: UniversePin, candidate: UniversePin) {
+    const sourceLane = this.intentLane(source);
+    const candidateLane = this.intentLane(candidate);
+    const sharedGroups = source.groupIds.filter(group => candidate.groupIds.includes(group) && !this.isGenericGroup(group)).length;
+    const sourceTokens = new Set(this.intentTextTokens(source));
+    const tokenOverlap = this.intentTextTokens(candidate).filter(token => sourceTokens.has(token)).length;
+    const topicMatch = source.topic.toLowerCase() === candidate.topic.toLowerCase() ? 1 : 0;
+    const laneMatch = sourceLane && sourceLane === candidateLane ? 1 : 0;
+
+    return laneMatch * 9
+      + sharedGroups * 5
+      + topicMatch * 3
+      + Math.min(tokenOverlap, 4) * 2
+      + Math.min(candidate.visitCount, 8) / 4;
+  }
+
+  private intentLane(pin: UniversePin) {
+    const text = `${pin.domain} ${pin.title} ${pin.topic} ${pin.groupIds.join(' ')}`.toLowerCase();
+    const lanes: Array<[string, string[]]> = [
+      ['sports', ['espn', 'nba', 'nfl', 'mlb', 'nhl', 'score', 'sports', 'fantasy', 'rotowire', 'cbssports', 'bleacher', 'thescore', 'yahoo sports']],
+      ['socials', ['instagram', 'linkedin', 'facebook', 'reddit', 'pinterest', 'x.com', 'twitter', 'social']],
+      ['design', ['design', 'dribbble', 'figma', 'behance', 'elementor', 'webflow', 'wordpress', 'modal', 'ui', 'ux']],
+      ['dev', ['github', 'angular', 'typescript', 'tailwind', 'developer', 'mdn', 'vercel', 'netlify', 'api', 'docs']],
+      ['search', ['google', 'bing', 'search', 'serp', 'seo', 'indexing', 'console']],
+      ['food', ['restaurant', 'food', 'flavor', 'sauce', 'burn', 'roosevelt', 'pickup', 'menu']],
+      ['shopping', ['shop', 'store', 'amazon', 'vendor', 'cart', 'product']],
+      ['work', ['job', 'career', 'indeed', 'apply', 'login', 'account', 'business']],
+    ];
+    return lanes.find(([, tokens]) => tokens.some(token => text.includes(token)))?.[0] ?? '';
+  }
+
+  private intentTextTokens(pin: UniversePin) {
+    return this.tokenize(`${pin.domain} ${pin.title} ${pin.topic}`)
+      .filter(token => !['com', 'www', 'https', 'http', 'login', 'home', 'page'].includes(token));
+  }
+
+  private isGenericGroup(group: string) {
+    return ['history', 'recent', 'active'].includes(group.toLowerCase());
   }
 
   private pinSizeForScore(score: number): UniversePin['size'] {
