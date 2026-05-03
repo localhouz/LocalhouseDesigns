@@ -576,6 +576,7 @@ export class LabUniverseComponent implements OnInit, AfterViewInit, OnDestroy {
 
     const nextPins = [...byDomain.values()].slice(0, MAX_HISTORY_PINS);
     this.allPins.set(nextPins);
+    this.expressLinks.set(this.buildExpressLinks(nextPins, []));
     const active = this.expressLinks().find(link => link.id === this.activeBoard()) ?? this.expressLinks()[0];
     if (active) this.setBoard(active);
   }
@@ -635,7 +636,9 @@ export class LabUniverseComponent implements OnInit, AfterViewInit, OnDestroy {
 
   private contextToPins(data: ExtensionContext) {
     const seenDomains = new Set<string>();
-    const primaryCluster = data.clusters!.find(ext => ext.id === 'recent' || ext.id === 'active') ?? null;
+    const primaryCluster = data.clusters!.find(ext => ext.id === 'recent')
+      ?? data.clusters!.find(ext => ext.id === 'active')
+      ?? null;
     const secondaryClusters = data.clusters!.filter(ext => ext.id !== 'recent' && ext.id !== 'active');
     const groupByDomain = this.groupMemberships(secondaryClusters);
     return [
@@ -734,11 +737,26 @@ export class LabUniverseComponent implements OnInit, AfterViewInit, OnDestroy {
 
     const lanePages = new Map<string, ExtPage[]>();
     const laneDomains = new Map<string, Set<string>>();
+    const classifiedDomains = new Set<string>();
+    const unclassifiedPages: ExtPage[] = [];
     for (const pin of pins) {
       const lane = this.intentLane(pin);
-      if (!lane) continue;
+      if (!lane) {
+        if (!classifiedDomains.has(pin.domain)) {
+          classifiedDomains.add(pin.domain);
+          unclassifiedPages.push({
+            url: pin.href,
+            title: pin.title,
+            image: pin.image,
+            visitCount: pin.visitCount,
+            lastVisitTime: pin.lastVisitTime,
+          });
+        }
+        continue;
+      }
       const domains = laneDomains.get(lane) ?? new Set<string>();
       if (domains.has(pin.domain)) continue;
+      classifiedDomains.add(pin.domain);
       domains.add(pin.domain);
       laneDomains.set(lane, domains);
       lanePages.set(lane, [
@@ -753,6 +771,8 @@ export class LabUniverseComponent implements OnInit, AfterViewInit, OnDestroy {
       ]);
     }
 
+    if (unclassifiedPages.length) lanePages.set('other', unclassifiedPages);
+
     const semanticLinks = Array.from(lanePages.entries())
       .map(([lane, pages]) => ({
         id: `lane:${lane}`,
@@ -761,7 +781,6 @@ export class LabUniverseComponent implements OnInit, AfterViewInit, OnDestroy {
         score: pages.length,
         pages,
       }))
-      .filter(link => link.pages.length >= 2)
       .sort((a, b) => (b.score - a.score) || a.label.localeCompare(b.label));
 
     for (const link of semanticLinks) {
@@ -811,7 +830,7 @@ export class LabUniverseComponent implements OnInit, AfterViewInit, OnDestroy {
 
     return {
       ...data,
-      importMode: this.initialImportComplete() ? 'event' : data.importMode,
+      importMode: this.initialImportComplete() && data.importMode !== 'initial' ? 'event' : data.importMode,
       clusters,
       interests,
       bookmarks,
