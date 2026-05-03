@@ -29,6 +29,34 @@ export class AboutComponent implements OnInit {
     }
   ];
 
+  localTrust = [
+    {
+      label: 'Home base',
+      value: 'Broken Arrow, OK',
+      detail: 'Localhouse Designs is operated from Broken Arrow and serves businesses across the Tulsa market.',
+      route: '/broken-arrow-web-design'
+    },
+    {
+      label: 'Service area',
+      value: 'Tulsa + Oklahoma',
+      detail: 'Most local SEO and website rebuild work is shaped around Broken Arrow, Tulsa, and nearby Oklahoma service businesses.',
+      route: '/tulsa-web-design'
+    },
+    {
+      label: 'Best first contact',
+      value: 'Chat window',
+      detail: 'The chat bubble is the preferred way to start. Email is available as a backup at steven@localhousedesigns.com.',
+      route: '/contact'
+    }
+  ];
+
+  localServiceLinks = [
+    { label: 'Broken Arrow Web Design', route: '/broken-arrow-web-design' },
+    { label: 'Tulsa Web Design', route: '/tulsa-web-design' },
+    { label: 'Local SEO for Service Businesses', route: '/local-seo-for-service-businesses' },
+    { label: 'Salon Website Design Tulsa', route: '/salon-website-design-tulsa' }
+  ];
+
   timeline = [
     {
       title: 'Software Developer, ERP and workflow automation',
@@ -105,6 +133,7 @@ export class AboutComponent implements OnInit {
           '@id': `${base}/about#person`,
           name: 'Steven Rausch',
           jobTitle: 'Software Developer and Product Manager',
+          email: 'steven@localhousedesigns.com',
           sameAs: [
             'https://github.com/localhouz',
             'https://www.linkedin.com/in/steven-rausch83/'

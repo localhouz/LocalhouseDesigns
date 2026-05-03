@@ -13,6 +13,8 @@ interface CaseStudy {
   result: string;
   metrics: { value: string; label: string }[];
   stack: string[];
+  proofSections?: { title: string; text: string }[];
+  relatedLinks?: { label: string; route: string; text: string }[];
   externalUrl?: string;
 }
 
@@ -33,6 +35,41 @@ const CASE_STUDIES: Record<string, CaseStudy> = {
       { value: 'Custom', label: 'Built from scratch' },
       { value: '3', label: 'SEO / GEO / AEO layers' },
       { value: 'Old -> New', label: 'Platform replaced' }
+    ],
+    proofSections: [
+      {
+        title: 'Before',
+        text: 'The brand depended on a booking-platform profile to explain the business, handle local discovery, and carry trust. That made the official web presence look more like a profile page than a source the business owned.'
+      },
+      {
+        title: 'Constraint',
+        text: 'Booking still needed to stay simple. The rebuild could not bury the appointment path under a heavy site; it had to make the business easier to understand, then move visitors toward booking quickly.'
+      },
+      {
+        title: 'Decision',
+        text: 'Localhouse built the standalone site as the brand and search layer, while the booking platform remains the transaction layer. The site now gives search engines and visitors clearer service context, ownership signals, and contact paths.'
+      },
+      {
+        title: 'Local search value',
+        text: 'The page structure now supports location, services, FAQs, About, Contact, and schema signals in a way a closed booking profile could not. That gives North Styles a better foundation for salon, barber, and grooming searches around Tulsa.'
+      }
+    ],
+    relatedLinks: [
+      {
+        label: 'Salon Websites',
+        route: '/salon-website-design-tulsa',
+        text: 'See the salon-focused service page this project now supports.'
+      },
+      {
+        label: 'Local SEO',
+        route: '/local-seo-for-service-businesses',
+        text: 'Review the local visibility rebuild offer for Oklahoma service businesses.'
+      },
+      {
+        label: 'Booking Platform Article',
+        route: '/insights/why-a-custom-site-beats-a-booking-platform-page-for-local-search',
+        text: 'Read why a custom site can outperform a booking profile for local search.'
+      }
     ],
     stack: ['Astro', 'Tailwind', 'JSON-LD', 'Local SEO', 'AEO'],
     externalUrl: 'https://north-styles.com/'

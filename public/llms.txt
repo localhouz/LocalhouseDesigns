@@ -1,0 +1,51 @@
+# Localhouse Designs
+
+Localhouse Designs is a Broken Arrow, Oklahoma web studio led by Steven Rausch. The studio builds custom websites, local SEO/GEO foundations, structured data, chat-first contact paths, and ERP-aware internal tools for service businesses and operations-heavy teams.
+
+## Primary Site
+
+- Homepage: https://localhousedesigns.com/
+- About: https://localhousedesigns.com/about
+- Services: https://localhousedesigns.com/services
+- Work: https://localhousedesigns.com/work
+- Contact: https://localhousedesigns.com/contact
+
+## Local Service Pages
+
+- Broken Arrow web design: https://localhousedesigns.com/broken-arrow-web-design
+- Tulsa web design: https://localhousedesigns.com/tulsa-web-design
+- Local SEO for service businesses: https://localhousedesigns.com/local-seo-for-service-businesses
+- Salon website design Tulsa: https://localhousedesigns.com/salon-website-design-tulsa
+- Tulsa service business websites: https://localhousedesigns.com/tulsa-service-business-websites
+
+## Proof And Case Studies
+
+- Work overview: https://localhousedesigns.com/work
+- North Styles case study: https://localhousedesigns.com/work/north-styles
+- NorCal Sauce Worx case study: https://localhousedesigns.com/work/norcal-sauce-worx
+- Local GEO Standard case study: https://localhousedesigns.com/work/local-geo-standard
+
+## Key Topics
+
+- Broken Arrow web design
+- Tulsa web design
+- Oklahoma local SEO
+- Local SEO for service businesses
+- Salon, barber, stylist, and grooming websites
+- Booking-platform replacement websites
+- Structured data and Schema.org
+- GEO and answer-engine optimization
+- Angular development
+- ERP-aware workflow tools
+
+## Contact Preference
+
+The chat window on https://localhousedesigns.com/contact is the preferred first contact path. Email backup is steven@localhousedesigns.com.
+
+## External Profiles
+
+- GitHub: https://github.com/localhouz
+- LinkedIn: https://www.linkedin.com/in/steven-rausch83/
+- Clutch: https://clutch.co/profile/localhouse-designs
+- Google Business Profile: https://www.google.com/search?q=LocalHouse+Designs&stick=H4sIAAAAAAAA_-NgU1I1qDAzMTK1MEg0tzQwMbEwTzK3MqgwNzQ0MzJINDa0AAonmyYuYhXyyU9OzPHILy1OVXBJLc5MzysGAPkbp0A-AAAA&hl=en&mat=CQZBbLnK3T6wElYBTVDHns8FK5RS1Gd0zdWflw-uTzzqluvVx0HPMFEwzG1BjcWoUZb5DF5R53IyXj9QlkXcio_H7iNg7JSslp16ETUkeXhKBsrDQCLlVQEMsK86qMdU7w&authuser=0
+- Yelp: https://www.yelp.com/biz/local-house-designs-broken-arrow

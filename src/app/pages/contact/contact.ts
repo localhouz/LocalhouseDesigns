@@ -66,11 +66,29 @@ export class ContactComponent implements OnInit {
     'Just exploring'
   ];
 
+  proofProfiles = [
+    {
+      label: 'Google',
+      url: 'https://www.google.com/search?q=LocalHouse+Designs&stick=H4sIAAAAAAAA_-NgU1I1qDAzMTK1MEg0tzQwMbEwTzK3MqgwNzQ0MzJINDa0AAonmyYuYhXyyU9OzPHILy1OVXBJLc5MzysGAPkbp0A-AAAA&hl=en&mat=CQZBbLnK3T6wElYBTVDHns8FK5RS1Gd0zdWflw-uTzzqluvVx0HPMFEwzG1BjcWoUZb5DF5R53IyXj9QlkXcio_H7iNg7JSslp16ETUkeXhKBsrDQCLlVQEMsK86qMdU7w&authuser=0',
+      text: 'Business Profile'
+    },
+    {
+      label: 'Clutch',
+      url: 'https://clutch.co/profile/localhouse-designs',
+      text: 'Service profile'
+    },
+    {
+      label: 'Yelp',
+      url: 'https://www.yelp.com/biz/local-house-designs-broken-arrow',
+      text: 'Local listing'
+    }
+  ];
+
   ngOnInit() {
     const base = 'https://localhousedesigns.com';
     this.seo.setPage({
       title: 'Contact | Localhouse Designs - Start a Project',
-      description: 'Ready to build something worth finding? Send a quick project outline and receive a 48-hour audit response from Localhouse Designs in Broken Arrow, Oklahoma.',
+      description: 'Start with the Localhouse Designs chat window when available, or use the form/email backup for a 48-hour audit response from Broken Arrow, Oklahoma.',
       url: `${base}/contact`,
       schemas: [
         {
@@ -79,7 +97,7 @@ export class ContactComponent implements OnInit {
           '@id': `${base}/contact#webpage`,
           url: `${base}/contact`,
           name: 'Contact | Localhouse Designs',
-          description: 'Start a web or enterprise project with Localhouse Designs. Based in Broken Arrow, Oklahoma and serving local and remote clients through separate Design & Web and Enterprise & ERP tracks with an async, no-call workflow.',
+          description: 'Start a web or enterprise project with Localhouse Designs. Chat is the preferred first contact path when available, with form and email backup for async details. Based in Broken Arrow, Oklahoma and serving local and remote clients.',
           isPartOf: { '@id': `${base}/#website` },
           breadcrumb: {
             '@type': 'BreadcrumbList',
@@ -96,12 +114,17 @@ export class ContactComponent implements OnInit {
             {
               '@type': 'Question',
               name: 'How do I start a project with Localhouse Designs?',
-              acceptedAnswer: { '@type': 'Answer', text: 'Fill out the contact form at localhousedesigns.com/contact. Share your name, email, website or page URL if you have one, what feels off right now, and any timeline or budget context. Expect a reply within 48 hours with a practical audit path.' }
+              acceptedAnswer: { '@type': 'Answer', text: 'The best way to start is the chat window when it is online. Share your site, what feels off, and the result you want. If chat is offline, use the contact form or email steven@localhousedesigns.com as a backup. Expect a practical audit-style response.' }
             },
             {
               '@type': 'Question',
               name: 'What information should I include in my project inquiry?',
               acceptedAnswer: { '@type': 'Answer', text: 'The most useful details are your current site or page, the main conversion or workflow issue, what kind of result you want, and any rough timing or budget context you already know.' }
+            },
+            {
+              '@type': 'Question',
+              name: 'What is the best way to contact Localhouse Designs?',
+              acceptedAnswer: { '@type': 'Answer', text: 'Chat is the preferred first contact path when it is online because it keeps the first exchange quick and lightweight. The contact form and steven@localhousedesigns.com are backup async paths.' }
             },
             {
               '@type': 'Question',

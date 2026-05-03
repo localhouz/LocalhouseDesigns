@@ -72,10 +72,10 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
 
   insightCards = [
     {
-      title: 'Why branded search ownership matters before local SEO promises',
-      desc: 'A practical article on why a business should own its own name in search before making bigger SEO claims.',
-      route: '/insights/why-branded-search-ownership-matters-before-local-seo-promises',
-      tag: 'Entity / SEO'
+      title: 'Broken Arrow web design for service businesses',
+      desc: 'A local page for Oklahoma businesses that need clearer website structure, stronger trust signals, and a better contact path.',
+      route: '/broken-arrow-web-design',
+      tag: 'Local page'
     },
     {
       title: 'Why Google can find your page and still not index it',
@@ -220,9 +220,16 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
           name: 'Localhouse Designs',
           description: 'Boutique web studio helping Oklahoma service businesses rebuild vague or underperforming websites into clearer, higher-converting sites with stronger local SEO/GEO foundations. Enterprise and ERP-connected tooling also available.',
           url: base,
+          email: 'steven@localhousedesigns.com',
           priceRange: '$5K-$40K+',
           logo: { '@type': 'ImageObject', url: `${base}/og.png`, width: 1200, height: 630 },
-          sameAs: ['https://github.com/localhouz', 'https://www.linkedin.com/in/steven-rausch83/'],
+          sameAs: [
+            'https://github.com/localhouz',
+            'https://www.linkedin.com/in/steven-rausch83/',
+            'https://clutch.co/profile/localhouse-designs',
+            'https://www.google.com/search?q=LocalHouse+Designs&stick=H4sIAAAAAAAA_-NgU1I1qDAzMTK1MEg0tzQwMbEwTzK3MqgwNzQ0MzJINDa0AAonmyYuYhXyyU9OzPHILy1OVXBJLc5MzysGAPkbp0A-AAAA&hl=en&mat=CQZBbLnK3T6wElYBTVDHns8FK5RS1Gd0zdWflw-uTzzqluvVx0HPMFEwzG1BjcWoUZb5DF5R53IyXj9QlkXcio_H7iNg7JSslp16ETUkeXhKBsrDQCLlVQEMsK86qMdU7w&authuser=0',
+            'https://www.yelp.com/biz/local-house-designs-broken-arrow'
+          ],
           founder: {
             '@type': 'Person',
             name: 'Steven Rausch',
@@ -237,6 +244,7 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
           contactPoint: {
             '@type': 'ContactPoint',
             contactType: 'sales',
+            email: 'steven@localhousedesigns.com',
             url: `${base}/contact`,
             areaServed: ['Broken Arrow', 'Tulsa', 'Oklahoma City', 'Oklahoma', 'United States'],
             availableLanguage: 'English'

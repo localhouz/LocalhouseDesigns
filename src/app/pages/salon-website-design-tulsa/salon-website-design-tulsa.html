@@ -1,0 +1,90 @@
+<div class="local-page">
+  <section class="page-header container">
+    <p class="label">Salon website design Tulsa</p>
+    <h1>Websites for salons<br><em>that need more than booking.</em></h1>
+    <p class="page-header__sub">Localhouse Designs builds custom websites for Tulsa and Broken Arrow salons, barbers, stylists, and grooming brands that need stronger local visibility, clearer services, better trust content, and a cleaner path from discovery to booking.</p>
+    <div class="local-page__actions">
+      <a routerLink="/contact" class="btn btn--filled">Start With Chat -&gt;</a>
+      <a routerLink="/work/north-styles" class="btn btn--accent">See North Styles -&gt;</a>
+    </div>
+  </section>
+
+  <section class="local-signals section">
+    <div class="container">
+      <p class="label">Why this page exists</p>
+      <div class="local-signals__grid">
+        @for (signal of trustSignals; track signal) {
+          <article class="signal-card">
+            <p>{{ signal }}</p>
+          </article>
+        }
+      </div>
+    </div>
+  </section>
+
+  <section class="local-work section container">
+    <div class="local-work__intro">
+      <p class="label">What gets rebuilt</p>
+      <h2>The booking button still matters.<br><em>So does everything before it.</em></h2>
+    </div>
+    <div class="local-work__grid">
+      @for (section of pageSections; track section.title) {
+        <article class="fix-card">
+          <h3>{{ section.title }}</h3>
+          <p>{{ section.text }}</p>
+        </article>
+      }
+    </div>
+  </section>
+
+  <section class="local-proof section">
+    <div class="container">
+      <p class="label">Best-fit work</p>
+      <div class="vertical-grid">
+        @for (vertical of verticals; track vertical) {
+          <span>{{ vertical }}</span>
+        }
+      </div>
+    </div>
+  </section>
+
+  <section class="local-proof section local-proof--light">
+    <div class="container">
+      <p class="label">Proof and support</p>
+      <div class="local-proof__grid">
+        <a routerLink="/work/north-styles" class="proof-card">
+          <span>Case study</span>
+          <h2>North Styles</h2>
+          <p>A local grooming brand moved from a constrained booking-platform presence to a custom standalone site with stronger search and booking foundations.</p>
+        </a>
+        <a routerLink="/insights/why-a-custom-site-beats-a-booking-platform-page-for-local-search" class="proof-card">
+          <span>Insight</span>
+          <h2>Why custom beats booking-only</h2>
+          <p>A plain-English look at why booking profiles are useful, but usually too narrow to carry the full brand and local SEO picture.</p>
+        </a>
+        <a routerLink="/local-seo-for-service-businesses" class="proof-card">
+          <span>Service</span>
+          <h2>Local SEO for service businesses</h2>
+          <p>The service-page, schema, FAQ, local trust, and contact-path work behind stronger local visibility.</p>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <section class="local-faq section container">
+    <p class="label">Common questions</p>
+    <div class="local-faq__grid">
+      @for (item of faqs; track item.question) {
+        <article class="faq-card">
+          <h3>{{ item.question }}</h3>
+          <p>{{ item.answer }}</p>
+        </article>
+      }
+    </div>
+  </section>
+
+  <section class="local-cta container">
+    <h2>Need the brand to do more<br><em>before the booking click?</em></h2>
+    <a routerLink="/contact" class="btn btn--filled">Start With Chat -&gt;</a>
+  </section>
+</div>

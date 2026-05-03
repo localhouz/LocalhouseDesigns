@@ -1,0 +1,90 @@
+<div class="local-page">
+  <section class="page-header container">
+    <p class="label">Broken Arrow web design</p>
+    <h1>Websites built for<br><em>local service businesses.</em></h1>
+    <p class="page-header__sub">Localhouse Designs is a Broken Arrow web studio helping Oklahoma service businesses replace vague, dated, or platform-limited sites with clearer service pages, stronger local trust signals, and a contact path people can actually follow.</p>
+    <div class="local-page__actions">
+      <a routerLink="/contact" class="btn btn--filled">Request a Quick Audit -&gt;</a>
+      <a routerLink="/work/local-geo-standard" class="btn btn--accent">See Local SEO Proof -&gt;</a>
+    </div>
+  </section>
+
+  <section class="local-signals section">
+    <div class="container">
+      <p class="label">Local fit</p>
+      <div class="local-signals__grid">
+        @for (signal of trustSignals; track signal) {
+          <article class="signal-card">
+            <p>{{ signal }}</p>
+          </article>
+        }
+      </div>
+    </div>
+  </section>
+
+  <section class="local-work section container">
+    <div class="local-work__intro">
+      <p class="label">What gets rebuilt</p>
+      <h2>Not just web design.<br><em>Search-ready business clarity.</em></h2>
+    </div>
+    <div class="local-work__grid">
+      @for (section of pageSections; track section.title) {
+        <article class="fix-card">
+          <h3>{{ section.title }}</h3>
+          <p>{{ section.text }}</p>
+        </article>
+      }
+    </div>
+  </section>
+
+  <section class="local-proof section">
+    <div class="container">
+      <p class="label">Best-fit businesses</p>
+      <div class="vertical-grid">
+        @for (vertical of verticals; track vertical) {
+          <span>{{ vertical }}</span>
+        }
+      </div>
+    </div>
+  </section>
+
+  <section class="local-proof section local-proof--light">
+    <div class="container">
+      <p class="label">Proof and next steps</p>
+      <div class="local-proof__grid">
+        <a routerLink="/services" class="proof-card">
+          <span>Services</span>
+          <h2>Website rebuilds and local SEO</h2>
+          <p>See the service structure behind clearer homepages, stronger service pages, schema, launch support, and contact-path cleanup.</p>
+        </a>
+        <a routerLink="/work/local-geo-standard" class="proof-card">
+          <span>Case study</span>
+          <h2>Local GEO Standard</h2>
+          <p>A practical scoring method for local visibility, trust signals, structured content, and contact clarity.</p>
+        </a>
+        <a routerLink="/insights/why-local-seo-fails-when-the-contact-path-is-vague" class="proof-card">
+          <span>Insight</span>
+          <h2>Why local SEO fails when contact is vague</h2>
+          <p>A plain-English guide to NAP clarity, CTA structure, FAQs, maps, and the conversion details that help local pages perform.</p>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <section class="local-faq section container">
+    <p class="label">Common questions</p>
+    <div class="local-faq__grid">
+      @for (item of faqs; track item.question) {
+        <article class="faq-card">
+          <h3>{{ item.question }}</h3>
+          <p>{{ item.answer }}</p>
+        </article>
+      }
+    </div>
+  </section>
+
+  <section class="local-cta container">
+    <h2>Want the site to explain itself<br><em>before people bounce?</em></h2>
+    <a routerLink="/contact" class="btn btn--filled">Request a Quick Audit -&gt;</a>
+  </section>
+</div>

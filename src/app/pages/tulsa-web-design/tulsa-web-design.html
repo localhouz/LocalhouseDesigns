@@ -1,0 +1,95 @@
+<div class="local-page">
+  <section class="page-header container">
+    <p class="label">Tulsa web design</p>
+    <h1>Clearer websites for<br><em>Tulsa service businesses.</em></h1>
+    <p class="page-header__sub">Localhouse Designs is a Broken Arrow web studio building custom websites for Tulsa-area service businesses that need stronger local trust, deeper service pages, better SEO foundations, and a contact path that does not make people guess.</p>
+    <div class="local-page__actions">
+      <a routerLink="/contact" class="btn btn--filled">Request a Quick Audit -&gt;</a>
+      <a routerLink="/tulsa-service-business-websites" class="btn btn--accent">Service Business Details -&gt;</a>
+    </div>
+  </section>
+
+  <section class="local-signals section">
+    <div class="container">
+      <p class="label">Local fit</p>
+      <div class="local-signals__grid">
+        @for (signal of trustSignals; track signal) {
+          <article class="signal-card">
+            <p>{{ signal }}</p>
+          </article>
+        }
+      </div>
+    </div>
+  </section>
+
+  <section class="local-work section container">
+    <div class="local-work__intro">
+      <p class="label">What gets rebuilt</p>
+      <h2>A sharper site for Tulsa search<br><em>and real buyer decisions.</em></h2>
+    </div>
+    <div class="local-work__grid">
+      @for (section of pageSections; track section.title) {
+        <article class="fix-card">
+          <h3>{{ section.title }}</h3>
+          <p>{{ section.text }}</p>
+        </article>
+      }
+    </div>
+  </section>
+
+  <section class="local-proof section">
+    <div class="container">
+      <p class="label">Best-fit businesses</p>
+      <div class="vertical-grid">
+        @for (vertical of verticals; track vertical) {
+          <span>{{ vertical }}</span>
+        }
+      </div>
+    </div>
+  </section>
+
+  <section class="local-proof section local-proof--light">
+    <div class="container">
+      <p class="label">Related proof</p>
+      <div class="local-proof__grid">
+        <a routerLink="/broken-arrow-web-design" class="proof-card">
+          <span>Local page</span>
+          <h2>Broken Arrow Web Design</h2>
+          <p>The primary home-market page for Localhouse Designs, with the local service rebuild offer and proof structure.</p>
+        </a>
+        <a routerLink="/work/local-geo-standard" class="proof-card">
+          <span>Case study</span>
+          <h2>Local GEO Standard</h2>
+          <p>A scoring method for local visibility, trust signals, structured content, and contact clarity.</p>
+        </a>
+        <a routerLink="/insights/what-local-service-pages-need-to-rank-and-get-cited" class="proof-card">
+          <span>Insight</span>
+          <h2>What local service pages need</h2>
+          <p>A practical guide to service-page depth, local SEO, AI search citations, and actual trust.</p>
+        </a>
+        <a routerLink="/salon-website-design-tulsa" class="proof-card">
+          <span>Vertical</span>
+          <h2>Salon Website Design Tulsa</h2>
+          <p>A focused page for salons, barbers, stylists, and grooming brands that need a stronger site around booking.</p>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <section class="local-faq section container">
+    <p class="label">Common questions</p>
+    <div class="local-faq__grid">
+      @for (item of faqs; track item.question) {
+        <article class="faq-card">
+          <h3>{{ item.question }}</h3>
+          <p>{{ item.answer }}</p>
+        </article>
+      }
+    </div>
+  </section>
+
+  <section class="local-cta container">
+    <h2>Need the Tulsa page to carry<br><em>more than a template?</em></h2>
+    <a routerLink="/contact" class="btn btn--filled">Request a Quick Audit -&gt;</a>
+  </section>
+</div>

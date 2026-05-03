@@ -48,5 +48,33 @@
         <span>{{ tech }}</span>
       }
     </div>
+
+    @if (study.proofSections?.length) {
+      <div class="case-proof">
+        <p class="label">Proof notes</p>
+        <div class="case-proof__grid">
+          @for (section of study.proofSections; track section.title) {
+            <article class="proof-card">
+              <span>{{ section.title }}</span>
+              <p>{{ section.text }}</p>
+            </article>
+          }
+        </div>
+      </div>
+    }
+
+    @if (study.relatedLinks?.length) {
+      <div class="case-related">
+        <p class="label">Related paths</p>
+        <div class="case-related__grid">
+          @for (link of study.relatedLinks; track link.route) {
+            <a [routerLink]="link.route" class="related-card">
+              <span>{{ link.label }}</span>
+              <p>{{ link.text }}</p>
+            </a>
+          }
+        </div>
+      </div>
+    }
   </section>
 </div>

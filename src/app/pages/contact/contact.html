@@ -3,16 +3,28 @@
   <div class="page-header container">
     <p class="label">Get in touch</p>
     <h1>Let's build<br><em>something.</em></h1>
-    <p class="page-header__sub">Tell us what you're trying to improve and share the site if you have one. We keep it async and reply with a practical audit path, not a sales script.</p>
+    <p class="page-header__sub">Chat is the best way to start when it is available. Send the site, the snag, or the idea there first. The form and email are backup paths for async details.</p>
   </div>
 
   <section class="contact-steps container">
-    <p class="label">What happens next</p>
+    <p class="label">Preferred path</p>
+    <div class="chat-first">
+      <div>
+        <span class="chat-first__eyebrow">Start with the chat bubble</span>
+        <h2>Fastest path, least ceremony.</h2>
+        <p>The chat window is the preferred contact path because it keeps the first exchange lightweight: share the URL, what feels off, and what kind of result you want. If chat is offline, the form below and email both still work.</p>
+      </div>
+      <a href="mailto:steven@localhousedesigns.com" class="chat-first__email">steven@localhousedesigns.com</a>
+    </div>
+  </section>
+
+  <section class="contact-steps container">
+    <p class="label">What happens after that</p>
     <div class="contact-steps__grid">
       <div class="contact-step">
         <span class="contact-step__num">Step 01</span>
-        <h3>Send the basics</h3>
-        <p>Share the site, the problem, and what kind of result you want. We keep it async.</p>
+        <h3>Send the basics in chat</h3>
+        <p>Share the site, the problem, and what kind of result you want. The form is there if chat is offline.</p>
       </div>
       <div class="contact-step">
         <span class="contact-step__num">Step 02</span>
@@ -48,12 +60,31 @@
           <span class="contact-info__available">Open to new projects</span>
         </div>
         <div class="contact-info__item">
+          <span class="contact-info__label">Best first contact</span>
+          <span>Use the chat bubble when it is online</span>
+        </div>
+        <div class="contact-info__item">
+          <span class="contact-info__label">Email backup</span>
+          <a href="mailto:steven@localhousedesigns.com">steven@localhousedesigns.com</a>
+        </div>
+        <div class="contact-info__item">
           <span class="contact-info__label">GitHub</span>
           <a href="https://github.com/localhouz" target="_blank" rel="noopener">github.com/localhouz</a>
         </div>
         <div class="contact-info__item">
           <span class="contact-info__label">LinkedIn</span>
           <a href="https://www.linkedin.com/in/steven-rausch83/" target="_blank" rel="noopener">linkedin.com/in/steven-rausch83</a>
+        </div>
+        <div class="contact-info__profiles">
+          <span class="contact-info__label">Verified profiles</span>
+          <div class="profile-links">
+            @for (profile of proofProfiles; track profile.label) {
+              <a [href]="profile.url" target="_blank" rel="noopener">
+                <strong>{{ profile.label }}</strong>
+                <span>{{ profile.text }}</span>
+              </a>
+            }
+          </div>
         </div>
         <div class="contact-info__stack">
           <span class="contact-info__label">Stack</span>

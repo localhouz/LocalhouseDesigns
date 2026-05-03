@@ -1,0 +1,95 @@
+<div class="local-page">
+  <section class="page-header container">
+    <p class="label">Local SEO for service businesses</p>
+    <h1>Local SEO works better<br><em>when the website is clear.</em></h1>
+    <p class="page-header__sub">Localhouse Designs helps Oklahoma service businesses strengthen the pages that decide whether local traffic turns into leads: service pages, FAQs, schema, local trust signals, proof, and the contact path after someone lands.</p>
+    <div class="local-page__actions">
+      <a routerLink="/contact" class="btn btn--filled">Request a Quick Audit -&gt;</a>
+      <a routerLink="/insights/what-local-service-pages-need-to-rank-and-get-cited" class="btn btn--accent">Read Page Criteria -&gt;</a>
+    </div>
+  </section>
+
+  <section class="local-signals section">
+    <div class="container">
+      <p class="label">How this is framed</p>
+      <div class="local-signals__grid">
+        @for (signal of trustSignals; track signal) {
+          <article class="signal-card">
+            <p>{{ signal }}</p>
+          </article>
+        }
+      </div>
+    </div>
+  </section>
+
+  <section class="local-work section container">
+    <div class="local-work__intro">
+      <p class="label">What gets fixed</p>
+      <h2>Less SEO theater.<br><em>More page-level trust.</em></h2>
+    </div>
+    <div class="local-work__grid">
+      @for (section of pageSections; track section.title) {
+        <article class="fix-card">
+          <h3>{{ section.title }}</h3>
+          <p>{{ section.text }}</p>
+        </article>
+      }
+    </div>
+  </section>
+
+  <section class="local-proof section">
+    <div class="container">
+      <p class="label">Foundation work</p>
+      <div class="vertical-grid">
+        @for (vertical of verticals; track vertical) {
+          <span>{{ vertical }}</span>
+        }
+      </div>
+    </div>
+  </section>
+
+  <section class="local-proof section local-proof--light">
+    <div class="container">
+      <p class="label">Related pages</p>
+      <div class="local-proof__grid">
+        <a routerLink="/broken-arrow-web-design" class="proof-card">
+          <span>Local page</span>
+          <h2>Broken Arrow Web Design</h2>
+          <p>The primary local landing page for web design, service-page depth, and contact-path cleanup.</p>
+        </a>
+        <a routerLink="/tulsa-web-design" class="proof-card">
+          <span>Local page</span>
+          <h2>Tulsa Web Design</h2>
+          <p>The Tulsa-market page for service businesses that need custom website structure and stronger local search foundations.</p>
+        </a>
+        <a routerLink="/work/local-geo-standard" class="proof-card">
+          <span>Case study</span>
+          <h2>Local GEO Standard</h2>
+          <p>A practical scoring method for local visibility, structured content, trust signals, and contact clarity.</p>
+        </a>
+        <a routerLink="/salon-website-design-tulsa" class="proof-card">
+          <span>Vertical</span>
+          <h2>Salon Website Design Tulsa</h2>
+          <p>A focused vertical page tied to North Styles and booking-platform replacement work.</p>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <section class="local-faq section container">
+    <p class="label">Common questions</p>
+    <div class="local-faq__grid">
+      @for (item of faqs; track item.question) {
+        <article class="faq-card">
+          <h3>{{ item.question }}</h3>
+          <p>{{ item.answer }}</p>
+        </article>
+      }
+    </div>
+  </section>
+
+  <section class="local-cta container">
+    <h2>Need search traffic to land<br><em>on a page that earns trust?</em></h2>
+    <a routerLink="/contact" class="btn btn--filled">Request a Quick Audit -&gt;</a>
+  </section>
+</div>

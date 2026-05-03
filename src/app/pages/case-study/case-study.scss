@@ -32,7 +32,9 @@
 
 .case-body__grid,
 .case-changes__grid,
-.case-metrics {
+.case-metrics,
+.case-proof__grid,
+.case-related__grid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 1px;
@@ -52,9 +54,25 @@
   }
 }
 
+.case-proof,
+.case-related {
+  margin-top: 4rem;
+
+  .label {
+    margin-bottom: 2rem;
+  }
+}
+
+.case-proof__grid,
+.case-related__grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
 .case-panel,
 .change-card,
-.metric-card {
+.metric-card,
+.proof-card,
+.related-card {
   background: var(--bg);
   padding: 2rem;
 
@@ -66,7 +84,9 @@
 }
 
 .case-panel span,
-.metric-card span {
+.metric-card span,
+.proof-card span,
+.related-card span {
   display: block;
   color: var(--accent);
   font-family: var(--font-mono);
@@ -74,6 +94,21 @@
   letter-spacing: 0.12em;
   margin-bottom: 0.9rem;
   text-transform: uppercase;
+}
+
+.related-card {
+  color: inherit;
+  min-height: 100%;
+  text-decoration: none;
+  transition: background 180ms ease, color 180ms ease;
+
+  &:hover {
+    background: rgba(10,10,18,0.03);
+
+    p {
+      color: rgba(10,10,18,0.82);
+    }
+  }
 }
 
 .case-metrics {
@@ -113,13 +148,17 @@
 
   .case-body__grid,
   .case-changes__grid,
-  .case-metrics {
+  .case-metrics,
+  .case-proof__grid,
+  .case-related__grid {
     grid-template-columns: 1fr;
   }
 
   .case-panel,
   .change-card,
-  .metric-card {
+  .metric-card,
+  .proof-card,
+  .related-card {
     padding: 1.5rem;
   }
 }

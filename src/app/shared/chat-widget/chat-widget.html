@@ -17,7 +17,7 @@
         <div class="chat-widget__header-info">
           <span class="chat-widget__name">{{ BUSINESS_NAME }}</span>
           <span class="chat-widget__status" [class.chat-widget__status--online]="status() === 'online'">
-            {{ status() === 'online' ? 'Online now' : status() === 'connecting' ? 'Connecting...' : 'Offline — try the contact form' }}
+            {{ status() === 'online' ? 'Preferred contact path' : status() === 'connecting' ? 'Connecting...' : 'Offline - use form or email backup' }}
           </span>
         </div>
       </div>
@@ -34,7 +34,7 @@
           </div>
         }
         @if (submitted() && status() === 'online' && messages().length > 0) {
-          <p class="chat-widget__receipt">Sent — typically replies within a few minutes during business hours.</p>
+          <p class="chat-widget__receipt">Sent - this chat is the fastest path when Steven is at the keyboard.</p>
         }
       </div>
 
@@ -60,7 +60,7 @@
           <textarea
             [(ngModel)]="inputText"
             (keydown)="onKeydown($event)"
-            placeholder="Type a message..."
+            placeholder="Send the site, snag, or idea..."
             rows="2"
             [disabled]="status() !== 'online'"
           ></textarea>

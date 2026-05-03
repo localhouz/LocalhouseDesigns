@@ -53,6 +53,60 @@
   }
 }
 
+.chat-first {
+  display: grid;
+  grid-template-columns: 1.4fr minmax(240px, 0.6fr);
+  gap: 1px;
+  margin-top: 2rem;
+  border: 1px solid var(--border);
+  background: var(--border);
+
+  > div,
+  &__email {
+    background: var(--bg);
+    padding: 2rem;
+  }
+
+  h2 {
+    margin: 0.6rem 0 0.8rem;
+    font-size: clamp(1.55rem, 3vw, 2.35rem);
+  }
+
+  p {
+    max-width: 46rem;
+    color: rgba(10,10,18,0.62);
+    font-size: 0.96rem;
+    line-height: 1.78;
+  }
+
+  &__eyebrow {
+    color: var(--accent);
+    font-family: var(--font-mono);
+    font-size: 0.65rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+
+  &__email {
+    display: flex;
+    align-items: center;
+    color: var(--fg);
+    font-family: var(--font-mono);
+    font-size: 0.82rem;
+    line-height: 1.55;
+    text-decoration: none;
+    word-break: break-word;
+
+    &:hover {
+      color: var(--accent);
+    }
+  }
+
+  @media (max-width: 768px) {
+    grid-template-columns: 1fr;
+  }
+}
+
 .contact-grid {
   display: grid;
   grid-template-columns: 1fr 1.6fr;
@@ -110,7 +164,12 @@
     }
   }
 
-  &__stack { display: flex; flex-direction: column; gap: 0.75rem; }
+  &__stack,
+  &__profiles {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
 
   &__tags {
     display: flex;
@@ -125,6 +184,45 @@
       border: 1px solid var(--border);
       padding: 0.2rem 0.5rem;
     }
+  }
+}
+
+.profile-links {
+  display: grid;
+  gap: 1px;
+  background: var(--border);
+  border: 1px solid var(--border);
+
+  a {
+    background: var(--bg);
+    color: var(--fg);
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    padding: 0.85rem 1rem;
+    text-decoration: none;
+    transition: background 180ms ease;
+
+    &:hover {
+      background: rgba(10,10,18,0.03);
+
+      strong {
+        color: var(--accent);
+      }
+    }
+  }
+
+  strong {
+    font-size: 0.92rem;
+    line-height: 1.2;
+  }
+
+  span {
+    color: rgba(10,10,18,0.52);
+    font-family: var(--font-mono);
+    font-size: 0.64rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
   }
 }
 
