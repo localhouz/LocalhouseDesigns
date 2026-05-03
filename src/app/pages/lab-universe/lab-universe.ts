@@ -477,9 +477,10 @@ export class LabUniverseComponent implements OnInit, AfterViewInit, OnDestroy {
   setBoard(link: ExpressLink, event?: Event) {
     event?.preventDefault();
     this.activeBoard.set(link.id);
+    const pageDomains = new Set((link.pages ?? []).map(page => this.domainFromUrl(page.url)));
     const next = link.id === 'history'
       ? this.allPins()
-      : this.allPins().filter(pin => pin.groupIds.includes(link.id));
+      : this.allPins().filter(pin => pageDomains.has(pin.domain) || pin.groupIds.includes(link.id));
     this.setVisiblePins(next);
   }
 
@@ -731,23 +732,42 @@ export class LabUniverseComponent implements OnInit, AfterViewInit, OnDestroy {
       pages: [],
     });
 
-    const sourceLinks = interests.length
-      ? interests
-      : clusters.map(cluster => ({
-          id: cluster.id,
-          label: cluster.label,
-          href: `/lab/universe?board=${encodeURIComponent(cluster.id)}`,
-          score: cluster.pages.length,
-          pages: cluster.pages,
-        }));
+    const lanePages = new Map<string, ExtPage[]>();
+    const laneDomains = new Map<string, Set<string>>();
+    for (const pin of pins) {
+      const lane = this.intentLane(pin);
+      if (!lane) continue;
+      const domains = laneDomains.get(lane) ?? new Set<string>();
+      if (domains.has(pin.domain)) continue;
+      domains.add(pin.domain);
+      laneDomains.set(lane, domains);
+      lanePages.set(lane, [
+        ...(lanePages.get(lane) ?? []),
+        {
+          url: pin.href,
+          title: pin.title,
+          image: pin.image,
+          visitCount: pin.visitCount,
+          lastVisitTime: pin.lastVisitTime,
+        },
+      ]);
+    }
 
-    for (const link of sourceLinks) {
-      const pages = (link.pages ?? []).filter(page => !this.isLocalUrl(page.url));
-      if (!pages.length) continue;
+    const semanticLinks = Array.from(lanePages.entries())
+      .map(([lane, pages]) => ({
+        id: `lane:${lane}`,
+        label: lane,
+        href: `/lab/universe?board=${encodeURIComponent(`lane:${lane}`)}`,
+        score: pages.length,
+        pages,
+      }))
+      .filter(link => link.pages.length >= 2)
+      .sort((a, b) => (b.score - a.score) || a.label.localeCompare(b.label));
+
+    for (const link of semanticLinks) {
       links.set(link.id, {
         ...link,
-        label: `${link.label.toLowerCase()} ${pages.length}`,
-        pages,
+        label: `${link.label} ${link.pages.length}`,
       });
     }
 
