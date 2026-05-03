@@ -142,9 +142,9 @@ const STORAGE_KEYS = {
   wiki: 'lh_universe_wiki',
 };
 
-const COLUMN_X = [-40, -27, -14, -1, 12, 25, 38];
-const COLUMN_START_Y = [56, 34, 60, 40, 64, 44, 58];
-const ROW_GAP = 39;
+const COLUMN_X = [-34, -17, 0, 17, 34];
+const COLUMN_START_Y = [62, 30, 66, 34, 60];
+const ROW_GAP = 62;
 const MAX_HISTORY_PINS = 36;
 
 const GHOST_SLOTS = [
@@ -306,8 +306,9 @@ export class LabUniverseComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   openPin(pin: UniversePin) {
-    if (pin.href.startsWith('https://') || pin.href.startsWith('http://')) {
-      window.open(pin.href, '_blank', 'noopener noreferrer');
+    const target = this.hoveredPinId() === pin.id ? this.pinActiveIntent(pin) : pin;
+    if (target.href.startsWith('https://') || target.href.startsWith('http://')) {
+      window.open(target.href, '_blank', 'noopener noreferrer');
     }
   }
 
@@ -321,8 +322,8 @@ export class LabUniverseComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   onPinWheel(pin: UniversePin, event: WheelEvent) {
-    const intents = this.pinLinkedIntents(pin);
-    if (!intents.length) return;
+    const intents = this.pinIntentLinks(pin);
+    if (intents.length < 2) return;
     event.preventDefault();
     event.stopPropagation();
     const delta = event.deltaY > 0 ? 1 : -1;
@@ -335,13 +336,20 @@ export class LabUniverseComponent implements OnInit, AfterViewInit, OnDestroy {
     return this.expressLinks().filter(link => pin.groupIds.includes(link.id));
   }
 
-  pinDrawerItems(pin: UniversePin, intentIndex: number): UniversePin[] {
-    const intents = this.pinLinkedIntents(pin);
-    const intent = intents[intentIndex];
-    if (!intent) return [];
-    return this.allPins()
-      .filter(p => p.id !== pin.id && p.groupIds.includes(intent.id))
-      .slice(0, 5);
+  pinIntentLinks(pin: UniversePin): UniversePin[] {
+    const groups = new Set(pin.groupIds);
+    if (!groups.size) return [pin];
+    const related = this.allPins()
+      .filter(p => p.id !== pin.id && p.groupIds.some(group => groups.has(group)))
+      .sort((a, b) => (b.visitCount - a.visitCount) || (b.lastVisitTime - a.lastVisitTime));
+    const unique = new Map<string, UniversePin>();
+    related.forEach(item => unique.set(item.domain, item));
+    return [pin, ...Array.from(unique.values()).slice(0, 6)];
+  }
+
+  pinActiveIntent(pin: UniversePin): UniversePin {
+    const links = this.pinIntentLinks(pin);
+    return links[this.hoveredIntentI()] ?? pin;
   }
 
   openGhost(node: GhostNode) {
@@ -1135,8 +1143,13 @@ export class LabUniverseComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   private pinSafeX(x: number, size: UniversePin['size']) {
-    if (size === 'featured' && x < 0) return this.clamp(x, -20, 34);
-    const limit = size === 'featured' ? 34 : size === 'large' ? 36 : 40;
+    if (size === 'featured') {
+      if (x < -25) return -22;
+      if (x < 0) return 0;
+      if (x > 25) return 22;
+      return x;
+    }
+    const limit = size === 'large' ? 34 : 38;
     return this.clamp(x, -limit, limit);
   }
 

@@ -174,19 +174,21 @@
       }
 
       @for (pin of pins(); track pin.id) {
-        @let linkedIntents = pinLinkedIntents(pin);
+        @let intentLinks = pinIntentLinks(pin);
+        @let activeIntent = pinActiveIntent(pin);
         @let isHovered = hoveredPinId() === pin.id;
         <button
           class="universe__pin"
           [class.universe__pin--small]="pin.size === 'small'"
           [class.universe__pin--large]="pin.size === 'large'"
           [class.universe__pin--featured]="pin.size === 'featured'"
-          [class.universe__pin--drawer-open]="isHovered && linkedIntents.length > 0"
+          [class.universe__pin--intent-open]="isHovered && intentLinks.length > 1"
           [class.visible]="clustersVisible()"
           [style.--cx]="pin.x + 'vw'"
           [style.--cy]="pin.y + 'vh'"
           [style.--rot]="pin.rotate + 'deg'"
           [style.--tone]="visualTone(pin.domain, pin.topic)"
+          [style.--intent-tone]="visualTone(activeIntent.domain, activeIntent.topic)"
           [style.--delay]="pin.delay + 'ms'"
           (click)="openPin(pin)"
           (mouseenter)="onPinEnter(pin)"
@@ -205,9 +207,9 @@
             <span class="universe__pin-title">{{ pin.title }}</span>
           </span>
 
-          @if (linkedIntents.length > 0) {
+          @if (intentLinks.length > 1) {
             <span class="universe__pin-dots" aria-hidden="true">
-              @for (intent of linkedIntents; track intent.id; let di = $index) {
+              @for (intent of intentLinks; track intent.id; let di = $index) {
                 <span
                   class="universe__pin-dot"
                   [class.universe__pin-dot--active]="isHovered && hoveredIntentI() === di"
@@ -216,19 +218,11 @@
             </span>
 
             @if (isHovered) {
-              @let activeI = hoveredIntentI();
-              @let drawerItems = pinDrawerItems(pin, activeI);
-              <span class="universe__pin-drawer">
-                <span class="universe__pin-drawer-label">{{ linkedIntents[activeI]?.label }}</span>
-                @for (item of drawerItems; track item.id) {
-                  <span class="universe__pin-drawer-item">
-                    <span class="universe__pin-drawer-item-domain">{{ item.domain }}</span>
-                    <span class="universe__pin-drawer-item-title">{{ item.title }}</span>
-                  </span>
-                }
-                @if (!drawerItems.length) {
-                  <span class="universe__pin-drawer-item universe__pin-drawer-item--empty">no related pins yet</span>
-                }
+              <span class="universe__pin-intent-card">
+                <span class="universe__pin-intent-domain">{{ activeIntent.domain }}</span>
+                <span class="universe__pin-intent-title">{{ activeIntent.title }}</span>
+                <span class="universe__pin-intent-tag">{{ activeIntent.topic }}</span>
+                <span class="universe__pin-intent-mark">{{ domainMark(activeIntent.domain) }}</span>
               </span>
             }
           }
