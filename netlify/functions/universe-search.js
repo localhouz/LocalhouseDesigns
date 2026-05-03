@@ -1,6 +1,30 @@
+const fs = require('fs');
+const path = require('path');
+
 const WINDOW_MS = 60_000;
 const MAX_REQUESTS = 30;
 const buckets = new Map();
+let localEnvLoaded = false;
+
+function loadLocalEnv() {
+  if (localEnvLoaded) return;
+  localEnvLoaded = true;
+
+  const envPath = path.join(process.cwd(), '.env.local');
+  if (!fs.existsSync(envPath)) return;
+
+  const env = fs.readFileSync(envPath, 'utf8');
+  for (const line of env.split(/\r?\n/)) {
+    const trimmed = line.trim();
+    if (!trimmed || trimmed.startsWith('#')) continue;
+    const equalsAt = trimmed.indexOf('=');
+    if (equalsAt < 1) continue;
+
+    const key = trimmed.slice(0, equalsAt).trim();
+    const value = trimmed.slice(equalsAt + 1).trim().replace(/^['"]|['"]$/g, '');
+    if (!process.env[key]) process.env[key] = value;
+  }
+}
 
 function json(statusCode, body) {
   return {
@@ -168,6 +192,8 @@ async function searchGoogle(query) {
 }
 
 exports.handler = async (event) => {
+  loadLocalEnv();
+
   if (event.httpMethod !== 'GET') {
     return json(405, { error: 'method_not_allowed', results: [] });
   }
