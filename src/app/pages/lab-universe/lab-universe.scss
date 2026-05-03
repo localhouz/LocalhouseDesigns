@@ -706,26 +706,6 @@
       border-color 0.2s ease;
 
     // 3D pushpin sphere
-    &::before {
-      content: '';
-      position: absolute;
-      left: 50%;
-      top: -0.62rem;
-      transform: translateX(-50%);
-      width: 0.7rem;
-      height: 0.7rem;
-      background: radial-gradient(
-        circle at 34% 28%,
-        rgba(255, 255, 255, 0.88) 0%,
-        hsl(var(--tone, 16deg) 68% 52%) 38%,
-        hsl(var(--tone, 16deg) 54% 28%) 100%
-      );
-      border-radius: 50%;
-      z-index: 12;
-      outline: 1px solid hsl(var(--tone, 16deg) 40% 32% / 0.38);
-      outline-offset: 1px;
-    }
-
     &.visible {
       opacity: 1;
       transform: translate(calc(-50% + var(--cx, 0vw)), calc(var(--cy, 0vh) - 50%)) scale(1);
@@ -938,21 +918,17 @@
     width: 0.58rem;
     height: 0.58rem;
     border-radius: 9999px;
-    border: 1px solid rgba(10, 10, 18, 0.2);
-    background:
-      radial-gradient(circle at 34% 28%, rgba(255, 255, 255, 0.86), transparent 35%),
-      hsl(var(--tone, 16deg) 18% 12% / 0.78);
+    border: 1px solid rgba(10, 10, 18, 0.16);
+    background: rgba(178, 178, 178, 0.72);
 
     &--active {
       width: 0.78rem;
       height: 0.78rem;
       margin-left: -0.1rem;
-      border-color: hsl(var(--tone, 16deg) 82% 58% / 0.95);
-      outline: 2px solid hsl(var(--tone, 16deg) 92% 62% / 0.38);
+      border-color: rgba(10, 10, 18, 0.32);
+      outline: 2px solid rgba(10, 10, 18, 0.12);
       outline-offset: 3px;
-      background:
-        radial-gradient(circle at 34% 28%, rgba(255, 255, 255, 0.92), transparent 34%),
-        hsl(var(--tone, 16deg) 82% 52%);
+      background: #d8d8d8;
     }
   }
 
@@ -967,9 +943,7 @@
     border-radius: 5px;
     background:
       linear-gradient(to top, rgba(6, 6, 12, 0.9), rgba(6, 6, 12, 0.34) 54%, rgba(6, 6, 12, 0.08)),
-      radial-gradient(ellipse at 22% 18%, hsl(var(--intent-tone, var(--tone)) 88% 64% / 0.46), transparent 48%),
-      radial-gradient(ellipse at 84% 78%, hsl(calc(var(--intent-tone, var(--tone)) + 52deg) 88% 58% / 0.34), transparent 50%),
-      rgba(12, 11, 18, 0.82);
+      rgba(18, 18, 20, 0.88);
     pointer-events: none;
     text-align: left;
   }
@@ -980,7 +954,7 @@
     font-weight: 700;
     letter-spacing: 0.16em;
     text-transform: lowercase;
-    color: hsl(var(--intent-tone, var(--tone)) 90% 70% / 0.92);
+    color: rgba(218, 218, 218, 0.86);
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
@@ -1000,8 +974,8 @@
     padding: 0.32rem 0.58rem;
     border: 1px solid rgba(255, 255, 255, 0.1);
     border-radius: 999px;
-    background: hsl(var(--intent-tone, var(--tone)) 76% 44% / 0.32);
-    color: rgba(255, 255, 255, 0.84);
+    background: rgba(228, 228, 228, 0.16);
+    color: rgba(238, 238, 238, 0.82);
     font-size: 0.62rem;
     font-weight: 700;
     overflow: hidden;
@@ -1017,7 +991,7 @@
     font-size: clamp(2.2rem, 3.2vw, 4rem);
     font-weight: 800;
     letter-spacing: 0.02em;
-    color: hsl(var(--intent-tone, var(--tone)) 88% 76% / 0.2);
+    color: rgba(232, 232, 232, 0.18);
   }
 
 }
