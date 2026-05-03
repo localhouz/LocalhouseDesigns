@@ -665,8 +665,12 @@ export class LabUniverseComponent implements OnInit, AfterViewInit, OnDestroy {
     const scored = visible
       .map(pin => ({ pin, score: this.intentScore(pin, pin.topic) }))
       .sort((a, b) => b.score - a.score);
-    const featuredIds = new Set(scored.filter(item => item.score >= 8).slice(0, 2).map(item => item.pin.id));
-    const largeIds = new Set(scored.filter(item => item.score >= 5 && !featuredIds.has(item.pin.id)).slice(0, 6).map(item => item.pin.id));
+    const featuredCount = visible.length >= 8 ? 2 : visible.length >= 4 ? 1 : 0;
+    const largeCount = Math.min(6, Math.max(1, Math.floor(visible.length * 0.22)));
+    const mediumCount = Math.min(10, Math.max(2, Math.floor(visible.length * 0.34)));
+    const featuredIds = new Set(scored.slice(0, featuredCount).map(item => item.pin.id));
+    const largeIds = new Set(scored.slice(featuredCount, featuredCount + largeCount).map(item => item.pin.id));
+    const mediumIds = new Set(scored.slice(featuredCount + largeCount, featuredCount + largeCount + mediumCount).map(item => item.pin.id));
 
     this.pins.set(visible.map((pin, i) => {
       const slot = this.pinSlot(i);
@@ -675,7 +679,7 @@ export class LabUniverseComponent implements OnInit, AfterViewInit, OnDestroy {
         ? 'featured'
         : largeIds.has(pin.id)
           ? 'large'
-          : score >= 3
+          : mediumIds.has(pin.id)
             ? 'medium'
             : 'small';
       return {
@@ -898,8 +902,9 @@ export class LabUniverseComponent implements OnInit, AfterViewInit, OnDestroy {
     const scored = this.pins()
       .map((pin, index) => ({ pin, index, score: this.intentScore(pin, pin.topic, active) }))
       .sort((a, b) => b.score - a.score);
-    const featuredIds = new Set(scored.filter(item => item.score >= 8).slice(0, 2).map(item => item.pin.id));
-    const largeIds = new Set(scored.filter(item => item.score >= 5).slice(0, 5).map(item => item.pin.id));
+    const featuredIds = new Set(scored.slice(0, Math.min(2, scored.length)).map(item => item.pin.id));
+    const largeIds = new Set(scored.slice(2, Math.min(8, scored.length)).map(item => item.pin.id));
+    const mediumIds = new Set(scored.slice(8, Math.min(18, scored.length)).map(item => item.pin.id));
 
     this.pins.update(pins => pins.map(pin => {
       const score = scored.find(item => item.pin.id === pin.id)?.score ?? 0;
@@ -907,7 +912,9 @@ export class LabUniverseComponent implements OnInit, AfterViewInit, OnDestroy {
         ? 'featured'
         : largeIds.has(pin.id)
           ? 'large'
-          : this.pinSizeForScore(score);
+          : mediumIds.has(pin.id)
+            ? 'medium'
+            : this.pinSizeForScore(score);
       return { ...pin, size };
     }));
   }
