@@ -446,8 +446,13 @@ export class LabUniverseComponent implements OnInit, AfterViewInit, OnDestroy {
         return;
       }
 
+      const seenDomains = new Set<string>();
       const results = (payload.results || [])
-        .filter(result => result.href && result.domain)
+        .filter(result => {
+          if (!result.href || !result.domain || seenDomains.has(result.domain)) return false;
+          seenDomains.add(result.domain);
+          return true;
+        })
         .map((result, index) => ({
           ...result,
           id: result.id || `search-${Date.now()}-${index}`,

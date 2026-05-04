@@ -59,7 +59,7 @@
     @if (resultsMode()) {
       <section class="universe__results" [class.visible]="inputVisible()" aria-label="Search results">
         <div class="universe__results-head">
-          <span>web results</span>
+          <span>candidate orbit</span>
           <strong>{{ activeQuery() }}</strong>
           <button type="button" (click)="clearSearchMode()">clear</button>
         </div>
@@ -80,17 +80,24 @@
           }
 
           @for (result of candidateResults(); track result.id) {
-            <button class="universe__candidate" (click)="openCandidate(result)">
+            <button
+              class="universe__candidate"
+              [class.universe__candidate--primary]="$index === 0"
+              [style.--tone]="visualTone(result.domain, activeQuery())"
+              (click)="openCandidate(result)"
+            >
+              <span class="universe__candidate-node" aria-hidden="true"></span>
               <span class="universe__candidate-visual">
                 <img [src]="siteIcon(result.domain)" [alt]="result.domain" loading="lazy">
+                <span class="universe__candidate-mark">{{ domainMark(result.domain) }}</span>
               </span>
-              <span>
-                <span class="universe__candidate-kind">{{ result.source || 'search' }}</span>
+              <span class="universe__candidate-body">
+                <span class="universe__candidate-domain">{{ result.domain }}</span>
                 <span class="universe__candidate-title">{{ result.title }}</span>
                 @if (result.snippet) {
                   <span class="universe__candidate-snippet">{{ result.snippet }}</span>
                 }
-                <span class="universe__candidate-domain">{{ result.domain }}</span>
+                <span class="universe__candidate-kind">{{ result.source || 'search' }}</span>
               </span>
             </button>
           }
