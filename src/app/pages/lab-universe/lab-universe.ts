@@ -458,7 +458,8 @@ export class LabUniverseComponent implements OnInit, AfterViewInit, OnDestroy {
           id: result.id || `search-${Date.now()}-${index}`,
           query,
           source: result.source || payload.provider || 'search',
-        }));
+        }))
+        .slice(0, 12);
 
       this.candidateResults.set(results);
       if (!results.length) this.searchError.set('No real links came back for that search.');

@@ -101,7 +101,7 @@ async function searchBrave(query) {
 
   const params = new URLSearchParams({
     q: query,
-    count: '10',
+    count: '20',
     country: 'us',
     safesearch: 'moderate',
     spellcheck: '1',
@@ -134,7 +134,7 @@ async function searchBrave(query) {
       results: (payload.web?.results || [])
         .map((result, index) => sanitizeResult(result, index, query, 'brave'))
         .filter(Boolean)
-        .slice(0, 8),
+        .slice(0, 16),
     },
   };
 }
