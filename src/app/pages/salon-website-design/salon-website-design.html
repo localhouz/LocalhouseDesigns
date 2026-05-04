@@ -1,0 +1,96 @@
+<div class="local-page">
+  <section class="page-header container">
+    <p class="label">Salon website design</p>
+    <h1>Salon websites that<br><em>book while you work.</em></h1>
+    <p class="page-header__sub">A salon website should turn a search into a booking without the client having to work for it. Clear services, real pricing, stylist profiles, and a booking path that doesn't require three platform redirects. That's the difference between a site that earns clients and one that just exists.</p>
+    <div class="local-page__actions">
+      <a routerLink="/contact" class="btn btn--filled">Request a Quick Audit -&gt;</a>
+      <a routerLink="/work/north-styles" class="btn btn--accent">See Salon Case Study -&gt;</a>
+    </div>
+  </section>
+
+  <section class="local-signals section">
+    <div class="container">
+      <p class="label">What salon sites get wrong</p>
+      <div class="local-signals__grid">
+        @for (signal of trustSignals; track signal) {
+          <article class="signal-card">
+            <p>{{ signal }}</p>
+          </article>
+        }
+      </div>
+    </div>
+  </section>
+
+  <section class="local-work section container">
+    <div class="local-work__intro">
+      <p class="label">What gets built</p>
+      <h2>A site that earns new clients<br><em>from search, not just referrals.</em></h2>
+    </div>
+    <div class="local-work__grid">
+      @for (section of pageSections; track section.title) {
+        <article class="fix-card">
+          <h3>{{ section.title }}</h3>
+          <p>{{ section.text }}</p>
+        </article>
+      }
+    </div>
+  </section>
+
+  <section class="local-proof section">
+    <div class="container">
+      <p class="label">Best fit</p>
+      <div class="vertical-grid">
+        @for (vertical of verticals; track vertical) {
+          <span>{{ vertical }}</span>
+        }
+      </div>
+    </div>
+  </section>
+
+  <section class="local-proof section local-proof--light">
+    <div class="container">
+      <p class="label">Related proof</p>
+      <div class="local-proof__grid">
+        <a routerLink="/work/north-styles" class="proof-card">
+          <span>Case study</span>
+          <h2>North Styles</h2>
+          <p>Rebuilt from GlossGenius to a custom brand site with stronger local SEO, clearer service structure, and a booking path that doesn't require a platform redirect.</p>
+        </a>
+        <a routerLink="/salon-website-design-tulsa" class="proof-card">
+          <span>Local page</span>
+          <h2>Salon Website Design — Tulsa</h2>
+          <p>The Tulsa-specific version of this page for salons, barbers, and stylists in the Tulsa market.</p>
+        </a>
+        <a routerLink="/insights/why-a-custom-site-beats-a-booking-platform-page-for-local-search" class="proof-card">
+          <span>Insight</span>
+          <h2>Why a custom site beats a booking platform</h2>
+          <p>Why salon websites that rely on GlossGenius or Vagaro pages leave local SEO and client trust behind.</p>
+        </a>
+        <a routerLink="/website-redesign-service-business" class="proof-card">
+          <span>Service page</span>
+          <h2>Website Redesign for Service Businesses</h2>
+          <p>For salons with an existing site that isn't generating enough new client bookings from search.</p>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <section class="local-faq section container">
+    <p class="label">Common questions</p>
+    <div class="local-faq__grid">
+      @for (item of faqs; track item.question) {
+        <article class="faq-card">
+          <h3>{{ item.question }}</h3>
+          <p>{{ item.answer }}</p>
+        </article>
+      }
+    </div>
+  </section>
+
+  <section class="local-cta container">
+    <h2>New clients are searching right now.<br><em>Is your site earning the booking?</em></h2>
+    <a routerLink="/contact" class="btn btn--filled">Request a Quick Audit -&gt;</a>
+    <p class="local-cta__studio">Studio: <a routerLink="/broken-arrow-web-design">Broken Arrow, Oklahoma</a> — working with service businesses nationally.</p>
+  </section>
+</div>

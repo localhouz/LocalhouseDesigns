@@ -1,0 +1,96 @@
+<div class="local-page">
+  <section class="page-header container">
+    <p class="label">Contractor website design</p>
+    <h1>Contractor websites that<br><em>bring in the right jobs.</em></h1>
+    <p class="page-header__sub">Most contractor websites attract the wrong inquiries — or no inquiries at all. Vague service descriptions, no visible proof, and a contact form that doesn't filter intent. A well-built contractor site shows what you do, what you've done, and makes it easy for the right customer to reach out.</p>
+    <div class="local-page__actions">
+      <a routerLink="/contact" class="btn btn--filled">Request a Quick Audit -&gt;</a>
+      <a routerLink="/website-redesign-service-business" class="btn btn--accent">Website Redesign Details -&gt;</a>
+    </div>
+  </section>
+
+  <section class="local-signals section">
+    <div class="container">
+      <p class="label">What contractor sites get wrong</p>
+      <div class="local-signals__grid">
+        @for (signal of trustSignals; track signal) {
+          <article class="signal-card">
+            <p>{{ signal }}</p>
+          </article>
+        }
+      </div>
+    </div>
+  </section>
+
+  <section class="local-work section container">
+    <div class="local-work__intro">
+      <p class="label">What gets built</p>
+      <h2>A site that pre-qualifies leads<br><em>before they reach your phone.</em></h2>
+    </div>
+    <div class="local-work__grid">
+      @for (section of pageSections; track section.title) {
+        <article class="fix-card">
+          <h3>{{ section.title }}</h3>
+          <p>{{ section.text }}</p>
+        </article>
+      }
+    </div>
+  </section>
+
+  <section class="local-proof section">
+    <div class="container">
+      <p class="label">Best fit</p>
+      <div class="vertical-grid">
+        @for (vertical of verticals; track vertical) {
+          <span>{{ vertical }}</span>
+        }
+      </div>
+    </div>
+  </section>
+
+  <section class="local-proof section local-proof--light">
+    <div class="container">
+      <p class="label">Related proof</p>
+      <div class="local-proof__grid">
+        <a routerLink="/work/local-geo-standard" class="proof-card">
+          <span>Case study</span>
+          <h2>Local GEO Standard</h2>
+          <p>A repeatable scoring method for local visibility, trust signals, and contact-path clarity — directly applicable to contractor sites.</p>
+        </a>
+        <a routerLink="/insights/what-local-service-pages-need-to-rank-and-get-cited" class="proof-card">
+          <span>Insight</span>
+          <h2>What local service pages need</h2>
+          <p>Service-page depth, local SEO structure, and what makes a contractor page worth citing by AI search.</p>
+        </a>
+        <a routerLink="/insights/best-website-structure-for-service-businesses" class="proof-card">
+          <span>Insight</span>
+          <h2>Best website structure for service businesses</h2>
+          <p>The page structure that works for contractors: homepage, service pages, proof, FAQ, and a clean quote path.</p>
+        </a>
+        <a routerLink="/website-redesign-service-business" class="proof-card">
+          <span>Service page</span>
+          <h2>Website Redesign for Service Businesses</h2>
+          <p>For contractors with an existing site that isn't generating enough of the right quote requests.</p>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <section class="local-faq section container">
+    <p class="label">Common questions</p>
+    <div class="local-faq__grid">
+      @for (item of faqs; track item.question) {
+        <article class="faq-card">
+          <h3>{{ item.question }}</h3>
+          <p>{{ item.answer }}</p>
+        </article>
+      }
+    </div>
+  </section>
+
+  <section class="local-cta container">
+    <h2>The right jobs are searching.<br><em>Is your site ready to earn them?</em></h2>
+    <a routerLink="/contact" class="btn btn--filled">Request a Quick Audit -&gt;</a>
+    <p class="local-cta__studio">Studio: <a routerLink="/broken-arrow-web-design">Broken Arrow, Oklahoma</a> — working with service businesses nationally.</p>
+  </section>
+</div>

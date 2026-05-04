@@ -1,0 +1,96 @@
+<div class="local-page">
+  <section class="page-header container">
+    <p class="label">HVAC website design</p>
+    <h1>HVAC websites that<br><em>earn the call before a competitor does.</em></h1>
+    <p class="page-header__sub">Most HVAC websites lose jobs not because of price — but because the site doesn't answer fast enough. Service area, availability, what you fix, who you are. A visitor in an emergency makes a decision in seconds. Your site needs to earn that call before they click the next result.</p>
+    <div class="local-page__actions">
+      <a routerLink="/contact" class="btn btn--filled">Request a Quick Audit -&gt;</a>
+      <a routerLink="/website-redesign-service-business" class="btn btn--accent">Website Redesign Details -&gt;</a>
+    </div>
+  </section>
+
+  <section class="local-signals section">
+    <div class="container">
+      <p class="label">What HVAC sites get wrong</p>
+      <div class="local-signals__grid">
+        @for (signal of trustSignals; track signal) {
+          <article class="signal-card">
+            <p>{{ signal }}</p>
+          </article>
+        }
+      </div>
+    </div>
+  </section>
+
+  <section class="local-work section container">
+    <div class="local-work__intro">
+      <p class="label">What gets built</p>
+      <h2>A site that works as hard<br><em>as your team does.</em></h2>
+    </div>
+    <div class="local-work__grid">
+      @for (section of pageSections; track section.title) {
+        <article class="fix-card">
+          <h3>{{ section.title }}</h3>
+          <p>{{ section.text }}</p>
+        </article>
+      }
+    </div>
+  </section>
+
+  <section class="local-proof section">
+    <div class="container">
+      <p class="label">Best fit</p>
+      <div class="vertical-grid">
+        @for (vertical of verticals; track vertical) {
+          <span>{{ vertical }}</span>
+        }
+      </div>
+    </div>
+  </section>
+
+  <section class="local-proof section local-proof--light">
+    <div class="container">
+      <p class="label">Related proof</p>
+      <div class="local-proof__grid">
+        <a routerLink="/lab/local-service-hvac-prototype" class="proof-card">
+          <span>Prototype</span>
+          <h2>HVAC Site Prototype</h2>
+          <p>A working prototype built around service clarity, emergency availability, and a quote path that earns the call before the visitor moves on.</p>
+        </a>
+        <a routerLink="/insights/how-a-local-service-rebuild-turns-traffic-into-leads" class="proof-card">
+          <span>Insight</span>
+          <h2>How a service rebuild turns traffic into leads</h2>
+          <p>Why local service sites lose jobs even with decent rankings — and what the rebuild actually fixes.</p>
+        </a>
+        <a routerLink="/insights/why-local-seo-fails-when-the-contact-path-is-vague" class="proof-card">
+          <span>Insight</span>
+          <h2>Why local SEO fails when contact is vague</h2>
+          <p>The friction points between a search result and a real phone call — and how to remove them.</p>
+        </a>
+        <a routerLink="/website-redesign-service-business" class="proof-card">
+          <span>Service page</span>
+          <h2>Website Redesign for Service Businesses</h2>
+          <p>For HVAC companies with an existing site that isn't generating enough calls or quote requests.</p>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <section class="local-faq section container">
+    <p class="label">Common questions</p>
+    <div class="local-faq__grid">
+      @for (item of faqs; track item.question) {
+        <article class="faq-card">
+          <h3>{{ item.question }}</h3>
+          <p>{{ item.answer }}</p>
+        </article>
+      }
+    </div>
+  </section>
+
+  <section class="local-cta container">
+    <h2>Your next service call is<br><em>already searching. Is your site ready?</em></h2>
+    <a routerLink="/contact" class="btn btn--filled">Request a Quick Audit -&gt;</a>
+    <p class="local-cta__studio">Studio: <a routerLink="/broken-arrow-web-design">Broken Arrow, Oklahoma</a> — working with service businesses nationally.</p>
+  </section>
+</div>

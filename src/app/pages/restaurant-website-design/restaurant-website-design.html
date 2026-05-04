@@ -1,0 +1,96 @@
+<div class="local-page">
+  <section class="page-header container">
+    <p class="label">Restaurant website design</p>
+    <h1>Restaurant websites that<br><em>fill seats, not just search results.</em></h1>
+    <p class="page-header__sub">A restaurant website has one job: get someone from "I'm looking for a place" to "I'm making a reservation." Most restaurant sites fail because the menu is buried, the hours are wrong, the booking path is three clicks too long, or the mobile experience makes it easier to go somewhere else.</p>
+    <div class="local-page__actions">
+      <a routerLink="/contact" class="btn btn--filled">Request a Quick Audit -&gt;</a>
+      <a routerLink="/website-redesign-service-business" class="btn btn--accent">Website Redesign Details -&gt;</a>
+    </div>
+  </section>
+
+  <section class="local-signals section">
+    <div class="container">
+      <p class="label">What restaurant sites get wrong</p>
+      <div class="local-signals__grid">
+        @for (signal of trustSignals; track signal) {
+          <article class="signal-card">
+            <p>{{ signal }}</p>
+          </article>
+        }
+      </div>
+    </div>
+  </section>
+
+  <section class="local-work section container">
+    <div class="local-work__intro">
+      <p class="label">What gets built</p>
+      <h2>A site that earns the visit<br><em>before they check Yelp.</em></h2>
+    </div>
+    <div class="local-work__grid">
+      @for (section of pageSections; track section.title) {
+        <article class="fix-card">
+          <h3>{{ section.title }}</h3>
+          <p>{{ section.text }}</p>
+        </article>
+      }
+    </div>
+  </section>
+
+  <section class="local-proof section">
+    <div class="container">
+      <p class="label">Best fit</p>
+      <div class="vertical-grid">
+        @for (vertical of verticals; track vertical) {
+          <span>{{ vertical }}</span>
+        }
+      </div>
+    </div>
+  </section>
+
+  <section class="local-proof section local-proof--light">
+    <div class="container">
+      <p class="label">Related proof</p>
+      <div class="local-proof__grid">
+        <a routerLink="/lab/local-service-hvac-prototype" class="proof-card">
+          <span>Prototype</span>
+          <h2>Local Service Site Prototype</h2>
+          <p>A working prototype showing how service clarity, availability, and a direct booking path work together on a tight layout.</p>
+        </a>
+        <a routerLink="/insights/why-a-custom-site-beats-a-booking-platform-page-for-local-search" class="proof-card">
+          <span>Insight</span>
+          <h2>Why a custom site beats a booking platform</h2>
+          <p>Why restaurants that rely on OpenTable or Yelp pages leave local SEO, trust, and conversion on the table.</p>
+        </a>
+        <a routerLink="/insights/best-website-structure-for-service-businesses" class="proof-card">
+          <span>Insight</span>
+          <h2>Best website structure for service businesses</h2>
+          <p>The structural decisions that decide whether a visitor books or bounces.</p>
+        </a>
+        <a routerLink="/website-redesign-service-business" class="proof-card">
+          <span>Service page</span>
+          <h2>Website Redesign for Service Businesses</h2>
+          <p>For restaurants with an existing site that isn't driving enough reservations, orders, or foot traffic.</p>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <section class="local-faq section container">
+    <p class="label">Common questions</p>
+    <div class="local-faq__grid">
+      @for (item of faqs; track item.question) {
+        <article class="faq-card">
+          <h3>{{ item.question }}</h3>
+          <p>{{ item.answer }}</p>
+        </article>
+      }
+    </div>
+  </section>
+
+  <section class="local-cta container">
+    <h2>Your next table is already searching.<br><em>Make sure they find you first.</em></h2>
+    <a routerLink="/contact" class="btn btn--filled">Request a Quick Audit -&gt;</a>
+    <p class="local-cta__studio">Studio: <a routerLink="/broken-arrow-web-design">Broken Arrow, Oklahoma</a> — working with service businesses nationally.</p>
+  </section>
+</div>

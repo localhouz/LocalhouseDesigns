@@ -1,0 +1,96 @@
+<div class="local-page">
+  <section class="page-header container">
+    <p class="label">Med spa website design</p>
+    <h1>Med spa websites that<br><em>earn trust before the consultation.</em></h1>
+    <p class="page-header__sub">Med spa clients are doing serious research before they book. They're checking credentials, reading about treatments, looking at real results, and deciding whether your practice feels safe and worth their investment. A site that doesn't answer those questions clearly loses them to a competitor who does.</p>
+    <div class="local-page__actions">
+      <a routerLink="/contact" class="btn btn--filled">Request a Quick Audit -&gt;</a>
+      <a routerLink="/website-redesign-service-business" class="btn btn--accent">Website Redesign Details -&gt;</a>
+    </div>
+  </section>
+
+  <section class="local-signals section">
+    <div class="container">
+      <p class="label">What med spa sites get wrong</p>
+      <div class="local-signals__grid">
+        @for (signal of trustSignals; track signal) {
+          <article class="signal-card">
+            <p>{{ signal }}</p>
+          </article>
+        }
+      </div>
+    </div>
+  </section>
+
+  <section class="local-work section container">
+    <div class="local-work__intro">
+      <p class="label">What gets built</p>
+      <h2>A site that converts research<br><em>into booked consultations.</em></h2>
+    </div>
+    <div class="local-work__grid">
+      @for (section of pageSections; track section.title) {
+        <article class="fix-card">
+          <h3>{{ section.title }}</h3>
+          <p>{{ section.text }}</p>
+        </article>
+      }
+    </div>
+  </section>
+
+  <section class="local-proof section">
+    <div class="container">
+      <p class="label">Best fit</p>
+      <div class="vertical-grid">
+        @for (vertical of verticals; track vertical) {
+          <span>{{ vertical }}</span>
+        }
+      </div>
+    </div>
+  </section>
+
+  <section class="local-proof section local-proof--light">
+    <div class="container">
+      <p class="label">Related proof</p>
+      <div class="local-proof__grid">
+        <a routerLink="/work/north-styles" class="proof-card">
+          <span>Case study</span>
+          <h2>North Styles</h2>
+          <p>A service-brand rebuild where trust signals, service clarity, and a cleaner booking path drove the redesign — directly applicable to med spa and wellness brands.</p>
+        </a>
+        <a routerLink="/insights/why-a-custom-site-beats-a-booking-platform-page-for-local-search" class="proof-card">
+          <span>Insight</span>
+          <h2>Why a custom site beats a booking platform</h2>
+          <p>Why med spas that rely on platform pages leave trust, local SEO, and consultation conversions behind.</p>
+        </a>
+        <a routerLink="/insights/best-website-structure-for-service-businesses" class="proof-card">
+          <span>Insight</span>
+          <h2>Best website structure for service businesses</h2>
+          <p>The structural decisions that decide whether a visitor books a consultation or keeps researching.</p>
+        </a>
+        <a routerLink="/website-redesign-service-business" class="proof-card">
+          <span>Service page</span>
+          <h2>Website Redesign for Service Businesses</h2>
+          <p>For med spas with an existing site that isn't converting enough research into booked consultations.</p>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <section class="local-faq section container">
+    <p class="label">Common questions</p>
+    <div class="local-faq__grid">
+      @for (item of faqs; track item.question) {
+        <article class="faq-card">
+          <h3>{{ item.question }}</h3>
+          <p>{{ item.answer }}</p>
+        </article>
+      }
+    </div>
+  </section>
+
+  <section class="local-cta container">
+    <h2>Your next client is researching right now.<br><em>Is your site earning the consultation?</em></h2>
+    <a routerLink="/contact" class="btn btn--filled">Request a Quick Audit -&gt;</a>
+    <p class="local-cta__studio">Studio: <a routerLink="/broken-arrow-web-design">Broken Arrow, Oklahoma</a> — working with service businesses nationally.</p>
+  </section>
+</div>

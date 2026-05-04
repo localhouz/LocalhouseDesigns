@@ -72,6 +72,54 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
 
   insightCards = [
     {
+      title: 'HVAC website design',
+      desc: 'HVAC websites that earn calls before a competitor does — emergency availability, service-area clarity, individual service pages, and local SEO foundations.',
+      route: '/hvac-website-design',
+      tag: 'Vertical page'
+    },
+    {
+      title: 'Contractor website design',
+      desc: 'Contractor websites that bring in the right jobs — project proof with context, service-page depth, credibility signals, and a quote path that filters intent.',
+      route: '/contractor-website-design',
+      tag: 'Vertical page'
+    },
+    {
+      title: 'Restaurant website design',
+      desc: 'Restaurant websites that fill seats — menu clarity, mobile-first performance, reservation path, and local search foundations that earn the visit.',
+      route: '/restaurant-website-design',
+      tag: 'Vertical page'
+    },
+    {
+      title: 'Salon website design',
+      desc: 'Salon websites that earn new client bookings from search — service menu clarity, stylist profiles, booking integration, and local SEO that platform pages can\'t provide.',
+      route: '/salon-website-design',
+      tag: 'Vertical page'
+    },
+    {
+      title: 'Plumber website design',
+      desc: 'Plumber websites that earn the call before a competitor does — emergency availability, service-area clarity, service-page depth, and local SEO foundations.',
+      route: '/plumber-website-design',
+      tag: 'Vertical page'
+    },
+    {
+      title: 'Med spa website design',
+      desc: 'Med spa websites that earn consultations — treatment pages with real depth, provider credentials, before/after structure, and local SEO foundations.',
+      route: '/med-spa-website-design',
+      tag: 'Vertical page'
+    },
+    {
+      title: 'Oklahoma City web design',
+      desc: 'Custom websites for OKC service businesses — based in Broken Arrow, 20 minutes from OKC, with deep understanding of the Oklahoma market.',
+      route: '/okc-web-design',
+      tag: 'Local page'
+    },
+    {
+      title: 'Sacramento web design',
+      desc: 'Custom websites for Sacramento businesses — backed by real Sacramento-market work on NorCal Sauce Worx and Prescribed Burn Sauces.',
+      route: '/sacramento-web-design',
+      tag: 'Local page'
+    },
+    {
       title: 'Why your Tulsa business website isn\'t converting',
       desc: 'Why service business sites get traffic but not inquiries — and what the rebuild actually fixes: service clarity, trust structure, and a contact path that doesn\'t lose people.',
       route: '/insights/why-your-tulsa-business-website-isnt-converting',

@@ -1,0 +1,123 @@
+<div class="local-page">
+  <section class="page-header container">
+    <p class="label">Oklahoma City web design</p>
+    <h1>Custom websites for<br><em>OKC service businesses.</em></h1>
+    <p class="page-header__sub">Localhouse Designs is based in Broken Arrow — 20 minutes from OKC — building custom websites for Oklahoma City service businesses that need stronger local visibility, clearer service pages, and a contact path that earns calls from people already searching.</p>
+    <div class="local-page__actions">
+      <a routerLink="/contact" class="btn btn--filled">Request a Quick Audit -&gt;</a>
+      <a routerLink="/broken-arrow-web-design" class="btn btn--accent">See Home Market Work -&gt;</a>
+    </div>
+  </section>
+
+  <section class="local-signals section">
+    <div class="container">
+      <p class="label">Why OKC businesses need this</p>
+      <div class="local-signals__grid">
+        @for (signal of trustSignals; track signal) {
+          <article class="signal-card">
+            <p>{{ signal }}</p>
+          </article>
+        }
+      </div>
+    </div>
+  </section>
+
+  <section class="local-work section container">
+    <div class="local-work__intro">
+      <p class="label">What gets built</p>
+      <h2>Not just a site.<br><em>A site that earns the call.</em></h2>
+    </div>
+    <div class="local-work__grid">
+      @for (section of pageSections; track section.title) {
+        <article class="fix-card">
+          <h3>{{ section.title }}</h3>
+          <p>{{ section.text }}</p>
+        </article>
+      }
+    </div>
+  </section>
+
+  <section class="local-proof section">
+    <div class="container">
+      <p class="label">Best-fit businesses</p>
+      <div class="vertical-grid">
+        @for (vertical of verticals; track vertical) {
+          <span>{{ vertical }}</span>
+        }
+      </div>
+    </div>
+  </section>
+
+  <section class="local-proof section local-proof--light">
+    <div class="container">
+      <p class="label">Proof and next steps</p>
+      <div class="local-proof__grid">
+        <a routerLink="/work/local-geo-standard" class="proof-card">
+          <span>Case study</span>
+          <h2>Local GEO Standard</h2>
+          <p>A scoring method for local visibility, trust signals, structured content, and contact clarity — built and tested in the Oklahoma market.</p>
+        </a>
+        <a routerLink="/broken-arrow-web-design" class="proof-card">
+          <span>Home market</span>
+          <h2>Broken Arrow Web Design</h2>
+          <p>The home-market page for Localhouse Designs — local service rebuild work, proof structure, and client results from 20 minutes away.</p>
+        </a>
+        <a routerLink="/website-redesign-service-business" class="proof-card">
+          <span>Service page</span>
+          <h2>Website Redesign for Service Businesses</h2>
+          <p>For OKC businesses with an existing site that isn't generating enough calls — what the rebuild actually fixes and why it works.</p>
+        </a>
+        <a routerLink="/insights/why-your-tulsa-business-website-isnt-converting" class="proof-card">
+          <span>Insight</span>
+          <h2>Why your service site isn't converting</h2>
+          <p>The specific reasons Oklahoma service business websites get traffic but don't earn calls — and what the rebuild actually addresses.</p>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <section class="local-proof section local-proof--light">
+    <div class="container">
+      <p class="label">Industry verticals</p>
+      <div class="local-proof__grid">
+        <a routerLink="/hvac-website-design" class="proof-card">
+          <span>Vertical</span>
+          <h2>HVAC Website Design</h2>
+          <p>Emergency availability, service-area clarity, and local SEO foundations for OKC HVAC companies competing in search.</p>
+        </a>
+        <a routerLink="/contractor-website-design" class="proof-card">
+          <span>Vertical</span>
+          <h2>Contractor Website Design</h2>
+          <p>Project proof, service-page depth, and a quote path that filters intent for OKC contractors and remodelers.</p>
+        </a>
+        <a routerLink="/plumber-website-design" class="proof-card">
+          <span>Vertical</span>
+          <h2>Plumber Website Design</h2>
+          <p>Emergency call path, phone visible in the first screen, and credibility signals where OKC buyers actually decide.</p>
+        </a>
+        <a routerLink="/restaurant-website-design" class="proof-card">
+          <span>Vertical</span>
+          <h2>Restaurant Website Design</h2>
+          <p>Mobile-first, menu clarity, reservation path, and local search foundations for OKC restaurants.</p>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <section class="local-faq section container">
+    <p class="label">Common questions</p>
+    <div class="local-faq__grid">
+      @for (item of faqs; track item.question) {
+        <article class="faq-card">
+          <h3>{{ item.question }}</h3>
+          <p>{{ item.answer }}</p>
+        </article>
+      }
+    </div>
+  </section>
+
+  <section class="local-cta container">
+    <h2>OKC buyers are already searching.<br><em>Is your site ready to earn the call?</em></h2>
+    <a routerLink="/contact" class="btn btn--filled">Request a Quick Audit -&gt;</a>
+  </section>
+</div>

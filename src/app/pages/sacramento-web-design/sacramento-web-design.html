@@ -1,0 +1,95 @@
+<div class="local-page">
+  <section class="page-header container">
+    <p class="label">Sacramento web design</p>
+    <h1>Custom websites for<br><em>Sacramento businesses.</em></h1>
+    <p class="page-header__sub">Localhouse Designs has built for Sacramento-area brands — and we work remotely with businesses across California and beyond. If your site feels vague, platform-limited, or isn't turning visits into real inquiries, that's exactly the kind of problem we fix.</p>
+    <div class="local-page__actions">
+      <a routerLink="/contact" class="btn btn--filled">Request a Quick Audit -&gt;</a>
+      <a routerLink="/website-redesign-service-business" class="btn btn--accent">Website Redesign Details -&gt;</a>
+    </div>
+  </section>
+
+  <section class="local-signals section">
+    <div class="container">
+      <p class="label">Why it works remotely</p>
+      <div class="local-signals__grid">
+        @for (signal of trustSignals; track signal) {
+          <article class="signal-card">
+            <p>{{ signal }}</p>
+          </article>
+        }
+      </div>
+    </div>
+  </section>
+
+  <section class="local-work section container">
+    <div class="local-work__intro">
+      <p class="label">What gets rebuilt</p>
+      <h2>A site that closes work<br><em>before someone compares you.</em></h2>
+    </div>
+    <div class="local-work__grid">
+      @for (section of pageSections; track section.title) {
+        <article class="fix-card">
+          <h3>{{ section.title }}</h3>
+          <p>{{ section.text }}</p>
+        </article>
+      }
+    </div>
+  </section>
+
+  <section class="local-proof section">
+    <div class="container">
+      <p class="label">Best-fit businesses</p>
+      <div class="vertical-grid">
+        @for (vertical of verticals; track vertical) {
+          <span>{{ vertical }}</span>
+        }
+      </div>
+    </div>
+  </section>
+
+  <section class="local-proof section local-proof--light">
+    <div class="container">
+      <p class="label">Sacramento work</p>
+      <div class="local-proof__grid">
+        <a href="https://norcalsauceworx.com" target="_blank" rel="noopener" class="proof-card">
+          <span>Live site</span>
+          <h2>NorCal Sauce Worx</h2>
+          <p>Full Angular rebuild with a clearer quote path, stronger service structure, and FAQPage + HowTo schema — built for a Sacramento-area specialty food brand.</p>
+        </a>
+        <a routerLink="/work/norcal-sauce-worx" class="proof-card">
+          <span>Case study</span>
+          <h2>NorCal Sauce Worx — Build Detail</h2>
+          <p>How the rebuild was structured: service clarity, quote-path friction, schema coverage, and the decisions behind the final architecture.</p>
+        </a>
+        <a href="https://prescribedburnsauces.com" target="_blank" rel="noopener" class="proof-card">
+          <span>Live site</span>
+          <h2>Prescribed Burn Sauces</h2>
+          <p>Brand site with stronger product structure, full schema coverage, and measurement foundations — built for a Sacramento specialty food and ecommerce brand.</p>
+        </a>
+        <a routerLink="/website-redesign-service-business" class="proof-card">
+          <span>Service page</span>
+          <h2>Website Redesign for Service Businesses</h2>
+          <p>For Sacramento businesses that already have a site but need it rebuilt around clearer messaging and a contact path that converts.</p>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <section class="local-faq section container">
+    <p class="label">Common questions</p>
+    <div class="local-faq__grid">
+      @for (item of faqs; track item.question) {
+        <article class="faq-card">
+          <h3>{{ item.question }}</h3>
+          <p>{{ item.answer }}</p>
+        </article>
+      }
+    </div>
+  </section>
+
+  <section class="local-cta container">
+    <h2>Sacramento work is done.<br><em>Yours could be next.</em></h2>
+    <a routerLink="/contact" class="btn btn--filled">Request a Quick Audit -&gt;</a>
+  </section>
+</div>

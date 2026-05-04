@@ -140,6 +140,18 @@
   .btn {
     margin-top: 1.5rem;
   }
+
+  &__studio {
+    margin-top: 2rem;
+    font-size: 0.85rem;
+    opacity: 0.55;
+
+    a {
+      color: inherit;
+      text-decoration: underline;
+      text-underline-offset: 3px;
+    }
+  }
 }
 
 @media (max-width: 768px) {

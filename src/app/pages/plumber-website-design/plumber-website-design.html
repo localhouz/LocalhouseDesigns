@@ -1,0 +1,96 @@
+<div class="local-page">
+  <section class="page-header container">
+    <p class="label">Plumber website design</p>
+    <h1>Plumber websites that<br><em>answer before a competitor does.</em></h1>
+    <p class="page-header__sub">Plumbing searches are high-intent and time-sensitive. Someone with a burst pipe or a failed water heater is not comparison shopping — they're calling the first business that looks credible and available. Your website needs to answer availability, service area, and trust signals in the first screen.</p>
+    <div class="local-page__actions">
+      <a routerLink="/contact" class="btn btn--filled">Request a Quick Audit -&gt;</a>
+      <a routerLink="/website-redesign-service-business" class="btn btn--accent">Website Redesign Details -&gt;</a>
+    </div>
+  </section>
+
+  <section class="local-signals section">
+    <div class="container">
+      <p class="label">What plumber sites get wrong</p>
+      <div class="local-signals__grid">
+        @for (signal of trustSignals; track signal) {
+          <article class="signal-card">
+            <p>{{ signal }}</p>
+          </article>
+        }
+      </div>
+    </div>
+  </section>
+
+  <section class="local-work section container">
+    <div class="local-work__intro">
+      <p class="label">What gets built</p>
+      <h2>A site that earns the call<br><em>in the first ten seconds.</em></h2>
+    </div>
+    <div class="local-work__grid">
+      @for (section of pageSections; track section.title) {
+        <article class="fix-card">
+          <h3>{{ section.title }}</h3>
+          <p>{{ section.text }}</p>
+        </article>
+      }
+    </div>
+  </section>
+
+  <section class="local-proof section">
+    <div class="container">
+      <p class="label">Best fit</p>
+      <div class="vertical-grid">
+        @for (vertical of verticals; track vertical) {
+          <span>{{ vertical }}</span>
+        }
+      </div>
+    </div>
+  </section>
+
+  <section class="local-proof section local-proof--light">
+    <div class="container">
+      <p class="label">Related proof</p>
+      <div class="local-proof__grid">
+        <a routerLink="/insights/how-a-local-service-rebuild-turns-traffic-into-leads" class="proof-card">
+          <span>Insight</span>
+          <h2>How a service rebuild turns traffic into leads</h2>
+          <p>Why local service sites lose jobs even with decent rankings — and what the rebuild actually fixes.</p>
+        </a>
+        <a routerLink="/insights/why-local-seo-fails-when-the-contact-path-is-vague" class="proof-card">
+          <span>Insight</span>
+          <h2>Why local SEO fails when contact is vague</h2>
+          <p>The contact-path friction that costs plumbers calls — and how to remove it.</p>
+        </a>
+        <a routerLink="/insights/best-website-structure-for-service-businesses" class="proof-card">
+          <span>Insight</span>
+          <h2>Best website structure for service businesses</h2>
+          <p>The structure that works for plumbers: homepage, service pages, emergency availability, and a clear call path.</p>
+        </a>
+        <a routerLink="/website-redesign-service-business" class="proof-card">
+          <span>Service page</span>
+          <h2>Website Redesign for Service Businesses</h2>
+          <p>For plumbing companies with an existing site that isn't generating enough calls.</p>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <section class="local-faq section container">
+    <p class="label">Common questions</p>
+    <div class="local-faq__grid">
+      @for (item of faqs; track item.question) {
+        <article class="faq-card">
+          <h3>{{ item.question }}</h3>
+          <p>{{ item.answer }}</p>
+        </article>
+      }
+    </div>
+  </section>
+
+  <section class="local-cta container">
+    <h2>The next emergency call is already searching.<br><em>Make sure your site earns it.</em></h2>
+    <a routerLink="/contact" class="btn btn--filled">Request a Quick Audit -&gt;</a>
+    <p class="local-cta__studio">Studio: <a routerLink="/broken-arrow-web-design">Broken Arrow, Oklahoma</a> — working with service businesses nationally.</p>
+  </section>
+</div>
