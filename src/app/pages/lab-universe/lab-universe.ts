@@ -8,6 +8,31 @@ import * as THREE from 'three';
 import { SeoService } from '../../shared/seo/seo.service';
 
 type Phase = 'idle' | 'exploding' | 'open';
+type MotionKind = 'position' | 'velocity' | 'acceleration' | 'gravity' | 'orbit' | 'drift' | 'mass' | 'resistance' | 'collapse';
+
+interface MotionMetrics {
+  position: number;
+  velocity: number;
+  acceleration: number;
+  gravity: number;
+  orbit: number;
+  drift: number;
+  mass: number;
+  resistance: number;
+  collapse: number;
+  dominant: MotionKind;
+}
+
+interface WebMotionEvent {
+  id: string;
+  kind: MotionKind;
+  source: 'history' | 'search' | 'card' | 'candidate' | 'memory';
+  domain?: string;
+  href?: string;
+  query?: string;
+  at: number;
+  confidence: number;
+}
 
 interface UniversePin {
   id: string;
@@ -24,6 +49,7 @@ interface UniversePin {
   delay: number;
   rotate: number;
   size: 'small' | 'medium' | 'large' | 'featured';
+  motion?: MotionMetrics;
 }
 
 interface ExpressLink {
@@ -72,6 +98,7 @@ interface CandidateResult {
   snippet?: string;
   source?: string;
   keplerScore?: number;
+  motion?: MotionMetrics;
 }
 
 interface UniverseSearchResponse {
@@ -223,6 +250,7 @@ export class LabUniverseComponent implements OnInit, AfterViewInit, OnDestroy {
   ghostNodes         = signal<GhostNode[]>([]);
   searchTrails       = signal<SearchTrail[]>([]);
   memoryCore         = signal<IntentWikiMemory | null>(null);
+  motionEvents       = signal<WebMotionEvent[]>([]);
   hoveredPinId       = signal<string | null>(null);
   hoveredIntentI     = signal(0);
   privacyState       = computed(() => {
@@ -308,6 +336,13 @@ export class LabUniverseComponent implements OnInit, AfterViewInit, OnDestroy {
 
   openPin(pin: UniversePin) {
     const target = this.hoveredPinId() === pin.id ? this.pinActiveIntent(pin) : pin;
+    this.recordMotionEvent({
+      kind: target.id === pin.id ? 'velocity' : 'collapse',
+      source: 'card',
+      domain: target.domain,
+      href: target.href,
+      confidence: target.id === pin.id ? 0.78 : 0.88,
+    });
     if (target.href.startsWith('https://') || target.href.startsWith('http://')) {
       window.open(target.href, '_blank', 'noopener noreferrer');
     }
@@ -359,6 +394,14 @@ export class LabUniverseComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   openCandidate(result: CandidateResult) {
+    this.recordMotionEvent({
+      kind: 'collapse',
+      source: 'candidate',
+      domain: result.domain,
+      href: result.href,
+      query: result.query,
+      confidence: 0.9,
+    });
     window.open(result.href, '_blank', 'noopener,noreferrer');
   }
 
@@ -431,6 +474,12 @@ export class LabUniverseComponent implements OnInit, AfterViewInit, OnDestroy {
     const next = [...existing.filter(item => item.query !== trail.query).slice(-4), trail];
     this.searchTrails.set(next);
     localStorage.setItem(STORAGE_KEYS.searches, JSON.stringify(next.map(t => t.query)));
+    this.recordMotionEvent({
+      kind: 'acceleration',
+      source: 'search',
+      query,
+      confidence: 0.82,
+    });
     this.resizePinsForIntent(query);
     this.activeQuery.set(query);
     this.resultsMode.set(true);
@@ -460,6 +509,7 @@ export class LabUniverseComponent implements OnInit, AfterViewInit, OnDestroy {
           query,
           source: result.source || payload.provider || 'search',
           keplerScore: this.searchResultScore(result, query, index),
+          motion: this.searchMotion(result, query, index),
         }))
         .sort((a, b) => (b.keplerScore ?? 0) - (a.keplerScore ?? 0))
         .slice(0, this.searchDisplayLimit(query, payload.results || []));
@@ -509,6 +559,38 @@ export class LabUniverseComponent implements OnInit, AfterViewInit, OnDestroy {
     return `M ${startX} ${startY} Q ${controlX} ${controlY} ${endX} ${endY}`;
   }
 
+  stringStrength(pin: UniversePin, index: number) {
+    if (index === 0) return 0;
+    const start = this.pins()[index - 1];
+    if (!start || start.topic !== pin.topic) return 0;
+    const relation = Math.min(this.intentLaneScore(start, pin) / 18, 1);
+    const gravity = (this.motionStrength(start) + this.motionStrength(pin)) / 2;
+    return this.clamp(0.16 + relation * 0.54 + gravity * 0.3, 0.18, 0.88);
+  }
+
+  pinMotionKind(pin: UniversePin) {
+    return this.pinMotion(pin).dominant;
+  }
+
+  pinMotion(pin: UniversePin) {
+    return pin.motion ?? this.motionFromPage(pin, pin.topic, pin.groupIds);
+  }
+
+  motionStrength(pin: UniversePin) {
+    const motion = this.pinMotion(pin);
+    return this.clamp(
+      motion.gravity * 0.28
+        + motion.orbit * 0.26
+        + motion.mass * 0.22
+        + motion.velocity * 0.12
+        + motion.acceleration * 0.08
+        - motion.drift * 0.1
+        - motion.resistance * 0.16,
+      0.05,
+      1,
+    );
+  }
+
   goBack() {
     history.back();
   }
@@ -539,6 +621,7 @@ export class LabUniverseComponent implements OnInit, AfterViewInit, OnDestroy {
     if (data?.type !== 'LH_UNIVERSE_CONTEXT' || !data.clusters?.length) return;
 
     this.zone.run(() => {
+      this.recordContextMotion(data);
       if (data.importMode === 'event' && this.initialImportComplete() && this.allPins().length) {
         this.mergeEventContext(data);
         this.extensionConnected.set(true);
@@ -579,6 +662,11 @@ export class LabUniverseComponent implements OnInit, AfterViewInit, OnDestroy {
             ...existing,
             visitCount: Math.max(existing.visitCount, pin.visitCount),
             lastVisitTime: Math.max(existing.lastVisitTime, pin.lastVisitTime),
+            motion: this.motionFromPage({
+              ...existing,
+              visitCount: Math.max(existing.visitCount, pin.visitCount),
+              lastVisitTime: Math.max(existing.lastVisitTime, pin.lastVisitTime),
+            }, existing.topic, existing.groupIds),
           }
         : pin);
     }
@@ -678,6 +766,7 @@ export class LabUniverseComponent implements OnInit, AfterViewInit, OnDestroy {
           delay: slot.delay,
           rotate: slot.rotate,
           size: this.pinSizeForScore(this.intentScore(page, topic)),
+          motion: this.motionFromPage(page, topic, groupByDomain.get(this.domainFromUrl(page.url)) ?? []),
         };
       });
   }
@@ -712,6 +801,7 @@ export class LabUniverseComponent implements OnInit, AfterViewInit, OnDestroy {
         delay: slot.delay,
         rotate: slot.rotate,
         size,
+        motion: this.motionFromPage(pin, pin.topic, pin.groupIds),
       };
     }));
   }
@@ -1150,6 +1240,119 @@ export class LabUniverseComponent implements OnInit, AfterViewInit, OnDestroy {
     return 1 + recency + repetition + adjacency;
   }
 
+  private recordContextMotion(data: ExtensionContext) {
+    const clusters = data.clusters ?? [];
+    const pages = clusters.flatMap(cluster => cluster.pages.map(page => ({ page, cluster })));
+    const seen = new Set<string>();
+    const events = pages
+      .filter(({ page }) => {
+        const domain = this.domainFromUrl(page.url);
+        if (!domain || seen.has(domain)) return false;
+        seen.add(domain);
+        return true;
+      })
+      .slice(0, data.importMode === 'event' ? 8 : 18)
+      .map(({ page, cluster }): WebMotionEvent => {
+        const groupIds = this.groupMemberships(clusters.filter(item => item.id !== 'recent' && item.id !== 'active'))
+          .get(this.domainFromUrl(page.url)) ?? [];
+        const motion = this.motionFromPage(page, cluster.label, groupIds);
+        return {
+          id: `context-${Date.now()}-${this.domainFromUrl(page.url)}`,
+          kind: data.importMode === 'event' ? 'velocity' : motion.dominant,
+          source: 'history',
+          domain: this.domainFromUrl(page.url),
+          href: page.url,
+          at: Date.now(),
+          confidence: data.importMode === 'event' ? 0.74 : 0.66,
+        };
+      });
+
+    if (data.searches?.length) {
+      events.push(...data.searches.slice(-4).map((query): WebMotionEvent => ({
+        id: `search-import-${Date.now()}-${query}`,
+        kind: 'acceleration',
+        source: 'search',
+        query,
+        at: Date.now(),
+        confidence: 0.7,
+      })));
+    }
+
+    if (events.length) this.motionEvents.update(current => [...current, ...events].slice(-80));
+  }
+
+  private recordMotionEvent(event: Omit<WebMotionEvent, 'id' | 'at'>) {
+    this.motionEvents.update(current => [
+      ...current,
+      {
+        ...event,
+        id: `${event.kind}-${Date.now()}-${event.domain ?? event.query ?? 'event'}`,
+        at: Date.now(),
+      },
+    ].slice(-80));
+  }
+
+  private motionFromPage(
+    page: { url?: string; href?: string; title?: string; domain?: string; visitCount?: number; lastVisitTime?: number },
+    topic: string,
+    groupIds: string[] = [],
+  ): MotionMetrics {
+    const visitCount = Math.max(page.visitCount ?? 1, 1);
+    const lastVisitTime = page.lastVisitTime ?? 0;
+    const ageHours = lastVisitTime ? (Date.now() - lastVisitTime) / 36e5 : 168;
+    const title = (page.title ?? '').toLowerCase();
+    const href = (page.url ?? page.href ?? '').toLowerCase();
+    const domain = (page.domain ?? this.domainFromUrl(href)).toLowerCase();
+    const text = `${domain} ${title} ${topic}`.toLowerCase();
+    const repeated = Math.log2(visitCount + 1) / 5;
+    const recent = ageHours <= 3 ? 1 : ageHours <= 24 ? 0.72 : ageHours <= 72 ? 0.42 : 0.16;
+    const adjacency = Math.min(groupIds.length / 3, 1);
+    const savedLike = /saved|favorite|bookmark|project|docs|profile|dashboard|scores|menu/.test(text) ? 0.22 : 0;
+    const weak = /login|sign in|blocked|captcha|error|404|request rejected/.test(text) ? 0.56 : 0;
+    const trusted = /docs|github|google|espn|nba|linkedin|instagram|pinterest|yelp|clutch|netlify|aws|youtube/.test(text) ? 0.18 : 0;
+    const drift = this.clamp((ageHours > 96 ? 0.36 : 0) + (visitCount <= 1 ? 0.22 : 0) - adjacency * 0.12, 0, 1);
+
+    return this.motionMetrics({
+      position: 1,
+      velocity: recent * 0.58,
+      acceleration: this.activeIntentTokens().some(token => text.includes(token)) ? 0.68 : 0.08,
+      gravity: this.clamp(repeated + recent * 0.3 + adjacency * 0.28, 0, 1),
+      orbit: this.clamp(repeated * 0.72 + adjacency * 0.38 + savedLike, 0, 1),
+      drift,
+      mass: this.clamp(repeated * 0.7 + trusted + adjacency * 0.24, 0.08, 1),
+      resistance: weak,
+    });
+  }
+
+  private motionMetrics(values: Partial<MotionMetrics> & { dominant?: MotionKind }): MotionMetrics {
+    const metrics: MotionMetrics = {
+      position: this.clamp(values.position ?? 0, 0, 1),
+      velocity: this.clamp(values.velocity ?? 0, 0, 1),
+      acceleration: this.clamp(values.acceleration ?? 0, 0, 1),
+      gravity: this.clamp(values.gravity ?? 0, 0, 1),
+      orbit: this.clamp(values.orbit ?? 0, 0, 1),
+      drift: this.clamp(values.drift ?? 0, 0, 1),
+      mass: this.clamp(values.mass ?? 0, 0, 1),
+      resistance: this.clamp(values.resistance ?? 0, 0, 1),
+      collapse: this.clamp(values.collapse ?? 0, 0, 1),
+      dominant: values.dominant ?? 'position',
+    };
+    if (!values.dominant) {
+      const dominant = ([
+        ['collapse', metrics.collapse],
+        ['resistance', metrics.resistance],
+        ['orbit', metrics.orbit],
+        ['gravity', metrics.gravity],
+        ['acceleration', metrics.acceleration],
+        ['mass', metrics.mass],
+        ['velocity', metrics.velocity],
+        ['drift', metrics.drift],
+      ] as Array<[MotionKind, number]>).sort((a, b) => b[1] - a[1])[0];
+      metrics.dominant = dominant?.[1] > 0.16 ? dominant[0] : 'position';
+    }
+    return metrics;
+  }
+
   private searchDisplayLimit(query: string, rawResults: CandidateResult[]) {
     const results = rawResults.filter(result => result.href && result.domain);
     if (!results.length) return 0;
@@ -1184,13 +1387,37 @@ export class LabUniverseComponent implements OnInit, AfterViewInit, OnDestroy {
     const domainMatches = queryTokens.filter(token => domain.includes(token)).length;
     const titleMatches = queryTokens.filter(token => title.includes(token)).length;
     const laneMatch = this.resultLane(result) === this.queryLane(query) ? 3 : 0;
+    const motion = this.searchMotion(result, query, rank);
 
     return Math.max(20 - rank, 1)
       + exactTitle
       + tokenMatches * 1.5
       + titleMatches * 1.5
       + domainMatches * 2.5
-      + laneMatch;
+      + laneMatch
+      + motion.acceleration * 3
+      + motion.mass * 2
+      - motion.resistance * 2;
+  }
+
+  private searchMotion(result: CandidateResult, query: string, rank: number): MotionMetrics {
+    const queryTokens = this.tokenize(query);
+    const text = `${result.domain} ${result.title} ${result.snippet ?? ''}`.toLowerCase();
+    const tokenMatches = queryTokens.filter(token => text.includes(token)).length;
+    const laneMatch = this.resultLane(result) && this.resultLane(result) === this.queryLane(query);
+    const known = this.allPins().find(pin => pin.domain === result.domain);
+    const acceleration = this.clamp(0.22 + tokenMatches / Math.max(queryTokens.length, 1) * 0.5 + (laneMatch ? 0.2 : 0), 0, 1);
+    const mass = known ? this.pinMotion(known).mass : this.clamp((12 - Math.min(rank, 12)) / 20, 0.08, 0.6);
+    const resistance = /login|sign in|blocked|captcha|account/i.test(`${result.title} ${result.snippet ?? ''}`) ? 0.62 : 0.08;
+    return this.motionMetrics({
+      position: this.clamp((14 - Math.min(rank, 14)) / 14, 0.08, 1),
+      acceleration,
+      gravity: known ? this.pinMotion(known).gravity : 0.1,
+      orbit: known ? this.pinMotion(known).orbit : 0,
+      mass,
+      resistance,
+      dominant: known ? 'gravity' : 'acceleration',
+    });
   }
 
   private resultLane(result: CandidateResult) {
@@ -1209,12 +1436,17 @@ export class LabUniverseComponent implements OnInit, AfterViewInit, OnDestroy {
     const tokenOverlap = this.intentTextTokens(candidate).filter(token => sourceTokens.has(token)).length;
     const topicMatch = source.topic.toLowerCase() === candidate.topic.toLowerCase() ? 1 : 0;
     const laneMatch = sourceLane && sourceLane === candidateLane ? 1 : 0;
+    const candidateMotion = this.pinMotion(candidate);
+    const sourceMotion = this.pinMotion(source);
 
     return laneMatch * 9
       + sharedGroups * 5
       + topicMatch * 3
       + Math.min(tokenOverlap, 4) * 2
-      + Math.min(candidate.visitCount, 8) / 4;
+      + Math.min(candidate.visitCount, 8) / 4
+      + candidateMotion.gravity * 2
+      + candidateMotion.orbit * 2
+      + Math.min(sourceMotion.gravity, candidateMotion.gravity);
   }
 
   private intentLane(pin: UniversePin) {

@@ -84,6 +84,7 @@
               class="universe__candidate"
               [class.universe__candidate--primary]="$index === 0"
               [style.--tone]="visualTone(result.domain, activeQuery())"
+              [style.--motion-strength]="result.motion?.mass || result.motion?.acceleration || 0.2"
               (click)="openCandidate(result)"
             >
               <span class="universe__candidate-node" aria-hidden="true"></span>
@@ -134,6 +135,7 @@
             <path
               [attr.d]="path"
               [style.animation-delay]="pin.delay + 'ms'"
+              [style.--motion-strength]="stringStrength(pin, i)"
             />
           }
         }
@@ -190,12 +192,17 @@
           [class.universe__pin--large]="pin.size === 'large'"
           [class.universe__pin--featured]="pin.size === 'featured'"
           [class.universe__pin--intent-open]="isHovered && intentLinks.length > 1"
+          [class.universe__pin--motion-orbit]="pinMotionKind(pin) === 'orbit'"
+          [class.universe__pin--motion-gravity]="pinMotionKind(pin) === 'gravity'"
+          [class.universe__pin--motion-drift]="pinMotionKind(pin) === 'drift'"
+          [class.universe__pin--motion-resistance]="pinMotionKind(pin) === 'resistance'"
           [class.visible]="clustersVisible()"
           [style.--cx]="pin.x + 'vw'"
           [style.--cy]="pin.y + 'vh'"
           [style.--rot]="pin.rotate + 'deg'"
           [style.--tone]="visualTone(pin.domain, pin.topic)"
           [style.--intent-tone]="visualTone(activeIntent.domain, activeIntent.topic)"
+          [style.--motion-strength]="motionStrength(pin)"
           [style.--delay]="pin.delay + 'ms'"
           (click)="openPin(pin)"
           (mouseenter)="onPinEnter(pin)"

@@ -453,7 +453,7 @@
     min-width: 0;
     min-height: 0;
     padding: 0;
-    border: 1px solid hsl(var(--tone, 16deg) 66% 42% / 0.26);
+    border: 1px solid hsl(var(--tone, 16deg) 66% 42% / calc(0.2 + var(--motion-strength, 0.2) * 0.22));
     border-radius: 8px;
     background:
       radial-gradient(circle at 78% 18%, hsl(var(--tone, 16deg) 78% 58% / 0.2), transparent 32%),
@@ -486,6 +486,7 @@
       height: 15rem;
       border: 1px solid hsl(var(--tone, 16deg) 92% 74% / 0.28);
       border-radius: 50%;
+      opacity: calc(0.35 + var(--motion-strength, 0.2) * 0.45);
       pointer-events: none;
     }
 
@@ -612,9 +613,9 @@
 
     path {
       fill: none;
-      stroke: rgba(143, 34, 0, 0.22);
-      stroke-width: 0.08;
-      stroke-dasharray: 0.5 1.1;
+      stroke: rgba(143, 34, 0, calc(0.06 + var(--motion-strength, 0.2) * 0.2));
+      stroke-width: calc(0.035 + var(--motion-strength, 0.2) * 0.06);
+      stroke-dasharray: 0.18 0.78;
       opacity: 0;
       animation: universe-string-in 0.9s ease both;
     }
@@ -840,6 +841,7 @@
     z-index: 10;
     cursor: pointer;
     opacity: 0;
+    --motion-alpha: calc(0.04 + var(--motion-strength, 0.2) * 0.18);
     transition:
       opacity 0.55s ease var(--delay, 0ms),
       transform 0.65s cubic-bezier(0.34, 1.4, 0.64, 1) var(--delay, 0ms),
@@ -854,6 +856,39 @@
     &.visible:hover {
       border-color: hsl(var(--tone, 16deg) 52% 60% / 0.42);
       transform: translate(calc(-50% + var(--cx, 0vw)), calc(var(--cy, 0vh) - 50%)) scale(1) translateY(-3px);
+    }
+
+    &::before {
+      content: '';
+      position: absolute;
+      inset: -0.55rem;
+      z-index: -1;
+      border-radius: 10px;
+      border: 1px solid hsl(var(--tone, 16deg) 70% 58% / var(--motion-alpha));
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.35s ease;
+    }
+
+    &.visible::before {
+      opacity: calc(var(--motion-strength, 0.2) * 0.72);
+    }
+
+    &--motion-orbit::before {
+      border-radius: 50%;
+      transform: scale(1.08);
+    }
+
+    &--motion-gravity::before {
+      border-style: solid;
+    }
+
+    &--motion-drift {
+      opacity: 0.78;
+    }
+
+    &--motion-resistance {
+      opacity: 0.72;
     }
 
     // SMALL — horizontal strip, no image, just a colored accent bar + text
