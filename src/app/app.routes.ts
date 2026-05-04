@@ -37,6 +37,7 @@ export const routes: Routes = [
   { path: 'local-seo-for-service-businesses', loadComponent: () => import('./pages/local-seo-service-businesses/local-seo-service-businesses').then(m => m.LocalSeoServiceBusinessesComponent) },
   { path: 'salon-website-design-tulsa', loadComponent: () => import('./pages/salon-website-design-tulsa/salon-website-design-tulsa').then(m => m.SalonWebsiteDesignTulsaComponent) },
   { path: 'tulsa-service-business-websites', loadComponent: () => import('./pages/tulsa-service-business-websites/tulsa-service-business-websites').then(m => m.TulsaServiceBusinessWebsitesComponent) },
+  { path: 'website-redesign-service-business', loadComponent: () => import('./pages/website-redesign-service-business/website-redesign-service-business').then(m => m.WebsiteRedesignServiceBusinessComponent) },
   { path: 'contact',  loadComponent: () => import('./pages/contact/contact').then(m => m.ContactComponent) },
   { path: 'local-geo-audit', loadComponent: () => import('./pages/local-geo-audit/local-geo-audit').then(m => m.LocalGeoAuditComponent) },
   { path: 'lab',      loadComponent: () => import('./pages/lab/lab').then(m => m.LabComponent) },

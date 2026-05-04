@@ -1,0 +1,95 @@
+<div class="local-page">
+  <section class="page-header container">
+    <p class="label">Website redesign</p>
+    <h1>Your website exists.<br><em>But is it actually working?</em></h1>
+    <p class="page-header__sub">Most service business websites don't fail because of design — they fail because the messaging is vague, the service pages are thin, and the contact path makes people guess. Localhouse Designs rebuilds sites around what your business actually does and what a visitor needs to see before they reach out.</p>
+    <div class="local-page__actions">
+      <a routerLink="/contact" class="btn btn--filled">Request a Quick Audit -&gt;</a>
+      <a routerLink="/tulsa-service-business-websites" class="btn btn--accent">Service Business Details -&gt;</a>
+    </div>
+  </section>
+
+  <section class="local-signals section">
+    <div class="container">
+      <p class="label">What a redesign actually fixes</p>
+      <div class="local-signals__grid">
+        @for (signal of trustSignals; track signal) {
+          <article class="signal-card">
+            <p>{{ signal }}</p>
+          </article>
+        }
+      </div>
+    </div>
+  </section>
+
+  <section class="local-work section container">
+    <div class="local-work__intro">
+      <p class="label">What gets rebuilt</p>
+      <h2>A site that earns trust<br><em>before someone has to ask.</em></h2>
+    </div>
+    <div class="local-work__grid">
+      @for (section of pageSections; track section.title) {
+        <article class="fix-card">
+          <h3>{{ section.title }}</h3>
+          <p>{{ section.text }}</p>
+        </article>
+      }
+    </div>
+  </section>
+
+  <section class="local-proof section">
+    <div class="container">
+      <p class="label">Best fit for a redesign</p>
+      <div class="vertical-grid">
+        @for (vertical of verticals; track vertical) {
+          <span>{{ vertical }}</span>
+        }
+      </div>
+    </div>
+  </section>
+
+  <section class="local-proof section local-proof--light">
+    <div class="container">
+      <p class="label">Related proof</p>
+      <div class="local-proof__grid">
+        <a routerLink="/work/north-styles" class="proof-card">
+          <span>Case study</span>
+          <h2>North Styles</h2>
+          <p>Rebuilt from a GlossGenius booking page to a custom site with stronger local SEO, clearer booking path, and real brand presence.</p>
+        </a>
+        <a routerLink="/insights/how-a-local-service-rebuild-turns-traffic-into-leads" class="proof-card">
+          <span>Insight</span>
+          <h2>How a service rebuild turns traffic into leads</h2>
+          <p>What actually changes when a site gets rebuilt around the right structure — and why traffic alone doesn't mean inquiries.</p>
+        </a>
+        <a routerLink="/broken-arrow-web-design" class="proof-card">
+          <span>Local page</span>
+          <h2>Broken Arrow Web Design</h2>
+          <p>The home-market page for Localhouse Designs, with full service rebuild detail and local trust structure.</p>
+        </a>
+        <a routerLink="/insights/what-local-service-pages-need-to-rank-and-get-cited" class="proof-card">
+          <span>Insight</span>
+          <h2>What local service pages need</h2>
+          <p>A practical look at service-page depth, local SEO, and what makes a page worth citing by AI search.</p>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <section class="local-faq section container">
+    <p class="label">Common questions</p>
+    <div class="local-faq__grid">
+      @for (item of faqs; track item.question) {
+        <article class="faq-card">
+          <h3>{{ item.question }}</h3>
+          <p>{{ item.answer }}</p>
+        </article>
+      }
+    </div>
+  </section>
+
+  <section class="local-cta container">
+    <h2>Your current site is already<br><em>costing you clients. Let's fix it.</em></h2>
+    <a routerLink="/contact" class="btn btn--filled">Request a Quick Audit -&gt;</a>
+  </section>
+</div>

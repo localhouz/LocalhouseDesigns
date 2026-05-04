@@ -57,16 +57,16 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
 
   answerBlocks = [
     {
-      question: 'Where is Localhouse Designs based?',
-      answer: 'Localhouse Designs is based in Broken Arrow, Oklahoma and works with service businesses across Tulsa, Oklahoma City, and the wider Oklahoma market.'
+      question: 'Where is Localhouse Designs located?',
+      answer: 'Broken Arrow, Oklahoma — serving service businesses across Tulsa, Oklahoma City, and the wider state, with remote capacity for national clients.'
     },
     {
-      question: 'What kind of projects are the best fit?',
-      answer: "The strongest fit is rebuilding service-business websites that feel vague, outdated, or boxed in by templates, especially when trust and local visibility need work."
+      question: "What's the strongest use case?",
+      answer: 'Rebuilding service-business websites that are vague, outdated, or stuck on a template — especially when local visibility, trust, and inquiry volume need work.'
     },
     {
-      question: 'Why does the ERP background matter?',
-      answer: 'It means the sites are built with stronger systems thinking. Clearer flows, better structure, and a sharper sense of what people need in order to take the next step.'
+      question: 'What makes the ERP background relevant to a website?',
+      answer: "Systems thinking. Sites built here have cleaner information architecture, stronger structured data, and contact paths that work because they're designed around how decisions actually get made."
     }
   ];
 
@@ -193,8 +193,8 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
   ngOnInit() {
     const base = 'https://localhousedesigns.com';
     this.seo.setPage({
-      title: 'Localhouse Designs | Broken Arrow Web Studio for Angular, ERP, SEO/GEO',
-      description: 'Broken Arrow, Oklahoma web studio building clearer, higher-converting websites for service businesses across Oklahoma, with stronger local SEO/GEO and cleaner contact paths.',
+      title: 'Localhouse Designs | Oklahoma Web Studio — Local SEO, Custom Sites, GEO',
+      description: 'Broken Arrow web studio building custom websites for Oklahoma service businesses. Real local SEO, structured data, and contact paths that convert. Serving Tulsa, OKC, and beyond.',
       url: base,
       schemas: [
         {
