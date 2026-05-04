@@ -26,6 +26,8 @@ export const routes: Routes = [
   { path: 'insights/what-erp-connected-tools-should-expose-to-floor-teams', loadComponent: () => import('./pages/floor-team-erp-tools-article/floor-team-erp-tools-article').then(m => m.FloorTeamErpToolsArticleComponent) },
   { path: 'insights/when-a-spreadsheet-should-become-a-real-internal-app', loadComponent: () => import('./pages/spreadsheet-to-app-article/spreadsheet-to-app-article').then(m => m.SpreadsheetToAppArticleComponent) },
   { path: 'insights/how-custom-business-software-reduces-handoff-friction', loadComponent: () => import('./pages/handoff-friction-article/handoff-friction-article').then(m => m.HandoffFrictionArticleComponent) },
+  { path: 'insights/why-your-tulsa-business-website-isnt-converting', loadComponent: () => import('./pages/tulsa-website-not-converting-article/tulsa-website-not-converting-article').then(m => m.TulsaWebsiteNotConvertingArticleComponent) },
+  { path: 'insights/best-website-structure-for-service-businesses', loadComponent: () => import('./pages/service-business-website-structure-article/service-business-website-structure-article').then(m => m.ServiceBusinessWebsiteStructureArticleComponent) },
   { path: 'work',     loadComponent: () => import('./pages/work/work').then(m => m.WorkComponent) },
   { path: 'work/north-styles', loadComponent: () => import('./pages/case-study/case-study').then(m => m.CaseStudyComponent) },
   { path: 'work/norcal-sauce-worx', loadComponent: () => import('./pages/case-study/case-study').then(m => m.CaseStudyComponent) },

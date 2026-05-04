@@ -72,6 +72,24 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
 
   insightCards = [
     {
+      title: 'Why your Tulsa business website isn\'t converting',
+      desc: 'Why service business sites get traffic but not inquiries — and what the rebuild actually fixes: service clarity, trust structure, and a contact path that doesn\'t lose people.',
+      route: '/insights/why-your-tulsa-business-website-isnt-converting',
+      tag: 'Conversion'
+    },
+    {
+      title: 'Best website structure for service businesses',
+      desc: 'The structure that actually works: homepage clarity, individual service pages, proof, FAQ content, and a contact path that reduces friction instead of adding it.',
+      route: '/insights/best-website-structure-for-service-businesses',
+      tag: 'Web design'
+    },
+    {
+      title: 'Website redesign for service businesses',
+      desc: 'For businesses that already have a site but need it rebuilt — clearer messaging, stronger service pages, proof structure, and a contact path that actually converts.',
+      route: '/website-redesign-service-business',
+      tag: 'Service page'
+    },
+    {
       title: 'Broken Arrow web design for service businesses',
       desc: 'A local page for Oklahoma businesses that need clearer website structure, stronger trust signals, and a better contact path.',
       route: '/broken-arrow-web-design',
