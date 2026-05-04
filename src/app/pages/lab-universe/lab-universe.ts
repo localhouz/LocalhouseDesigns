@@ -71,6 +71,7 @@ interface CandidateResult {
   query: string;
   snippet?: string;
   source?: string;
+  keplerScore?: number;
 }
 
 interface UniverseSearchResponse {
@@ -458,8 +459,10 @@ export class LabUniverseComponent implements OnInit, AfterViewInit, OnDestroy {
           id: result.id || `search-${Date.now()}-${index}`,
           query,
           source: result.source || payload.provider || 'search',
+          keplerScore: this.searchResultScore(result, query, index),
         }))
-        .slice(0, 12);
+        .sort((a, b) => (b.keplerScore ?? 0) - (a.keplerScore ?? 0))
+        .slice(0, this.searchDisplayLimit(query, payload.results || []));
 
       this.candidateResults.set(results);
       if (!results.length) this.searchError.set('No real links came back for that search.');
@@ -1147,6 +1150,57 @@ export class LabUniverseComponent implements OnInit, AfterViewInit, OnDestroy {
     return 1 + recency + repetition + adjacency;
   }
 
+  private searchDisplayLimit(query: string, rawResults: CandidateResult[]) {
+    const results = rawResults.filter(result => result.href && result.domain);
+    if (!results.length) return 0;
+
+    const queryTokens = this.tokenize(query);
+    const uniqueDomains = new Set(results.map(result => result.domain)).size;
+    const exactTitleMatches = results.filter(result => result.title.toLowerCase().includes(query.toLowerCase())).length;
+    const exactDomainMatches = results.filter(result => queryTokens.some(token => result.domain.toLowerCase().includes(token))).length;
+    const lanes = new Set(results.map(result => this.resultLane(result)).filter(Boolean));
+    const repeatedDomains = results.length - uniqueDomains;
+    const exactConcentration = exactTitleMatches / results.length;
+
+    const breadth = uniqueDomains
+      + lanes.size * 2
+      - repeatedDomains * 0.65
+      - exactConcentration * 5
+      - exactDomainMatches * 0.35;
+
+    if (breadth <= 4.2) return 6;
+    if (breadth <= 8) return 9;
+    if (breadth <= 12) return 12;
+    return 14;
+  }
+
+  private searchResultScore(result: CandidateResult, query: string, rank: number) {
+    const queryTokens = this.tokenize(query);
+    const haystack = `${result.domain} ${result.title} ${result.snippet ?? ''}`.toLowerCase();
+    const title = result.title.toLowerCase();
+    const domain = result.domain.toLowerCase();
+    const exactTitle = title.includes(query.toLowerCase()) ? 5 : 0;
+    const tokenMatches = queryTokens.filter(token => haystack.includes(token)).length;
+    const domainMatches = queryTokens.filter(token => domain.includes(token)).length;
+    const titleMatches = queryTokens.filter(token => title.includes(token)).length;
+    const laneMatch = this.resultLane(result) === this.queryLane(query) ? 3 : 0;
+
+    return Math.max(20 - rank, 1)
+      + exactTitle
+      + tokenMatches * 1.5
+      + titleMatches * 1.5
+      + domainMatches * 2.5
+      + laneMatch;
+  }
+
+  private resultLane(result: CandidateResult) {
+    return this.laneForText(`${result.domain} ${result.title} ${result.snippet ?? ''}`);
+  }
+
+  private queryLane(query: string) {
+    return this.laneForText(query);
+  }
+
   private intentLaneScore(source: UniversePin, candidate: UniversePin) {
     const sourceLane = this.intentLane(source);
     const candidateLane = this.intentLane(candidate);
@@ -1164,7 +1218,11 @@ export class LabUniverseComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   private intentLane(pin: UniversePin) {
-    const text = `${pin.domain} ${pin.title} ${pin.topic} ${pin.groupIds.join(' ')}`.toLowerCase();
+    return this.laneForText(`${pin.domain} ${pin.title} ${pin.topic} ${pin.groupIds.join(' ')}`);
+  }
+
+  private laneForText(value: string) {
+    const text = value.toLowerCase();
     const lanes: Array<[string, string[]]> = [
       ['sports', ['espn', 'nba', 'nfl', 'mlb', 'nhl', 'score', 'sports', 'fantasy', 'rotowire', 'cbssports', 'bleacher', 'thescore', 'yahoo sports']],
       ['socials', ['instagram', 'linkedin', 'facebook', 'reddit', 'pinterest', 'x.com', 'twitter', 'social']],
